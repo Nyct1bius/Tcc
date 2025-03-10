@@ -5,13 +5,29 @@
 
 # Game Design Document
 ## Membros
-> **Arthur Henrique**: Producer, level design, gerenciamento do cronograma.
-> **Anna Beatriz**: Cenário 3D, direcionamento de Arte.
-> **Isabella**: Cenários e props 3D.
-> **João Gabriel**: Personagens 3D e cutscene.
-> **Kayke**: Programação da core gameplay (player character), direcionamento de programação.
-> **Matheus Ferreira**: Game Designer, montagem e programação da UI.
-> **Theo**: Programação de NPCs hostis.
+### Producer
+* **Arthur Henrique**
+   * Producer
+   * level design
+   * gerenciamento do cronograma.
+### Arte
+* **Anna Beatriz** 
+   * Cenário 3D
+   * Direcionamento de Arte.
+* **Isabella**
+   * Cenários e props 3D.
+* **João Gabriel**
+   * Personagens 3D 
+   * Cutscene.
+### Programação
+* **Kayke**
+   * Programação da core gameplay (player character)
+   * Direcionamento de programação.
+* **Matheus Ferreira** 
+   * Game Designer
+   * Montagem e programação da UI.
+* **Theo** 
+   * Programação de NPCs hostis.
 ## Premissa do Jogo
 O jogador controlará um robô em um mundo que mistura fantasia e ficção científica. Ele deve explorar um pequeno arquipélago utilizando seu barco e coletar recursos protegidos inimigos mecânicos, os "sobreviventes" de um antigo mundo. Os recursos serão usados para aprimorar o barco e trocar equipamentos para enfrentar uma criatura poderosa no final da aventura.
 ## Estilo do Jogo
@@ -33,6 +49,6 @@ O jogo será feito em 3D com a perspectiva do player em terceira pessoa, o que p
   * Analógico direito: Ângulo da câmera
   * X: Ataque
 ## Referências
-* Zelda: The Wind Waker - Exploração e combate
-* Dredge - Navegação com o barco
-* Soul Searching - Gameplay
+* ### [_Zelda: The Wind Waker_](https://www.nintendo.com/pt-pt/Jogos/Nintendo-GameCube/The-Legend-of-Zelda-The-Wind-Waker-269039.html) - Exploração e combate
+* ### [_Dredge_](https://store.steampowered.com/app/1562430/DREDGE/) - Navegação com o barco
+* ### [_Soul Searching_](https://store.steampowered.com/app/586240/Soul_Searching/) - Gameplay
