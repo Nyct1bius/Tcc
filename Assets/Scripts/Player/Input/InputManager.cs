@@ -3,29 +3,49 @@ using System;
 using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance;
 
     private PlayerInputs input;
     Vector3 direction;
-
-    public event Action OnJump;
 
     private void Awake()
     {
         input = new PlayerInputs();
         input.BaseActionMap.Enable();
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
     private void OnEnable()
     {
-        input.BaseActionMap.Jump.performed += JumpInputPerformed;
-    }
-    private void OnDisable()
-    {
-        input.BaseActionMap.Jump.performed -= JumpInputPerformed;
+        input.BaseActionMap.Interact.performed += HandleInteractInput;
+        input.BaseActionMap.Jump.performed += HandleJumpInput;
+        input.BaseActionMap.Attack.performed += HandleAttackInput;
+        
     }
 
-    public void JumpInputPerformed(InputAction.CallbackContext context)
+    private void OnDisable()
     {
-        OnJump?.Invoke();
+        input.BaseActionMap.Interact.performed -= HandleInteractInput;
+        input.BaseActionMap.Jump.performed -= HandleJumpInput;
+        input.BaseActionMap.Attack.performed -= HandleAttackInput;
+    }
+    private void HandleInteractInput(InputAction.CallbackContext context)
+    {
+        PlayerEvents.OnInteract();
+    }
+
+    private void HandleAttackInput(InputAction.CallbackContext context)
+    {
+        PlayerEvents.OnAttack();
+    }
+
+    public void HandleJumpInput(InputAction.CallbackContext context)
+    {
+        PlayerEvents.OnJump();
     }
 
     public Vector3 InputDirection()

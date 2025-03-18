@@ -1,4 +1,3 @@
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows;
@@ -26,9 +25,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheckTransform;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundMask;
-    [Header("Physics")]
-    [Range(0f, 10f)]
-    [SerializeField] private float gravity;
 
     [Header("Rotation")]
     private float targetAngle;
@@ -43,11 +39,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnEnable()
     {
-        inputManager.OnJump += HandleJump;
+        PlayerEvents.Jump += HandleJump;
     }
     private void OnDisable()
     {
-        inputManager.OnJump -= HandleJump;
+        PlayerEvents.Jump -= HandleJump;
     }
 
     private void Update()
@@ -57,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        ApplyGravity();
         FaceInput();
     }
 
@@ -70,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Grounded())
         {
-            if (inputManager.InputDirection() == Vector3.zero )
+            if (inputManager.InputDirection() == Vector3.zero)
             {
                 statesController.ChangePlayerState(idleState);
             }
@@ -92,15 +87,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundMask);
     }
-#region Physics
-    void ApplyGravity()
-    {
-        if (!Grounded())
-        {
-            body.AddForce(-Vector3.up * gravity, ForceMode.Force);
-        }
-    }
-#endregion
+
     private void FaceInput()
     {
         if(inputManager.InputDirection() != Vector3.zero)

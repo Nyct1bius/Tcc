@@ -16,17 +16,16 @@ public class WalkState : PlayerStates
     Vector3 moveDirection;
     public override void Enter() 
     {
-        Debug.Log("Walk");
+        
     }
 
     public override void Do() 
     {
-        CheckInputs();
+        HandleDirection();
     }
 
     public override void FixedDo() 
     {
-        FaceInput();
         if (inputManager.InputDirection() != Vector3.zero)
         {
             body.AddForce(moveDirection * acceleration, ForceMode.VelocityChange);
@@ -36,16 +35,13 @@ public class WalkState : PlayerStates
     public override void Exit() { }
 
 
-    private void FaceInput()
+    private void HandleDirection()
     {
+        xInput = inputManager.InputDirection().x;
+        yInput = inputManager.InputDirection().z;
         moveDirection = mainCameraRef.transform.forward * yInput + mainCameraRef.transform.right * xInput;
         moveDirection.y = 0;
     }
 
-    private void CheckInputs()
-    {
-        xInput = inputManager.InputDirection().x;
-        yInput = inputManager.InputDirection().z;
-    }
 
 }

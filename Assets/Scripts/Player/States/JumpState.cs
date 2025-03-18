@@ -6,7 +6,6 @@ public class JumpState : PlayerStates
     [SerializeField] private float jumpForce;
     public override void Enter() 
     {
-        Debug.Log("Jump");
         body.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
     }
 
