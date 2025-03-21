@@ -9,7 +9,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "40fdabad-13a8-4120-a2f8-b0584e60487d",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -40,9 +40,29 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "09b8fece-248b-48a0-90f2-4c9d2c6db586",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
+                {
+                    "name": "",
+                    "id": "0a86848e-7f2b-436b-9ffe-bf31d662ef99",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
                     "name": "3D Vector",
                     "id": "77dead42-961f-428a-8902-5a1ffe022422",
@@ -111,8 +131,30 @@
                 },
                 {
                     "name": "",
+                    "id": "d675ee32-abd1-402c-bca6-6a55ed120fd4",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "be185a05-453f-4072-859a-30bccd9936ac",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f6f9e217-866d-4a13-b594-7b8df86f2612",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -128,6 +170,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc47096f-b93f-4942-8c74-2066d9826130",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

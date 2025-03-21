@@ -5,9 +5,12 @@ public abstract class PlayerStates : MonoBehaviour
 
     protected Rigidbody body;
     protected Animator animator;
-    protected InputManager inputManager;
+    protected PlayerMovement inputs;
 
     public bool isComplete { get; protected set;}
+
+    protected float startTime;
+    public float time => Time.time -startTime;
 
 
     public virtual void Enter() { }
@@ -18,11 +21,17 @@ public abstract class PlayerStates : MonoBehaviour
             
     public virtual void Exit() { }
 
-    public virtual void Setup(Rigidbody _body, Animator _animator,InputManager _inputManager) 
+    public virtual void Setup(Rigidbody _body, Animator _animator, PlayerMovement _inputs) 
     {
         body = _body;
         animator = _animator;
-        inputManager = _inputManager;
+        inputs = _inputs;
     
+    }
+
+    public virtual void Initialize() 
+    {
+        isComplete = false;
+        startTime = Time.time;  
     }
 }

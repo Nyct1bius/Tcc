@@ -24,18 +24,26 @@ public class InputManager : MonoBehaviour
         input.BaseActionMap.Interact.performed += HandleInteractInput;
         input.BaseActionMap.Jump.performed += HandleJumpInput;
         input.BaseActionMap.Attack.performed += HandleAttackInput;
-        
+        input.BaseActionMap.Dash.performed += HandleDashInput;
+
     }
+
+  
 
     private void OnDisable()
     {
         input.BaseActionMap.Interact.performed -= HandleInteractInput;
         input.BaseActionMap.Jump.performed -= HandleJumpInput;
         input.BaseActionMap.Attack.performed -= HandleAttackInput;
+        input.BaseActionMap.Dash.performed -= HandleDashInput;
     }
     private void HandleInteractInput(InputAction.CallbackContext context)
     {
         PlayerEvents.OnInteract();
+    }
+    private void HandleDashInput(InputAction.CallbackContext context)
+    {
+        PlayerEvents.OnDash();
     }
 
     private void HandleAttackInput(InputAction.CallbackContext context)

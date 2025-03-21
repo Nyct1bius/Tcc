@@ -31,7 +31,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""40fdabad-13a8-4120-a2f8-b0584e60487d"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -62,9 +62,29 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""09b8fece-248b-48a0-90f2-4c9d2c6db586"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0a86848e-7f2b-436b-9ffe-bf31d662ef99"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
                 {
                     ""name"": ""3D Vector"",
                     ""id"": ""77dead42-961f-428a-8902-5a1ffe022422"",
@@ -133,8 +153,30 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d675ee32-abd1-402c-bca6-6a55ed120fd4"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""be185a05-453f-4072-859a-30bccd9936ac"",
                     ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6f9e217-866d-4a13-b594-7b8df86f2612"",
+                    ""path"": ""<XInputController>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -152,6 +194,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc47096f-b93f-4942-8c74-2066d9826130"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +217,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_BaseActionMap_Jump = m_BaseActionMap.FindAction("Jump", throwIfNotFound: true);
         m_BaseActionMap_Attack = m_BaseActionMap.FindAction("Attack", throwIfNotFound: true);
         m_BaseActionMap_Interact = m_BaseActionMap.FindAction("Interact", throwIfNotFound: true);
+        m_BaseActionMap_Dash = m_BaseActionMap.FindAction("Dash", throwIfNotFound: true);
     }
 
     ~@PlayerInputs()
@@ -234,6 +288,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_BaseActionMap_Jump;
     private readonly InputAction m_BaseActionMap_Attack;
     private readonly InputAction m_BaseActionMap_Interact;
+    private readonly InputAction m_BaseActionMap_Dash;
     public struct BaseActionMapActions
     {
         private @PlayerInputs m_Wrapper;
@@ -242,6 +297,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_BaseActionMap_Jump;
         public InputAction @Attack => m_Wrapper.m_BaseActionMap_Attack;
         public InputAction @Interact => m_Wrapper.m_BaseActionMap_Interact;
+        public InputAction @Dash => m_Wrapper.m_BaseActionMap_Dash;
         public InputActionMap Get() { return m_Wrapper.m_BaseActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,6 +319,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IBaseActionMapActions instance)
@@ -279,6 +338,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IBaseActionMapActions instance)
@@ -302,5 +364,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }

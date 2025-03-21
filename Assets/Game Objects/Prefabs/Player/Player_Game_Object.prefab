@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4960947092266762759}
   - component: {fileID: 8413151897833958582}
   m_Layer: 3
-  m_Name: Player
+  m_Name: Player_Game_Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ Rigidbody:
   m_GameObject: {fileID: 1479004193044153031}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 0
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -229,9 +229,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &4960947092266762759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +249,12 @@ MonoBehaviour:
   statesController: {fileID: 8413151897833958582}
   animator: {fileID: 6371231654719870991}
   mainCameraRef: {fileID: 0}
+  acceleration: 5
+  jumpForce: 15
+  dashForce: 15
+  dashCooldownTime: 1
+  gravity: 0.2
+  groundDecay: 0.3
   idleState: {fileID: 2886000075692240883}
   walkState: {fileID: 4140540248808287525}
   jumpState: {fileID: 3148708264247230721}
@@ -315,9 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882e5f7bb48493f41bec5f7757f2b350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCameraRef: {fileID: 0}
-  acceleration: 1
-  maxSpeed: 3
 --- !u!1 &2293276670422402040
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +503,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3.17
+  m_Radius: 1.35
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8439383391159065291
 MonoBehaviour:
@@ -682,4 +685,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6012d389845239845a6a7884e36636c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10

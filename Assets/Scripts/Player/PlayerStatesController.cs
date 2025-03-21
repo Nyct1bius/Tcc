@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerStatesController : MonoBehaviour
 {
     private PlayerStates currentState;
+    private PlayerStates oldState;
     [SerializeField] private IdleState IdleState;
 
     private void Start()
@@ -23,6 +24,7 @@ public class PlayerStatesController : MonoBehaviour
     {
         currentState.Exit();
         currentState = newState;
+        currentState.Initialize();
         currentState.Enter();   
 
     }

@@ -16,5 +16,8 @@ public static class PlayerEvents
     public static event UnityAction Attack;
     public static void OnAttack() => Attack?.Invoke();
 
+    public static event UnityAction Dash;
+    public static void OnDash() => Dash?.Invoke();
+
 
 }
