@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerCombatManager : MonoBehaviour
 {
@@ -37,13 +38,13 @@ public class PlayerCombatManager : MonoBehaviour
     {
         if(hasSword && !attackIncooldown)
         {
-           StartCoroutine(SelectAttack());
+            attackIncooldown = true;
+            StartCoroutine(SelectAttack());
            attackCount++;
         }
     }
     private IEnumerator SelectAttack()
     {
-        yield return new WaitForSeconds(timeBetweenAttacks);
         Debug.Log("Attack" + attackCount);
         switch (attackCount)
         {
@@ -55,10 +56,11 @@ public class PlayerCombatManager : MonoBehaviour
                 break;
             case 2:
                 CheckAllNearbyColliders();
-                attackIncooldown = true;
                 StartCoroutine(ResetAttack());
                 break;
         }
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        attackIncooldown = false;
     }
 
     private IEnumerator ResetAttack()
@@ -76,7 +78,10 @@ public class PlayerCombatManager : MonoBehaviour
 
             if (Vector3.Dot(vectorToCollider, gameObject.transform.forward) > 0.5)
             {
-                DamageEnemy(enemy);
+                if (!HasWallInfront(enemy.transform))
+                {
+                    DamageEnemy(enemy);
+                }             
             }
         }
     }
@@ -87,7 +92,21 @@ public class PlayerCombatManager : MonoBehaviour
     }
 
 
+    private bool HasWallInfront(Transform enemyTransform)
+    {
+        Vector3 direction = (enemyTransform.position - transform.position).normalized;
+        Ray ray = new Ray(transform.position, direction);
 
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Debug.DrawLine(transform.position, hit.transform.position, Color.red, 1f);
+            if(hit.transform != enemyTransform)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     private void DamageEnemy(Collider enemy)
     {
         IHealth enemyHealth = enemy.GetComponent<IHealth>();
