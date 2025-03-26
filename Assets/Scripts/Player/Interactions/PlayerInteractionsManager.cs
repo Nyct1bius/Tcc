@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteractionsManager : MonoBehaviour
@@ -5,8 +6,15 @@ public class PlayerInteractionsManager : MonoBehaviour
     [SerializeField] private bool hasItemToInteract;
     [SerializeField] private GameObject uiPickUp;
     private IInteractable currentInteractable;
-    private Vector3 currentItemTransform;
+    private Transform currentItemTransform;
     private GameObject uiSpawned;
+
+
+    //Itens
+    private List<IInteractable> interactableItens = new List<IInteractable>();
+    private List<GameObject> uiSpawneds = new List<GameObject>();
+
+
     private void OnEnable()
     {
         PlayerEvents.Interact += HandleInteraction;
@@ -21,19 +29,33 @@ public class PlayerInteractionsManager : MonoBehaviour
         currentInteractable = other.GetComponent<IInteractable>();
         if (currentInteractable != null)
         {
-            currentItemTransform = other.transform.position;
+            currentItemTransform = other.transform;
+            Debug.Log(currentItemTransform.name);
             hasItemToInteract = true;
-            uiSpawned = Instantiate(uiPickUp, currentItemTransform + Vector3.up * 2, Quaternion.identity);
+            uiSpawned = Instantiate(uiPickUp,currentItemTransform.position + Vector3.up * 2, Quaternion.identity, currentItemTransform);
+            interactableItens.Add(currentInteractable);
+            uiSpawneds.Add(uiSpawned);
         }
         
 
     }
     private void OnTriggerExit(Collider other)
     {
-        if (currentInteractable != null)
+        if (interactableItens.Count != 0)
         {
-            Destroy(uiSpawned);
-            currentInteractable = null;
+            IInteractable exitItem = other.GetComponent<IInteractable>();
+            for (int i = 0; i < interactableItens.Count; i++)
+            {
+                if(exitItem == interactableItens[i])
+                {
+                    interactableItens.Remove(interactableItens[i]);
+                    Destroy(uiSpawneds[i]);
+
+                    uiSpawneds.RemoveAt(i);
+                }
+            
+            }
+
         }
     }
 
@@ -47,9 +69,11 @@ public class PlayerInteractionsManager : MonoBehaviour
 
         if (hasItemToInteract)
         {
-            currentInteractable.HasBeenPickedUp();
-            hasItemToInteract = false;
-            Destroy(uiSpawned);
+            for(int i = 0; i < interactableItens.Count; i++)
+            {
+                interactableItens[i].HasBeenPickedUp();
+                interactableItens.Remove(interactableItens[i]);
+            }
         }
     }
 
