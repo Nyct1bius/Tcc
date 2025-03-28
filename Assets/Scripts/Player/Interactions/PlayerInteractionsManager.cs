@@ -5,6 +5,7 @@ public class PlayerInteractionsManager : MonoBehaviour
 {
     [SerializeField] private bool hasItemToInteract;
     [SerializeField] private GameObject uiPickUp;
+    [SerializeField] private Notifier notifier;
     private IInteractable currentInteractable;
     private Transform currentItemTransform;
     private GameObject uiSpawned;
@@ -72,6 +73,7 @@ public class PlayerInteractionsManager : MonoBehaviour
             for(int i = 0; i < interactableItens.Count; i++)
             {
                 interactableItens[i].HasBeenPickedUp();
+                notifier.NotifyGreen("Collected" + interactableItens[i]);
                 interactableItens.Remove(interactableItens[i]);
             }
         }
