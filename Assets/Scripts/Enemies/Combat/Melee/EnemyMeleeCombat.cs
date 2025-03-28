@@ -18,9 +18,10 @@ public class EnemyMeleeCombat : MonoBehaviour
     private Renderer enemyRenderer;
 
 
-    private void Awake()
+    private void Start()
     {
-        playerXZ = new Vector3(player.transform.position.x, 1.25f, player.transform.position.z);
+        player = GameManager.instance.playerInstance;
+        playerXZ = new Vector3(player.transform.position.x, 0, player.transform.position.z);
 
         enemyRenderer = GetComponent<Renderer>();
         originalColor = enemyRenderer.material.color;

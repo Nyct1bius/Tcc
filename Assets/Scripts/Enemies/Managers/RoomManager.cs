@@ -16,13 +16,15 @@ public class RoomManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (GameManager.instance.playerInstance == other.gameObject)
         {
             foreach (GameObject enemy in MyEnemies)
             {
                 enemy.GetComponent<IdlePathfinding>().enabled = false;
                 enemy.GetComponent<EnemyMeleeCombat>().enabled = true;
             }
+
+            Debug.Log("Player found");
         }
     }
 

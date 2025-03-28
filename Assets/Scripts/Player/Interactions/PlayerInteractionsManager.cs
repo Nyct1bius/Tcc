@@ -73,7 +73,7 @@ public class PlayerInteractionsManager : MonoBehaviour
             for(int i = 0; i < interactableItens.Count; i++)
             {
                 interactableItens[i].HasBeenPickedUp();
-                notifier.NotifyGreen("Collected" + interactableItens[i]);
+                notifier.NotifyGreen("Collected: " + interactableItens[i]);
                 interactableItens.Remove(interactableItens[i]);
             }
         }

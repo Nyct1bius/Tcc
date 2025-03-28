@@ -530,7 +530,6 @@ GameObject:
   - component: {fileID: 6283407076924706174}
   - component: {fileID: 5151748939355105982}
   - component: {fileID: 3465247994873912816}
-  - component: {fileID: 2582457965494792520}
   - component: {fileID: 6371231654719870991}
   m_Layer: 3
   m_Name: Visual
@@ -609,29 +608,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2582457965494792520
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399042751538316424}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &6371231654719870991
 Animator:
   serializedVersion: 7
@@ -1368,6 +1344,7 @@ GameObject:
   - component: {fileID: 214729954821965475}
   - component: {fileID: 4960947092266762759}
   - component: {fileID: 8413151897833958582}
+  - component: {fileID: 7753109150640399014}
   m_Layer: 3
   m_Name: Player_Game_Object
   m_TagString: Untagged
@@ -1471,6 +1448,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdleState: {fileID: 2886000075692240883}
+--- !u!136 &7753109150640399014
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479004193044153031}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1481249423731595818
 GameObject:
   m_ObjectHideFlags: 0
@@ -4757,7 +4757,7 @@ MonoBehaviour:
     m_Bits: 256
   attackCollisionCheck: {fileID: 8789237998911698959}
   attackRange: 3
-  weaponDamage: 5
+  weaponDamage: 30
   swordVisual: {fileID: 4812415002625788980}
   attackIncooldown: 0
   timeToResetAttack: 0.5
