@@ -11,63 +11,65 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private Transform attackCollisionCheck;
     [SerializeField] private float attackRange;
     [SerializeField] private float weaponDamage;
+    [SerializeField] private GameObject swordVisual;
 
 
     //Combat variables
     private int attackCount;
-    private bool attackIncooldown;
+    [SerializeField] private bool attackIncooldown;
     private float timeBetweenAttacks = 0.2f;
     [SerializeField] private float timeToResetAttack = 0.5f;
     private void OnEnable()
     {
         PlayerEvents.Attack += PerformAttack;
-        PlayerEvents.SwordPickUp += CheckIfHasSword;
+        PlayerEvents.SwordPickUp += AddSword;
     }
     private void OnDisable()
     {
         PlayerEvents.Attack -= PerformAttack;
-        PlayerEvents.SwordPickUp -= CheckIfHasSword;
+        PlayerEvents.SwordPickUp -= AddSword;
     }
 
-    private void CheckIfHasSword()
+    private void AddSword()
     {
         hasSword = true;
+        swordVisual.SetActive(true);
     }
 
     private void PerformAttack()
     {
         if(hasSword && !attackIncooldown)
         {
-            attackIncooldown = true;
-            StartCoroutine(SelectAttack());
-           attackCount++;
+            SelectAttack();
+           attackIncooldown = true;
         }
     }
-    private IEnumerator SelectAttack()
+    private void SelectAttack()
     {
-        Debug.Log("Attack" + attackCount);
         switch (attackCount)
         {
             case 0:
                 CheckAllNearbyColliders();
+                attackCount++;
+                StartCoroutine(ResetAttack(timeBetweenAttacks));
                 break;
             case 1:
                 CheckAllNearbyColliders();
+                attackCount++;
+                StartCoroutine(ResetAttack(timeBetweenAttacks));
                 break;
             case 2:
                 CheckAllNearbyColliders();
-                StartCoroutine(ResetAttack());
+                attackCount = 0;
+                StartCoroutine(ResetAttack(timeToResetAttack));
                 break;
         }
-        yield return new WaitForSeconds(timeBetweenAttacks);
-        attackIncooldown = false;
     }
 
-    private IEnumerator ResetAttack()
+    private IEnumerator ResetAttack(float timeToReset)
     {
-        yield return new WaitForSeconds(timeToResetAttack);
+        yield return new WaitForSeconds(timeToReset);
         attackIncooldown = false;
-        attackCount = 0;
     }
     private void CheckAllNearbyColliders()
     {

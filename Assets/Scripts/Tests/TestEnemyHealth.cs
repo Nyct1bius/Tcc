@@ -23,7 +23,6 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
         if (!isImmortal)
         {
             currenthealth -= damage;
-            Debug.Log(transform.name + " " + currenthealth);
             isImmortal = true;
             StartCoroutine(Immortal());
 
