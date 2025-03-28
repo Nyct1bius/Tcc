@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody body;
     [SerializeField] private PlayerStatesController statesController;
     public Animator animator;
-    [SerializeField] private Transform mainCameraRef;
+    private Camera mainCameraRef;
 
 
     //Inputs
@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         idleState.Setup(body, animator,this);
         walkState.Setup(body, animator, this);
         jumpState.Setup(body, animator, this);
+        mainCameraRef = Camera.main;
     }
     private void OnEnable()
     {
@@ -145,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(inputManager.InputDirection() != Vector3.zero)
         {
-            targetAngle = Mathf.Atan2(xInput, yInput) * Mathf.Rad2Deg + mainCameraRef.eulerAngles.y;
+            targetAngle = Mathf.Atan2(xInput, yInput) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
             angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }

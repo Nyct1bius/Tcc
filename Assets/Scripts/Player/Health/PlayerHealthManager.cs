@@ -3,15 +3,9 @@ using UnityEngine.UI;
 
 public class PlayerHealthManager : MonoBehaviour,IHealth
 {
-    [SerializeField] private float maxHealth;
     [SerializeField] private PlayerUIManager playerUIManager;
-    private float currentHealth;
+    [SerializeField] private PlayerStatsSO stats;
 
-
-    private void Start()
-    {
-        currentHealth = maxHealth;
-    }
 
     public void Death()
     {
@@ -20,7 +14,7 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
 
     public void HealHealth(float healing)
     {
-        currentHealth += healing;
+        stats.currentHealth += healing;
     }
 
     public void TakeDamage(float damage)
@@ -32,8 +26,8 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
 
         Debug.Log("Took damage");
 
-        currentHealth -= damage;
-        playerUIManager.AtualizePlayerHealthUI(maxHealth, currentHealth);
+        stats.currentHealth -= damage;
+        playerUIManager.AtualizePlayerHealthUI();
     }
 
 }

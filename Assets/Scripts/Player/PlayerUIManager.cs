@@ -5,14 +5,14 @@ using UnityEngine.UI;
 public class PlayerUIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI healthText;
-   
+    [SerializeField] private PlayerStatsSO stats;
     [SerializeField] private Slider healthSlider;
 
 
-    public void AtualizePlayerHealthUI(float maxHealth, float currentHealth)
+    public void AtualizePlayerHealthUI()
     {
-        healthText.text = currentHealth.ToString() + "/" + maxHealth.ToString();
+        healthText.text = stats.currentHealth.ToString() + "/" + stats.maxHealth.ToString();
 
-        healthSlider.value = currentHealth;
+        healthSlider.value = stats.currentHealth;
     }
 }

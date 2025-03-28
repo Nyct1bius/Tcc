@@ -11,7 +11,6 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         input = new PlayerInputs();
-        input.BaseActionMap.Enable();
         if(Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -21,6 +20,7 @@ public class InputManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        input.BaseActionMap.Enable();
         input.BaseActionMap.Interact.performed += HandleInteractInput;
         input.BaseActionMap.Jump.performed += HandleJumpInput;
         input.BaseActionMap.Attack.performed += HandleAttackInput;
@@ -32,6 +32,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDisable()
     {
+        input.BaseActionMap.Disable();
         input.BaseActionMap.Interact.performed -= HandleInteractInput;
         input.BaseActionMap.Jump.performed -= HandleJumpInput;
         input.BaseActionMap.Attack.performed -= HandleAttackInput;
