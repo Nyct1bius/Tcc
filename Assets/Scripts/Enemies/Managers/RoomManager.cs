@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public List<GameObject> MyEnemies;
+    [SerializeField] private Door door;
 
     private void Update()
     {
@@ -31,5 +32,9 @@ public class RoomManager : MonoBehaviour
     public void RemoveEnemyFromList(GameObject enemy)
     {
         MyEnemies.Remove(enemy);
+        if (MyEnemies.Count == 0)
+        {
+            door.OpenDoor();
+        }
     }
 }

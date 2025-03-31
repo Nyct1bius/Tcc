@@ -16,6 +16,10 @@ public class PlayerInteractionsManager : MonoBehaviour
     private List<GameObject> uiSpawneds = new List<GameObject>();
 
 
+    //CheckPoint
+    private CheckPoint checkPoint;
+
+
     private void OnEnable()
     {
         PlayerEvents.Interact += HandleInteraction;
@@ -31,36 +35,50 @@ public class PlayerInteractionsManager : MonoBehaviour
         if (currentInteractable != null)
         {
             currentItemTransform = other.transform;
-            Debug.Log(currentItemTransform.name);
-            hasItemToInteract = true;
-            uiSpawned = Instantiate(uiPickUp,currentItemTransform.position + Vector3.up * 2, Quaternion.identity, currentItemTransform);
-            interactableItens.Add(currentInteractable);
-            uiSpawneds.Add(uiSpawned);
+            SetupItensToInteract();
+        }
+
+        checkPoint = other.GetComponent<CheckPoint>();
+        if(checkPoint!= null)
+        {
+            checkPoint.SetupCheckpoint();
         }
         
 
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (interactableItens.Count != 0)
         {
             IInteractable exitItem = other.GetComponent<IInteractable>();
-            for (int i = 0; i < interactableItens.Count; i++)
-            {
-                if(exitItem == interactableItens[i])
-                {
-                    interactableItens.Remove(interactableItens[i]);
-                    Destroy(uiSpawneds[i]);
+           CleanListOfItens(exitItem);
+        }
+    }
 
-                    uiSpawneds.RemoveAt(i);
-                }
-            
+    private void CleanListOfItens(IInteractable exitItem)
+    {
+        for (int i = 0; i < interactableItens.Count; i++)
+        {
+            if (exitItem == interactableItens[i])
+            {
+                interactableItens.Remove(interactableItens[i]);
+                Destroy(uiSpawneds[i]);
+
+                uiSpawneds.RemoveAt(i);
             }
 
         }
     }
 
-
+    private void SetupItensToInteract()
+    {
+        Debug.Log(currentItemTransform.name);
+        hasItemToInteract = true;
+        uiSpawned = Instantiate(uiPickUp, currentItemTransform.position + Vector3.up * 2, Quaternion.identity, currentItemTransform);
+        interactableItens.Add(currentInteractable);
+        uiSpawneds.Add(uiSpawned);
+    }
 
 
 

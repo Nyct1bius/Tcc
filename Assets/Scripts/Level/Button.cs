@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Button : MonoBehaviour,IHealth
 {
-    private bool isActivated;
+    [SerializeField] private bool isActivated;
     [SerializeField] Door doorToOpen;
     [SerializeField] private Material newMat;
     private MeshRenderer meshRenderer;

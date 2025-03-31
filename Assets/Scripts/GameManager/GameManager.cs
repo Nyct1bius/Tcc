@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private CinemachineCamera cnCamera;
     [SerializeField] private Camera minimapCamera;
+    public Transform checkPoint;
+
+
+
 
     public GameObject playerInstance { get; private set; }
     
@@ -61,7 +65,15 @@ public class GameManager : MonoBehaviour
         camera.Follow = playerInstance.transform;
         camera.LookAt = playerInstance.transform;
 
+        checkPoint = spawnPoint;
+
         currentState = GameplayStates.Playing;
+    }
+
+
+    public void RespawnPlayer()
+    {
+        playerInstance.transform.position = checkPoint.position;
     }
 
 }

@@ -3,14 +3,26 @@ using UnityEngine;
 
 public class MovablePlataformOcean : MonoBehaviour
 {
-     private Vector3 upPositionPosition;
+     private Vector3 startPosition;
     [SerializeField] private float movePlataformTime = 2f;
-    [SerializeField] private Vector3 downPosition;
+    [SerializeField] private Transform downPosition;
+    [SerializeField] private float timeBetweenStates;
     private float t;
+
+
+    private enum OceanStates
+    {
+        down,
+        up
+    }
+    [SerializeField] private OceanStates state;
+
+
     private void Start()
     {
-        downPosition -= transform.position;
-        upPositionPosition = transform.position;
+        downPosition.position -= transform.position;
+        startPosition = transform.position;
+        StartCoroutine(ChangeState());
     }
     private void OnEnable()
     {
@@ -26,12 +38,12 @@ public class MovablePlataformOcean : MonoBehaviour
 
     private void MoveDown()
     {
-        StartCoroutine(MovePlataform(downPosition));
+        StartCoroutine(MovePlataform(downPosition.position));
     }
 
     private void MoveUp()
     {
-        StartCoroutine(MovePlataform(upPositionPosition));
+        StartCoroutine(MovePlataform(startPosition));
     }
 
 
@@ -45,6 +57,23 @@ public class MovablePlataformOcean : MonoBehaviour
             transform.position = Vector3.Lerp(startPosition, targetPosition, t);
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
+        }
+        transform.position = targetPosition;
+        StartCoroutine(ChangeState());
+    }
+
+    IEnumerator ChangeState()
+    {
+        yield return new WaitForSeconds(timeBetweenStates);
+        if (state == OceanStates.down)
+        {
+            MoveUp();
+            state = OceanStates.up;
+        }
+        else
+        {
+           MoveDown();
+           state = OceanStates.down;
         }
     }
 }

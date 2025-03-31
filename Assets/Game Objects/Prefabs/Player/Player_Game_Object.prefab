@@ -1345,6 +1345,7 @@ GameObject:
   - component: {fileID: 4960947092266762759}
   - component: {fileID: 8413151897833958582}
   - component: {fileID: 7753109150640399014}
+  - component: {fileID: 5923956784815927567}
   m_Layer: 3
   m_Name: Player_Game_Object
   m_TagString: Untagged
@@ -1374,7 +1375,6 @@ Transform:
   - {fileID: 8789237998911698959}
   - {fileID: 5372033998844949420}
   - {fileID: 4979567979529115642}
-  - {fileID: 3897547886251455352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &214729954821965475
@@ -1471,6 +1471,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5923956784815927567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479004193044153031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73514c189bbc1f441b8109d8a226bed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerUIManager: {fileID: 2608459011676336727}
+  stats: {fileID: 11400000, guid: fd92c0ac67ed7e74699d100ad81051f8, type: 2}
 --- !u!1 &1481249423731595818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3435,6 +3449,9 @@ MonoBehaviour:
   hasItemToInteract: 0
   uiPickUp: {fileID: 4884220181051483280, guid: 7694575884dc1814e9445b0a5eabaedc, type: 3}
   notifier: {fileID: 9000467174429766338}
+  checkPointLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &3255077566269589856
 GameObject:
   m_ObjectHideFlags: 0
@@ -3783,52 +3800,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &3494753522434710498
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3897547886251455352}
-  - component: {fileID: 5294061703158939863}
-  m_Layer: 3
-  m_Name: HealthManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3897547886251455352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3494753522434710498}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8918552513360700576}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5294061703158939863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3494753522434710498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73514c189bbc1f441b8109d8a226bed4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerUIManager: {fileID: 2608459011676336727}
-  stats: {fileID: 11400000, guid: fd92c0ac67ed7e74699d100ad81051f8, type: 2}
 --- !u!1 &3564184197499114471
 GameObject:
   m_ObjectHideFlags: 0

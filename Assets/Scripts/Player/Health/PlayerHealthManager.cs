@@ -1,4 +1,4 @@
- using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealthManager : MonoBehaviour,IHealth
@@ -6,10 +6,16 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
     [SerializeField] private PlayerUIManager playerUIManager;
     [SerializeField] private PlayerStatsSO stats;
 
-
+    private void Awake()
+    {
+        stats.currentHealth = stats.maxHealth;
+        playerUIManager.AtualizePlayerHealthUI();
+    }
     public void Death()
     {
-        throw new System.NotImplementedException();
+        GameManager.instance.RespawnPlayer();
+        stats.currentHealth = stats.maxHealth;
+        playerUIManager.AtualizePlayerHealthUI();
     }
 
     public void HealHealth(float healing)
@@ -18,16 +24,16 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
     }
 
     public void TakeDamage(float damage)
-    {
-        //if(currentHealth >= 0)
-        //{
-        //    Death();
-        //}
 
+    {
         Debug.Log("Took damage");
 
         stats.currentHealth -= damage;
         playerUIManager.AtualizePlayerHealthUI();
+        if(stats.currentHealth <= 0)
+        {
+            Death();
+        }
     }
 
 }
