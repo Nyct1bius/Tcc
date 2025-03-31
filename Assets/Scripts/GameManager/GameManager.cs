@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private CinemachineCamera cnCamera;
     [SerializeField] private Camera minimapCamera;
+    private CinemachineCamera cameraRef;
     public Transform checkPoint;
 
 
@@ -59,11 +61,11 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayer(Transform spawnPoint)
     {
         playerInstance = Instantiate(playerObj, spawnPoint.position , spawnPoint.rotation);
-        CinemachineCamera camera = Instantiate(cnCamera, spawnPoint.position, Quaternion.identity);
+        cameraRef = Instantiate(cnCamera, spawnPoint.position, Quaternion.identity);
         Instantiate(minimapCamera);
 
-        camera.Follow = playerInstance.transform;
-        camera.LookAt = playerInstance.transform;
+        cameraRef.Follow = playerInstance.transform;
+        cameraRef.LookAt = playerInstance.transform;
 
         checkPoint = spawnPoint;
 
@@ -73,7 +75,20 @@ public class GameManager : MonoBehaviour
 
     public void RespawnPlayer()
     {
+       StartCoroutine(RespawningPlayer());
+    }
+
+
+    IEnumerator RespawningPlayer()
+    {
+        cameraRef.Follow = null;
+        yield return new WaitForSeconds(3f);
+        Destroy(cameraRef);
         playerInstance.transform.position = checkPoint.position;
+        yield return new WaitForSeconds(1f);
+        cameraRef = cameraRef = Instantiate(cnCamera, playerInstance.transform.position, Quaternion.identity);
+        cameraRef.Follow = playerInstance.transform;
+        cameraRef.LookAt = playerInstance.transform;
     }
 
 }
