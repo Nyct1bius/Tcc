@@ -57,9 +57,9 @@ public class InputManager : MonoBehaviour
         PlayerEvents.OnJump();
     }
 
-    public Vector3 InputDirection()
+    public Vector2 InputDirection()
     {
-        direction = input.BaseActionMap.Move.ReadValue<Vector3>();
+        direction = input.BaseActionMap.Move.ReadValue<Vector2>();
         direction = direction.normalized;
         return direction;
     }

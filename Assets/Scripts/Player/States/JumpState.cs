@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class JumpState : PlayerStates
 {
-    public override void Enter() 
+    [SerializeField] AnimationClip jumpAnimation;
+    public override void Enter()
     {
-
+        animator.Play(jumpAnimation.name);
     }
 
     public override void Do() 
