@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Componets")]
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private Rigidbody body;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private PlayerStatesController statesController;
     [SerializeField] private Transform playerVisualTransform;
@@ -19,9 +20,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currrentMovementInput;
 
     [Header("Movement")]
-    [Range(0f, 100f)]
+    [Range(0f, 50f)]
     [SerializeField] private float walkAcceleration;
-    [Range(0f, 100f)]
+    [Range(0f, 10f)]
     [SerializeField] private float maxWalkSpeed;
     private Vector3 horizontalVelocity;
     private float verticalVelocity;
@@ -36,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight;
     [SerializeField] private float maxJumpTime;
     private float jumpVelocity;
+    private bool isJumping;
+    private bool isButtonPressed;
+    private float buttonPressedTime;
 
 
     [Header("Dash")]
@@ -99,7 +103,8 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleHorizontalMovement();
         ApplyFinalVelocity();
-        GetGravity();
+        CheckIfStillJumping();
+        ApplyGravity();
     }
 
     private void CheckInputs()
@@ -145,29 +150,44 @@ public class PlayerMovement : MonoBehaviour
     private void SetUpJumpVariables()
     {
         float jumpTimeToPeak = maxJumpTime / 2f;
-        jumpVelocity = 2f * jumpHeight / jumpTimeToPeak;
+        jumpVelocity = MathF.Sqrt(jumpHeight * gravity * -2) * body.mass;
     }
-    private void HandleJump()
+    private void HandleJump(bool isJumpButtonPressed)
     {
-        if (IsGrounded())
+        Debug.Log(isJumpButtonPressed);
+        isButtonPressed = isJumpButtonPressed;
+        if (IsGrounded() && isJumpButtonPressed)
         {
-            verticalVelocity = jumpVelocity;
+            body.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            buttonPressedTime = 0;
+            isJumping = true;
         }
-        if (moveDirection != Vector3.zero)
+
+    }
+    private void CheckIfStillJumping()
+    {
+        if (isJumping)
         {
-            horizontalVelocity = moveDirection.normalized * walkAcceleration * Time.deltaTime;
+            buttonPressedTime += Time.deltaTime;
+
+            if (buttonPressedTime < maxJumpTime && !isButtonPressed)
+            {
+                CancelJump();
+            }
+
         }
-        else
-        {
-            horizontalVelocity = transform.forward * walkAcceleration * Time.deltaTime;
-        }
+
+    }
+    private void CancelJump()
+    {
+        body.AddForce(Vector3.up * gravity, ForceMode.Force);
     }
     private void ApplyFinalVelocity()
     {
         newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity , horizontalVelocity.z);
         ApplyFriction();
-        characterController.Move(newVelocity * Time.deltaTime);
-        GetGravity();
+        body.AddForce(newVelocity,ForceMode.VelocityChange);
+        ApplyGravity();
     }
     private void HandleDash()
     {
@@ -199,21 +219,29 @@ public class PlayerMovement : MonoBehaviour
         if(inputManager.InputDirection() != Vector2.zero)
         {
             targetAngle = Mathf.Atan2(currrentMovementInput.x, currrentMovementInput.z) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
-            angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
            
     }
 
-    private void GetGravity()
+    public void MovePlayerToAPoint(Vector3 movePosition)
     {
-        if (!IsGrounded())
+        horizontalVelocity = movePosition;
+        verticalVelocity = movePosition.y;
+    }
+
+    private void ApplyGravity()
+    {
+        if (body.linearVelocity.y > 0)
         {
-            verticalVelocity += gravity * Time.deltaTime;
+            body.AddForce(Vector3.up * -0.1f, ForceMode.Force);
+
         }
-        else 
+        else if(!IsGrounded())
         {
-            verticalVelocity = -2f;
+            isJumping = false;
+            body.AddForce(Vector3.up * gravity, ForceMode.Force);
         }
 
     }

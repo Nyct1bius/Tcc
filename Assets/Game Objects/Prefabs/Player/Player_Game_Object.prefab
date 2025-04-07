@@ -1937,10 +1937,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8918552513360700576}
-  - component: {fileID: 8206816815389473791}
+  - component: {fileID: 3422465072937968406}
   - component: {fileID: 4960947092266762759}
   - component: {fileID: 8413151897833958582}
   - component: {fileID: 5923956784815927567}
+  - component: {fileID: 4180338343420396380}
   m_Layer: 3
   m_Name: Player_Game_Object
   m_TagString: Player
@@ -1972,31 +1973,33 @@ Transform:
   - {fileID: 4979567979529115642}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &8206816815389473791
-CharacterController:
+--- !u!54 &3422465072937968406
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479004193044153031}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 5
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.12, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &4960947092266762759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2010,17 +2013,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 8558301507294174358}
-  characterController: {fileID: 8206816815389473791}
+  body: {fileID: 3422465072937968406}
+  characterController: {fileID: 0}
   statesController: {fileID: 8413151897833958582}
   playerVisualTransform: {fileID: 267607609003095408}
   animator: {fileID: 4133485285549614538}
-  walkAcceleration: 50
-  maxWalkSpeed: 8
-  jumpHeight: 1
-  maxJumpTime: 0.2
+  walkAcceleration: 15
+  maxWalkSpeed: 1.5
+  jumpHeight: 15
+  maxJumpTime: 1
   dashForce: 15
   dashCooldownTime: 1
-  gravity: -20
+  gravity: -50
   groundDecay: 30
   idleState: {fileID: 2886000075692240883}
   walkState: {fileID: 4140540248808287525}
@@ -2058,6 +2062,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerUIManager: {fileID: 2608459011676336727}
   stats: {fileID: 11400000, guid: fd92c0ac67ed7e74699d100ad81051f8, type: 2}
+--- !u!136 &4180338343420396380
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479004193044153031}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.18, z: 0}
 --- !u!1 &1481249423731595818
 GameObject:
   m_ObjectHideFlags: 0
@@ -11743,13 +11770,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftHandThumb1'\n\tTransform
-    'mixamorig:Neck'\n\tTransform 'mixamorig:Head'\n\tTransform 'mixamorig:RightFoot'\n\tTransform
-    'mixamorig:LeftLeg'\n\tTransform 'mixamorig:RightShoulder'\n\tTransform 'mixamorig:Spine'\n\tTransform
-    'mixamorig:LeftHandMiddle3'\n\tTransform 'mixamorig:RightForeArm'\n\tand more
-    ...\n\tFrom animation clip 'Jump'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -12691,7 +12712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6012d389845239845a6a7884e36636c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpAnimation: {fileID: 7400000, guid: e7fa3aa78b48c584fbee583a7c532655, type: 2}
+  jumpAnimation: {fileID: -203655887218126122, guid: ed12f7c9808e48b46a52eef9e11bd436, type: 3}
 --- !u!1 &7517400204046116662
 GameObject:
   m_ObjectHideFlags: 0

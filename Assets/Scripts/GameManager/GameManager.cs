@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         cameraRef.Follow = null;
         yield return new WaitForSeconds(3f);
         Destroy(cameraRef);
-        playerInstance.transform.position = checkPoint.position;
+        playerInstance.GetComponent<PlayerMovement>().MovePlayerToAPoint(checkPoint.position);
         yield return new WaitForSeconds(1f);
         cameraRef = cameraRef = Instantiate(cnCamera, playerInstance.transform.position, Quaternion.identity);
         cameraRef.Follow = playerInstance.transform;

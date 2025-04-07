@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 public static class PlayerEvents
 {
-    public static event UnityAction Jump;
-    public static void OnJump() => Jump?.Invoke();
+    public static event UnityAction<bool> Jump;
+    public static void OnJump(bool isJumpButtonPressed) => Jump?.Invoke(isJumpButtonPressed);
 
     public static event UnityAction Interact;
     public static void OnInteract() => Interact?.Invoke();

@@ -23,6 +23,7 @@ public class InputManager : MonoBehaviour
         input.BaseActionMap.Enable();
         input.BaseActionMap.Interact.performed += HandleInteractInput;
         input.BaseActionMap.Jump.performed += HandleJumpInput;
+        input.BaseActionMap.Jump.canceled += HandleJumpInput;
         input.BaseActionMap.Attack.performed += HandleAttackInput;
         input.BaseActionMap.Dash.performed += HandleDashInput;
 
@@ -35,6 +36,7 @@ public class InputManager : MonoBehaviour
         input.BaseActionMap.Disable();
         input.BaseActionMap.Interact.performed -= HandleInteractInput;
         input.BaseActionMap.Jump.performed -= HandleJumpInput;
+        input.BaseActionMap.Jump.canceled -= HandleJumpInput;
         input.BaseActionMap.Attack.performed -= HandleAttackInput;
         input.BaseActionMap.Dash.performed -= HandleDashInput;
     }
@@ -53,8 +55,8 @@ public class InputManager : MonoBehaviour
     }
 
     public void HandleJumpInput(InputAction.CallbackContext context)
-    {
-        PlayerEvents.OnJump();
+    {           
+        PlayerEvents.OnJump(input.BaseActionMap.Jump.triggered);              
     }
 
     public Vector2 InputDirection()
