@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private CinemachineCamera cnCamera;
     [SerializeField] private Camera minimapCamera;
-    private CinemachineCamera cameraRef;
+    private CinemachineCamera cnCameraRef;
+    private CinemachineCamera oldCnCameraRef;
     public Transform checkPoint;
 
 
@@ -61,11 +62,11 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayer(Transform spawnPoint)
     {
         playerInstance = Instantiate(playerObj, spawnPoint.position , spawnPoint.rotation);
-        cameraRef = Instantiate(cnCamera, spawnPoint.position, Quaternion.identity);
+        cnCameraRef = Instantiate(cnCamera, spawnPoint.position, Quaternion.identity);
         Instantiate(minimapCamera);
 
-        cameraRef.Follow = playerInstance.transform;
-        cameraRef.LookAt = playerInstance.transform;
+        cnCameraRef.Follow = playerInstance.transform;
+        cnCameraRef.LookAt = playerInstance.transform;
 
         checkPoint = spawnPoint;
 
@@ -81,14 +82,19 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RespawningPlayer()
     {
-        cameraRef.Follow = null;
+        cnCameraRef.Follow = null;
+        cnCameraRef.LookAt = null;
         yield return new WaitForSeconds(3f);
-        Destroy(cameraRef);
-        playerInstance.GetComponent<PlayerMovement>().MovePlayerToAPoint(checkPoint.position);
+        playerInstance.transform.position = checkPoint.position;
+        oldCnCameraRef = cnCameraRef;
+        oldCnCameraRef.Priority = 0;
         yield return new WaitForSeconds(1f);
-        cameraRef = cameraRef = Instantiate(cnCamera, playerInstance.transform.position, Quaternion.identity);
-        cameraRef.Follow = playerInstance.transform;
-        cameraRef.LookAt = playerInstance.transform;
+        cnCameraRef = Instantiate(cnCamera, playerInstance.transform.position, Quaternion.identity);
+        cnCamera.Priority = 1;
+        cnCameraRef.Follow = playerInstance.transform;
+        cnCameraRef.LookAt = playerInstance.transform;
+        yield return new WaitForSeconds(2f);
+        Destroy(oldCnCameraRef);
     }
 
 }
