@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class IdleState : PlayerStates
 {
-    public override void Enter() 
+    [SerializeField] AnimationClip idleAnimation;
+    public override void Enter()
     {
-       
+        animator.Play(idleAnimation.name);
     }
-
     public override void Do() { }
 
     public override void FixedDo() { }

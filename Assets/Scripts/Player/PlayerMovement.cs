@@ -8,30 +8,48 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Componets")]
     [SerializeField] private InputManager inputManager;
-    [SerializeField] private Rigidbody body;
+    [SerializeField] private CharacterController characterController;
     [SerializeField] private PlayerStatesController statesController;
+    [SerializeField] private Transform playerVisualTransform;
     public Animator animator;
     private Camera mainCameraRef;
-
+    private Vector3 playerVisualDefaultPos;
 
     //Inputs
-    float xInput;
-    float yInput;
+    Vector3 currrentMovementInput;
 
     [Header("Movement")]
-    [SerializeField] private float acceleration;
-    [SerializeField] private float jumpForce;
-    Vector3 moveDirection;
+    [Range(0f, 100f)]
+    [SerializeField] private float walkAcceleration;
+    [Range(0f, 100f)]
+    [SerializeField] private float maxWalkSpeed;
+    private Vector3 horizontalVelocity;
+    private float verticalVelocity;
+    private Vector3 cameraFowardXZ;
+    private Vector3 cameRightXZ;
+    private Vector3 moveDirection;
+    private Vector3 movementDelta;
+    private Vector3 newVelocity;
+
+
+    [Header("Jump")]
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float maxJumpTime;
+    private float jumpVelocity;
+
+
     [Header("Dash")]
     [SerializeField] private float dashForce;
     [SerializeField] private float dashCooldownTime;
     private bool dashInCooldown;
 
     [Header("Physics")]
-    [Range(0f, 1f)]
+    [Range(0f, -50f)]
     [SerializeField] private float gravity;
-    [Range(0f, 1f)]
+    [Range(0f, 100f)]
     [SerializeField] private float groundDecay;
+
+
     [Header("States")]
     [SerializeField] private IdleState idleState;
     [SerializeField] private WalkState walkState;
@@ -50,10 +68,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        idleState.Setup(body, animator,this);
-        walkState.Setup(body, animator, this);
-        jumpState.Setup(body, animator, this);
+        idleState.Setup(animator,this);
+        walkState.Setup(animator, this);
+        jumpState.Setup(animator, this);
         mainCameraRef = Camera.main;
+        playerVisualDefaultPos = playerVisualTransform.localPosition;
+        SetUpJumpVariables();
     }
     private void OnEnable()
     {
@@ -67,30 +87,31 @@ public class PlayerMovement : MonoBehaviour
         PlayerEvents.Jump -= HandleJump;
         PlayerEvents.Dash -= HandleDash;
     }
-
+  
     private void Update()
     {
+        playerVisualTransform.localPosition = playerVisualDefaultPos;
         CheckInputs();
         SelectState();
         FaceInput();
     }
     private void FixedUpdate()
     {
-        HandleMovement();
-        ApplyFriction();
-        ApplyGravity();
+        HandleHorizontalMovement();
+        ApplyFinalVelocity();
+        GetGravity();
     }
 
     private void CheckInputs()
     {
-        xInput = inputManager.InputDirection().x;
-        yInput = inputManager.InputDirection().z;
+        currrentMovementInput.x = inputManager.InputDirection().x;
+        currrentMovementInput.z = inputManager.InputDirection().y;
     }
     private void SelectState()
     {
-        if (Grounded())
+        if (IsGrounded())
         {
-            if (inputManager.InputDirection() == Vector3.zero)
+            if (inputManager.InputDirection() == Vector2.zero)
             {
                 statesController.ChangePlayerState(idleState);
             }
@@ -98,32 +119,63 @@ public class PlayerMovement : MonoBehaviour
             {
                 statesController.ChangePlayerState(walkState);
             }
-        }    
-    }
-    private void HandleMovement()
-    {
-        if (inputManager.InputDirection() != Vector3.zero)
-        {
-            moveDirection = mainCameraRef.transform.forward * yInput + mainCameraRef.transform.right * xInput;
-            moveDirection = new Vector3(moveDirection.x * acceleration, body.linearVelocity.y, moveDirection.z * acceleration);
-            body.linearVelocity = moveDirection;
         }
-    }
-    private void HandleJump()
-    {
-        if (Grounded())
+        else
         {
-            body.linearVelocity = Vector3.up * jumpForce;
             statesController.ChangePlayerState(jumpState);
         }
     }
+    private void HandleHorizontalMovement()
+    {
+        if (inputManager.InputDirection() != Vector2.zero)
+        {
+            cameraFowardXZ = new Vector3(mainCameraRef.transform.forward.x, 0, mainCameraRef.transform.forward.z).normalized;
+            cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
+            moveDirection = cameRightXZ * currrentMovementInput.x + cameraFowardXZ * currrentMovementInput.z;
 
+            movementDelta = moveDirection * walkAcceleration * Time.deltaTime;
+            horizontalVelocity += movementDelta;
+            horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxWalkSpeed);
+        }
+        else if (IsGrounded())
+        {
+            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, groundDecay * Time.deltaTime);
+        }
+    }
+    private void SetUpJumpVariables()
+    {
+        float jumpTimeToPeak = maxJumpTime / 2f;
+        jumpVelocity = 2f * jumpHeight / jumpTimeToPeak;
+    }
+    private void HandleJump()
+    {
+        if (IsGrounded())
+        {
+            verticalVelocity = jumpVelocity;
+        }
+        if (moveDirection != Vector3.zero)
+        {
+            horizontalVelocity = moveDirection.normalized * walkAcceleration * Time.deltaTime;
+        }
+        else
+        {
+            horizontalVelocity = transform.forward * walkAcceleration * Time.deltaTime;
+        }
+    }
+    private void ApplyFinalVelocity()
+    {
+        newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity , horizontalVelocity.z);
+        ApplyFriction();
+        characterController.Move(newVelocity * Time.deltaTime);
+        GetGravity();
+    }
     private void HandleDash()
     {
         if (!dashInCooldown)
         {
             Debug.Log("dashed");
-            body.AddForce(moveDirection * dashForce, ForceMode.Impulse);
+            Vector3 dashDir = moveDirection == Vector3.zero ? transform.forward : moveDirection;
+            horizontalVelocity += dashDir.normalized * dashForce;
             dashInCooldown = true;
             StartCoroutine(DashCoolingdown());
         }
@@ -137,35 +189,46 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    public bool Grounded()
+    public bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundMask);
     }
 
     private void FaceInput()
     {
-        if(inputManager.InputDirection() != Vector3.zero)
+        if(inputManager.InputDirection() != Vector2.zero)
         {
-            targetAngle = Mathf.Atan2(xInput, yInput) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
+            targetAngle = Mathf.Atan2(currrentMovementInput.x, currrentMovementInput.z) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
             angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
            
     }
 
-    private void ApplyGravity()
+    private void GetGravity()
     {
-        if (!Grounded())
+        if (!IsGrounded())
         {
-            body.linearVelocity -= Vector3.up * gravity;    
+            verticalVelocity += gravity * Time.deltaTime;
         }
+        else 
+        {
+            verticalVelocity = -2f;
+        }
+
     }
 
     private void ApplyFriction()
     {
-        if (Grounded() && xInput == 0 && yInput == 0 && body.linearVelocity.y <= 0)
+       Vector3 currentDrag = newVelocity.normalized * groundDecay * Time.deltaTime;
+
+        if(newVelocity.magnitude > groundDecay * Time.deltaTime)
         {
-            body.linearVelocity *= groundDecay;
+            newVelocity -= currentDrag;
+        }
+        else
+        {
+            newVelocity = Vector3.zero;
         }
     }
 

@@ -5,19 +5,18 @@ using UnityEngine.Windows;
 public class WalkState : PlayerStates
 {
     float xVel;
-    Animator anim;
+    [SerializeField] AnimationClip walkAnimation;
     public override void Enter()
     {
-        anim = inputs.animator;
-        //anim.Play("Run");
+        animator.Play(walkAnimation.name);
     }
     public override void Do()
     {
-        xVel = body.linearVelocity.x;
-        if (inputs.Grounded() || MathF.Abs(xVel) < 0.1f)
-        {
-            isComplete = true;
-        }
+        //xVel = body.linearVelocity.x;
+        //if (inputs.Grounded() || MathF.Abs(xVel) < 0.1f)
+        //{
+        //    isComplete = true;
+        //}
     }
 
     public override void Exit() { }

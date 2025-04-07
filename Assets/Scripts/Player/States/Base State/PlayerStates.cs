@@ -21,9 +21,8 @@ public abstract class PlayerStates : MonoBehaviour
             
     public virtual void Exit() { }
 
-    public virtual void Setup(Rigidbody _body, Animator _animator, PlayerMovement _inputs) 
+    public virtual void Setup(Animator _animator, PlayerMovement _inputs) 
     {
-        body = _body;
         animator = _animator;
         inputs = _inputs;
     

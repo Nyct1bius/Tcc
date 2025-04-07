@@ -20,7 +20,7 @@ public class MovablePlataformOcean : MonoBehaviour
 
     private void Start()
     {
-        downPosition.position -= transform.position;
+        //downPosition.position -= transform.position;
         startPosition = transform.position;
         StartCoroutine(ChangeState());
     }
