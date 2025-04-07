@@ -8,11 +8,12 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Componets")]
     [SerializeField] private InputManager inputManager;
-    private CharacterController characterController;
+    [SerializeField] private CharacterController characterController;
     [SerializeField] private PlayerStatesController statesController;
+    [SerializeField] private Transform playerVisualTransform;
     public Animator animator;
     private Camera mainCameraRef;
-
+    private Vector3 playerVisualDefaultPos;
 
     //Inputs
     Vector3 currrentMovementInput;
@@ -22,15 +23,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float walkAcceleration;
     [Range(0f, 100f)]
     [SerializeField] private float maxWalkSpeed;
-    [SerializeField] private float jumpForce;
-    Vector3 cameraFowardXZ;
-    Vector3 cameRightXZ;
-    Vector3 moveDirection;
-    Vector3 movementDelta;
-    Vector3 newVelocity;
+    private Vector3 horizontalVelocity;
+    private float verticalVelocity;
+    private Vector3 cameraFowardXZ;
+    private Vector3 cameRightXZ;
+    private Vector3 moveDirection;
+    private Vector3 movementDelta;
+    private Vector3 newVelocity;
 
 
-
+    [Header("Jump")]
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float maxJumpTime;
+    private float jumpVelocity;
 
 
     [Header("Dash")]
@@ -39,10 +44,8 @@ public class PlayerMovement : MonoBehaviour
     private bool dashInCooldown;
 
     [Header("Physics")]
-    [Range(-0f, -10f)]
+    [Range(0f, -50f)]
     [SerializeField] private float gravity;
-    [Range(-0f, -10f)]
-    [SerializeField] private float groundGravaty;
     [Range(0f, 100f)]
     [SerializeField] private float groundDecay;
 
@@ -62,16 +65,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float turnSmoothTime;
     private float turnSmoothVelocity;
     float angle;
-    private void Awake()
-    {
-        characterController = GetComponent<CharacterController>();
-    }
+
     private void Start()
     {
-        idleState.Setup( animator,this);
+        idleState.Setup(animator,this);
         walkState.Setup(animator, this);
         jumpState.Setup(animator, this);
         mainCameraRef = Camera.main;
+        playerVisualDefaultPos = playerVisualTransform.localPosition;
+        SetUpJumpVariables();
     }
     private void OnEnable()
     {
@@ -85,24 +87,19 @@ public class PlayerMovement : MonoBehaviour
         PlayerEvents.Jump -= HandleJump;
         PlayerEvents.Dash -= HandleDash;
     }
-
+  
     private void Update()
     {
+        playerVisualTransform.localPosition = playerVisualDefaultPos;
         CheckInputs();
         SelectState();
         FaceInput();
     }
     private void FixedUpdate()
     {
-        HandleMovement();
-        ApplyFriction();
-        //ApplyGravity();
-
-        if (inputManager.InputDirection() != Vector2.zero)
-        {
-            characterController.Move(newVelocity * Time.deltaTime);
-        }
-       
+        HandleHorizontalMovement();
+        ApplyFinalVelocity();
+        GetGravity();
     }
 
     private void CheckInputs()
@@ -112,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void SelectState()
     {
-        if (characterController.isGrounded)
+        if (IsGrounded())
         {
             if (inputManager.InputDirection() == Vector2.zero)
             {
@@ -128,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
             statesController.ChangePlayerState(jumpState);
         }
     }
-    private void HandleMovement()
+    private void HandleHorizontalMovement()
     {
         if (inputManager.InputDirection() != Vector2.zero)
         {
@@ -136,35 +133,52 @@ public class PlayerMovement : MonoBehaviour
             cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
             moveDirection = cameRightXZ * currrentMovementInput.x + cameraFowardXZ * currrentMovementInput.z;
 
-            // Move delta is the amount that the player walks in that frame
             movementDelta = moveDirection * walkAcceleration * Time.deltaTime;
-            // Its aplied twice the acceleration due to the Kinematic movement formula 
-            newVelocity = characterController.velocity + movementDelta;
-
-            ApplyFriction();
-
-            newVelocity = Vector3.ClampMagnitude(newVelocity, maxWalkSpeed);
-
+            horizontalVelocity += movementDelta;
+            horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxWalkSpeed);
         }
+        else if (IsGrounded())
+        {
+            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, groundDecay * Time.deltaTime);
+        }
+    }
+    private void SetUpJumpVariables()
+    {
+        float jumpTimeToPeak = maxJumpTime / 2f;
+        jumpVelocity = 2f * jumpHeight / jumpTimeToPeak;
     }
     private void HandleJump()
     {
-        if (Grounded())
+        if (IsGrounded())
         {
-            //body.linearVelocity = Vector3.up * jumpForce;
-            //statesController.ChangePlayerState(jumpState);
+            verticalVelocity = jumpVelocity;
+        }
+        if (moveDirection != Vector3.zero)
+        {
+            horizontalVelocity = moveDirection.normalized * walkAcceleration * Time.deltaTime;
+        }
+        else
+        {
+            horizontalVelocity = transform.forward * walkAcceleration * Time.deltaTime;
         }
     }
-
+    private void ApplyFinalVelocity()
+    {
+        newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity , horizontalVelocity.z);
+        ApplyFriction();
+        characterController.Move(newVelocity * Time.deltaTime);
+        GetGravity();
+    }
     private void HandleDash()
     {
-        //if (!dashInCooldown)
-        //{
-        //    Debug.Log("dashed");
-        //    body.AddForce(moveDirection * dashForce, ForceMode.Impulse);
-        //    dashInCooldown = true;
-        //    StartCoroutine(DashCoolingdown());
-        //}
+        if (!dashInCooldown)
+        {
+            Debug.Log("dashed");
+            Vector3 dashDir = moveDirection == Vector3.zero ? transform.forward : moveDirection;
+            horizontalVelocity += dashDir.normalized * dashForce;
+            dashInCooldown = true;
+            StartCoroutine(DashCoolingdown());
+        }
     }
 
     IEnumerator DashCoolingdown()
@@ -175,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    public bool Grounded()
+    public bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundMask);
     }
@@ -191,17 +205,17 @@ public class PlayerMovement : MonoBehaviour
            
     }
 
-    private void ApplyGravity()
+    private void GetGravity()
     {
-        if (characterController.isGrounded)
+        if (!IsGrounded())
         {
-            moveDirection.y = groundGravaty;    
+            verticalVelocity += gravity * Time.deltaTime;
         }
-        else
+        else 
         {
-            moveDirection.y += gravity;
+            verticalVelocity = -2f;
         }
-    
+
     }
 
     private void ApplyFriction()

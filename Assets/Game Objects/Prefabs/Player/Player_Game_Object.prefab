@@ -1937,13 +1937,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8918552513360700576}
-  - component: {fileID: 8108132841189360448}
+  - component: {fileID: 8206816815389473791}
   - component: {fileID: 4960947092266762759}
   - component: {fileID: 8413151897833958582}
   - component: {fileID: 5923956784815927567}
   m_Layer: 3
   m_Name: Player_Game_Object
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1972,7 +1972,7 @@ Transform:
   - {fileID: 4979567979529115642}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &8108132841189360448
+--- !u!143 &8206816815389473791
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1990,13 +1990,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2.34
-  m_Radius: 0.64
+  m_Height: 2
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.00001
-  m_Center: {x: 0, y: 0.04, z: 0}
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: -0.12, z: 0}
 --- !u!114 &4960947092266762759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2010,16 +2010,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 8558301507294174358}
+  characterController: {fileID: 8206816815389473791}
   statesController: {fileID: 8413151897833958582}
+  playerVisualTransform: {fileID: 267607609003095408}
   animator: {fileID: 4133485285549614538}
   walkAcceleration: 50
-  maxWalkSpeed: 4
-  jumpForce: 17
+  maxWalkSpeed: 8
+  jumpHeight: 1
+  maxJumpTime: 0.2
   dashForce: 15
   dashCooldownTime: 1
-  gravity: -9.8
-  groundGravaty: -0.53
-  groundDecay: 0.3
+  gravity: -20
+  groundDecay: 30
   idleState: {fileID: 2886000075692240883}
   walkState: {fileID: 4140540248808287525}
   jumpState: {fileID: 3148708264247230721}
