@@ -43,8 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Dash")]
-    [SerializeField] private float dashForce;
+    [SerializeField] private float dashDistance;
     [SerializeField] private float dashCooldownTime;
+    private float dashVelocity;
     private bool dashInCooldown;
 
     [Header("Physics")]
@@ -149,8 +150,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void SetUpJumpVariables()
     {
-        float jumpTimeToPeak = maxJumpTime / 2f;
         jumpVelocity = MathF.Sqrt(jumpHeight * gravity * -2) * body.mass;
+        dashVelocity = MathF.Sqrt(dashDistance * -groundDecay * -2) * body.mass;
     }
     private void HandleJump(bool isJumpButtonPressed)
     {
@@ -191,11 +192,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleDash()
     {
-        if (!dashInCooldown)
+        if (!dashInCooldown && IsGrounded())
         {
-            Debug.Log("dashed");
+            Debug.Log(dashVelocity);
             Vector3 dashDir = moveDirection == Vector3.zero ? transform.forward : moveDirection;
-            horizontalVelocity += dashDir.normalized * dashForce;
+            body.AddForce(dashDir.normalized * dashVelocity, ForceMode.Impulse);
             dashInCooldown = true;
             StartCoroutine(DashCoolingdown());
         }
