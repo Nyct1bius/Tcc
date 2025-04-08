@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerInteractionsManager : MonoBehaviour
 {
     [SerializeField] private bool hasItemToInteract;
+    private InputReader inputReader;
     [SerializeField] private GameObject uiPickUp;
     [SerializeField] private Notifier notifier;
     private IInteractable currentInteractable;
@@ -19,14 +20,17 @@ public class PlayerInteractionsManager : MonoBehaviour
     //CheckPoint
     private CheckPoint checkPoint;
 
-
+    private void Awake()
+    {
+        inputReader = GetComponentInParent<PlayerMovement>().inputs;
+    }
     private void OnEnable()
     {
-        PlayerEvents.Interact += HandleInteraction;
+        inputReader.InteractEvent += HandleInteraction;
     }
     private void OnDisable()
     {
-        PlayerEvents.Interact -= HandleInteraction;
+        inputReader.InteractEvent -= HandleInteraction;
     }
 
     private void OnTriggerEnter(Collider other)

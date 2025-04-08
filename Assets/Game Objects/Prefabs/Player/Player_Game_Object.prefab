@@ -1963,7 +1963,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 267607609003095408}
-  - {fileID: 8606342317426342166}
   - {fileID: 5348677757066901225}
   - {fileID: 3059413286738507189}
   - {fileID: 1811575511856777108}
@@ -2012,9 +2011,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe3b5017020d57499398a6b9d048f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 8558301507294174358}
+  inputs: {fileID: 11400000, guid: 12337715a3680b24cb9047a0f4e3a238, type: 2}
   body: {fileID: 3422465072937968406}
-  characterController: {fileID: 0}
   statesController: {fileID: 8413151897833958582}
   playerVisualTransform: {fileID: 267607609003095408}
   animator: {fileID: 4133485285549614538}
@@ -4253,50 +4251,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00022870908, y: 0.027619276, z: 0.0071387477}
     m_Extent: {x: 0.0071336757, y: 0.004655118, z: 0.0010707469}
   m_DirtyAABB: 0
---- !u!1 &2594897916017380301
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8606342317426342166}
-  - component: {fileID: 8558301507294174358}
-  m_Layer: 3
-  m_Name: Inputs
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8606342317426342166
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2594897916017380301}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8918552513360700576}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8558301507294174358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2594897916017380301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3ab45e0a9539c4dacacf0cfa9e321a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2603035389792260607
 GameObject:
   m_ObjectHideFlags: 0
@@ -5435,6 +5389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasItemToInteract: 0
+  inputReader: {fileID: 11400000, guid: 12337715a3680b24cb9047a0f4e3a238, type: 2}
   uiPickUp: {fileID: 4884220181051483280, guid: 7694575884dc1814e9445b0a5eabaedc, type: 3}
   notifier: {fileID: 9000467174429766338}
 --- !u!1 &3255077566269589856
@@ -7832,6 +7787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasSword: 0
+  inputReader: {fileID: 11400000, guid: 12337715a3680b24cb9047a0f4e3a238, type: 2}
   damageableLayer:
     serializedVersion: 2
     m_Bits: 256

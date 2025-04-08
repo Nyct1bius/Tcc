@@ -7,9 +7,8 @@ using UnityEngine.Windows;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Componets")]
-    [SerializeField] private InputManager inputManager;
+    public InputReader inputs;
     [SerializeField] private Rigidbody body;
-    [SerializeField] private CharacterController characterController;
     [SerializeField] private PlayerStatesController statesController;
     [SerializeField] private Transform playerVisualTransform;
     public Animator animator;
@@ -17,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 playerVisualDefaultPos;
 
     //Inputs
-    Vector3 currrentMovementInput;
+    Vector2 currrentMovementInput;
 
     [Header("Movement")]
     [Range(0f, 50f)]
@@ -82,21 +81,22 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnEnable()
     {
-        PlayerEvents.Jump += HandleJump;
-        PlayerEvents.Dash += HandleDash;
+        inputs.MoveEvent += SetUpMoveInput;
+        inputs.JumpEvent += HandleJump;
+        inputs.DashEvent += HandleDash;
     }
 
 
     private void OnDisable()
     {
-        PlayerEvents.Jump -= HandleJump;
-        PlayerEvents.Dash -= HandleDash;
+        inputs.JumpEvent -= HandleJump;
+        inputs.DashEvent -= HandleDash;
     }
+     
   
     private void Update()
     {
         playerVisualTransform.localPosition = playerVisualDefaultPos;
-        CheckInputs();
         SelectState();
         FaceInput();
     }
@@ -108,16 +108,11 @@ public class PlayerMovement : MonoBehaviour
         ApplyGravity();
     }
 
-    private void CheckInputs()
-    {
-        currrentMovementInput.x = inputManager.InputDirection().x;
-        currrentMovementInput.z = inputManager.InputDirection().y;
-    }
     private void SelectState()
     {
         if (IsGrounded())
         {
-            if (inputManager.InputDirection() == Vector2.zero)
+            if (currrentMovementInput == Vector2.zero)
             {
                 statesController.ChangePlayerState(idleState);
             }
@@ -131,15 +126,19 @@ public class PlayerMovement : MonoBehaviour
             statesController.ChangePlayerState(jumpState);
         }
     }
+    private void SetUpMoveInput(Vector2 inputDirection)
+    {
+        currrentMovementInput = inputDirection;
+    }
     private void HandleHorizontalMovement()
     {
-        if (inputManager.InputDirection() != Vector2.zero)
+        if (currrentMovementInput != Vector2.zero)
         {
             cameraFowardXZ = new Vector3(mainCameraRef.transform.forward.x, 0, mainCameraRef.transform.forward.z).normalized;
             cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
-            moveDirection = cameRightXZ * currrentMovementInput.x + cameraFowardXZ * currrentMovementInput.z;
+            moveDirection = cameRightXZ * currrentMovementInput.x + cameraFowardXZ * currrentMovementInput.y;
 
-            movementDelta = moveDirection * walkAcceleration * Time.deltaTime;
+            movementDelta = moveDirection * walkAcceleration;
             horizontalVelocity += movementDelta;
             horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxWalkSpeed);
         }
@@ -155,7 +154,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleJump(bool isJumpButtonPressed)
     {
-        Debug.Log(isJumpButtonPressed);
         isButtonPressed = isJumpButtonPressed;
         if (IsGrounded() && isJumpButtonPressed)
         {
@@ -188,7 +186,6 @@ public class PlayerMovement : MonoBehaviour
         newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity , horizontalVelocity.z);
         ApplyFriction();
         body.AddForce(newVelocity,ForceMode.VelocityChange);
-        ApplyGravity();
     }
     private void HandleDash()
     {
@@ -217,9 +214,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FaceInput()
     {
-        if(inputManager.InputDirection() != Vector2.zero)
+        if(currrentMovementInput != Vector2.zero)
         {
-            targetAngle = Mathf.Atan2(currrentMovementInput.x, currrentMovementInput.z) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
+            targetAngle = Mathf.Atan2(currrentMovementInput.x, currrentMovementInput.y) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
             angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
         }

@@ -7,6 +7,7 @@ public class PlayerCombatManager : MonoBehaviour
 {
     //wepon variables
     [SerializeField] private bool hasSword;
+    private InputReader inputReader;
     [SerializeField] private LayerMask damageableLayer;
     [SerializeField] private Transform attackCollisionCheck;
     [SerializeField] private float attackRange;
@@ -19,14 +20,19 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private bool attackIncooldown;
     private float timeBetweenAttacks = 0.2f;
     [SerializeField] private float timeToResetAttack = 0.5f;
+
+    private void Awake()
+    {
+        inputReader = GetComponentInParent<PlayerMovement>().inputs;
+    }
     private void OnEnable()
     {
-        PlayerEvents.Attack += PerformAttack;
+        inputReader.AttackEvent += PerformAttack;
         PlayerEvents.SwordPickUp += AddSword;
     }
     private void OnDisable()
     {
-        PlayerEvents.Attack -= PerformAttack;
+        inputReader.AttackEvent -= PerformAttack;
         PlayerEvents.SwordPickUp -= AddSword;
     }
 

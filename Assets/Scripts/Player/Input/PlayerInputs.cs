@@ -24,7 +24,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputs"",
     ""maps"": [
         {
-            ""name"": ""BaseActionMap"",
+            ""name"": ""PlayerControls"",
             ""id"": ""50c58a23-1768-4e45-b1ef-bd5b0c03142c"",
             ""actions"": [
                 {
@@ -222,18 +222,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // BaseActionMap
-        m_BaseActionMap = asset.FindActionMap("BaseActionMap", throwIfNotFound: true);
-        m_BaseActionMap_Move = m_BaseActionMap.FindAction("Move", throwIfNotFound: true);
-        m_BaseActionMap_Jump = m_BaseActionMap.FindAction("Jump", throwIfNotFound: true);
-        m_BaseActionMap_Attack = m_BaseActionMap.FindAction("Attack", throwIfNotFound: true);
-        m_BaseActionMap_Interact = m_BaseActionMap.FindAction("Interact", throwIfNotFound: true);
-        m_BaseActionMap_Dash = m_BaseActionMap.FindAction("Dash", throwIfNotFound: true);
+        // PlayerControls
+        m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
+        m_PlayerControls_Move = m_PlayerControls.FindAction("Move", throwIfNotFound: true);
+        m_PlayerControls_Jump = m_PlayerControls.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerControls_Attack = m_PlayerControls.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerControls_Dash = m_PlayerControls.FindAction("Dash", throwIfNotFound: true);
     }
 
     ~@PlayerInputs()
     {
-        UnityEngine.Debug.Assert(!m_BaseActionMap.enabled, "This will cause a leak and performance issues, PlayerInputs.BaseActionMap.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_PlayerControls.enabled, "This will cause a leak and performance issues, PlayerInputs.PlayerControls.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -292,32 +292,32 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // BaseActionMap
-    private readonly InputActionMap m_BaseActionMap;
-    private List<IBaseActionMapActions> m_BaseActionMapActionsCallbackInterfaces = new List<IBaseActionMapActions>();
-    private readonly InputAction m_BaseActionMap_Move;
-    private readonly InputAction m_BaseActionMap_Jump;
-    private readonly InputAction m_BaseActionMap_Attack;
-    private readonly InputAction m_BaseActionMap_Interact;
-    private readonly InputAction m_BaseActionMap_Dash;
-    public struct BaseActionMapActions
+    // PlayerControls
+    private readonly InputActionMap m_PlayerControls;
+    private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
+    private readonly InputAction m_PlayerControls_Move;
+    private readonly InputAction m_PlayerControls_Jump;
+    private readonly InputAction m_PlayerControls_Attack;
+    private readonly InputAction m_PlayerControls_Interact;
+    private readonly InputAction m_PlayerControls_Dash;
+    public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
-        public BaseActionMapActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_BaseActionMap_Move;
-        public InputAction @Jump => m_Wrapper.m_BaseActionMap_Jump;
-        public InputAction @Attack => m_Wrapper.m_BaseActionMap_Attack;
-        public InputAction @Interact => m_Wrapper.m_BaseActionMap_Interact;
-        public InputAction @Dash => m_Wrapper.m_BaseActionMap_Dash;
-        public InputActionMap Get() { return m_Wrapper.m_BaseActionMap; }
+        public PlayerControlsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_PlayerControls_Move;
+        public InputAction @Jump => m_Wrapper.m_PlayerControls_Jump;
+        public InputAction @Attack => m_Wrapper.m_PlayerControls_Attack;
+        public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
+        public InputAction @Dash => m_Wrapper.m_PlayerControls_Dash;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(BaseActionMapActions set) { return set.Get(); }
-        public void AddCallbacks(IBaseActionMapActions instance)
+        public static implicit operator InputActionMap(PlayerControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerControlsActions instance)
         {
-            if (instance == null || m_Wrapper.m_BaseActionMapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_BaseActionMapActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -335,7 +335,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Dash.canceled += instance.OnDash;
         }
 
-        private void UnregisterCallbacks(IBaseActionMapActions instance)
+        private void UnregisterCallbacks(IPlayerControlsActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -354,22 +354,22 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Dash.canceled -= instance.OnDash;
         }
 
-        public void RemoveCallbacks(IBaseActionMapActions instance)
+        public void RemoveCallbacks(IPlayerControlsActions instance)
         {
-            if (m_Wrapper.m_BaseActionMapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IBaseActionMapActions instance)
+        public void SetCallbacks(IPlayerControlsActions instance)
         {
-            foreach (var item in m_Wrapper.m_BaseActionMapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerControlsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_BaseActionMapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public BaseActionMapActions @BaseActionMap => new BaseActionMapActions(this);
-    public interface IBaseActionMapActions
+    public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
+    public interface IPlayerControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
