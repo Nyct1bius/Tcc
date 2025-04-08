@@ -56,6 +56,7 @@ public class MainMenu : MonoBehaviour
         {
             // pega item
             Debug.Log("Pegou arma");
+            Arma();
         }
 
 
@@ -76,5 +77,10 @@ public class MainMenu : MonoBehaviour
     public void Casco()
     {
         inventoryManager.GetIten("Casco");
+    }
+
+    public void Arma()
+    {
+        inventoryManager.GetIten("Arma");
     }
 }
