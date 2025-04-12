@@ -23,7 +23,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void Awake()
     {
-        inputReader = GetComponentInParent<PlayerMovement>().inputs;
+        inputReader = GetComponentInParent<PlayerMovement>().inputReader;
     }
     private void OnEnable()
     {
