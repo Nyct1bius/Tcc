@@ -4,19 +4,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Core
 {
     [Header("Componets")]
-    public InputReader inputs;
-    [SerializeField] private Rigidbody body;
-    [SerializeField] private PlayerStatesController statesController;
+    public InputReader inputReader;
     [SerializeField] private Transform playerVisualTransform;
-    public Animator animator;
     private Camera mainCameraRef;
     private Vector3 playerVisualDefaultPos;
 
     //Inputs
-    Vector2 currrentMovementInput;
+    public Vector2 CurrrentMovementInput { get; private set; }
 
     [Header("Movement")]
     [Range(0f, 50f)]
@@ -33,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Jump")]
-    [SerializeField] private float jumpHeight;
+    public float jumpHeight;
     [SerializeField] private float maxJumpTime;
     private float jumpVelocity;
     private bool isJumping;
@@ -58,11 +55,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private IdleState idleState;
     [SerializeField] private WalkState walkState;
     [SerializeField] private JumpState jumpState;
-
-    [Header("Ground Check")]
-    [SerializeField] private Transform groundCheckTransform;
-    [SerializeField] private float groundCheckRadius;
-    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private DashState dashState;
 
     [Header("Rotation")]
     private float targetAngle;
@@ -72,80 +65,74 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        idleState.Setup(animator,this);
-        walkState.Setup(animator, this);
-        jumpState.Setup(animator, this);
+        SetupInstances();
         mainCameraRef = Camera.main;
         playerVisualDefaultPos = playerVisualTransform.localPosition;
         SetUpJumpVariables();
+        machine = new StateMachine();
+        machine.Set(idleState);
     }
     private void OnEnable()
     {
-        inputs.MoveEvent += SetUpMoveInput;
-        inputs.JumpEvent += HandleJump;
-        inputs.DashEvent += HandleDash;
+        inputReader.MoveEvent += SetUpMoveInput;
+        inputReader.JumpEvent += HandleJump;
+        inputReader.DashEvent += HandleDash;
     }
 
 
     private void OnDisable()
     {
-        inputs.JumpEvent -= HandleJump;
-        inputs.DashEvent -= HandleDash;
+        inputReader.JumpEvent -= HandleJump;
+        inputReader.DashEvent -= HandleDash;
     }
-     
-  
+
+
     private void Update()
     {
+        machine.state.Do();
         playerVisualTransform.localPosition = playerVisualDefaultPos;
         SelectState();
         FaceInput();
     }
     private void FixedUpdate()
     {
-        HandleHorizontalMovement();
+        machine.state.FixedDo();
         ApplyFinalVelocity();
-        CheckIfStillJumping();
         ApplyGravity();
     }
 
     private void SelectState()
     {
-        if (IsGrounded())
+        if (groundSensor.IsGrounded())
         {
-            if (currrentMovementInput == Vector2.zero)
+            if (CurrrentMovementInput == Vector2.zero)
             {
-                statesController.ChangePlayerState(idleState);
+                machine.Set(idleState);
             }
             else
             {
-                statesController.ChangePlayerState(walkState);
+                machine.Set(walkState);
             }
         }
         else
         {
-            statesController.ChangePlayerState(jumpState);
+            machine.Set(jumpState);
         }
     }
     private void SetUpMoveInput(Vector2 inputDirection)
     {
-        currrentMovementInput = inputDirection;
+        CurrrentMovementInput = inputDirection;
     }
-    private void HandleHorizontalMovement()
+    public void HandleHorizontalMovement()
     {
-        if (currrentMovementInput != Vector2.zero)
-        {
-            cameraFowardXZ = new Vector3(mainCameraRef.transform.forward.x, 0, mainCameraRef.transform.forward.z).normalized;
-            cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
-            moveDirection = cameRightXZ * currrentMovementInput.x + cameraFowardXZ * currrentMovementInput.y;
+        cameraFowardXZ = new Vector3(mainCameraRef.transform.forward.x, 0, mainCameraRef.transform.forward.z).normalized;
+        cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
+        moveDirection = cameRightXZ * CurrrentMovementInput.x + cameraFowardXZ * CurrrentMovementInput.y;
 
-            movementDelta = moveDirection * walkAcceleration;
-            horizontalVelocity += movementDelta;
-            horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxWalkSpeed);
-        }
-        else if (IsGrounded())
-        {
-            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, groundDecay * Time.deltaTime);
-        }
+        movementDelta = moveDirection * walkAcceleration;
+        horizontalVelocity += movementDelta;
+        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxWalkSpeed);
+
     }
     private void SetUpJumpVariables()
     {
@@ -155,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleJump(bool isJumpButtonPressed)
     {
         isButtonPressed = isJumpButtonPressed;
-        if (IsGrounded() && isJumpButtonPressed)
+        if (groundSensor.IsGrounded() && isJumpButtonPressed)
         {
             body.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
             buttonPressedTime = 0;
@@ -163,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-    private void CheckIfStillJumping()
+    public void CheckIfStillJumping()
     {
         if (isJumping)
         {
@@ -181,17 +168,23 @@ public class PlayerMovement : MonoBehaviour
     {
         body.AddForce(Vector3.up * gravity, ForceMode.Force);
     }
+
+
+
+
     private void ApplyFinalVelocity()
     {
-        newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity , horizontalVelocity.z);
+        newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity, horizontalVelocity.z);
         ApplyFriction();
-        body.AddForce(newVelocity,ForceMode.VelocityChange);
+        body.AddForce(newVelocity, ForceMode.VelocityChange);
     }
+
+
+
     private void HandleDash()
     {
-        if (!dashInCooldown && IsGrounded())
+        if (!dashInCooldown && groundSensor.IsGrounded())
         {
-            Debug.Log(dashVelocity);
             Vector3 dashDir = moveDirection == Vector3.zero ? transform.forward : moveDirection;
             body.AddForce(dashDir.normalized * dashVelocity, ForceMode.Impulse);
             dashInCooldown = true;
@@ -206,27 +199,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
-    public bool IsGrounded()
-    {
-        return Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundMask);
-    }
-
     private void FaceInput()
     {
-        if(currrentMovementInput != Vector2.zero)
+        if (CurrrentMovementInput != Vector2.zero)
         {
-            targetAngle = Mathf.Atan2(currrentMovementInput.x, currrentMovementInput.y) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
+            targetAngle = Mathf.Atan2(CurrrentMovementInput.x, CurrrentMovementInput.y) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
             angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
-           
-    }
 
-    public void MovePlayerToAPoint(Vector3 movePosition)
-    {
-        horizontalVelocity = movePosition;
-        verticalVelocity = movePosition.y;
     }
 
     private void ApplyGravity()
@@ -236,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
             body.AddForce(Vector3.up * -0.1f, ForceMode.Force);
 
         }
-        else if(!IsGrounded())
+        else if (!groundSensor.IsGrounded())
         {
             isJumping = false;
             body.AddForce(Vector3.up * gravity, ForceMode.Force);
@@ -246,25 +227,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyFriction()
     {
-       Vector3 currentDrag = newVelocity.normalized * groundDecay * Time.deltaTime;
-
-        if(newVelocity.magnitude > groundDecay * Time.deltaTime)
+        if (groundSensor.IsGrounded())
         {
-            newVelocity -= currentDrag;
-        }
-        else
-        {
-            newVelocity = Vector3.zero;
+            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, groundDecay * Time.deltaTime);
         }
     }
-
-    #region Debug
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(groundCheckTransform.position, groundCheckRadius);
-    }
-    #endregion
 }
+
