@@ -8,7 +8,7 @@ public class LevelBorderTest : MonoBehaviour
 
         if (playerHealth != null)
         {
-            playerHealth.TakeDamage(20f);
+            playerHealth.Damage(20f);
             GameManager.instance.RespawnPlayer();
         }
     }

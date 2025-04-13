@@ -18,7 +18,7 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
         throw new System.NotImplementedException();
     }
 
-    public void TakeDamage(float damage)
+    public void Damage(float damage)
     {
         if (!isImmortal)
         {

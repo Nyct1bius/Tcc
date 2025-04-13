@@ -7,7 +7,7 @@ public class EnemyTest : MonoBehaviour
     [ContextMenu("Damage Player")]
     public void DamagePlayer()
     {
-        playerHealth.TakeDamage(20f);
+        playerHealth.Damage(20f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,7 +17,7 @@ public class EnemyTest : MonoBehaviour
         if (player != null)
         {
             Debug.Log("Hit Player");
-            player.TakeDamage(20f);
+            player.Damage(20f);
         }
     }
 }

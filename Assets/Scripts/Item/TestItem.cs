@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class TestItem : MonoBehaviour, IInteractable
+public class TestItem : Item
 {
-    public void HasBeenPickedUp()
+    public override void OnPickedUp()
     {
         Debug.Log("PickUp item");
         Destroy(gameObject);

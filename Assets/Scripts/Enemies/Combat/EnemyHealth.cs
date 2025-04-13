@@ -31,7 +31,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
         }
     }
     
-    public void TakeDamage(float damage)
+    public void Damage(float damage)
     {
         CurrentHealth -= damage;
 

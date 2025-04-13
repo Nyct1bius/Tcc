@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 public class PlayerCombatManager : MonoBehaviour
 {
     //wepon variables
-    [SerializeField] private bool hasSword;
+    private bool hasWeapon;
     private InputReader inputReader;
     [SerializeField] private LayerMask damageableLayer;
     [SerializeField] private Transform attackCollisionCheck;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float weaponDamage;
-    [SerializeField] private GameObject swordVisual;
+    [SerializeField] private Transform weaponPos;
+    [SerializeField] private WeaponSO currentWeaponData;
+    private GameObject currentWeaponVisual;
 
 
     //Combat variables
@@ -36,15 +36,22 @@ public class PlayerCombatManager : MonoBehaviour
         PlayerEvents.SwordPickUp -= AddSword;
     }
 
-    private void AddSword()
+    private void AddSword(WeaponSO currentWeapon)
     {
-        hasSword = true;
-        swordVisual.SetActive(true);
+        if(currentWeaponVisual != null)
+        {
+            Destroy(currentWeaponVisual);   
+        }
+        currentWeaponData = currentWeapon;
+        hasWeapon = true;
+        currentWeaponVisual = Instantiate(currentWeaponData.weaponVisual, weaponPos);
+
+
     }
 
     private void PerformAttack()
     {
-        if(hasSword && !attackIncooldown)
+        if(hasWeapon && !attackIncooldown)
         {
             SelectAttack();
            attackIncooldown = true;
@@ -55,17 +62,17 @@ public class PlayerCombatManager : MonoBehaviour
         switch (attackCount)
         {
             case 0:
-                CheckAllNearbyColliders();
+                currentWeaponData.OnAttack(transform, damageableLayer);
                 attackCount++;
                 StartCoroutine(ResetAttack(timeBetweenAttacks));
                 break;
             case 1:
-                CheckAllNearbyColliders();
+                currentWeaponData.OnAttack(transform, damageableLayer);
                 attackCount++;
                 StartCoroutine(ResetAttack(timeBetweenAttacks));
                 break;
             case 2:
-                CheckAllNearbyColliders();
+                currentWeaponData.OnAttack(transform, damageableLayer);
                 attackCount = 0;
                 StartCoroutine(ResetAttack(timeToResetAttack));
                 break;
@@ -77,58 +84,16 @@ public class PlayerCombatManager : MonoBehaviour
         yield return new WaitForSeconds(timeToReset);
         attackIncooldown = false;
     }
-    private void CheckAllNearbyColliders()
-    {
-        foreach(Collider enemy in GetAllNearbyColliders())
-        {
-            Vector3 vectorToCollider = enemy.transform.position - gameObject.transform.position;
-            vectorToCollider = vectorToCollider.normalized;
-
-            if (Vector3.Dot(vectorToCollider, gameObject.transform.forward) > 0.5)
-            {
-                if (!HasWallInfront(enemy.transform))
-                {
-                    DamageEnemy(enemy);
-                }             
-            }
-        }
-    }
-
-    private Collider[] GetAllNearbyColliders()
-    {
-        return Physics.OverlapSphere(attackCollisionCheck.position, attackRange, damageableLayer);
-    }
 
 
-    private bool HasWallInfront(Transform enemyTransform)
-    {
-        Vector3 direction = (enemyTransform.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position, direction);
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            Debug.DrawLine(transform.position, hit.transform.position, Color.red, 1f);
-            if(hit.transform != enemyTransform)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    private void DamageEnemy(Collider enemy)
-    {
-        IHealth enemyHealth = enemy.GetComponent<IHealth>();
-
-        if (enemyHealth != null)
-        {
-            enemyHealth.TakeDamage(weaponDamage);
-        }
-    }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
+        if (hasWeapon)
+        {
+            Gizmos.color = Color.blue;
 
-        Gizmos.DrawWireSphere(attackCollisionCheck.position, attackRange);
+            Gizmos.DrawWireSphere(attackCollisionCheck.position, currentWeaponData.attackRange);
+        }
     }
 }

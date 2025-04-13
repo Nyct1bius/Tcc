@@ -23,7 +23,7 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
         stats.currentHealth += healing;
     }
 
-    public void TakeDamage(float damage)
+    public void Damage(float damage)
 
     {
         Debug.Log("Took damage");

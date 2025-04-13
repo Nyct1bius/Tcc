@@ -3,7 +3,7 @@ using UnityEngine;
 public interface IHealth  
 {
 
-     void TakeDamage(float damage);
+     void Damage(float damage);
 
      void HealHealth(float healing);
 
