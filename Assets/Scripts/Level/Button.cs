@@ -3,6 +3,7 @@ using UnityEngine;
 public class Button : MonoBehaviour,IHealth
 {
     [SerializeField] private bool isActivated;
+    [SerializeField] private bool isPressed;
     [SerializeField] Door doorToOpen;
     [SerializeField] private Material newMat;
     private MeshRenderer meshRenderer;
@@ -25,6 +26,7 @@ public class Button : MonoBehaviour,IHealth
     {
         if (isActivated)
         {
+            isPressed = true;
             Debug.Log("OpenDoor");
             doorToOpen.CheckIfAllButtonsIsActivated();
             meshRenderer.material = newMat;
@@ -35,6 +37,12 @@ public class Button : MonoBehaviour,IHealth
     public void ActivatedButton()
     {
         isActivated = true;
+    }
+
+    public void DeactivatedButton()
+    {
+        if(!isPressed)
+            isActivated = false;
     }
 
 
