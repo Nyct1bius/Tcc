@@ -5,9 +5,16 @@ using UnityEngine.EventSystems;
 
 public class PlayerCombatManager : MonoBehaviour
 {
+    //Components
+    [SerializeField] private InputReader inputReader;
+    [SerializeField] private PlayerMovement inputs;
+
+    [Header("State")]
+    [SerializeField] private AttackState attackState;
+
+
     //wepon variables
     private bool hasWeapon;
-    private InputReader inputReader;
     [SerializeField] private LayerMask damageableLayer;
     [SerializeField] private Transform attackCollisionCheck;
     [SerializeField] private Transform weaponPos;
@@ -16,24 +23,21 @@ public class PlayerCombatManager : MonoBehaviour
 
 
     //Combat variables
-    private int attackCount;
+    public int attackCount;
     [SerializeField] private bool attackIncooldown;
-    private float timeBetweenAttacks = 0.2f;
-    [SerializeField] private float timeToResetAttack = 0.5f;
-
-    private void Awake()
-    {
-        inputReader = GetComponentInParent<PlayerMovement>().inputReader;
-    }
+    [SerializeField] private float timeBetweenAttacks = 0.5f;
+    private bool isAttacking;
     private void OnEnable()
     {
-        inputReader.AttackEvent += PerformAttack;
+        inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
+        PlayerEvents.AttackFinished += HandleResetAttack;
     }
     private void OnDisable()
     {
-        inputReader.AttackEvent -= PerformAttack;
+        inputReader.AttackEvent -= CheckAttackButton;
         PlayerEvents.SwordPickUp -= AddSword;
+        PlayerEvents.AttackFinished -= HandleResetAttack;
     }
 
     private void AddSword(WeaponSO currentWeapon)
@@ -48,42 +52,59 @@ public class PlayerCombatManager : MonoBehaviour
 
 
     }
+    private void CheckAttackButton(bool _isAttacking)
+    {
+        isAttacking = _isAttacking;
+    }
+
+    private void Update()
+    {
+        PerformAttack();
+    }
 
     private void PerformAttack()
     {
-        if(hasWeapon && !attackIncooldown)
+        if(currentWeaponData!= null && isAttacking && !attackIncooldown)
         {
+            Debug.Log("Attack");
+            attackIncooldown = true;
             SelectAttack();
-           attackIncooldown = true;
         }
     }
-    private void SelectAttack()
+    public void SelectAttack()
     {
-        switch (attackCount)
+        inputs.machine.Set(attackState, true);
+        currentWeaponData.OnAttack(transform, damageableLayer);
+
+        attackCount++;
+
+        if (attackCount >= 3)
         {
-            case 0:
-                currentWeaponData.OnAttack(transform, damageableLayer);
-                attackCount++;
-                StartCoroutine(ResetAttack(timeBetweenAttacks));
-                break;
-            case 1:
-                currentWeaponData.OnAttack(transform, damageableLayer);
-                attackCount++;
-                StartCoroutine(ResetAttack(timeBetweenAttacks));
-                break;
-            case 2:
-                currentWeaponData.OnAttack(transform, damageableLayer);
-                attackCount = 0;
-                StartCoroutine(ResetAttack(timeToResetAttack));
-                break;
+            attackCount = 0;
         }
+
     }
 
-    private IEnumerator ResetAttack(float timeToReset)
+    public void HandleResetAttack()
     {
-        yield return new WaitForSeconds(timeToReset);
+       StartCoroutine(WaitToResetAttack());
+    }
+    private IEnumerator WaitToResetAttack()
+    {
+        yield return new WaitForSeconds(timeBetweenAttacks);
         attackIncooldown = false;
     }
+
+    public bool IsAttackHeld()
+    {
+        return isAttacking;
+    }
+
+    public void ResetCombo()
+    {
+        attackCount = 0;
+    }
+
 
 
 

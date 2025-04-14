@@ -19,6 +19,7 @@ public class WeaponSO : ScriptableObject
             {
                 if (!HasWallInfront(enemy.transform, posToAttack))
                 {
+                    Debug.Log("Damage");
                     OnDamage(enemy);
                 }
             }

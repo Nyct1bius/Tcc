@@ -9,7 +9,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
 {
     public event UnityAction<Vector2> MoveEvent;
     public event UnityAction<bool> JumpEvent;
-    public event UnityAction AttackEvent;
+    public event UnityAction<bool> AttackEvent;
     public event UnityAction DashEvent;
     public event UnityAction InteractEvent;
 
@@ -32,7 +32,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        AttackEvent?.Invoke();
+        AttackEvent?.Invoke(context.performed);
     }
 
     public void OnDash(InputAction.CallbackContext context)

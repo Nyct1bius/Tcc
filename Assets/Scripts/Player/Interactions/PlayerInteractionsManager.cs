@@ -77,7 +77,6 @@ public class PlayerInteractionsManager : MonoBehaviour
 
     private void SetupItensToInteract()
     {
-        Debug.Log(currentItemTransform.name);
         hasItemToInteract = true;
         uiSpawned = Instantiate(uiPickUp, currentItemTransform.position + Vector3.up * 2, Quaternion.identity, currentItemTransform);
         interactableItens.Add(currentInteractable);

@@ -14,6 +14,7 @@ public class PlayerMovement : Core
 
     //Inputs
     public Vector2 CurrrentMovementInput { get; private set; }
+    bool isAttacking;
 
     [Header("Movement")]
     [Range(0f, 50f)]
@@ -82,6 +83,7 @@ public class PlayerMovement : Core
 
     private void OnDisable()
     {
+        inputReader.MoveEvent -= SetUpMoveInput;
         inputReader.JumpEvent -= HandleJump;
         inputReader.DashEvent -= HandleDash;
     }
@@ -89,10 +91,10 @@ public class PlayerMovement : Core
 
     private void Update()
     {
-        machine.state.Do();
         playerVisualTransform.localPosition = playerVisualDefaultPos;
         SelectState();
         FaceInput();
+        machine.state.Do();
     }
     private void FixedUpdate()
     {
@@ -105,14 +107,11 @@ public class PlayerMovement : Core
     {
         if (groundSensor.IsGrounded())
         {
-            if (CurrrentMovementInput == Vector2.zero)
+            if(CurrrentMovementInput == Vector2.zero)
             {
-                machine.Set(idleState);
+              // machine.Set(idleState);
             }
-            else
-            {
-                machine.Set(walkState);
-            }
+           
         }
         else
         {
@@ -121,6 +120,11 @@ public class PlayerMovement : Core
     }
     private void SetUpMoveInput(Vector2 inputDirection)
     {
+        if(inputDirection != Vector2.zero || groundSensor.IsGrounded())
+        {
+            machine.Set(walkState);
+        }
+
         CurrrentMovementInput = inputDirection;
     }
     public void HandleHorizontalMovement()
