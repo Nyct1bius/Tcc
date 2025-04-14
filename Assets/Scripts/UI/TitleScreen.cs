@@ -21,12 +21,12 @@ public class TitleScreen : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadSceneAsync("Matheus_TestScene");
+        SceneManager.LoadSceneAsync("Programmers_TestScene");
     }
 
     public void NewGame()
     {
-        SceneManager.LoadSceneAsync("Matheus_TestScene");
+        SceneManager.LoadSceneAsync("Programmers_TestScene");
     }
 
     public void LoadGame()
