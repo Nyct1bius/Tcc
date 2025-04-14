@@ -14,6 +14,7 @@ public class SteppingTrigger : MonoBehaviour
     public GameObject UIHolder;
     public TextMeshProUGUI timerText;
     public Slider timerSlider;
+    private Coroutine countdownCoroutine;
 
     private void Awake()
     {
@@ -34,11 +35,12 @@ public class SteppingTrigger : MonoBehaviour
     private void ActivateTrigger()
     {
         triggerMeshRenderer.material = pressedMat;
+        if(countdownCoroutine != null ) StopCoroutine(CountdownTimerRoutine(activationTimer));
         for( int i = 0; i < ButtonsToActivate.Length; i++ )
         {
             ButtonsToActivate[i].ActivatedButton();   
         }
-        StartCoroutine(CountdownTimerRoutine(activationTimer));
+        countdownCoroutine = StartCoroutine(CountdownTimerRoutine(activationTimer));
         
     }
     private void DeactivateTrigger()
@@ -71,6 +73,7 @@ public class SteppingTrigger : MonoBehaviour
         StartCoroutine(UIHolderDeactivation());
 
         Debug.Log("Countdown complete!");
+        countdownCoroutine = null;
     }
 
     private IEnumerator UIHolderDeactivation()
