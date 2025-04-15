@@ -16,7 +16,7 @@ public abstract class Core : MonoBehaviour
         State[] AllStateChildren = GetComponentsInChildren<State>();
         foreach (State state in AllStateChildren)
         {
-            state.SetCore(this);
+            //state.SetCore(this);
         }
 
     }

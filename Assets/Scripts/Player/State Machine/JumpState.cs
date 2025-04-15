@@ -1,28 +1,91 @@
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class JumpState : State
 {
-    [SerializeField] AnimationClip jumpAnimation;
-    [SerializeField] PlayerMovement inputs; 
+    public JumpState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
+   : base(contex, playerStateFactory) {
+        isRootState = true;
+        InitializeSubState();
+    }
+
+    private float _timeSinceEntered;
+    private float _switchDelay = 0.3f;
     public override void Enter()
     {
-       animator.Play(jumpAnimation.name);
+        HandleJump();
+        _timeSinceEntered = 0f;
+        _ctx.Animator.SetBool("IsJumping",true);
+        
     }
 
     public override void Do() 
     {
-        if (core.groundSensor.IsGrounded())
+
+
+
+        CheckIfStillJumping();
+        _timeSinceEntered += Time.deltaTime;
+        if (_timeSinceEntered >= _switchDelay)
         {
-            IsComplete = true;
+            CheckSwitchState();
         }
+
     }
     public override void FixedDo()
     {
-        inputs.HandleHorizontalMovement();
-        inputs.CheckIfStillJumping();
     }
     public override void Exit()
     {
+        if (_ctx.IsJumpButtonPressed)
+        {
+            _ctx.RequireNewJumpPress = true;
+        }
+        _ctx.Animator.SetBool("IsJumping", false);
+    }
+
+    public override void CheckSwitchState()
+    {
+        if (_ctx.GroundSensor.IsGrounded())
+        {
+            SwitchStates(_factory.Grounded());
+        }
+    }
+
+    public override void InitializeSubState()
+    {
+        if (_ctx.CurrentMovementInput != Vector2.zero)
+        {
+            SetSubState(_factory.Walk());
+        }
+        else
+        {
+            SetSubState(_factory.Idle());
+        }
+    }
+
+    private void HandleJump()
+    {
+        _ctx.Body.AddForce(Vector3.up * _ctx.JumpVelocity, ForceMode.Impulse);
+        _ctx.ButtonPressedTime = 0;
+    }
+
+    public void CheckIfStillJumping()
+    {
+
+        _ctx.ButtonPressedTime += Time.deltaTime;
+
+        if (_ctx.ButtonPressedTime < _ctx.MaxJumpTime && !_ctx.IsJumpButtonPressed)
+        {
+            CancelJump();
+        }
+
+
 
     }
+    private void CancelJump()
+    {
+        _ctx.Body.AddForce(Vector3.up * _ctx.Gravity / 4, ForceMode.Force);
+    }
+
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
         switch(currentState)
         {
             case GameplayStates.Playing:
+                PlayingEnter();
                 break;
             case GameplayStates.Paused:
                 break;
@@ -58,6 +60,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void PlayingEnter()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     public void SpawnPlayer(Transform spawnPoint)
     {
@@ -71,6 +77,7 @@ public class GameManager : MonoBehaviour
         checkPoint = spawnPoint;
 
         currentState = GameplayStates.Playing;
+        SelectGameplayState();
     }
 
 

@@ -22,7 +22,7 @@ public class PlayerInteractionsManager : MonoBehaviour
 
     private void Awake()
     {
-        inputReader = GetComponentInParent<PlayerMovement>().inputReader;
+        inputReader = GetComponentInParent<PlayerStateMachine>().inputReader;
     }
     private void OnEnable()
     {

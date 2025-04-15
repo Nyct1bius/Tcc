@@ -1,36 +1,66 @@
-using UnityEngine;
-
-public abstract class State : MonoBehaviour
+public abstract class State
 {
+    protected bool isRootState = false;
+    protected PlayerStateMachine _ctx;
+    protected PlayerStateFactory _factory;
+    protected State _currentSuperState;
+    protected State _currentSubState;
 
-    protected Core core;
-
-    public bool IsComplete { get; protected set; }
-
-    protected Rigidbody body => core.body;
-    protected Animator animator => core.animator;
-
-    protected float startTime;
-    public float Time => UnityEngine.Time.time - startTime;
-
-
-    public virtual void Enter() { }
-
-    public virtual void Do() { }
-
-    public virtual void FixedDo() { }
-
-    public virtual void Exit() { }
-
-    public void SetCore (Core _core)
+    public State (PlayerStateMachine ctx, PlayerStateFactory factory)
     {
-         this.core = _core;
+        _ctx = ctx;
+        _factory = factory;
     }
 
-    public virtual void Initialize()
+    public abstract void Enter() ;
+         
+    public abstract void Do() ;
+
+    public abstract void FixedDo();
+
+    public abstract void Exit();
+    public abstract void CheckSwitchState();
+    public abstract void InitializeSubState();
+
+
+    public void UpdateStates() 
     {
-        IsComplete = false;
-        startTime = UnityEngine.Time.time;
+        Do();
+        _currentSubState?.UpdateStates();
     }
+
+    public void FixedUpdateStates()
+    {
+        FixedDo();
+        _currentSubState?.FixedUpdateStates();
+    }
+    protected void SwitchStates(State newState) 
+    {
+        //Current State exit 
+        Exit();
+
+        newState.Enter();
+        if (isRootState)
+        {
+            _ctx.CurrentState = newState;
+        }else if(_currentSuperState != null)
+        {
+            _currentSuperState.SetSubState(newState);
+        }
+        
+    }
+    protected void SetSuperState(State newSuperState) 
+    {
+        _currentSuperState = newSuperState;
+    }
+
+    protected void SetSubState(State newSubState) 
+    {
+        _currentSubState= newSubState;
+        newSubState.SetSuperState(this);
+    }
+
+
+           
 }
 

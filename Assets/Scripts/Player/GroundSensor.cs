@@ -9,6 +9,7 @@ public class GroundSensor : MonoBehaviour
 
     public bool IsGrounded()
     {
+       
         return Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundMask);
     }
 

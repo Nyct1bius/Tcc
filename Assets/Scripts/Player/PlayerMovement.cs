@@ -13,7 +13,7 @@ public class PlayerMovement : Core
     private Vector3 playerVisualDefaultPos;
 
     //Inputs
-    public Vector2 CurrrentMovementInput { get; private set; }
+    public Vector2 CurrentMovementInput { get; private set; }
     bool isAttacking;
 
     [Header("Movement")]
@@ -107,7 +107,7 @@ public class PlayerMovement : Core
     {
         if (groundSensor.IsGrounded())
         {
-            if(CurrrentMovementInput == Vector2.zero)
+            if(CurrentMovementInput == Vector2.zero)
             {
               // machine.Set(idleState);
             }
@@ -125,13 +125,13 @@ public class PlayerMovement : Core
             machine.Set(walkState);
         }
 
-        CurrrentMovementInput = inputDirection;
+        CurrentMovementInput = inputDirection;
     }
     public void HandleHorizontalMovement()
     {
         cameraFowardXZ = new Vector3(mainCameraRef.transform.forward.x, 0, mainCameraRef.transform.forward.z).normalized;
         cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
-        moveDirection = cameRightXZ * CurrrentMovementInput.x + cameraFowardXZ * CurrrentMovementInput.y;
+        moveDirection = cameRightXZ * CurrentMovementInput.x + cameraFowardXZ * CurrentMovementInput.y;
 
         movementDelta = moveDirection * walkAcceleration;
         horizontalVelocity += movementDelta;
@@ -205,9 +205,9 @@ public class PlayerMovement : Core
 
     private void FaceInput()
     {
-        if (CurrrentMovementInput != Vector2.zero)
+        if (CurrentMovementInput != Vector2.zero)
         {
-            targetAngle = Mathf.Atan2(CurrrentMovementInput.x, CurrrentMovementInput.y) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
+            targetAngle = Mathf.Atan2(CurrentMovementInput.x, CurrentMovementInput.y) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
             angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
         }

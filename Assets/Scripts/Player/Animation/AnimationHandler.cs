@@ -7,4 +7,5 @@ public class AnimationHandler : MonoBehaviour
     {
         PlayerEvents.OnAttackFinished();
     }
+
 }
