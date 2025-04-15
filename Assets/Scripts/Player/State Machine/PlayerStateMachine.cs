@@ -45,6 +45,7 @@ public class PlayerStateMachine : MonoBehaviour
 
 
     [Header("Dash")]
+    private bool _isDashButtonPressed;
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashCooldownTime;
     private float dashVelocity;
@@ -249,8 +250,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     }
 
-    private void HandleDash()
+    private void HandleDash( bool isDashing)
     {
+        _isDashButtonPressed = isDashing;
         if (!dashInCooldown && _groundSensor.IsGrounded())
         {
             Vector3 dashDir = _moveDirection == Vector3.zero ? transform.forward : _moveDirection;
@@ -283,8 +285,8 @@ public class PlayerStateMachine : MonoBehaviour
         if (_currentMovementInput != Vector2.zero)
         {
             targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg + _mainCameraRef.transform.eulerAngles.y;
-            angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
+            angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
     }

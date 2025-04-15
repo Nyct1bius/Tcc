@@ -7,17 +7,20 @@ public class WeaponSO : ScriptableObject
     public float attackRange;
     public float weaponDamage;
     public GameObject weaponVisual;
+    private Transform _posToAttack;
     public void OnAttack(Transform posToAttack, LayerMask damageableLayer)
     {
-        foreach (Collider enemy in GetAllNearbyColliders(posToAttack, damageableLayer))
+        _posToAttack = posToAttack;
+        foreach (Collider enemy in GetAllNearbyColliders(damageableLayer))
         {
-            Debug.Log(enemy);
+         
             Vector3 vectorToCollider = enemy.transform.position - posToAttack.position;
             vectorToCollider = vectorToCollider.normalized;
 
-            if (Vector3.Dot(vectorToCollider, posToAttack.forward) > 0.5)
+            if (Vector3.Dot(vectorToCollider, posToAttack.forward) > 0.5f)
             {
-                if (!HasWallInfront(enemy.transform, posToAttack))
+             
+                if (!HasWallInfront(enemy.transform))
                 {
                     Debug.Log("Damage");
                     OnDamage(enemy);
@@ -26,19 +29,19 @@ public class WeaponSO : ScriptableObject
         }
     }
 
-    private Collider[] GetAllNearbyColliders(Transform posToOverlap, LayerMask damageableLayer)
+    private Collider[] GetAllNearbyColliders(LayerMask damageableLayer)
     {
-        return Physics.OverlapSphere(posToOverlap.position, attackRange, damageableLayer);
+        return Physics.OverlapSphere(_posToAttack.position, attackRange, damageableLayer);
     }
 
-    private bool HasWallInfront(Transform enemyTransform, Transform currentTransform)
+    private bool HasWallInfront(Transform enemyTransform)
     {
-        Vector3 direction = (enemyTransform.position - currentTransform.position).normalized;
-        Ray ray = new Ray(currentTransform.position, direction);
-
+        Vector3 direction = (enemyTransform.position - _posToAttack.position).normalized;
+        Ray ray = new Ray(_posToAttack.position, direction);
+        Debug.Log(enemyTransform);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.DrawLine(currentTransform.position, hit.transform.position, Color.red, 1f);
+            Debug.DrawLine(_posToAttack.position, hit.transform.position, Color.red, 1f);
             if (hit.transform != enemyTransform)
             {
                 return true;

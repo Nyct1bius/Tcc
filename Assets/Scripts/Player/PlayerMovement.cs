@@ -77,7 +77,6 @@ public class PlayerMovement : Core
     {
         inputReader.MoveEvent += SetUpMoveInput;
         inputReader.JumpEvent += HandleJump;
-        inputReader.DashEvent += HandleDash;
     }
 
 
@@ -85,7 +84,6 @@ public class PlayerMovement : Core
     {
         inputReader.MoveEvent -= SetUpMoveInput;
         inputReader.JumpEvent -= HandleJump;
-        inputReader.DashEvent -= HandleDash;
     }
 
 

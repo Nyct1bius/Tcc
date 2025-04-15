@@ -46,7 +46,7 @@ public class WalkState : State
 
     public void HandleHorizontalMovement()
     {
-       _ctx.CameraFowardXZ = _ctx.MainCameraRef.transform.forward.normalized;
+       _ctx.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
         _ctx.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
         _ctx.MoveDirection = _ctx.CameraRightXZ * _ctx.CurrentMovementInput.x + _ctx.CameraFowardXZ * _ctx.CurrentMovementInput.y;
 
