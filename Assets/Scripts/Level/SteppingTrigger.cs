@@ -19,12 +19,11 @@ public class SteppingTrigger : MonoBehaviour
     private void Awake()
     {
         triggerMeshRenderer = GetComponent<MeshRenderer>();
-        normalMat = GetComponent<Material>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMovement player = other.GetComponent<PlayerMovement>();
+        PlayerStateMachine player = other.GetComponent<PlayerStateMachine>();
 
         if(player != null )
         {
@@ -56,13 +55,13 @@ public class SteppingTrigger : MonoBehaviour
     {
         float remainTime = time;
         if (timerSlider) timerSlider.maxValue = time;
-        UIHolder.SetActive(true);
+        if (UIHolder) UIHolder.SetActive(true);
 
         while(remainTime > 0)
         {
             if(timerText) timerText.text = Mathf.CeilToInt(remainTime).ToString();
             if(timerSlider) timerSlider.value = remainTime;
-
+            print(remainTime);
             yield return null;
             remainTime -= Time.deltaTime;
         }
@@ -70,7 +69,7 @@ public class SteppingTrigger : MonoBehaviour
         DeactivateTrigger();
         if (timerText) timerText.text = "0";
         if (timerSlider) timerSlider.value = 0;
-        StartCoroutine(UIHolderDeactivation());
+        if (UIHolder) StartCoroutine(UIHolderDeactivation());
 
         Debug.Log("Countdown complete!");
         countdownCoroutine = null;
