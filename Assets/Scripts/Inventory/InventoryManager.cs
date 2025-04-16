@@ -40,6 +40,17 @@ public class InventoryManager : MonoBehaviour
     public List<string> itemDescriptions;
     public List<string> itemNames;
 
+    public GameObject inventario;
+    public GameObject mainMenu;
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            inventario.SetActive(false);
+            mainMenu.SetActive(true);
+        }
+    }
     public void GetIten(string name)
     {
         Item existingItem = itens.Find(item => item.name == name);
