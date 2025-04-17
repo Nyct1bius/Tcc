@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -12,6 +14,8 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     public event UnityAction<bool> AttackEvent;
     public event UnityAction <bool>DashEvent;
     public event UnityAction InteractEvent;
+    public event UnityAction PauseEvent;
+
 
     private PlayerInputs inputs;
     private void OnEnable()
@@ -23,11 +27,13 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
         }
 
         inputs.Enable();
+        GameEvents.ResumeGame += ResumeGameByUIButton;
     }
 
     private void OnDisable()
     {
         inputs.Disable();
+        GameEvents.ResumeGame -= ResumeGameByUIButton;
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -42,7 +48,10 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        InteractEvent?.Invoke();
+        if (context.performed)
+        {
+            InteractEvent?.Invoke();
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -53,5 +62,46 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnOpenMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PauseEvent?.Invoke();
+            MenuInputs(true);
+        }
+     
+    }
+
+    private void OnCloseMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PauseEvent?.Invoke();
+            MenuInputs();
+        }
+    
+    }
+
+    private void ResumeGameByUIButton()
+    {
+        MenuInputs();
+    }
+
+    private void MenuInputs(bool isEneable = false)
+    {
+        if (isEneable)
+        {
+            inputs.UI.Enable();
+            inputs.UI.CloseMenu.performed += OnCloseMenu;
+            inputs.PlayerControls.Disable();
+        }
+        else
+        {
+            inputs.UI.CloseMenu.performed -= OnCloseMenu;
+            inputs.UI.Disable();
+            inputs.PlayerControls.Enable();
+        }
     }
 }

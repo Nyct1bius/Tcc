@@ -54,4 +54,5 @@ public class WalkState : State
         _ctx.HorizontalVelocity += _ctx.MovementDelta;
         _ctx.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.HorizontalVelocity, _ctx.MaxWalkSpeed);
     }
+
 }

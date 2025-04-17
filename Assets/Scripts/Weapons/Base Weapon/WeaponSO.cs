@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapons/ New Weapon")]
@@ -7,6 +8,12 @@ public class WeaponSO : ScriptableObject
     public float attackRange;
     public float weaponDamage;
     public GameObject weaponVisual;
+    public enum WeaponType
+    {
+        Sword,
+        Spear,
+    }
+    public WeaponType Type;
     private Transform _posToAttack;
     public void OnAttack(Transform posToAttack, LayerMask damageableLayer)
     {

@@ -40,5 +40,9 @@ public class PlayerStateFactory
         return new FallState(_contex, this);
     }
 
+    public State PausedState()
+    {
+        return new PausedState(_contex, this);
+    }
 
 }

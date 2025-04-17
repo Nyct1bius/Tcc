@@ -2,21 +2,18 @@ using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
    public static GameManager instance;
     //Player Variables
-    [SerializeField] private GameObject playerObj;
-    [SerializeField] private CinemachineCamera cnCamera;
-    [SerializeField] private Camera minimapCamera;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private CinemachineCamera cnCameraPrefab;
+    [SerializeField] private Camera minimapCameraPrefab;
     private CinemachineCamera cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
     public Transform checkPoint;
-
-
-
-
     public GameObject playerInstance { get; private set; }
     
     
@@ -24,14 +21,16 @@ public class GameManager : MonoBehaviour
 
 
     //Gameplay States
-    public enum GameplayStates
+    public enum GameStates
     {
+        Started,
+        RunningGame,
         Paused,
-        Playing,
-        GameIsOver
+        Resume,
+        Respawn,
+        GameOver
     }
-    public GameplayStates currentState;
-
+    public GameStates State;
     private void Awake()
     {
         if (instance == null)
@@ -44,40 +43,76 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void SelectGameplayState()
+    private void OnEnable()
     {
-        switch(currentState)
-        {
-            case GameplayStates.Playing:
-                PlayingEnter();
-                break;
-            case GameplayStates.Paused:
-                break;
+        GameEvents.PauseGame += OnGamePaused;
+        GameEvents.ResumeGame += OnGameResume;
+    }
+    private void OnDisable()
+    {
+        GameEvents.PauseGame -= OnGamePaused;
+        GameEvents.ResumeGame -= OnGameResume;
+    }
 
-            case GameplayStates.GameIsOver:
+    public void ChangeGameState(GameStates newState)
+    {
+        State = newState;
+        Debug.Log("Game State = " + State);
+        switch(State)
+        {
+            case GameStates.Started:
+                OnEnterGame();
+                break;
+            case GameStates.RunningGame:
+                OnGame();
+                break;
+            case GameStates.Paused:
+                break;
+            case GameStates.Resume:
+                break;
+            case GameStates.GameOver:
                 break;
         }
     }
 
-    private void PlayingEnter()
+    private void OnEnterGame()
+    {
+       
+        //do something more when the game is initializing
+
+
+        ChangeGameState(GameStates.RunningGame);
+    }
+
+    private void OnGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+    }
+
+    private void OnGamePaused()
+    {
+        ChangeGameState(GameStates.Paused);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void OnGameResume()
+    {
+        State = GameStates.Resume;
+        ChangeGameState(GameStates.RunningGame);
     }
 
     public void SpawnPlayer(Transform spawnPoint)
     {
-        playerInstance = Instantiate(playerObj, spawnPoint.position , spawnPoint.rotation);
-        cnCameraRef = Instantiate(cnCamera, spawnPoint.position, Quaternion.identity);
-        Instantiate(minimapCamera);
+        ChangeGameState(GameStates.Started);
+        playerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
+        cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
+        Instantiate(minimapCameraPrefab);
 
         cnCameraRef.Follow = playerInstance.transform;
         cnCameraRef.LookAt = playerInstance.transform;
 
         checkPoint = spawnPoint;
-
-        currentState = GameplayStates.Playing;
-        SelectGameplayState();
     }
 
 
@@ -96,8 +131,8 @@ public class GameManager : MonoBehaviour
         oldCnCameraRef = cnCameraRef;
         oldCnCameraRef.Priority = 0;
         yield return new WaitForSeconds(1f);
-        cnCameraRef = Instantiate(cnCamera, playerInstance.transform.position, Quaternion.identity);
-        cnCamera.Priority = 1;
+        cnCameraRef = Instantiate(cnCameraPrefab, playerInstance.transform.position, Quaternion.identity);
+        cnCameraPrefab.Priority = 1;
         cnCameraRef.Follow = playerInstance.transform;
         cnCameraRef.LookAt = playerInstance.transform;
         yield return new WaitForSeconds(2f);

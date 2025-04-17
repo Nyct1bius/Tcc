@@ -36,6 +36,7 @@ public abstract class State
     }
     protected void SwitchStates(State newState) 
     {
+        _ctx.OldState = _ctx.CurrentState;
         //Current State exit 
         Exit();
 

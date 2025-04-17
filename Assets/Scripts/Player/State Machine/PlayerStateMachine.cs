@@ -31,7 +31,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     //State variables
     State _currentState;
+    State _oldState;
     PlayerStateFactory _states;
+    private bool _gameIsPaused;
 
 
 
@@ -70,7 +72,6 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Transform _attackCollisionCheck;
     [SerializeField] private Transform _weaponPos;
     [SerializeField] private WeaponSO _currentWeaponData;
-    private bool _hasWeapon;
     private GameObject _currentWeaponVisual;
 
 
@@ -89,14 +90,15 @@ public class PlayerStateMachine : MonoBehaviour
     #region Getters/Setters
 
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
+    public bool GameIsPaused { get { return _gameIsPaused; } }
+    public State OldState { get { return _oldState; } set { _oldState = value; } }
 
 
     //COMPONENTS
     public Animator Animator { get { return animator; } }
-    public Rigidbody Body { get { return _body; } }
+    public Rigidbody Body { get { return _body; }}
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
-    
     public Transform PlayerTransform { get { return transform; } }
 
     //Phisycs
@@ -165,6 +167,8 @@ public class PlayerStateMachine : MonoBehaviour
         inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
+        GameEvents.PauseGame += OnPauseGame;
+        GameEvents.ResumeGame += OnResumeGame;
     }
 
 
@@ -176,18 +180,37 @@ public class PlayerStateMachine : MonoBehaviour
         inputReader.AttackEvent -= CheckAttackButton;
         PlayerEvents.SwordPickUp -= AddSword;
         PlayerEvents.AttackFinished -= HandleResetAttack;
+        GameEvents.PauseGame -= OnPauseGame;
+        GameEvents.ResumeGame -= OnResumeGame;
     }
     private void Update()
     {     
-        FaceInput();
         _currentState.UpdateStates();
     }
     private void FixedUpdate()
     {
         _currentState.FixedUpdateStates();
-        ApplyGravity();
-        ApplyFinalVelocity();
+        if (!_gameIsPaused)
+        {
+            FaceInput();
+            ApplyGravity();
+            ApplyFinalVelocity();
+        }
     }
+
+    #region Game States
+    private void OnPauseGame()
+    {
+        _gameIsPaused = true;
+    }
+    private void OnResumeGame()
+    {
+        _gameIsPaused = false;
+    }
+
+    #endregion
+
+
     #region Combat
 
     private void AddSword(WeaponSO currentWeapon)
@@ -197,7 +220,6 @@ public class PlayerStateMachine : MonoBehaviour
             Destroy(_currentWeaponVisual);
         }
         _currentWeaponData = currentWeapon;
-        _hasWeapon = true;
         _currentWeaponVisual = Instantiate(_currentWeaponData.weaponVisual, _weaponPos);
 
 

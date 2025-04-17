@@ -1,4 +1,3 @@
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class JumpState : State
@@ -21,10 +20,6 @@ public class JumpState : State
 
     public override void Do() 
     {
-
-
-
-        CheckIfStillJumping();
         _timeSinceEntered += Time.deltaTime;
         if (_timeSinceEntered >= _switchDelay)
         {
@@ -34,6 +29,7 @@ public class JumpState : State
     }
     public override void FixedDo()
     {
+        CheckIfStillJumping();
     }
     public override void Exit()
     {
@@ -85,7 +81,7 @@ public class JumpState : State
     }
     private void CancelJump()
     {
-        _ctx.Body.AddForce(Vector3.up * _ctx.Gravity / 4, ForceMode.Force);
+        _ctx.Body.AddForce(Vector3.up * _ctx.Gravity, ForceMode.Force);
     }
 
 }

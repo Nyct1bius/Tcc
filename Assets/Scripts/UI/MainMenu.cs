@@ -10,28 +10,9 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField]
     private GameObject _mainMenuScreen;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("p") && !paused)
-        {
-            _mainMenuScreen.SetActive(true);
-            paused = true;
-            //Debug.Log("pausado");
-        }
-        else if(Input.GetKeyDown("p") && paused)
-        {
-            _mainMenuScreen.SetActive(false);
-            paused = false;
-            //Debug.Log("Não pausado");
-        }
 
         if (Input.GetKeyDown("l"))
         {
@@ -61,7 +42,6 @@ public class MainMenu : MonoBehaviour
 
 
     }
-
     public void Title()
     {
         SceneManager.LoadSceneAsync("Title Screen");
