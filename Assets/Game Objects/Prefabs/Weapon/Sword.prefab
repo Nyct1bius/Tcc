@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.6, y: 2.6, z: 2.6}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
   isImportantItem: 1
   visual: {fileID: 4124007066082251504, guid: 83b7fb60f14326a48b5e05373ce730d3, type: 3}
   weaponData: {fileID: 11400000, guid: 65ecfab748b1d7348b1054235ed0dab7, type: 2}
+  height: 0
 --- !u!135 &4118018958051425255
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -122,5 +123,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}

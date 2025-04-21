@@ -7,14 +7,16 @@ public class PlayerInteractionsManager : MonoBehaviour
     private InputReader inputReader;
     [SerializeField] private GameObject uiPickUp;
     [SerializeField] private Notifier notifier;
-    private IInteractable currentInteractable;
+    [SerializeField] private float uiOffset;
+    private Item currentInteractable;
     private Transform currentItemTransform;
     private GameObject uiSpawned;
 
 
     //Itens
-    private List<IInteractable> interactableItens = new List<IInteractable>();
-    private List<GameObject> uiSpawneds = new List<GameObject>();
+    private List<Item> interactableItens = new List<Item>();
+    private List<GameObject> spawnedUIs = new List<GameObject>();
+    private float itemHeight;
 
 
     //CheckPoint
@@ -35,7 +37,7 @@ public class PlayerInteractionsManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        currentInteractable = other.GetComponent<IInteractable>();
+        currentInteractable = other.GetComponent<Item>();
         if (currentInteractable != null)
         {
             currentItemTransform = other.transform;
@@ -55,21 +57,21 @@ public class PlayerInteractionsManager : MonoBehaviour
     {
         if (interactableItens.Count != 0)
         {
-            IInteractable exitItem = other.GetComponent<IInteractable>();
+            Item exitItem = other.GetComponent<Item>();
            CleanListOfItens(exitItem);
         }
     }
 
-    private void CleanListOfItens(IInteractable exitItem)
+    private void CleanListOfItens(Item exitItem)
     {
         for (int i = 0; i < interactableItens.Count; i++)
         {
             if (exitItem == interactableItens[i])
             {
                 interactableItens.Remove(interactableItens[i]);
-                Destroy(uiSpawneds[i]);
+                Destroy(spawnedUIs[i]);
 
-                uiSpawneds.RemoveAt(i);
+                spawnedUIs.RemoveAt(i);
             }
 
         }
@@ -78,9 +80,9 @@ public class PlayerInteractionsManager : MonoBehaviour
     private void SetupItensToInteract()
     {
         hasItemToInteract = true;
-        uiSpawned = Instantiate(uiPickUp, currentItemTransform.position + Vector3.up * 2, Quaternion.identity, currentItemTransform);
+        uiSpawned = Instantiate(uiPickUp, currentItemTransform.position + Vector3.up * (currentInteractable.height + uiOffset), Quaternion.identity); 
         interactableItens.Add(currentInteractable);
-        uiSpawneds.Add(uiSpawned);
+        spawnedUIs.Add(uiSpawned);
     }
 
 
@@ -96,6 +98,9 @@ public class PlayerInteractionsManager : MonoBehaviour
                 interactableItens[i].OnPickedUp();
                 notifier.NotifyGreen("Collected: " + interactableItens[i]);
                 interactableItens.Remove(interactableItens[i]);
+                Destroy(spawnedUIs[i]);
+
+                spawnedUIs.RemoveAt(i);
             }
         }
     }
