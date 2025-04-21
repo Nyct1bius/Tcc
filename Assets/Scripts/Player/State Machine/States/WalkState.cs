@@ -10,7 +10,6 @@ public class WalkState : State
 
     public override void Enter()
     {
-        Debug.Log("Enter WalkState");
          
     }
     public override void FixedDo()

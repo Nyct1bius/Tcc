@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera minimapCameraPrefab;
     private CinemachineCamera cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
-    public Transform checkPoint;
+    private Vector3 _checkpoint;
     public GameObject playerInstance { get; private set; }
     
     
@@ -112,9 +112,12 @@ public class GameManager : MonoBehaviour
         cnCameraRef.Follow = playerInstance.transform;
         cnCameraRef.LookAt = playerInstance.transform;
 
-        checkPoint = spawnPoint;
+        _checkpoint = spawnPoint.position;
     }
-
+    public void SetCheckpoint(Vector3 newCheckpoint)
+    {
+        _checkpoint = newCheckpoint;
+    }
 
     public void RespawnPlayer()
     {
@@ -127,7 +130,7 @@ public class GameManager : MonoBehaviour
         cnCameraRef.Follow = null;
         cnCameraRef.LookAt = null;
         yield return new WaitForSeconds(3f);
-        playerInstance.transform.position = checkPoint.position;
+        playerInstance.transform.position = _checkpoint;
         oldCnCameraRef = cnCameraRef;
         oldCnCameraRef.Priority = 0;
         yield return new WaitForSeconds(1f);

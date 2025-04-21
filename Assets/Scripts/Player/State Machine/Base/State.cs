@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public abstract class State
 {
     protected bool isRootState = false;
@@ -44,11 +46,12 @@ public abstract class State
         if (isRootState)
         {
             _ctx.CurrentState = newState;
-        }else if(_currentSuperState != null)
+        }
+        else if(_currentSuperState != null)
         {
             _currentSuperState.SetSubState(newState);
         }
-        
+        Debug.Log("Player State = " + newState);
     }
     protected void SetSuperState(State newSuperState) 
     {
