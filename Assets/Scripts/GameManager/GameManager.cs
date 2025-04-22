@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     public void ChangeGameState(GameStates newState)
     {
         State = newState;
-        Debug.Log("Game State = " + State);
+        Debug.Log("Game State: " + State);
         switch(State)
         {
             case GameStates.Started:

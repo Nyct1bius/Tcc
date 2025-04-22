@@ -45,23 +45,23 @@ public class AttackState : State
     {
         if (!_ctx.AttackIncooldown)
         {
-            _ctx.AttackIncooldown = true;
-            _ctx.Animator.SetFloat("AttackCount", _ctx.AttackCount);
-            Debug.Log("Attack");
             SelectAttack();
+            Debug.Log(_ctx.AttackIncooldown);
         }
     }
 
     public void SelectAttack()
     {
         _ctx.CurrentWeaponData.OnAttack(_ctx.PlayerTransform, _ctx.DamageableLayer);
-
+        _ctx.Animator.SetFloat("AttackCount", _ctx.AttackCount);
         _ctx.AttackCount++;
 
         if (_ctx.AttackCount >= 3)
         {
             _ctx.AttackCount = 0;
         }
+
+        _ctx.AttackIncooldown = true;
 
     }
 }

@@ -38,7 +38,14 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        AttackEvent?.Invoke(context.performed);
+        if (context.performed)
+        {
+            AttackEvent?.Invoke(true);
+        }
+        if (context.canceled)
+        {
+            AttackEvent?.Invoke(false);
+        }
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -56,7 +63,14 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        JumpEvent?.Invoke(context.performed);
+        if (context.performed)
+        {
+            JumpEvent?.Invoke(true);
+        }
+        if (context.canceled)
+        {
+            JumpEvent?.Invoke(false);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -93,9 +107,9 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     {
         if (isEneable)
         {
+            inputs.PlayerControls.Disable();
             inputs.UI.Enable();
             inputs.UI.CloseMenu.performed += OnCloseMenu;
-            inputs.PlayerControls.Disable();
         }
         else
         {

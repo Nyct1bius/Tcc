@@ -51,7 +51,6 @@ public abstract class State
         {
             _currentSuperState.SetSubState(newState);
         }
-        Debug.Log("Player State = " + newState);
     }
     protected void SetSuperState(State newSuperState) 
     {

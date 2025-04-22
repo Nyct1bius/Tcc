@@ -232,12 +232,12 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void HandleResetAttack()
     {
-        StartCoroutine(WaitToResetAttack());
+        _attackIncooldown = false;
     }
     private IEnumerator WaitToResetAttack()
     {
         yield return new WaitForSeconds(_timeBetweenAttacks);
-        _attackIncooldown = false;
+      
     }
     private void OnDrawGizmos()
     {
