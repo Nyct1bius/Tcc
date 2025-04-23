@@ -1,69 +1,69 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyMeleeCombat : MonoBehaviour
 {
-    [SerializeField] private float timeBetweenAttacks = 1.5f;
-
     [Header("References")]
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject attackHitbox;
-    [SerializeField] private float targetDistanceToPlayer;
+    [SerializeField] GameObject player;
+    Transform playerPosition;
+    [SerializeField] GameObject attackHitbox;
+    public EnemyStats stats;
+    [SerializeField] NavMeshAgent agent;
+    Animator animator;
 
-    private Vector3 playerXZ;
-    private bool attacked = false;
+    bool hasAttacked = false;
+    float minimumDistanceToPlayer = 5;
 
-    //Temporary
-    private Color originalColor;
-    private Renderer enemyRenderer;
-
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
 
     private void Start()
     {
-        player = GameManager.instance.playerInstance;
-        playerXZ = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-
-        enemyRenderer = GetComponent<Renderer>();
-        originalColor = enemyRenderer.material.color;
+        //player = GameManager.instance.playerInstance;
+        playerPosition = player.transform;
     }
 
-    void Update()
+    private void Update()
     {
-        MoveToTarget();
-    }
+        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition.position);
 
-    void MoveToTarget()
-    {
-        float distanceToPlayer = Vector3.Distance(transform.position, playerXZ);
-
-        if (distanceToPlayer > targetDistanceToPlayer)
+        if (distanceToPlayer > minimumDistanceToPlayer)
         {
-            MoveTowardsPlayer(2.5f);
-        }
-        if (distanceToPlayer <= targetDistanceToPlayer && !attacked)
-        {
-            StartCoroutine(Attack());
-            attacked = true;
-        }
-    }
+            agent.SetDestination(playerPosition.position);
 
-    private void MoveTowardsPlayer(float enemySpeed)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, playerXZ, enemySpeed * Time.deltaTime);
+            AnimatorSetMoving();
+        }
+        else
+        {
+            agent.ResetPath();
+
+            AnimatorSetIdle();
+
+            transform.LookAt(playerPosition.position);
+
+            if (!hasAttacked)
+            {
+                StartCoroutine(Attack());
+
+                Debug.Log("Attacked");
+
+                hasAttacked = true;
+            }
+        }
     }
 
     private IEnumerator Attack()
-    {
-        yield return new WaitForSeconds(timeBetweenAttacks);
+    { 
+        yield return new WaitForSeconds(stats.TimeBetweenAttacks);
 
-        Debug.Log("Attack");
+        AnimatorMelee();
 
-        // Temporary
-        StartCoroutine(ChangeColorWhenAttacking());
+        //StartCoroutine(AttackHitboxOnThenOff());
 
-        StartCoroutine(AttackHitboxOnThenOff());
-
-        attacked = false;
+        hasAttacked = false;
     }
 
     private IEnumerator AttackHitboxOnThenOff()
@@ -75,13 +75,42 @@ public class EnemyMeleeCombat : MonoBehaviour
         attackHitbox.SetActive(false);
     }
 
-    // Temporary
-    private IEnumerator ChangeColorWhenAttacking()
+    public void MeleeAttack()
     {
-        enemyRenderer.material.color = Color.yellow;
+        StartCoroutine(AttackHitboxOnThenOff());
+    }
 
-        yield return new WaitForSeconds(0.2f);
+    private void AnimatorSetIdle()
+    {
+        //animator.SetBool("Moving", false);
+        animator.SetBool("Idle", true);
+    }
 
-        enemyRenderer.material.color = originalColor;
+    private void AnimatorSetMoving()
+    {
+        //animator.SetBool("Idle", false);
+        //animator.SetBool("Moving", true);
+    }
+
+    private void AnimatorMelee()
+    {
+        animator.SetTrigger("Melee");
+    }
+
+    private void AnimatorRanged()
+    {
+        animator.SetTrigger("Ranged");
+    }
+
+    public void AnimatorHit()
+    {
+        //animator.SetTrigger("Hit");
+    }
+
+    public void AnimatorSetDead()
+    {
+        animator.SetBool("Idle", false);
+        //animator.SetBool("Moving", false);
+        animator.SetBool("Dead", true);
     }
 }

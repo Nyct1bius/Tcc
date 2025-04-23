@@ -6,7 +6,7 @@ public class EnemyMeleeHitbox : MonoBehaviour
     {
         if (other.GetComponent<PlayerMovement>())
         {
-            other.GetComponent<PlayerHealthManager>();
+            other.GetComponent<PlayerHealthManager>().Damage(10);
         }
     }
 }
