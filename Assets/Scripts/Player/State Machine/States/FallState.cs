@@ -12,7 +12,6 @@ public class FallState : State
     private float _switchDelay = 0.3f;
     public override void Enter()
     {
-
         _timeSinceEntered = 0f;
         _ctx.Animator.SetBool("IsFalling", true);
 
@@ -31,6 +30,7 @@ public class FallState : State
     public override void FixedDo()
     {
        
+        _ctx.Body.AddForce(Vector3.up * _ctx.Gravity, ForceMode.Force);
     }
 
     public override void InitializeSubState()

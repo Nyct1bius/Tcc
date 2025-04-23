@@ -71,7 +71,7 @@ public class JumpState : State
 
         _ctx.ButtonPressedTime += Time.deltaTime;
 
-        if (_ctx.ButtonPressedTime < _ctx.MaxJumpTime && !_ctx.IsJumpButtonPressed)
+        if (_ctx.ButtonPressedTime > _ctx.MaxJumpTime || !_ctx.IsJumpButtonPressed)
         {
             CancelJump();
         }

@@ -96,7 +96,7 @@ public class PlayerInteractionsManager : MonoBehaviour
             for(int i = 0; i < interactableItens.Count; i++)
             {
                 interactableItens[i].OnPickedUp();
-                notifier.NotifyGreen("Collected: " + interactableItens[i]);
+                notifier.NotifyGreen("Collected: " + interactableItens[i].name);
                 interactableItens.Remove(interactableItens[i]);
                 Destroy(spawnedUIs[i]);
 
