@@ -23,6 +23,8 @@ public class EnemyRangedCombat : MonoBehaviour
     private void Start()
     {
         AnimatorSetIdle();
+
+        playerPosition = player.transform;
     }
 
     private void Update()
@@ -54,14 +56,9 @@ public class EnemyRangedCombat : MonoBehaviour
 
         AnimatorRanged();
 
-        //Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);    
+        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);    
 
         hasAttacked = false;
-    }
-
-    public void Shoot()
-    {
-        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);
     }
 
     private bool CanSeePlayer()
