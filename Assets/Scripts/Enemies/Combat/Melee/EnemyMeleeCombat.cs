@@ -25,12 +25,15 @@ public class EnemyMeleeCombat : MonoBehaviour
         AnimatorSetIdle();
 
         player = stats.Player;
-
-        playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
     }
 
     private void Update()
     {
+        if (player != null)
+        {
+            playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+        }
+
         float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
 
         if (distanceToPlayer > minimumDistanceToPlayer)
@@ -64,7 +67,7 @@ public class EnemyMeleeCombat : MonoBehaviour
 
         AnimatorMelee();
 
-        StartCoroutine(AttackHitboxOnThenOff());
+        //StartCoroutine(AttackHitboxOnThenOff());
 
         hasAttacked = false;
     }
@@ -73,7 +76,7 @@ public class EnemyMeleeCombat : MonoBehaviour
     {
         attackHitbox.SetActive(true);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1);
 
         attackHitbox.SetActive(false);
     }

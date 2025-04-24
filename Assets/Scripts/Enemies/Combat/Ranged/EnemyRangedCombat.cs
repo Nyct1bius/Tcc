@@ -25,12 +25,12 @@ public class EnemyRangedCombat : MonoBehaviour
         AnimatorSetIdle();
 
         player = stats.Player;
-
-        playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
     }
 
     private void Update()
     {
+        playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+
         if (player == null) return;
 
         if (CanSeePlayer())

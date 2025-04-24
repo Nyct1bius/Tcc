@@ -6,10 +6,16 @@ public class PlayerSpawner : MonoBehaviour
     public float height = 2f;
     public Color gizmoColor = Color.green;
 
-    private void Start()
+    private void Awake()
     {
         GameManager.instance.SpawnPlayer(transform);
     }
+
+    private void Start()
+    {
+        //GameManager.instance.SpawnPlayer(transform);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColor;

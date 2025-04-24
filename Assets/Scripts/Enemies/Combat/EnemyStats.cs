@@ -7,7 +7,7 @@ public class EnemyStats : MonoBehaviour, IHealth
 {
     public float MaxHealth, TimeBetweenAttacks, MovementSpeed;
 
-    private float currentHealth;
+    [SerializeField] private float currentHealth;
 
     private bool isAlive = true;
 
