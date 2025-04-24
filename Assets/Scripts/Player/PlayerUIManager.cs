@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
+    public static PlayerUIManager Instance;
+
     [Header("Player Hud")]
     [SerializeField] private GameObject _playerHud;
 
@@ -13,6 +15,11 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private PlayerStatsSO _stats;
     [SerializeField] private Slider _healthSlider;
 
+    [Header("Timers")]
+    [SerializeField] public GameObject _uiHolder;
+    [SerializeField] public TextMeshProUGUI _timeText;
+    [SerializeField] public Slider _timeSlider;
+
 
     [Header("Pause")]
     private bool paused = false;
@@ -20,7 +27,13 @@ public class PlayerUIManager : MonoBehaviour
 
     [SerializeField] private GameObject _mainMenuScreen;
 
-
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
     private void OnEnable()
     {
         _inputs.PauseEvent += OpenPauseMenu;
