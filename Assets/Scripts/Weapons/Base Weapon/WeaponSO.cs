@@ -26,12 +26,12 @@ public class WeaponSO : ScriptableObject
 
             if (Vector3.Dot(vectorToCollider, posToAttack.forward) > 0.5f)
             {
-             
-                if (!HasWallInfront(enemy.transform))
-                {
-                    Debug.Log("Damage");
-                    OnDamage(enemy);
-                }
+                Debug.Log("Damage");
+                OnDamage(enemy);
+
+                //if (!HasWallInfront(enemy.transform))
+                //{
+                //}
             }
         }
     }
@@ -45,7 +45,6 @@ public class WeaponSO : ScriptableObject
     {
         Vector3 direction = (enemyTransform.position - _posToAttack.position).normalized;
         Ray ray = new Ray(_posToAttack.position, direction);
-        Debug.Log(enemyTransform);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Debug.DrawLine(_posToAttack.position, hit.transform.position, Color.red, 1f);

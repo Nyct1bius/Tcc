@@ -8,12 +8,12 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.instance.SpawnPlayer(transform);
+        //GameManager.instance.SpawnPlayer(transform);
     }
 
     private void Start()
     {
-        //GameManager.instance.SpawnPlayer(transform);
+        GameManager.instance.SpawnPlayer(transform);
     }
 
     private void OnDrawGizmos()
