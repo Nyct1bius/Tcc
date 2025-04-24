@@ -20,6 +20,19 @@ public class SteppingTrigger : MonoBehaviour
     {
         triggerMeshRenderer = GetComponent<MeshRenderer>();
     }
+    private void Start()
+    {
+        if(PlayerUIManager.Instance)
+        {
+            UIHolder = PlayerUIManager.Instance._uiHolder;
+            timerSlider = PlayerUIManager.Instance._timeSlider;
+            timerText = PlayerUIManager.Instance._timeText;
+        }
+        for (int i = 0; i < ButtonsToActivate.Length; i++)
+        {
+            ButtonsToActivate[i].steppingTrigger = this;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -73,6 +86,12 @@ public class SteppingTrigger : MonoBehaviour
 
         Debug.Log("Countdown complete!");
         countdownCoroutine = null;
+    }
+
+    public void ButtonPressedDeactivation()
+    {
+        StopCoroutine(countdownCoroutine);
+        StartCoroutine(UIHolderDeactivation());
     }
 
     private IEnumerator UIHolderDeactivation()

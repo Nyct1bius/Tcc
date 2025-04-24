@@ -7,6 +7,7 @@ public class Button : MonoBehaviour,IHealth
     [SerializeField] Door doorToOpen;
     [SerializeField] private Material newMat;
     private MeshRenderer meshRenderer;
+    public SteppingTrigger steppingTrigger;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class Button : MonoBehaviour,IHealth
         if (isActivated)
         {
             isPressed = true;
+            steppingTrigger.ButtonPressedDeactivation();
             Debug.Log("OpenDoor");
             doorToOpen.CheckIfAllButtonsIsActivated();
             meshRenderer.material = newMat;
