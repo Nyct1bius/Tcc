@@ -5,8 +5,8 @@ using UnityEngine.AI;
 public class EnemyMeleeCombat : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] GameObject player;
-    Transform playerPosition;
+    GameObject player;
+    Vector3 playerPosition;
     [SerializeField] GameObject attackHitbox;
     public EnemyStats stats;
     [SerializeField] NavMeshAgent agent;
@@ -22,17 +22,20 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     private void Start()
     {
-        //player = GameManager.instance.playerInstance;
-        playerPosition = player.transform;
+        AnimatorSetIdle();
+
+        player = stats.Player;
+
+        playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
     }
 
     private void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
 
         if (distanceToPlayer > minimumDistanceToPlayer)
         {
-            agent.SetDestination(playerPosition.position);
+            agent.SetDestination(playerPosition);
 
             AnimatorSetMoving();
         }
@@ -42,7 +45,7 @@ public class EnemyMeleeCombat : MonoBehaviour
 
             AnimatorSetIdle();
 
-            transform.LookAt(playerPosition.position);
+            transform.LookAt(playerPosition);
 
             if (!hasAttacked)
             {
@@ -61,7 +64,7 @@ public class EnemyMeleeCombat : MonoBehaviour
 
         AnimatorMelee();
 
-        //StartCoroutine(AttackHitboxOnThenOff());
+        StartCoroutine(AttackHitboxOnThenOff());
 
         hasAttacked = false;
     }

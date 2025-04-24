@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    private Transform playerPosition;
+    GameObject player;
+    Transform playerPosition;
 
     public float Speed;
 
-    private Vector3 targetDirection;
+    Vector3 targetDirection;
 
     private void Start()
     {
-        //player = GameManager.instance.playerInstance;
+        player = GameManager.instance.playerInstance;
         playerPosition = player.transform;
 
         targetDirection = (playerPosition.position - transform.position).normalized;

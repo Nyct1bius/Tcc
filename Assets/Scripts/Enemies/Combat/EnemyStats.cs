@@ -15,6 +15,8 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     private NavMeshAgent agent;
 
+    public GameObject Player;
+
     void Awake()
     {
         currentHealth = MaxHealth;
@@ -28,6 +30,8 @@ public class EnemyStats : MonoBehaviour, IHealth
         {
             agent.speed = MovementSpeed;
         }
+
+        Player = GameManager.instance.playerInstance;
     }
 
     void Update()

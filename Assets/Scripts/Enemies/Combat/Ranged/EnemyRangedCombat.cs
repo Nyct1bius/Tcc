@@ -5,8 +5,8 @@ using UnityEngine.AI;
 public class EnemyRangedCombat : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] GameObject player;
-    Transform playerPosition;
+    GameObject player;
+    Vector3 playerPosition;
     [SerializeField] GameObject projectile;
     [SerializeField] Transform projectileSpawnPoint;
     public EnemyStats stats;
@@ -24,7 +24,9 @@ public class EnemyRangedCombat : MonoBehaviour
     {
         AnimatorSetIdle();
 
-        playerPosition = player.transform;
+        player = stats.Player;
+
+        playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
     }
 
     private void Update()
@@ -35,7 +37,7 @@ public class EnemyRangedCombat : MonoBehaviour
         {
             agent.isStopped = true;
 
-            transform.LookAt(playerPosition.position);
+            transform.LookAt(playerPosition);
 
             if (!hasAttacked)
             {
