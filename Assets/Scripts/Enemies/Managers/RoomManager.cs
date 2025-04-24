@@ -98,7 +98,7 @@ public class RoomManager : MonoBehaviour
             MyEnemies.Remove(enemy);
             if (MyEnemies.Count == 0)
             {
-                door.OpenDoor();
+                OpenTheDoor();
             }
         }
         else
@@ -119,7 +119,7 @@ public class RoomManager : MonoBehaviour
                     if(isThereWave3)
                         SpawnThirdWave();
                     else
-                        door.OpenDoor();
+                        OpenTheDoor();
                 }
             }
             else if (enemiesWave3.Contains(enemy))
@@ -127,9 +127,15 @@ public class RoomManager : MonoBehaviour
                 enemiesWave3.Remove(enemy);
                 if (enemiesWave3.Count == 0)
                 {
-                    door.OpenDoor();
+                    OpenTheDoor();
                 }
             }
         }
+    }
+
+    public void OpenTheDoor()
+    {
+        if(door != null)
+            door.OpenDoor();
     }
 }
