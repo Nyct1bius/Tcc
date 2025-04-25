@@ -19,6 +19,10 @@ public class DashState : State
 
     private void ApllyDashForce()
     {
+        _ctx.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
+        _ctx.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
+        _ctx.MoveDirection = _ctx.CameraRightXZ * _ctx.CurrentMovementInput.x + _ctx.CameraFowardXZ * _ctx.CurrentMovementInput.y;
+
         Vector3 dashDir = _ctx.MoveDirection == Vector3.zero ? _ctx.PlayerTransform.forward : _ctx.MoveDirection;
         _ctx.Body.AddForce(dashDir.normalized * _ctx.DashVelocity, ForceMode.Impulse);
         _ctx.DashInCooldown = true;
