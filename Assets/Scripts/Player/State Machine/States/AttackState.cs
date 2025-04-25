@@ -30,7 +30,7 @@ public class AttackState : State
 
     public override void CheckSwitchState()
     {
-        if (!_ctx.IsAttacking && !_ctx.AttackIncooldown)
+        if ( !_ctx.AttackIncooldown)
         {
             SwitchStates(_factory.Grounded());
         }
@@ -57,6 +57,7 @@ public class AttackState : State
 
         if (_ctx.AttackCount >= 3)
         {
+            _ctx.Body.AddForce(_ctx.transform.forward.normalized * 20f, ForceMode.Impulse);
             _ctx.AttackCount = 0;
         }
 
