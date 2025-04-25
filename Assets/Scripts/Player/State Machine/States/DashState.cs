@@ -20,7 +20,7 @@ public class DashState : State
     private void ApllyDashForce()
     {
         Vector3 dashDir = _ctx.MoveDirection == Vector3.zero ? _ctx.PlayerTransform.forward : _ctx.MoveDirection;
-        _ctx.Body.AddForce(dashDir.normalized * _ctx.DashVelocity * 2f, ForceMode.Impulse);
+        _ctx.Body.AddForce(dashDir.normalized * _ctx.DashVelocity, ForceMode.Impulse);
         _ctx.DashInCooldown = true;
     }
 

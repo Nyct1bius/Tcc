@@ -9,4 +9,7 @@ public static class PlayerEvents
     public static event UnityAction AttackFinished;
     public static void OnAttackFinished() => AttackFinished?.Invoke();
 
+    public static event UnityAction DashFinished;
+    public static void OnDashFinished() => DashFinished?.Invoke();
+
 }

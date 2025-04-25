@@ -3,9 +3,13 @@ using UnityEngine;
 public class AnimationHandler : MonoBehaviour
 {
    
-    public void OnAnimationFinished()
+    public void OnAtackAnimationFinished()
     {
         PlayerEvents.OnAttackFinished();
     }
 
+    public void OnDashAnimationFinished()
+    {
+        PlayerEvents.OnDashFinished();
+    }
 }

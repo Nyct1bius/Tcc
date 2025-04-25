@@ -50,7 +50,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private float _dashTime = 1f;
     [SerializeField] private float _dashCooldownTime;
     private bool _isDashButtonPressed;
-    private float _dashVelocity;
+    [SerializeField] private float _dashVelocity;
     private bool _dashInCooldown;
 
     [Header("Physics")]
@@ -190,7 +190,6 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(_currentState);
         _currentState.UpdateStates();
     }
     private void FixedUpdate()
@@ -261,7 +260,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         _jumpVelocity = MathF.Sqrt(jumpHeight * _gravity * -2) * _body.mass;
-        _dashVelocity = MathF.Sqrt(_dashDistance * -groundDecay * -2) * _body.mass;
+        _dashVelocity = MathF.Sqrt(_dashDistance * _gravity * -2) * _body.mass;
         
     }
 

@@ -46,7 +46,6 @@ public class AttackState : State
         if (!_ctx.AttackIncooldown)
         {
             SelectAttack();
-            Debug.Log(_ctx.AttackIncooldown);
         }
     }
 
