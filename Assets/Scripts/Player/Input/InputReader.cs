@@ -50,7 +50,14 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        DashEvent?.Invoke(context.performed);
+        if (context.performed)
+        {
+            DashEvent?.Invoke(true);
+        }
+        if (context.canceled)
+        {
+            DashEvent?.Invoke(false);
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)

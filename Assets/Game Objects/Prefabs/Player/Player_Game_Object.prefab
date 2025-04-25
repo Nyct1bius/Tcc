@@ -914,8 +914,9 @@ MonoBehaviour:
   _maxWalkSpeed: 2
   jumpHeight: 20
   _maxJumpTime: 0.5
-  dashDistance: 15
-  dashCooldownTime: 1
+  _dashDistance: 15
+  _dashTime: 0.5
+  _dashCooldownTime: 1
   _gravity: -50
   groundDecay: 30
   turnSmoothTime: 0.1
@@ -926,7 +927,7 @@ MonoBehaviour:
   _weaponPos: {fileID: 1740325602650998706}
   _currentWeaponData: {fileID: 0}
   _attackIncooldown: 0
-  _timeBetweenAttacks: 0.1
+  _timeBetweenAttacks: 0.3
   _jumpAnim: {fileID: 1827226128182048838, guid: 8be8f9bf3f16f184fb9719bd233874e6, type: 3}
   _idleAnim: {fileID: 1827226128182048838, guid: 423aabfede0896f4db862ab8e54dde30, type: 3}
   _walkAnim: {fileID: 1827226128182048838, guid: 4897d9e1e93439744a78d1cebdef17ff, type: 3}

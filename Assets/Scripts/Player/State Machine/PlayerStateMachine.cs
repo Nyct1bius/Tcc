@@ -47,11 +47,12 @@ public class PlayerStateMachine : MonoBehaviour
 
 
     [Header("Dash")]
+    [SerializeField] private float _dashDistance;
+    [SerializeField] private float _dashTime = 1f;
+    [SerializeField] private float _dashCooldownTime;
     private bool _isDashButtonPressed;
-    [SerializeField] private float dashDistance;
-    [SerializeField] private float dashCooldownTime;
-    private float dashVelocity;
-    private bool dashInCooldown;
+    private float _dashVelocity;
+    private bool _dashInCooldown;
 
     [Header("Physics")]
     [Range(0f, -50f)]
@@ -120,6 +121,13 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector3 CameraRightXZ{ get { return _cameraRightXZ; } set { _cameraRightXZ = value; } }
     public Vector3 MovementDelta{ get { return _movementDelta; } set { _movementDelta = value; } }
 
+    //DASH
+    public float DashTime { get { return _dashTime; } }
+    public bool IsDashButtonPressed { get { return _isDashButtonPressed; } }
+    public float DashVelocity {  get { return _dashVelocity; } }
+    public bool DashInCooldown { get { return _dashInCooldown; } set { _dashInCooldown = value; } }
+
+
     //JUMP
     public bool IsJumpButtonPressed { get { return _isJumpButtonPressed; }}
 
@@ -184,7 +192,7 @@ public class PlayerStateMachine : MonoBehaviour
         GameEvents.ResumeGame -= OnResumeGame;
     }
     private void Update()
-    {     
+    {
         _currentState.UpdateStates();
     }
     private void FixedUpdate()
@@ -255,7 +263,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         _jumpVelocity = MathF.Sqrt(jumpHeight * _gravity * -2) * _body.mass;
-        dashVelocity = MathF.Sqrt(dashDistance * -groundDecay * -2) * _body.mass;
+        _dashVelocity = MathF.Sqrt(_dashDistance * -groundDecay * -2) * _body.mass;
         
     }
 
@@ -275,19 +283,15 @@ public class PlayerStateMachine : MonoBehaviour
     private void HandleDash( bool isDashing)
     {
         _isDashButtonPressed = isDashing;
-        if (!dashInCooldown && _groundSensor.IsGrounded())
-        {
-            Vector3 dashDir = _moveDirection == Vector3.zero ? transform.forward : _moveDirection;
-            _body.AddForce(dashDir.normalized * dashVelocity, ForceMode.Impulse);
-            dashInCooldown = true;
-            StartCoroutine(DashCoolingdown());
-        }
     }
-
-    IEnumerator DashCoolingdown()
+    public void ResetDash()
     {
-        yield return new WaitForSeconds(dashCooldownTime);
-        dashInCooldown = false;
+        StartCoroutine(DashCoolingdown());
+    }
+    private IEnumerator DashCoolingdown()
+    {
+        yield return new WaitForSeconds(_dashCooldownTime);
+        _dashInCooldown = false;
     }
 
     private void ApplyFinalVelocity()

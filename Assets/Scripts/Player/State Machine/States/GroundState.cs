@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class GroundState : State
 {
     public GroundState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
@@ -24,6 +25,12 @@ public class GroundState : State
         }else if (!_ctx.GroundSensor.IsGrounded())
         {
             SwitchStates(_factory.Fall());
+        }
+
+
+        if (!_ctx.DashInCooldown && _ctx.IsDashButtonPressed)
+        {
+            SwitchStates(_factory.Dash());
         }
     }
 
