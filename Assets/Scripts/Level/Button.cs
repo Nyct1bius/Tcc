@@ -28,7 +28,7 @@ public class Button : MonoBehaviour,IHealth
         if (isActivated)
         {
             isPressed = true;
-            steppingTrigger.ButtonPressedDeactivation();
+            steppingTrigger?.ButtonPressedDeactivation();
             Debug.Log("OpenDoor");
             doorToOpen.CheckIfAllButtonsIsActivated();
             meshRenderer.material = newMat;

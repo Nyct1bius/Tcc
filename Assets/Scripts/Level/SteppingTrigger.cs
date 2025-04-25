@@ -16,6 +16,9 @@ public class SteppingTrigger : MonoBehaviour
     public Slider timerSlider;
     private Coroutine countdownCoroutine;
 
+    private int buttonPressedCount;
+    public int buttonsCount;
+
     private void Awake()
     {
         triggerMeshRenderer = GetComponent<MeshRenderer>();
@@ -90,8 +93,12 @@ public class SteppingTrigger : MonoBehaviour
 
     public void ButtonPressedDeactivation()
     {
-        StopCoroutine(countdownCoroutine);
-        StartCoroutine(UIHolderDeactivation());
+        buttonPressedCount++;
+        if (buttonsCount == buttonPressedCount) 
+        {
+            StopCoroutine(countdownCoroutine);
+            StartCoroutine(UIHolderDeactivation());
+        }
     }
 
     private IEnumerator UIHolderDeactivation()
