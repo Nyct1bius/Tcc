@@ -105,14 +105,17 @@ public class RoomManager : MonoBehaviour
         {
             if (enemiesWave1.Contains(enemy))
             {
+                print("EnemiesWave 1 Cleared");
                 enemiesWave1.Remove(enemy);
                 if (enemiesWave1.Count == 0)
                 {
+                    print("EnemiesWave 2 Called to Spawn");
                     SpawnSecondWave();
                 }
             }
             else if (enemiesWave2.Contains(enemy))
             {
+                print("EnemiesWave 2 Cleared");
                 enemiesWave2.Remove(enemy);
                 if (enemiesWave2.Count == 0)
                 {
