@@ -239,11 +239,6 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _attackIncooldown = false;
     }
-    private IEnumerator WaitToResetAttack()
-    {
-        yield return new WaitForSeconds(_timeBetweenAttacks);
-      
-    }
     private void OnDrawGizmos()
     {
         if (_currentWeaponData != null)
