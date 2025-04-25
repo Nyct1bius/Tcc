@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
         Paused,
         Resume,
         Respawn,
-        GameOver
+        GameOver,
+        Quit
     }
     public GameStates State;
     private void Awake()
@@ -47,11 +48,14 @@ public class GameManager : MonoBehaviour
     {
         GameEvents.PauseGame += OnGamePaused;
         GameEvents.ResumeGame += OnGameResume;
+        GameEvents.QuitGame += OnQuitGame;
     }
+
     private void OnDisable()
     {
         GameEvents.PauseGame -= OnGamePaused;
         GameEvents.ResumeGame -= OnGameResume;
+        GameEvents.QuitGame -= OnQuitGame;
     }
 
     public void ChangeGameState(GameStates newState)
@@ -71,6 +75,9 @@ public class GameManager : MonoBehaviour
             case GameStates.Resume:
                 break;
             case GameStates.GameOver:
+                break;
+            case GameStates.Quit:
+                Quit();
                 break;
         }
     }
@@ -118,7 +125,19 @@ public class GameManager : MonoBehaviour
     {
         _checkpoint = newCheckpoint;
     }
+    private void OnQuitGame()
+    {
+        ChangeGameState(GameStates.Quit);
+    }
 
+    private void Quit()
+    {
+        PauseGameManager.QuitGame();
+        _checkpoint = Vector3.zero;
+        cnCameraRef = null;
+        oldCnCameraRef = null;
+        playerInstance = null;
+    }
     public void RespawnPlayer()
     {
        StartCoroutine(RespawningPlayer());

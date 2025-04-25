@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
@@ -67,5 +68,12 @@ public class PlayerUIManager : MonoBehaviour
             paused = false;
             PauseGameManager.ResumeGame();
         }
+    }
+
+
+    public void Title()
+    {
+        GameEvents.OnQuitGame();
+        SceneManager.LoadSceneAsync("Title Screen");
     }
 }

@@ -11,7 +11,6 @@ public class PlayerStateMachine : MonoBehaviour
     public InputReader inputReader;
     [SerializeField] private Transform playerVisualTransform;
     private Camera _mainCameraRef;
-    private Vector3 playerVisualDefaultPos;
 
     //Inputs
     private Vector2 _currentMovementInput;
@@ -86,7 +85,6 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private AnimationClip _jumpAnim;
     [SerializeField] private AnimationClip _idleAnim;
     [SerializeField] private AnimationClip _walkAnim;
-    private int _dashAnimHash;
 
     #region Getters/Setters
 
@@ -160,7 +158,6 @@ public class PlayerStateMachine : MonoBehaviour
         
         //Get Components
         _mainCameraRef = Camera.main;
-        playerVisualDefaultPos = playerVisualTransform.localPosition;
         
         SetUpJumpVariables();
         
@@ -184,15 +181,16 @@ public class PlayerStateMachine : MonoBehaviour
     {
         inputReader.MoveEvent -= SetUpMoveInput;
         inputReader.JumpEvent -= OnjumpButton;
-        inputReader.DashEvent -= HandleDash;
         inputReader.AttackEvent -= CheckAttackButton;
         PlayerEvents.SwordPickUp -= AddSword;
         PlayerEvents.AttackFinished -= HandleResetAttack;
         GameEvents.PauseGame -= OnPauseGame;
-        GameEvents.ResumeGame -= OnResumeGame;
+        GameEvents.ResumeGame -= OnResumeGame;;
+        inputReader.DashEvent -= HandleDash;
     }
     private void Update()
     {
+        Debug.Log(_currentState);
         _currentState.UpdateStates();
     }
     private void FixedUpdate()

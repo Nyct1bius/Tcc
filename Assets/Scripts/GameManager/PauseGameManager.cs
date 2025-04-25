@@ -13,4 +13,9 @@ public static class PauseGameManager
         GameEvents.OnResumeGame();
         Time.timeScale = 1.4f;
     }
+
+    public static void QuitGame()
+    {
+        Time.timeScale = 1.4f;
+    }
 }
