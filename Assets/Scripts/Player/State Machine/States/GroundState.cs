@@ -9,7 +9,6 @@ public class GroundState : State
     }
     public override void Enter()
     {
-        _ctx.Animator.SetBool("IsMoving", false);
     }
     public override void CheckSwitchState()
     {

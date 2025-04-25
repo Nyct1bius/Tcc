@@ -85,6 +85,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
+        Debug.Log(context.ReadValue<Vector2>());
     }
 
     public void OnOpenMenu(InputAction.CallbackContext context)

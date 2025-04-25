@@ -7,14 +7,16 @@ public class IdleState : State
    : base(contex, playerStateFactory) { }
     public override void Enter()
     {
-        _ctx.Animator.SetBool("IsMoving", false);
     }
     public override void Do() 
     {
         CheckSwitchState();
     }
 
-    public override void FixedDo() { }
+    public override void FixedDo() 
+    {
+        _ctx.Animator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
+    }
 
     public override void Exit() { }
 

@@ -14,13 +14,11 @@ public class WalkState : State
     }
     public override void FixedDo()
     {
-        _ctx.Animator.SetBool("IsMoving", true);
         HandleHorizontalMovement();
     }
 
     public override void Exit()
     {
-        _ctx.Animator.SetBool("IsMoving", false);
 
     }
 
@@ -52,6 +50,8 @@ public class WalkState : State
         _ctx.MovementDelta = _ctx.MoveDirection * _ctx.WalkAcceleration;
         _ctx.HorizontalVelocity += _ctx.MovementDelta;
         _ctx.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.HorizontalVelocity, _ctx.MaxWalkSpeed);
+
+        _ctx.Animator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
     }
 
 }

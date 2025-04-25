@@ -294,7 +294,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void ApplyFinalVelocity()
     {
         _newVelocity = new Vector3(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);
-        ApplyFriction();;
+        ApplyFriction();
         _body.AddForce(_newVelocity, ForceMode.VelocityChange);
     }
 
@@ -325,7 +325,6 @@ public class PlayerStateMachine : MonoBehaviour
         {
             _body.AddForce(Vector3.up * _gravity, ForceMode.Force);
         }
-
     }
     #endregion
 }

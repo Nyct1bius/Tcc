@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class JumpState : State
@@ -12,10 +13,11 @@ public class JumpState : State
     private float _switchDelay = 0.3f;
     public override void Enter()
     {
+
         HandleJump();
         _timeSinceEntered = 0f;
-        _ctx.Animator.SetBool("IsJumping",true);
-        
+        _ctx.Animator.SetTrigger("OnAir");
+        _ctx.Animator.SetBool("IsGrounded", false);
     }
 
     public override void Do() 
@@ -25,7 +27,7 @@ public class JumpState : State
         {
             CheckSwitchState();
         }
-
+        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
     public override void FixedDo()
     {
@@ -37,7 +39,7 @@ public class JumpState : State
         {
             _ctx.RequireNewJumpPress = true;
         }
-        _ctx.Animator.SetBool("IsJumping", false);
+        _ctx.Animator.SetBool("IsGrounded", true);
     }
 
     public override void CheckSwitchState()

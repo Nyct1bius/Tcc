@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class FallState : State
 {
@@ -13,8 +14,9 @@ public class FallState : State
     public override void Enter()
     {
         _timeSinceEntered = 0f;
-        _ctx.Animator.SetBool("IsFalling", true);
 
+        _ctx.Animator.SetTrigger("OnAir");
+        _ctx.Animator.SetBool("IsGrounded",false);
     }
 
     public override void Do()
@@ -24,6 +26,7 @@ public class FallState : State
         {
             CheckSwitchState();
         }
+        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
 
 
@@ -54,7 +57,7 @@ public class FallState : State
 
     public override void Exit()
     {
-        _ctx.Animator.SetBool("IsFalling", false);
+        _ctx.Animator.SetBool("IsGrounded", true);
 
     }
 }
