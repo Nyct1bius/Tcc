@@ -7,13 +7,13 @@ public class EnemyStats : MonoBehaviour, IHealth
 {
     public float MaxHealth, TimeBetweenAttacks, MovementSpeed;
 
-    [SerializeField] private float currentHealth;
+    public float currentHealth;
 
-    private bool isAlive = true;
+    bool isAlive = true;
 
     public RoomManager RoomManager;
 
-    private NavMeshAgent agent;
+    NavMeshAgent agent;
 
     public GameObject Player;
 
@@ -56,11 +56,23 @@ public class EnemyStats : MonoBehaviour, IHealth
     public void Death()
     {
         gameObject.GetComponent<IdlePathfinding>().enabled = false;
-        gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
+
+        if (gameObject.GetComponent<EnemyMeleeCombat>() != null)
+        {
+            gameObject.GetComponent<EnemyMeleeCombat>().AnimatorSetDead();
+            gameObject.GetComponent<EnemyMeleeCombat>().enabled = true;
+        }
+        if (gameObject.GetComponent<EnemyRangedCombat>() != null)
+        {
+            gameObject.GetComponent<EnemyMeleeCombat>().AnimatorSetDead();
+            gameObject.GetComponent<EnemyRangedCombat>().enabled = true;
+        }
 
         if (RoomManager != null)
         {
             RoomManager.RemoveEnemyFromList(gameObject);
         }
+
+        Destroy(gameObject, 0.5f);
     }
 }
