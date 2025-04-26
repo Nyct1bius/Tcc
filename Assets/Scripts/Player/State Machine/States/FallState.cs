@@ -33,12 +33,12 @@ public class FallState : State
     public override void FixedDo()
     {
        
-        _ctx.Body.AddForce(Vector3.up * _ctx.Gravity, ForceMode.Force);
+        _ctx.Body.AddForce(Vector3.up * _ctx.Movement.Gravity, ForceMode.Force);
     }
 
     public override void InitializeSubState()
     {
-        if (_ctx.CurrentMovementInput != Vector2.zero)
+        if (_ctx.Movement.CurrentMovementInput != Vector2.zero)
         {
             SetSubState(_factory.Walk());
         }

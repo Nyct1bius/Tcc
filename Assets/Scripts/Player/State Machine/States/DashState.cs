@@ -19,13 +19,13 @@ public class DashState : State
 
     private void ApllyDashForce()
     {
-        _ctx.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
-        _ctx.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
-        _ctx.MoveDirection = _ctx.CameraRightXZ * _ctx.CurrentMovementInput.x + _ctx.CameraFowardXZ * _ctx.CurrentMovementInput.y;
+        _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
+        _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
+        _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
 
-        Vector3 dashDir = _ctx.MoveDirection == Vector3.zero ? _ctx.PlayerTransform.forward : _ctx.MoveDirection;
-        _ctx.Body.AddForce(dashDir.normalized * _ctx.DashVelocity, ForceMode.Impulse);
-        _ctx.DashInCooldown = true;
+        Vector3 dashDir = _ctx.Movement.MoveDirection == Vector3.zero ? _ctx.Movement.PlayerTransform.forward : _ctx.Movement.MoveDirection;
+        _ctx.Body.AddForce(dashDir.normalized * _ctx.Movement.DashVelocity, ForceMode.Impulse);
+        _ctx.Movement.DashInCooldown = true;
     }
 
     public override void Do()
@@ -38,14 +38,14 @@ public class DashState : State
     public override void Exit() 
     {
         _ctx.Animator.SetBool("IsDashing", false);
-        _ctx.ResetDash();
+        _ctx.Movement.ResetDash();
     }
 
     public override void CheckSwitchState()
     {
         currentTime += Time.deltaTime;
 
-        if (currentTime > _ctx.DashTime)
+        if (currentTime > _ctx.Movement.DashTime)
         {
             SwitchStates(_factory.Grounded());
         }

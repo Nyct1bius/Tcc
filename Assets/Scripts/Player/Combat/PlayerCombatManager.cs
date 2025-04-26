@@ -5,116 +5,79 @@ using UnityEngine.EventSystems;
 
 public class PlayerCombatManager : MonoBehaviour
 {
-    //Components
-    [SerializeField] private InputReader inputReader;
-    [SerializeField] private PlayerMovement inputs;
+    [Header("Components")]
+    [SerializeField] private PlayerStateMachine _machine;
 
-    [Header("State")]
-    [SerializeField] private AttackState attackState;
-
-
-    //wepon variables
-    private bool hasWeapon;
-    [SerializeField] private LayerMask damageableLayer;
-    [SerializeField] private Transform attackCollisionCheck;
-    [SerializeField] private Transform weaponPos;
-    [SerializeField] private WeaponSO currentWeaponData;
-    private GameObject currentWeaponVisual;
+    [Header("Weapon")]
+    [SerializeField] private LayerMask _damageableLayer;
+    [SerializeField] private Transform _attackCollisionCheck;
+    [SerializeField] private Transform _weaponPos;
+    [SerializeField] private WeaponSO _currentWeaponData;
+    private GameObject _currentWeaponVisual;
 
 
-    //Combat variables
-    public int attackCount;
-    [SerializeField] private bool attackIncooldown;
-    [SerializeField] private float timeBetweenAttacks = 0.5f;
-    private bool isAttacking;
+    [Header("Combat")]
+    [SerializeField] private bool _attackIncooldown;
+    [SerializeField] private float _timeBetweenAttacks = 0.5f;
+    private int _attackCount;
+    private bool _isAttacking;
+
+    #region Getters and Setters
+
+    //COMBAT
+    public int AttackCount { get { return _attackCount; } set { _attackCount = value; } }
+    public bool AttackIncooldown { get { return _attackIncooldown; } set { _attackIncooldown = value; } }
+    public float TimeBetweenAttacks { get { return _timeBetweenAttacks; } }
+    public bool IsAttacking { get { return _isAttacking; } }
+    public LayerMask DamageableLayer { get { return _damageableLayer; } }
+    public WeaponSO CurrentWeaponData { get { return _currentWeaponData; } }
+
+    #endregion
+
     private void OnEnable()
     {
-        inputReader.AttackEvent += CheckAttackButton;
+        _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
     }
     private void OnDisable()
     {
-        inputReader.AttackEvent -= CheckAttackButton;
-        PlayerEvents.SwordPickUp -= AddSword;
-        PlayerEvents.AttackFinished -= HandleResetAttack;
+        _machine.inputReader.AttackEvent += CheckAttackButton;
+        PlayerEvents.SwordPickUp += AddSword;
+        PlayerEvents.AttackFinished += HandleResetAttack;
     }
+    #region Combat
 
     private void AddSword(WeaponSO currentWeapon)
     {
-        if(currentWeaponVisual != null)
+        if (_currentWeaponVisual != null)
         {
-            Destroy(currentWeaponVisual);   
+            Destroy(_currentWeaponVisual);
         }
-        currentWeaponData = currentWeapon;
-        hasWeapon = true;
-        currentWeaponVisual = Instantiate(currentWeaponData.weaponVisual, weaponPos);
+        _currentWeaponData = currentWeapon;
+        _currentWeaponVisual = Instantiate(_currentWeaponData.weaponVisual, _weaponPos);
 
 
     }
-    private void CheckAttackButton(bool _isAttacking)
+
+    private void CheckAttackButton(bool attacking)
     {
-        isAttacking = _isAttacking;
-    }
-
-    private void Update()
-    {
-        PerformAttack();
-    }
-
-    private void PerformAttack()
-    {
-        if(currentWeaponData!= null && isAttacking && !attackIncooldown)
-        {
-            Debug.Log("Attack");
-            attackIncooldown = true;
-            SelectAttack();
-        }
-    }
-    public void SelectAttack()
-    {
-        inputs.machine.Set(attackState, true);
-        currentWeaponData.OnAttack(transform, damageableLayer);
-
-        attackCount++;
-
-        if (attackCount >= 3)
-        {
-            attackCount = 0;
-        }
-
+        _isAttacking = attacking;
     }
 
     public void HandleResetAttack()
     {
-       StartCoroutine(WaitToResetAttack());
+        _attackIncooldown = false;
     }
-    private IEnumerator WaitToResetAttack()
-    {
-        yield return new WaitForSeconds(timeBetweenAttacks);
-        attackIncooldown = false;
-    }
-
-    public bool IsAttackHeld()
-    {
-        return isAttacking;
-    }
-
-    public void ResetCombo()
-    {
-        attackCount = 0;
-    }
-
-
-
-
     private void OnDrawGizmos()
     {
-        if (hasWeapon)
+        if (_currentWeaponData != null)
         {
             Gizmos.color = Color.blue;
 
-            Gizmos.DrawWireSphere(attackCollisionCheck.position, currentWeaponData.attackRange);
+            Gizmos.DrawWireSphere(_attackCollisionCheck.position, _currentWeaponData.attackRange);
         }
     }
+
+    #endregion
 }

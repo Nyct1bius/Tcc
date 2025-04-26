@@ -30,7 +30,7 @@ public class AttackState : State
 
     public override void CheckSwitchState()
     {
-        if (!_ctx.AttackIncooldown)
+        if (!_ctx.Combat.AttackIncooldown)
         {
             SwitchStates(_factory.Grounded());
         }
@@ -43,23 +43,23 @@ public class AttackState : State
 
     private void PerformAttack()
     {
-        if (!_ctx.AttackIncooldown)
+        if (!_ctx.Combat.AttackIncooldown)
         {
-            _ctx.AttackIncooldown = true;
+            _ctx.Combat.AttackIncooldown = true;
             SelectAttack();
         }
     }
 
     public void SelectAttack()
     {
-        _ctx.CurrentWeaponData.OnAttack(_ctx.PlayerTransform, _ctx.DamageableLayer);
-        _ctx.Animator.SetFloat("AttackCount", _ctx.AttackCount);
-        _ctx.AttackCount++;
+        _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer);
+        _ctx.Animator.SetFloat("AttackCount", _ctx.Combat.AttackCount);
+        _ctx.Combat.AttackCount++;
 
-        if (_ctx.AttackCount >= 3)
+        if (_ctx.Combat.AttackCount >= 3)
         {
             _ctx.Body.AddForce(_ctx.transform.forward.normalized * 20f, ForceMode.Impulse);
-            _ctx.AttackCount = 0;
+            _ctx.Combat.AttackCount = 0;
         }
 
 

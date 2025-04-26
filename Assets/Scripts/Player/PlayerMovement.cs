@@ -1,238 +1,197 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows;
 
-public class PlayerMovement : Core
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Componets")]
-    public InputReader inputReader;
+    [SerializeField] PlayerStateMachine _machine;
     [SerializeField] private Transform playerVisualTransform;
-    private Camera mainCameraRef;
-    private Vector3 playerVisualDefaultPos;
 
     //Inputs
-    public Vector2 CurrentMovementInput { get; private set; }
-    bool isAttacking;
+    private Vector2 _currentMovementInput;
 
     [Header("Movement")]
     [Range(0f, 50f)]
-    [SerializeField] private float walkAcceleration;
+    [SerializeField] private float _walkAcceleration;
     [Range(0f, 10f)]
-    [SerializeField] private float maxWalkSpeed;
-    private Vector3 horizontalVelocity;
-    private float verticalVelocity;
-    private Vector3 cameraFowardXZ;
-    private Vector3 cameRightXZ;
-    private Vector3 moveDirection;
-    private Vector3 movementDelta;
-    private Vector3 newVelocity;
+    [SerializeField] private float _maxWalkSpeed;
+    private Vector3 _horizontalVelocity;
+    private float _verticalVelocity;
+    private Vector3 _cameraFowardXZ;
+    private Vector3 _cameraRightXZ;
+    private Vector3 _moveDirection;
+    private Vector3 _movementDelta;
+    private Vector3 _newVelocity;
 
 
     [Header("Jump")]
     public float jumpHeight;
-    [SerializeField] private float maxJumpTime;
-    private float jumpVelocity;
-    private bool isJumping;
-    private bool isButtonPressed;
-    private float buttonPressedTime;
+    [SerializeField] private float _maxJumpTime;
+    private float _jumpVelocity;
+    private bool _isJumpButtonPressed;
+    private float _buttonPressedTime;
+    private bool _requireNewJumpPress;
 
 
     [Header("Dash")]
-    [SerializeField] private float dashDistance;
-    [SerializeField] private float dashCooldownTime;
-    private float dashVelocity;
-    private bool dashInCooldown;
+    [SerializeField] private float _dashDistance;
+    [SerializeField] private float _dashTime = 1f;
+    [SerializeField] private float _dashCooldownTime;
+    private bool _isDashButtonPressed;
+    private float _dashVelocity;
+    private bool _dashInCooldown;
 
     [Header("Physics")]
     [Range(0f, -50f)]
-    [SerializeField] private float gravity;
+    [SerializeField] private float _gravity;
     [Range(0f, 100f)]
     [SerializeField] private float groundDecay;
 
 
-    [Header("States")]
-    [SerializeField] private IdleState idleState;
-    [SerializeField] private WalkState walkState;
-    [SerializeField] private JumpState jumpState;
-    [SerializeField] private DashState dashState;
-
     [Header("Rotation")]
-    private float targetAngle;
     [SerializeField] private float turnSmoothTime;
+    private float targetAngle;
     private float turnSmoothVelocity;
     float angle;
 
+    #region Getters and Setters
+    //COMPONENTS
+    public Transform PlayerTransform { get { return transform; } }
+
+    //Phisycs
+
+    public float Gravity { get { return _gravity; } }
+
+
+    //MOVEMENT
+    public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
+    public Vector3 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
+    public float WalkAcceleration { get { return _walkAcceleration; } }
+    public float MaxWalkSpeed { get { return _maxWalkSpeed; } }
+    public Vector3 HorizontalVelocity { get { return _horizontalVelocity; } set { _horizontalVelocity = value; } }
+    public float VerticalVelocity { get { return _verticalVelocity; } set { _verticalVelocity = value; } }
+    public Vector3 CameraFowardXZ { get { return _cameraFowardXZ; } set { _cameraFowardXZ = value; } }
+    public Vector3 CameraRightXZ { get { return _cameraRightXZ; } set { _cameraRightXZ = value; } }
+    public Vector3 MovementDelta { get { return _movementDelta; } set { _movementDelta = value; } }
+
+    //DASH
+    public float DashTime { get { return _dashTime; } }
+    public bool IsDashButtonPressed { get { return _isDashButtonPressed; } }
+    public float DashVelocity { get { return _dashVelocity; } }
+    public bool DashInCooldown { get { return _dashInCooldown; } set { _dashInCooldown = value; } }
+
+
+    //JUMP
+    public bool IsJumpButtonPressed { get { return _isJumpButtonPressed; } }
+    public float ButtonPressedTime { get { return _buttonPressedTime; } set { _buttonPressedTime = value; } }
+    public float JumpVelocity { get { return _jumpVelocity; } }
+    public float MaxJumpTime { get { return _maxJumpTime; } }
+    public bool RequireNewJumpPress { get { return _requireNewJumpPress; } set { _requireNewJumpPress = value; } }
+
+
+    #endregion
+
     private void Start()
     {
-        SetupInstances();
-        mainCameraRef = Camera.main;
-        playerVisualDefaultPos = playerVisualTransform.localPosition;
         SetUpJumpVariables();
-        machine = new StateMachine();
-        machine.Set(idleState);
     }
     private void OnEnable()
     {
-        inputReader.MoveEvent += SetUpMoveInput;
-        inputReader.JumpEvent += HandleJump;
+        _machine.inputReader.MoveEvent += SetUpMoveInput;
+        _machine.inputReader.JumpEvent += OnjumpButton;
+        _machine.inputReader.DashEvent += HandleDash;
     }
-
 
     private void OnDisable()
     {
-        inputReader.MoveEvent -= SetUpMoveInput;
-        inputReader.JumpEvent -= HandleJump;
-    }
-
-
-    private void Update()
-    {
-        playerVisualTransform.localPosition = playerVisualDefaultPos;
-        SelectState();
-        FaceInput();
-        machine.state.Do();
+        _machine.inputReader.MoveEvent -= SetUpMoveInput;
+        _machine.inputReader.JumpEvent -= OnjumpButton;
+        _machine.inputReader.DashEvent -= HandleDash;
     }
     private void FixedUpdate()
     {
-        machine.state.FixedDo();
-        ApplyFinalVelocity();
-        ApplyGravity();
-    }
-
-    private void SelectState()
-    {
-        if (groundSensor.IsGrounded())
+        if (!_machine.GameIsPaused)
         {
-            if(CurrentMovementInput == Vector2.zero)
-            {
-              // machine.Set(idleState);
-            }
-           
-        }
-        else
-        {
-            machine.Set(jumpState);
+            FaceInput();
+            ApplyGravity();
+            ApplyFinalVelocity();
         }
     }
-    private void SetUpMoveInput(Vector2 inputDirection)
-    {
-        if(inputDirection != Vector2.zero || groundSensor.IsGrounded())
-        {
-            machine.Set(walkState);
-        }
 
-        CurrentMovementInput = inputDirection;
-    }
-    public void HandleHorizontalMovement()
-    {
-        cameraFowardXZ = new Vector3(mainCameraRef.transform.forward.x, 0, mainCameraRef.transform.forward.z).normalized;
-        cameRightXZ = new Vector3(mainCameraRef.transform.right.x, 0, mainCameraRef.transform.right.z).normalized;
-        moveDirection = cameRightXZ * CurrentMovementInput.x + cameraFowardXZ * CurrentMovementInput.y;
-
-        movementDelta = moveDirection * walkAcceleration;
-        horizontalVelocity += movementDelta;
-        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxWalkSpeed);
-
-    }
+    #region Movement
     private void SetUpJumpVariables()
     {
-        jumpVelocity = MathF.Sqrt(jumpHeight * gravity * -2) * body.mass;
-        dashVelocity = MathF.Sqrt(dashDistance * -groundDecay * -2) * body.mass;
+        _jumpVelocity = MathF.Sqrt(jumpHeight * _gravity * -2) * _machine.Body.mass;
+        _dashVelocity = MathF.Sqrt(_dashDistance * _gravity * -2) * _machine.Body.mass;
+
     }
-    private void HandleJump(bool isJumpButtonPressed)
+
+    private void SetUpMoveInput(Vector2 inputDirection)
     {
-        isButtonPressed = isJumpButtonPressed;
-        if (groundSensor.IsGrounded() && isJumpButtonPressed)
-        {
-            body.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-            buttonPressedTime = 0;
-            isJumping = true;
-        }
-
+        _currentMovementInput = inputDirection;
     }
-    public void CheckIfStillJumping()
+
+
+    private void OnjumpButton(bool isJumpButtonPressed)
     {
-        if (isJumping)
-        {
-            buttonPressedTime += Time.deltaTime;
-
-            if (buttonPressedTime < maxJumpTime && !isButtonPressed)
-            {
-                CancelJump();
-            }
-
-        }
+        this._isJumpButtonPressed = isJumpButtonPressed;
+        _requireNewJumpPress = false;
 
     }
-    private void CancelJump()
+
+    private void HandleDash(bool isDashing)
     {
-        body.AddForce(Vector3.up * gravity, ForceMode.Force);
+        _isDashButtonPressed = isDashing;
     }
-
-
-
+    public void ResetDash()
+    {
+        StartCoroutine(DashCoolingdown());
+    }
+    private IEnumerator DashCoolingdown()
+    {
+        yield return new WaitForSeconds(_dashCooldownTime);
+        _dashInCooldown = false;
+    }
 
     private void ApplyFinalVelocity()
     {
-        newVelocity = new Vector3(horizontalVelocity.x, verticalVelocity, horizontalVelocity.z);
+        _newVelocity = new Vector3(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);
         ApplyFriction();
-        body.AddForce(newVelocity, ForceMode.VelocityChange);
+        _machine.Body.AddForce(_newVelocity, ForceMode.VelocityChange);
     }
 
-
-
-    private void HandleDash()
+    private void ApplyFriction()
     {
-        if (!dashInCooldown && groundSensor.IsGrounded())
-        {
-            Vector3 dashDir = moveDirection == Vector3.zero ? transform.forward : moveDirection;
-            body.AddForce(dashDir.normalized * dashVelocity, ForceMode.Impulse);
-            dashInCooldown = true;
-            StartCoroutine(DashCoolingdown());
-        }
+        _horizontalVelocity = Vector3.Lerp(_horizontalVelocity, Vector3.zero, groundDecay * Time.deltaTime);
     }
-
-    IEnumerator DashCoolingdown()
-    {
-        yield return new WaitForSeconds(dashCooldownTime);
-        dashInCooldown = false;
-    }
-
 
     private void FaceInput()
     {
-        if (CurrentMovementInput != Vector2.zero)
+        if (_currentMovementInput != Vector2.zero)
         {
-            targetAngle = Mathf.Atan2(CurrentMovementInput.x, CurrentMovementInput.y) * Mathf.Rad2Deg + mainCameraRef.transform.eulerAngles.y;
-            angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
+            targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg + _machine.MainCameraRef.transform.eulerAngles.y;
+            angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
     }
 
     private void ApplyGravity()
     {
-        if (body.linearVelocity.y > 0)
+        if (_machine.Body.linearVelocity.y > 0)
         {
-            body.AddForce(Vector3.up * -0.1f, ForceMode.Force);
+            _machine.Body.AddForce(Vector3.up * -0.1f, ForceMode.Force);
 
         }
-        else if (!groundSensor.IsGrounded())
+        else
         {
-            isJumping = false;
-            body.AddForce(Vector3.up * gravity, ForceMode.Force);
-        }
-
-    }
-
-    private void ApplyFriction()
-    {
-        if (groundSensor.IsGrounded())
-        {
-            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, groundDecay * Time.deltaTime);
+            _machine.Body.AddForce(Vector3.up * _gravity, ForceMode.Force);
         }
     }
+    #endregion
 }
 

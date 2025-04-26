@@ -35,9 +35,9 @@ public class JumpState : State
     }
     public override void Exit()
     {
-        if (_ctx.IsJumpButtonPressed)
+        if (_ctx.Movement.IsJumpButtonPressed)
         {
-            _ctx.RequireNewJumpPress = true;
+            _ctx.Movement.RequireNewJumpPress = true;
         }
         _ctx.Animator.SetBool("IsGrounded", true);
     }
@@ -52,7 +52,7 @@ public class JumpState : State
 
     public override void InitializeSubState()
     {
-        if (_ctx.CurrentMovementInput != Vector2.zero)
+        if (_ctx.Movement.CurrentMovementInput != Vector2.zero)
         {
             SetSubState(_factory.Walk());
         }
@@ -64,16 +64,16 @@ public class JumpState : State
 
     private void HandleJump()
     {
-        _ctx.Body.AddForce(Vector3.up * _ctx.JumpVelocity, ForceMode.Impulse);
-        _ctx.ButtonPressedTime = 0;
+        _ctx.Body.AddForce(Vector3.up * _ctx.Movement.JumpVelocity, ForceMode.Impulse);
+        _ctx.Movement.ButtonPressedTime = 0;
     }
 
     public void CheckIfStillJumping()
     {
 
-        _ctx.ButtonPressedTime += Time.deltaTime;
+        _ctx.Movement.ButtonPressedTime += Time.deltaTime;
 
-        if (_ctx.ButtonPressedTime > _ctx.MaxJumpTime || !_ctx.IsJumpButtonPressed)
+        if (_ctx.Movement.ButtonPressedTime > _ctx.Movement.MaxJumpTime || !_ctx.Movement.IsJumpButtonPressed)
         {
             CancelJump();
         }
@@ -83,7 +83,7 @@ public class JumpState : State
     }
     private void CancelJump()
     {
-        _ctx.Body.AddForce(Vector3.up * _ctx.Gravity, ForceMode.Force);
+        _ctx.Body.AddForce(Vector3.up * _ctx.Movement.Gravity, ForceMode.Force);
     }
 
 }

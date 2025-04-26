@@ -12,13 +12,13 @@ public class GroundState : State
     }
     public override void CheckSwitchState()
     {
-        if (_ctx.IsAttacking && _ctx.CurrentWeaponData != null)
+        if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null)
         {
             SwitchStates(_factory.Attack());
         }
 
 
-        if (_ctx.IsJumpButtonPressed && !_ctx.RequireNewJumpPress)
+        if (_ctx.Movement.IsJumpButtonPressed && !_ctx.Movement.RequireNewJumpPress)
         {
             SwitchStates(_factory.Jump());
         }else if (!_ctx.GroundSensor.IsGrounded())
@@ -27,7 +27,7 @@ public class GroundState : State
         }
 
 
-        if (!_ctx.DashInCooldown && _ctx.IsDashButtonPressed)
+        if (!_ctx.Movement.DashInCooldown && _ctx.Movement.IsDashButtonPressed)
         {
             SwitchStates(_factory.Dash());
         }
@@ -51,7 +51,7 @@ public class GroundState : State
 
     public override void InitializeSubState()
     {
-        if (_ctx.CurrentMovementInput != Vector2.zero)
+        if (_ctx.Movement.CurrentMovementInput != Vector2.zero)
         {
             SetSubState(_factory.Walk());
         }

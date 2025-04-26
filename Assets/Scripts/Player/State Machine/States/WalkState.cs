@@ -30,7 +30,7 @@ public class WalkState : State
 
     public override void CheckSwitchState()
     {
-        if (_ctx.CurrentMovementInput == Vector2.zero)
+        if (_ctx.Movement.CurrentMovementInput == Vector2.zero)
         {
             SwitchStates(_factory.Idle());
         }
@@ -43,13 +43,13 @@ public class WalkState : State
 
     public void HandleHorizontalMovement()
     {
-       _ctx.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
-        _ctx.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
-        _ctx.MoveDirection = _ctx.CameraRightXZ * _ctx.CurrentMovementInput.x + _ctx.CameraFowardXZ * _ctx.CurrentMovementInput.y;
+       _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
+        _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
+        _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
 
-        _ctx.MovementDelta = _ctx.MoveDirection * _ctx.WalkAcceleration;
-        _ctx.HorizontalVelocity += _ctx.MovementDelta;
-        _ctx.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.HorizontalVelocity, _ctx.MaxWalkSpeed);
+        _ctx.Movement.MovementDelta = _ctx.Movement.MoveDirection * _ctx.Movement.WalkAcceleration;
+        _ctx.Movement.HorizontalVelocity += _ctx.Movement.MovementDelta;
+        _ctx.Movement.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.Movement.HorizontalVelocity, _ctx.Movement.MaxWalkSpeed);
 
         _ctx.Animator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
     }

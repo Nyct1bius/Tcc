@@ -22,7 +22,7 @@ public class IdleState : State
 
     public override void CheckSwitchState()
     {
-        if(_ctx.CurrentMovementInput != Vector2.zero)
+        if(_ctx.Movement.CurrentMovementInput != Vector2.zero)
         {
             SwitchStates(_factory.Walk());
         }
