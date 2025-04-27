@@ -4,11 +4,10 @@ public class EnemyMeleeHitbox : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         
-        if (GameManager.instance.playerInstance == other.gameObject)
+        if (GameManager.instance.PlayerInstance == other.gameObject)
         {
-            other.GetComponent<PlayerHealthManager>().Damage(10);
+            other.GetComponent<PlayerHealthManager>().Damage(10, transform.position);
         }
     }
 }

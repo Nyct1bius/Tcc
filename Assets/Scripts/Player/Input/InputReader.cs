@@ -29,6 +29,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
         inputs.Enable();
         GameEvents.ResumeGame += ResumeGameByUIButton;
         GameEvents.QuitGame += ResumeGameByUIButton;
+        GameEvents.GameOver += OnGameOver;
     }
 
     private void OnDisable()
@@ -36,6 +37,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
         inputs.Disable();
         GameEvents.ResumeGame -= ResumeGameByUIButton;
         GameEvents.QuitGame -= ResumeGameByUIButton;
+        GameEvents.GameOver -= OnGameOver;
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -110,7 +112,15 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     {
         MenuInputs();
     }
-
+    private void OnGameOver()
+    {
+        GameOverMenuInputs();
+    }
+    private void GameOverMenuInputs()
+    {
+        inputs.PlayerControls.Disable();
+        inputs.UI.Enable();
+    }
     private void MenuInputs(bool isEneable = false)
     {
         if (isEneable)

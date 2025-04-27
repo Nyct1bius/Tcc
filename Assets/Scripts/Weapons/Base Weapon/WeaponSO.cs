@@ -61,7 +61,7 @@ public class WeaponSO : ScriptableObject
         IHealth health = enemy.GetComponent<IHealth>();
         if (health != null)
         {
-            health.Damage(weaponDamage);
+            health.Damage(weaponDamage, _posToAttack.position);
         }
 
     }

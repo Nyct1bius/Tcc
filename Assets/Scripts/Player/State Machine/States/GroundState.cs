@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using PlayerState;
 public class GroundState : State
 {
     public GroundState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
@@ -30,6 +31,11 @@ public class GroundState : State
         if (!_ctx.Movement.DashInCooldown && _ctx.Movement.IsDashButtonPressed)
         {
             SwitchStates(_factory.Dash());
+        }
+
+        if (_ctx.Health.IsDamaged)
+        {
+            SwitchStates(_factory.Damaged());
         }
     }
 

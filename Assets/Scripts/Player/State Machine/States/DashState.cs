@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using PlayerState;
 public class DashState : State
 {
     float currentTime;
@@ -15,17 +15,6 @@ public class DashState : State
         currentTime = 0f;
         _ctx.Animator.SetBool("IsDashing", true);
         ApllyDashForce();
-    }
-
-    private void ApllyDashForce()
-    {
-        _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
-        _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
-        _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
-
-        Vector3 dashDir = _ctx.Movement.MoveDirection == Vector3.zero ? _ctx.Movement.PlayerTransform.forward : _ctx.Movement.MoveDirection;
-        _ctx.Body.AddForce(dashDir.normalized * _ctx.Movement.DashVelocity, ForceMode.Impulse);
-        _ctx.Movement.DashInCooldown = true;
     }
 
     public override void Do()
@@ -54,5 +43,16 @@ public class DashState : State
     public override void InitializeSubState()
     {
         
+    }
+
+    private void ApllyDashForce()
+    {
+        _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
+        _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
+        _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
+
+        Vector3 dashDir = _ctx.Movement.MoveDirection == Vector3.zero ? _ctx.Movement.PlayerTransform.forward : _ctx.Movement.MoveDirection;
+        _ctx.Body.AddForce(dashDir.normalized * _ctx.Movement.DashVelocity, ForceMode.Impulse);
+        _ctx.Movement.DashInCooldown = true;
     }
 }

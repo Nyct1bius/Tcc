@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-
+using PlayerState;
 public class FallState : State
 {
     public FallState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
@@ -22,11 +22,11 @@ public class FallState : State
     public override void Do()
     {
         _timeSinceEntered += Time.deltaTime;
+        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
         }
-        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
 
 
@@ -52,6 +52,11 @@ public class FallState : State
         if (_ctx.GroundSensor.IsGrounded())
         {
             SwitchStates(_factory.Grounded());
+        }
+
+        if (_ctx.Health.IsDamaged)
+        {
+            SwitchStates(_factory.Damaged());
         }
     }
 

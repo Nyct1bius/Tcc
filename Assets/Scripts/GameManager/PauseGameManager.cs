@@ -13,7 +13,10 @@ public static class PauseGameManager
         GameEvents.OnResumeGame();
         Time.timeScale = 1.4f;
     }
-
+    public static void GameOver()
+    {
+        Time.timeScale = 0;
+    }
     public static void QuitGame()
     {
         Time.timeScale = 1.4f;

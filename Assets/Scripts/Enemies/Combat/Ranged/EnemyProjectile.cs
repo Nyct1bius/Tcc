@@ -11,7 +11,7 @@ public class EnemyProjectile : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.instance.playerInstance;
+        player = GameManager.instance.PlayerInstance;
         playerPosition = player.transform;
 
         targetDirection = (playerPosition.position - transform.position).normalized;
@@ -26,7 +26,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.GetComponent<PlayerMovement>())
         {
-            other.GetComponent<PlayerHealthManager>().Damage(10);
+            other.GetComponent<PlayerHealthManager>().Damage(10, transform.position);
 
             Destroy(gameObject);
         }

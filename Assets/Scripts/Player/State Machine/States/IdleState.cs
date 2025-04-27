@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using PlayerState;
 public class IdleState : State
 {
     [SerializeField] AnimationClip idleAnimation;

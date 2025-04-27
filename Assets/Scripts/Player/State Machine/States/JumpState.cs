@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+using PlayerState;
 public class JumpState : State
 {
     public JumpState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
@@ -23,11 +23,11 @@ public class JumpState : State
     public override void Do() 
     {
         _timeSinceEntered += Time.deltaTime;
+        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
         }
-        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
     public override void FixedDo()
     {
@@ -47,6 +47,10 @@ public class JumpState : State
         if (_ctx.GroundSensor.IsGrounded())
         {
             SwitchStates(_factory.Grounded());
+        }
+        if (_ctx.Health.IsDamaged)
+        {
+            SwitchStates(_factory.Damaged());
         }
     }
 

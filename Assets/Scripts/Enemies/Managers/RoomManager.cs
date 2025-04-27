@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (GameManager.instance.playerInstance == other.gameObject)
+        if (GameManager.instance.PlayerInstance == other.gameObject)
         {
             if(!isWavedRoom)
             {

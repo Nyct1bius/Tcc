@@ -1,4 +1,4 @@
-
+using PlayerState;
 public class PlayerStateFactory 
 {
     PlayerStateMachine _contex;
@@ -39,7 +39,14 @@ public class PlayerStateFactory
     {
         return new FallState(_contex, this);
     }
-
+    public State Damaged()
+    {
+        return new DamagedState(_contex, this);
+    }
+    public State Death()
+    {
+        return new DeathState(_contex, this);
+    }
     public State PausedState()
     {
         return new PausedState(_contex, this);
