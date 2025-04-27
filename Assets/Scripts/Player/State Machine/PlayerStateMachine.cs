@@ -1,17 +1,22 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using PlayerState;
 public class PlayerStateMachine : MonoBehaviour
 {
     [Header("Componets")]
     [SerializeField] Rigidbody _body;
     [SerializeField] Animator animator;
     [SerializeField] GroundSensor _groundSensor;
-    [SerializeField] private PlayerMovement _movement;
-    [SerializeField] private PlayerCombatManager _combatManager;
     public InputReader inputReader;
     private Camera _mainCameraRef;
+
+    [Header("Managers")]
+    [SerializeField] private PlayerMovement _movement;
+    [SerializeField] private PlayerCombatManager _combat;
+    [SerializeField] private PlayerHealthManager _health;
+
+
 
     [Header("State variables")]
     State _currentState;
@@ -25,6 +30,11 @@ public class PlayerStateMachine : MonoBehaviour
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool GameIsPaused { get { return _gameIsPaused; } }
     public State OldState { get { return _oldState; } set { _oldState = value; } }
+   
+    //Managers
+    public PlayerMovement Movement { get { return _movement; } }
+    public PlayerCombatManager Combat { get { return _combat; } }
+    public PlayerHealthManager Health { get { return _health; } }
 
 
     //COMPONENTS
@@ -32,9 +42,6 @@ public class PlayerStateMachine : MonoBehaviour
     public Rigidbody Body { get { return _body; }}
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
-    public PlayerMovement Movement { get { return _movement; } }
-
-    public PlayerCombatManager Combat { get { return _combatManager; } }
     #endregion
 
     private void Start()

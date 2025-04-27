@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,8 +26,10 @@ public class PlayerUIManager : MonoBehaviour
     [Header("Pause")]
     private bool paused = false;
     [SerializeField] InputReader _inputs;
-
     [SerializeField] private GameObject _mainMenuScreen;
+
+    [Header("Game Over")]
+    [SerializeField] private GameObject _gameOverMenu;
 
     private void Awake()
     {
@@ -38,17 +41,20 @@ public class PlayerUIManager : MonoBehaviour
     private void OnEnable()
     {
         _inputs.PauseEvent += OpenPauseMenu;
+        GameEvents.GameOver += OnGameOver;
     }
+
     private void OnDisable()
     {
         _inputs.PauseEvent -= OpenPauseMenu;
+        GameEvents.GameOver -= OnGameOver;
     }
 
-    public void AtualizePlayerHealthUI()
+    public void AtualizePlayerHealthUI(float currentHealth)
     {
-        _healthText.text = _stats.currentHealth.ToString() + "/" + _stats.maxHealth.ToString();
+        _healthText.text = currentHealth.ToString() + "/" + _stats.maxHealth.ToString();
 
-        _healthSlider.value = _stats.currentHealth;
+        _healthSlider.value = currentHealth;
     }
 
 
@@ -70,7 +76,19 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
+    private void OnGameOver()
+    {
+        _playerHud.SetActive(false);
+        _mainMenuScreen.SetActive(false);
+        _gameOverMenu.SetActive(true);
+    }
 
+    public void OnRestartGame()
+    {
+        _playerHud.SetActive(true);
+        _gameOverMenu.SetActive(false);
+        GameManager.instance.SwitchGameState(GameManager.GameStates.Restart);
+    }
     public void Title()
     {
         GameEvents.OnQuitGame();

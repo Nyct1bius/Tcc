@@ -5,8 +5,13 @@ using UnityEngine;
 public class PlayerStatsSO : ScriptableObject
 {
     public float maxHealth;
-    public float currentHealth;
     public Transform respawnPoint;
     public bool hasSword;
     public bool hasShield;
+
+    private void OnDisable()
+    {
+        hasSword = false;
+        hasShield = false;
+    }
 }

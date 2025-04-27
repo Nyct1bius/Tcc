@@ -7,12 +7,14 @@ public class PlayerCombatManager : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private PlayerStateMachine _machine;
+    [SerializeField] private PlayerStatsSO _playerStats;
 
     [Header("Weapon")]
     [SerializeField] private LayerMask _damageableLayer;
     [SerializeField] private Transform _attackCollisionCheck;
     [SerializeField] private Transform _weaponPos;
     [SerializeField] private WeaponSO _currentWeaponData;
+    [SerializeField] private WeaponSO _backupWeaponData;
     private GameObject _currentWeaponVisual;
 
 
@@ -46,6 +48,13 @@ public class PlayerCombatManager : MonoBehaviour
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
     }
+    private void Start()
+    {
+        if (_playerStats.hasSword)
+        {
+            AddSword(_backupWeaponData);
+        }
+    }
     #region Combat
 
     private void AddSword(WeaponSO currentWeapon)
@@ -56,7 +65,7 @@ public class PlayerCombatManager : MonoBehaviour
         }
         _currentWeaponData = currentWeapon;
         _currentWeaponVisual = Instantiate(_currentWeaponData.weaponVisual, _weaponPos);
-
+        _playerStats.hasSword = true;
 
     }
 

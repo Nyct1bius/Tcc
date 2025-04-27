@@ -1,9 +1,9 @@
 using UnityEngine;
-
+using PlayerState;
 public class PausedState : State
 {
     public PausedState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
- : base(contex, playerStateFactory)
+     : base(contex, playerStateFactory)
     {
         isRootState = true;
     }

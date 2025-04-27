@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,10 +12,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private CinemachineCamera cnCameraPrefab;
     [SerializeField] private Camera minimapCameraPrefab;
-    private CinemachineCamera cnCameraRef;
+    private Camera _minimapCamRef;
+    private CinemachineCamera _cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
-    private Vector3 _checkpoint;
-    public GameObject playerInstance { get; private set; }
+    private Transform _checkpoint;
+    private Transform _spawnPos;
+    public bool IsRestartingGame;
+    public GameObject PlayerInstance { get; private set; }
+    [SerializeField] private PlayerStatsSO _playerStats;
     
     
 
@@ -29,6 +34,7 @@ public class GameManager : MonoBehaviour
         Resume,
         Respawn,
         GameOver,
+        Restart,
         Quit
     }
     public GameStates State;
@@ -57,8 +63,11 @@ public class GameManager : MonoBehaviour
         GameEvents.ResumeGame -= OnGameResume;
         GameEvents.QuitGame -= OnQuitGame;
     }
-
-    public void ChangeGameState(GameStates newState)
+    private void OnApplicationQuit()
+    {
+        _playerStats.hasSword = false;
+    }
+    public void SwitchGameState(GameStates newState)
     {
         State = newState;
         Debug.Log("Game State: " + State);
@@ -75,6 +84,10 @@ public class GameManager : MonoBehaviour
             case GameStates.Resume:
                 break;
             case GameStates.GameOver:
+                OnGameOver();
+                break;
+            case GameStates.Restart:
+                RestarGame();
                 break;
             case GameStates.Quit:
                 Quit();
@@ -82,13 +95,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void OnEnterGame()
     {
        
         //do something more when the game is initializing
 
 
-        ChangeGameState(GameStates.RunningGame);
+        SwitchGameState(GameStates.RunningGame);
     }
 
     private void OnGame()
@@ -96,47 +110,63 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
     }
-
+    private void RestarGame()
+    {
+        DestroyCurrentPlayer();
+        PauseGameManager.ResumeGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    private void OnGameOver()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        GameEvents.OnGameOver();
+        PauseGameManager.GameOver();
+    }
     private void OnGamePaused()
     {
-        ChangeGameState(GameStates.Paused);
+        SwitchGameState(GameStates.Paused);
         Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnGameResume()
     {
         State = GameStates.Resume;
-        ChangeGameState(GameStates.RunningGame);
+        SwitchGameState(GameStates.RunningGame);
     }
 
     public void SpawnPlayer(Transform spawnPoint)
     {
-        ChangeGameState(GameStates.Started);
-        playerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
-        cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
-        Instantiate(minimapCameraPrefab);
+        SwitchGameState(GameStates.Started);
+        PlayerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
+        _cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
+        _minimapCamRef = Instantiate(minimapCameraPrefab);
 
-        cnCameraRef.Follow = playerInstance.transform;
-        cnCameraRef.LookAt = playerInstance.transform;
+        _cnCameraRef.Follow = PlayerInstance.transform;
+        _cnCameraRef.LookAt = PlayerInstance.transform;
 
-        _checkpoint = spawnPoint.position;
+        _spawnPos = spawnPoint;
     }
-    public void SetCheckpoint(Vector3 newCheckpoint)
+    private void DestroyCurrentPlayer()
+    {
+        Destroy(PlayerInstance);
+        Destroy(_cnCameraRef);
+    }
+    public void SetCheckpoint(Transform newCheckpoint)
     {
         _checkpoint = newCheckpoint;
     }
     private void OnQuitGame()
     {
-        ChangeGameState(GameStates.Quit);
+        SwitchGameState(GameStates.Quit);
     }
 
     private void Quit()
     {
         PauseGameManager.QuitGame();
-        _checkpoint = Vector3.zero;
-        cnCameraRef = null;
+        _checkpoint = null;
+        _cnCameraRef = null;
         oldCnCameraRef = null;
-        playerInstance = null;
+        PlayerInstance = null;
     }
     public void RespawnPlayer()
     {
@@ -146,17 +176,26 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RespawningPlayer()
     {
-        cnCameraRef.Follow = null;
-        cnCameraRef.LookAt = null;
+        _cnCameraRef.Follow = null;
+        _cnCameraRef.LookAt = null;
         yield return new WaitForSeconds(3f);
-        playerInstance.transform.position = _checkpoint;
-        oldCnCameraRef = cnCameraRef;
+        if (_checkpoint == null)
+        {
+            PlayerInstance.transform.position = _spawnPos.position;
+
+        }
+        else
+        {
+            PlayerInstance.transform.position = _checkpoint.position;
+        }
+          
+        oldCnCameraRef = _cnCameraRef;
         oldCnCameraRef.Priority = 0;
         yield return new WaitForSeconds(1f);
-        cnCameraRef = Instantiate(cnCameraPrefab, playerInstance.transform.position, Quaternion.identity);
+        _cnCameraRef = Instantiate(cnCameraPrefab, PlayerInstance.transform.position, Quaternion.identity);
         cnCameraPrefab.Priority = 1;
-        cnCameraRef.Follow = playerInstance.transform;
-        cnCameraRef.LookAt = playerInstance.transform;
+        _cnCameraRef.Follow = PlayerInstance.transform;
+        _cnCameraRef.LookAt = PlayerInstance.transform;
         yield return new WaitForSeconds(2f);
         Destroy(oldCnCameraRef);
     }

@@ -8,11 +8,11 @@ public class CheckPoint : MonoBehaviour
     {
         if (checkPoint != null)
         {
-            GameManager.instance.SetCheckpoint(checkPoint.position);
+            GameManager.instance.SetCheckpoint(checkPoint);
         }
         else
         {
-            GameManager.instance.SetCheckpoint(transform.position);
+            GameManager.instance.SetCheckpoint(transform);
         }
 
         Debug.Log("Checkpoint set");

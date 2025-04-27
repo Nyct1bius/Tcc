@@ -1,7 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Windows;
-
+using PlayerState;
 public class AttackState : State
 {
     public AttackState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
@@ -33,6 +31,11 @@ public class AttackState : State
         if (!_ctx.Combat.AttackIncooldown)
         {
             SwitchStates(_factory.Grounded());
+        }
+
+        if (_ctx.Health.IsDamaged)
+        {
+            SwitchStates(_factory.Damaged());
         }
     }
 

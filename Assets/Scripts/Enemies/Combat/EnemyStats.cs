@@ -30,7 +30,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         {
             agent.speed = MovementSpeed;
         }
-        Player = GameManager.instance.playerInstance;
+        Player = GameManager.instance.PlayerInstance;
         if(Player == null)
             StartCoroutine(WaitToFindPlayer());
     }
@@ -44,7 +44,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
     
-    public void Damage(float damage)
+    public void Damage(float damage, Vector3 DamageSourcePos)
     {
         currentHealth -= damage;
     }
@@ -80,11 +80,11 @@ public class EnemyStats : MonoBehaviour, IHealth
     IEnumerator WaitToFindPlayer()
     {
         yield return new WaitForSeconds(0.25f);
-        if(GameManager.instance.playerInstance != null)
+        if(GameManager.instance.PlayerInstance != null)
         {
             while(Player == null)
             {
-                Player = GameManager.instance.playerInstance;
+                Player = GameManager.instance.PlayerInstance;
                 yield return null;
             }
         }

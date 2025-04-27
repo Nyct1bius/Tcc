@@ -23,7 +23,7 @@ public class Button : MonoBehaviour,IHealth
         throw new System.NotImplementedException();
     }
 
-    public void Damage(float damage)
+    public void Damage(float damage, Vector3 DamageSourcePos)
     {
         if (isActivated)
         {

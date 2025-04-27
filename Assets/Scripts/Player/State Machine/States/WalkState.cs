@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using PlayerState;
 public class WalkState : State
 {
     public WalkState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
