@@ -9,7 +9,7 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     public float currentHealth;
 
-    bool isAlive = true;
+    public bool IsAlive = true;
 
     public RoomManager RoomManager;
 
@@ -37,9 +37,9 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     void Update()
     {
-        if (currentHealth <= 0 && isAlive)
+        if (currentHealth <= 0 && IsAlive)
         {
-            isAlive = false;
+            IsAlive = false;
             Death();
         }
     }
@@ -61,12 +61,12 @@ public class EnemyStats : MonoBehaviour, IHealth
         if (gameObject.GetComponent<EnemyMeleeCombat>() != null)
         {
             gameObject.GetComponent<EnemyMeleeCombat>().AnimatorSetDead();
-            gameObject.GetComponent<EnemyMeleeCombat>().enabled = true;
+            gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
         }
         if (gameObject.GetComponent<EnemyRangedCombat>() != null)
         {
             gameObject.GetComponent<EnemyRangedCombat>().AnimatorSetDead();
-            gameObject.GetComponent<EnemyRangedCombat>().enabled = true;
+            gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
         }
 
         if (RoomManager != null)
@@ -74,7 +74,7 @@ public class EnemyStats : MonoBehaviour, IHealth
             RoomManager.RemoveEnemyFromList(gameObject);
         }
 
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 2.2f);
     }
 
     IEnumerator WaitToFindPlayer()

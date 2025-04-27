@@ -29,27 +29,52 @@ public class EnemyRangedCombat : MonoBehaviour
 
     private void Update()
     {
-        playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
-
-        if (player == null) return;
-
-        if (CanSeePlayer())
+        if (stats.IsAlive)
         {
-            agent.isStopped = true;
+            playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
 
-            transform.LookAt(playerPosition);
+            if (player == null) return;
 
-            if (!hasAttacked)
+            if (CanSeePlayer())
             {
-                StartCoroutine(Attack());
-                hasAttacked = true;
+                agent.isStopped = true;
+
+                Debug.Log("Player visible");
+
+                transform.LookAt(playerPosition);
+
+                if (!hasAttacked)
+                {
+                    StartCoroutine(Attack());
+                    hasAttacked = true;
+                }
+            }
+            else
+            {
+                agent.isStopped = false;
+                agent.SetDestination(player.transform.position);
+
+                Debug.Log("Player not visible");
             }
         }
         else
         {
-            agent.isStopped = false;
-            agent.SetDestination(player.transform.position);
+            AnimatorSetDead();
         }
+    }
+
+    private bool CanSeePlayer()
+    {
+        Vector3 direction = player.transform.position - transform.position;
+        Ray ray = new Ray(transform.position, direction.normalized);
+        LayerMask mask = LayerMask.GetMask("Player");
+
+        if (Physics.Raycast(ray, out RaycastHit hit, mask))
+        {
+            return hit.collider.gameObject == player;
+        }
+
+        return false;
     }
 
     private IEnumerator Attack()
@@ -58,22 +83,11 @@ public class EnemyRangedCombat : MonoBehaviour
 
         AnimatorRanged();
 
-        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);    
-
         hasAttacked = false;
-    }
 
-    private bool CanSeePlayer()
-    {
-        Vector3 direction = player.transform.position - transform.position;
-        Ray ray = new Ray(transform.position + Vector3.up, direction.normalized);
+        yield return new WaitForSeconds(1.1f);
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            return hit.collider.gameObject == player;
-        }
-
-        return false;
+        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);    
     }
 
     private void AnimatorSetIdle()

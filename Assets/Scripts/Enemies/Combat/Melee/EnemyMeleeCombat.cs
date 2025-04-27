@@ -29,35 +29,42 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     private void Update()
     {
-        if (player != null)
+        if (stats.IsAlive)
         {
-            playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
-        }
+            if (player != null)
+            {
+                playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+            }
 
-        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+            float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
 
-        if (distanceToPlayer > minimumDistanceToPlayer)
-        {
-            agent.SetDestination(playerPosition);
+            if (distanceToPlayer > minimumDistanceToPlayer)
+            {
+                agent.SetDestination(playerPosition);
 
-            AnimatorSetMoving();
+                AnimatorSetMoving();
+            }
+            else
+            {
+                agent.ResetPath();
+
+                AnimatorSetIdle();
+
+                transform.LookAt(playerPosition);
+
+                if (!hasAttacked)
+                {
+                    StartCoroutine(Attack());
+
+                    Debug.Log("Attacked");
+
+                    hasAttacked = true;
+                }
+            }
         }
         else
         {
-            agent.ResetPath();
-
-            AnimatorSetIdle();
-
-            transform.LookAt(playerPosition);
-
-            if (!hasAttacked)
-            {
-                StartCoroutine(Attack());
-
-                Debug.Log("Attacked");
-
-                hasAttacked = true;
-            }
+            AnimatorSetDead();
         }
     }
 
@@ -68,13 +75,15 @@ public class EnemyMeleeCombat : MonoBehaviour
         AnimatorMelee();
         MeleeAttack();
 
-        //StartCoroutine(AttackHitboxOnThenOff());
+        StartCoroutine(AttackHitboxOnThenOff());
 
         hasAttacked = false;
     }
 
     private IEnumerator AttackHitboxOnThenOff()
     {
+        yield return new WaitForSeconds(1.1f);
+
         attackHitbox.SetActive(true);
 
         yield return new WaitForSeconds(1);

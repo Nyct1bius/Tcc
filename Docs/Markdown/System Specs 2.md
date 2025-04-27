@@ -28,4 +28,6 @@
   * Além da movimentação e superação de puzzles de level, o jogador irá interagir com elementos listados no seguinte [documento](https://docs.google.com/document/d/1OXTNRNywRP2QrFFqrxfQGCN84GuDNDablAln5ckMuHs/edit?usp=sharing).
 * **Navegação**
   * O jogador pode navegar através do mapa buscando algum porto para atracar seu barco. Uma vez atracado, o jogador acessa a cena do jogo. Basicamente, a navegação funciona como um mapa de seleção de níveis interativo.
+### Elementos Narrativos
+Neste jogo, o jogador navega pelo oceano em seu barco visitando ilhas que, apesar de um dia habitadas agora se encontram abandonadas, e em cada uma onde atraca ele consegue coletar recursos e ferramentas de combate para enfrentar a estranha horda de robôs agressivos que tomaram conta das ilhas e o boss final. O mundo é semi aberto em que o player pode navegar pelas ilhas mas precisa de determinadas ferramentas de cada uma para progredir. Cada ilha terá seus desafios próprios com monstros e puzzles que o player deve superar.
 
