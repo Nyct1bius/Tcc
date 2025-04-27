@@ -19,6 +19,9 @@ public class SteppingTrigger : MonoBehaviour
     private int buttonPressedCount;
     public int buttonsCount;
 
+    public bool activatesEnemies = false;
+    [SerializeField] GameObject roomsToActivate;
+
     private void Awake()
     {
         triggerMeshRenderer = GetComponent<MeshRenderer>();
@@ -56,6 +59,9 @@ public class SteppingTrigger : MonoBehaviour
             ButtonsToActivate[i].ActivatedButton();   
         }
         countdownCoroutine = StartCoroutine(CountdownTimerRoutine(activationTimer));
+        if(activatesEnemies && !roomsToActivate.activeSelf)
+            roomsToActivate.SetActive(true);
+
         
     }
     private void DeactivateTrigger()
