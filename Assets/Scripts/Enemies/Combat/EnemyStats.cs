@@ -30,8 +30,9 @@ public class EnemyStats : MonoBehaviour, IHealth
         {
             agent.speed = MovementSpeed;
         }
-
         Player = GameManager.instance.playerInstance;
+        if(Player == null)
+            StartCoroutine(WaitToFindPlayer());
     }
 
     void Update()
@@ -64,7 +65,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
         if (gameObject.GetComponent<EnemyRangedCombat>() != null)
         {
-            gameObject.GetComponent<EnemyMeleeCombat>().AnimatorSetDead();
+            gameObject.GetComponent<EnemyRangedCombat>().AnimatorSetDead();
             gameObject.GetComponent<EnemyRangedCombat>().enabled = true;
         }
 
@@ -74,5 +75,22 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
 
         Destroy(gameObject, 0.5f);
+    }
+
+    IEnumerator WaitToFindPlayer()
+    {
+        yield return new WaitForSeconds(0.25f);
+        if(GameManager.instance.playerInstance != null)
+        {
+            while(Player == null)
+            {
+                Player = GameManager.instance.playerInstance;
+                yield return null;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("GameManager Instance not found");
+        }
     }
 }

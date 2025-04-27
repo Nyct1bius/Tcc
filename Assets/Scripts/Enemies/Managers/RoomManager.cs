@@ -20,6 +20,7 @@ public class RoomManager : MonoBehaviour
         {
             if(!isWavedRoom)
             {
+                Debug.Log("Player found");
                 foreach (GameObject enemy in MyEnemies)
                 {
                     enemy.GetComponent<IdlePathfinding>().enabled = false;
@@ -36,6 +37,7 @@ public class RoomManager : MonoBehaviour
             }
             else
             {
+                Debug.Log("Player found");
                 foreach (GameObject enemy in enemiesWave1)
                 {
                     enemy.GetComponent<IdlePathfinding>().enabled = false;
@@ -50,9 +52,9 @@ public class RoomManager : MonoBehaviour
                     }
                 }
             }
-            
+            Debug.Log("Player found_end");
 
-            Debug.Log("Player found");
+            
         }
     }
 

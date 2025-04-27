@@ -66,6 +66,7 @@ public class EnemyMeleeCombat : MonoBehaviour
         yield return new WaitForSeconds(stats.TimeBetweenAttacks);
 
         AnimatorMelee();
+        MeleeAttack();
 
         //StartCoroutine(AttackHitboxOnThenOff());
 
