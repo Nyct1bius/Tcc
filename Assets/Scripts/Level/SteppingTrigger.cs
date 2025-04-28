@@ -34,6 +34,7 @@ public class SteppingTrigger : MonoBehaviour
             timerSlider = PlayerUIManager.Instance._timeSlider;
             timerText = PlayerUIManager.Instance._timeText;
         }
+        StartCoroutine(WaitToFindPlayer());
         for (int i = 0; i < ButtonsToActivate.Length; i++)
         {
             ButtonsToActivate[i].steppingTrigger = this;
@@ -111,5 +112,24 @@ public class SteppingTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         UIHolder.SetActive(false);
+    }
+
+    IEnumerator WaitToFindPlayer()
+    {
+        yield return new WaitForSeconds(0.25f);
+        if (PlayerUIManager.Instance != null)
+        {
+            while (UIHolder == null)
+            {
+                UIHolder = PlayerUIManager.Instance._uiHolder;
+                timerSlider = PlayerUIManager.Instance._timeSlider;
+                timerText = PlayerUIManager.Instance._timeText;
+                yield return null;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("GameManager Instance not found");
+        }
     }
 }
