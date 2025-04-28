@@ -932,6 +932,7 @@ MonoBehaviour:
   _maxWalkSpeed: 2
   jumpHeight: 20
   _maxJumpTime: 0.5
+  _shortHopMultiplier: 0.3
   _dashDistance: 40
   _dashTime: 0.3
   _dashCooldownTime: 1
@@ -2166,7 +2167,7 @@ MonoBehaviour:
   hasItemToInteract: 0
   uiPickUp: {fileID: 6659979911424643107, guid: 8a0f8421df075a74287277acb881fbee, type: 3}
   notifier: {fileID: 2211290325680777885}
-  uiOffset: 1.5
+  uiOffset: 2
 --- !u!1 &3294337421872847272
 GameObject:
   m_ObjectHideFlags: 0

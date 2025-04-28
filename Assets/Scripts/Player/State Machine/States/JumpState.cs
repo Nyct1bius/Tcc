@@ -11,6 +11,7 @@ public class JumpState : State
 
     private float _timeSinceEntered;
     private float _switchDelay = 0.3f;
+    private bool _isJumpCanceled;
     public override void Enter()
     {
 
@@ -18,6 +19,7 @@ public class JumpState : State
         _timeSinceEntered = 0f;
         _ctx.Animator.SetTrigger("OnAir");
         _ctx.Animator.SetBool("IsGrounded", false);
+        _isJumpCanceled = false;
     }
 
     public override void Do() 
@@ -76,17 +78,34 @@ public class JumpState : State
     {
 
         _ctx.Movement.ButtonPressedTime += Time.deltaTime;
-
-        if (_ctx.Movement.ButtonPressedTime > _ctx.Movement.MaxJumpTime || !_ctx.Movement.IsJumpButtonPressed)
+        if (!_ctx.Movement.IsJumpButtonPressed)
         {
-            CancelJump();
+            JumpButtonCanceled();
+            _isJumpCanceled = true;
+        }
+        if (_ctx.Movement.ButtonPressedTime > _ctx.Movement.MaxJumpTime)
+        {
+            _isJumpCanceled = true;
         }
 
 
-
+        CancelJump();
+    }
+    private void JumpButtonCanceled()
+    {
+        if (!_isJumpCanceled && _ctx.Body.linearVelocity.y > 0f)
+        {
+            _ctx.Body.linearVelocity = new Vector3(
+                _ctx.Body.linearVelocity.x,
+                _ctx.Body.linearVelocity.y * _ctx.Movement.ShortHopMultiplier, 
+                _ctx.Body.linearVelocity.z
+            );
+            _isJumpCanceled = true;
+        }
     }
     private void CancelJump()
     {
+        if (_isJumpCanceled)
         _ctx.Body.AddForce(Vector3.up * _ctx.Movement.Gravity, ForceMode.Force);
     }
 

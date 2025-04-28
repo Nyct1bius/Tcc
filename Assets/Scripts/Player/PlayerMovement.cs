@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     public float jumpHeight;
     [SerializeField] private float _maxJumpTime;
+    [Range(0, 0.7f)]
+    [SerializeField] private float _shortHopMultiplier;
     private float _jumpVelocity;
     private bool _isJumpButtonPressed;
     private float _buttonPressedTime;
@@ -91,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     public float JumpVelocity { get { return _jumpVelocity; } }
     public float MaxJumpTime { get { return _maxJumpTime; } }
     public bool RequireNewJumpPress { get { return _requireNewJumpPress; } set { _requireNewJumpPress = value; } }
+    public float ShortHopMultiplier { get { return _shortHopMultiplier; } }
 
 
     #endregion
