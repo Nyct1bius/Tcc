@@ -46,7 +46,12 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
 
     public void HealHealth(float healing)
     {
-       
+       _currentHealth += healing;
+        if(_currentHealth > _stats.maxHealth)
+        {
+            _currentHealth = _stats.maxHealth;
+        } 
+        _playerUIManager.AtualizePlayerHealthUI(_currentHealth);
        
     }
 
