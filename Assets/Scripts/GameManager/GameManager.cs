@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public bool IsRestartingGame;
     public GameObject PlayerInstance { get; private set; }
     [SerializeField] private PlayerStatsSO _playerStats;
+
+    [SerializeField] private int lastCheckPointIndex;
     
     
 
@@ -151,9 +153,14 @@ public class GameManager : MonoBehaviour
         Destroy(PlayerInstance);
         Destroy(_cnCameraRef);
     }
-    public void SetCheckpoint(Transform newCheckpoint)
+    public void SetCheckpoint(Transform newCheckpoint, int cpIndex)
     {
         _checkpoint = newCheckpoint;
+        if(cpIndex != lastCheckPointIndex)
+        {
+            lastCheckPointIndex = cpIndex;
+            PlayerInstance.GetComponent<PlayerHealthManager>().HealHealth(_playerStats.maxHealth);
+        }
     }
     private void OnQuitGame()
     {
