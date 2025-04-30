@@ -928,8 +928,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _machine: {fileID: 1879942085890910862}
   playerVisualTransform: {fileID: 3297609512898516442}
-  _walkAcceleration: 5
-  _maxWalkSpeed: 2
+  _walkAcceleration: 3
+  _maxWalkSpeed: 1.5
   jumpHeight: 20
   _maxJumpTime: 0.5
   _shortHopMultiplier: 0.3
@@ -937,7 +937,7 @@ MonoBehaviour:
   _dashTime: 0.3
   _dashCooldownTime: 1
   _gravity: -50
-  groundDecay: 30
+  groundDecay: 50
   turnSmoothTime: 0.2
 --- !u!114 &4753316193442231772
 MonoBehaviour:
@@ -1003,7 +1003,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479004193044153031}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f8eda721b61be304ebf42578ada74445, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
