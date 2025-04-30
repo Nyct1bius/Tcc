@@ -9,6 +9,7 @@ public class SteppingTrigger : MonoBehaviour
     [SerializeField] private Material normalMat;
     [SerializeField] private Button[] ButtonsToActivate;
     private MeshRenderer triggerMeshRenderer;
+    [SerializeField] BoxCollider boxCollider;
 
     [SerializeField] private float activationTimer;
     public GameObject UIHolder;
@@ -39,6 +40,7 @@ public class SteppingTrigger : MonoBehaviour
         {
             ButtonsToActivate[i].steppingTrigger = this;
         }
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -105,6 +107,7 @@ public class SteppingTrigger : MonoBehaviour
         {
             StopCoroutine(countdownCoroutine);
             StartCoroutine(UIHolderDeactivation());
+            boxCollider.enabled = false;
         }
     }
 

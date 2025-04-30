@@ -50,5 +50,7 @@ public class Door : MonoBehaviour
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        if(gameObject.GetComponent<BoxCollider>())
+            gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 }
