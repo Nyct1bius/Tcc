@@ -46,6 +46,11 @@ public class WalkState : State
        _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
         _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
         _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
+        if (_ctx.Movement.OnSlope())
+        {
+            _ctx.Movement.MoveDirection = _ctx.Movement.GetSlopeDirection();
+        }
+
 
         _ctx.Movement.MovementDelta = _ctx.Movement.MoveDirection * _ctx.Movement.WalkAcceleration;
         _ctx.Movement.HorizontalVelocity += _ctx.Movement.MovementDelta;

@@ -866,6 +866,7 @@ Transform:
   - {fileID: 8789237998911698959}
   - {fileID: 5372033998844949420}
   - {fileID: 4979567979529115642}
+  - {fileID: 7062386390166708539}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3422465072937968406
@@ -928,8 +929,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _machine: {fileID: 1879942085890910862}
   playerVisualTransform: {fileID: 3297609512898516442}
-  _walkAcceleration: 3
-  _maxWalkSpeed: 1.5
+  _walkAcceleration: 5
+  _maxWalkSpeed: 2
+  _maxSlopeAngle: 40
+  _highFrictionMaterial: {fileID: 13400000, guid: e2cb1bb2bd8748d44b2cb980bc4db1a1, type: 2}
+  _lowFrictionMaterial: {fileID: 13400000, guid: f8eda721b61be304ebf42578ada74445, type: 2}
+  _playerCollider: {fileID: 4180338343420396380}
   jumpHeight: 20
   _maxJumpTime: 0.5
   _shortHopMultiplier: 0.3
@@ -2636,6 +2641,61 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0036675772, y: 0.042975597, z: -0.014426941}
     m_Extent: {x: 0.031334642, y: 0.034463815, z: 0.026008865}
   m_DirtyAABB: 0
+--- !u!1 &4487148893677440410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7062386390166708539}
+  - component: {fileID: 7629202941328774048}
+  m_Layer: 3
+  m_Name: Frictionless
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7062386390166708539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487148893677440410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8918552513360700576}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7629202941328774048
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487148893677440410}
+  m_Material: {fileID: 13400000, guid: f8eda721b61be304ebf42578ada74445, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 1.7
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.18, z: 0}
 --- !u!1 &4904520870632179877
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _movementDelta;
     private Vector3 _newVelocity;
 
+    [Header("Slope")]
+    [Range(0f, 90f)]
+    [SerializeField] private float _maxSlopeAngle;
+    [SerializeField] private PhysicsMaterial _highFrictionMaterial;
+    [SerializeField] private PhysicsMaterial _lowFrictionMaterial;
+    [SerializeField] private CapsuleCollider _playerCollider;
+    private RaycastHit _slopeHit;
+
+
 
     [Header("Jump")]
     public float jumpHeight;
@@ -115,6 +124,11 @@ public class PlayerMovement : MonoBehaviour
         _machine.inputReader.JumpEvent -= OnjumpButton;
         _machine.inputReader.DashEvent -= HandleDash;
     }
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
+        UpdateFrictionMaterial();
+    }
     private void FixedUpdate()
     {
         if (!_machine.GameIsPaused)
@@ -182,9 +196,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
+    private void UpdateFrictionMaterial()
+    {
+        if (OnSlope() && _currentMovementInput == Vector2.zero)
+        {
+            Debug.Log("On a Slope");
+            _playerCollider.material = _highFrictionMaterial;
+        }
+        else
+        {
+            _playerCollider.material = _lowFrictionMaterial;
+        }
+    }
     private void ApplyGravity()
     {
+        //_machine.Body.useGravity = OnSlope();
+        //if (OnSlope()) return;
+
         if (_machine.Body.linearVelocity.y > 0)
         {
             _machine.Body.AddForce(Vector3.up * -0.1f, ForceMode.Force);
@@ -194,6 +222,27 @@ public class PlayerMovement : MonoBehaviour
         {
             _machine.Body.AddForce(Vector3.up * _gravity, ForceMode.Force);
         }
+    }
+
+    public bool OnSlope()
+    {
+        Vector3 rayOrigin = transform.position + Vector3.up * (_playerCollider.center.y - _playerCollider.height / 2 + 0.05f);
+        float rayLength = (transform.localScale.y * 0.5f) + 0.3f;
+
+        Debug.DrawRay(rayOrigin, Vector3.down * rayLength, Color.red);
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out _slopeHit, rayLength))
+        {
+            float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
+            return angle < _maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+
+    public Vector3 GetSlopeDirection()
+    {
+        return Vector3.ProjectOnPlane(_moveDirection, _slopeHit.normal).normalized;
     }
     #endregion
 }
