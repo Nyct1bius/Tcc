@@ -4,16 +4,18 @@ using UnityEngine.AI;
 
 public class EnemyRangedCombat : MonoBehaviour
 {
-    [Header("References")]
     GameObject player;
     Vector3 playerPosition;
+
     [SerializeField] GameObject projectile;
     [SerializeField] Transform projectileSpawnPoint;
+
     public EnemyStats stats;
-    [SerializeField] NavMeshAgent agent;
+    NavMeshAgent agent;
     Animator animator;
 
     bool hasAttacked = false;
+    public bool IsTurret;
 
     private void Awake()
     {
@@ -25,36 +27,41 @@ public class EnemyRangedCombat : MonoBehaviour
         AnimatorSetIdle();
 
         player = stats.Player;
+
+        agent = stats.agent;
     }
 
     private void Update()
     {
         if (stats.IsAlive)
         {
-            playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+            playerPosition = new Vector3(player.transform.position.x, gameObject.transform.position.y, player.transform.position.z);
 
-            if (player == null) return;
-
-            if (CanSeePlayer())
+            if (!IsTurret)
             {
-                agent.isStopped = true;
+                if (player == null) return;
 
-                Debug.Log("Player visible");
-
-                transform.LookAt(playerPosition);
-
-                if (!hasAttacked)
+                if (CanSeePlayer())
                 {
-                    StartCoroutine(Attack());
-                    hasAttacked = true;
+                    agent.isStopped = true;
+                    agent.ResetPath();
+
+                    transform.LookAt(playerPosition);
+
+                    Shoot();
+                }
+                else
+                {
+                    agent.isStopped = false;
+                    agent.SetDestination(player.transform.position);
                 }
             }
-            else
-            {
-                agent.isStopped = false;
-                agent.SetDestination(player.transform.position);
 
-                Debug.Log("Player not visible");
+            if (IsTurret)
+            {
+                Shoot();
+
+                transform.LookAt(playerPosition);
             }
         }
         else
@@ -88,6 +95,15 @@ public class EnemyRangedCombat : MonoBehaviour
         yield return new WaitForSeconds(1.1f);
 
         Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);    
+    }
+
+    private void Shoot()
+    {
+        if (!hasAttacked)
+        {
+            StartCoroutine(Attack());
+            hasAttacked = true;
+        }
     }
 
     private void AnimatorSetIdle()

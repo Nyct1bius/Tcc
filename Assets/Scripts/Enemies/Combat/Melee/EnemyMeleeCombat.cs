@@ -4,12 +4,12 @@ using UnityEngine.AI;
 
 public class EnemyMeleeCombat : MonoBehaviour
 {
-    [Header("References")]
     GameObject player;
     Vector3 playerPosition;
-    [SerializeField] GameObject attackHitbox;
+
+    BoxCollider attackHitbox;
     public EnemyStats stats;
-    [SerializeField] NavMeshAgent agent;
+    NavMeshAgent agent;
     Animator animator;
 
     bool hasAttacked = false;
@@ -18,6 +18,7 @@ public class EnemyMeleeCombat : MonoBehaviour
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        attackHitbox = GetComponentInChildren<BoxCollider>();
     }
 
     private void Start()
@@ -25,6 +26,8 @@ public class EnemyMeleeCombat : MonoBehaviour
         AnimatorSetIdle();
 
         player = stats.Player;
+
+        agent = stats.agent;
     }
 
     private void Update()
@@ -33,7 +36,7 @@ public class EnemyMeleeCombat : MonoBehaviour
         {
             if (player != null)
             {
-                playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+                playerPosition = new Vector3(player.transform.position.x, gameObject.transform.position.y, player.transform.position.z);
             }
 
             float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
@@ -84,11 +87,11 @@ public class EnemyMeleeCombat : MonoBehaviour
     {
         yield return new WaitForSeconds(1.1f);
 
-        attackHitbox.SetActive(true);
+        attackHitbox.enabled = true;
 
         yield return new WaitForSeconds(1);
 
-        attackHitbox.SetActive(false);
+        attackHitbox.enabled = false;
     }
 
     public void MeleeAttack()

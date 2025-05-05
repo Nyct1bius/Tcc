@@ -5,9 +5,9 @@ public class EnemyProjectile : MonoBehaviour
     GameObject player;
     Transform playerPosition;
 
-    public float Speed;
-
     Vector3 targetDirection;
+
+    public float Speed;
 
     private void Start()
     {

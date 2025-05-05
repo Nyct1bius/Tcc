@@ -76,7 +76,9 @@ MonoBehaviour:
   MaxHealth: 100
   TimeBetweenAttacks: 5
   MovementSpeed: 5
+  IsAlive: 1
   RoomManager: {fileID: 0}
+  agent: {fileID: 0}
   Player: {fileID: 0}
 --- !u!114 &3230871373467491907
 MonoBehaviour:
@@ -93,7 +95,7 @@ MonoBehaviour:
   projectile: {fileID: 2102856790986989687, guid: 1df588c11fe364840b1b88332f8bf039, type: 3}
   projectileSpawnPoint: {fileID: 4504851409974770029}
   stats: {fileID: 4423831765372149865}
-  agent: {fileID: 7570544844877955337}
+  IsTurret: 1
 --- !u!114 &7756143508970583448
 MonoBehaviour:
   m_ObjectHideFlags: 0

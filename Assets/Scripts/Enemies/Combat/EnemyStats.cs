@@ -5,14 +5,13 @@ using UnityEngine.AI;
 public class EnemyStats : MonoBehaviour, IHealth
 {
     public float MaxHealth, TimeBetweenAttacks, MovementSpeed;
-
-    public float currentHealth;
+    float currentHealth;
 
     public bool IsAlive = true;
 
     public RoomManager RoomManager;
 
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public GameObject Player;
 
@@ -73,7 +72,7 @@ public class EnemyStats : MonoBehaviour, IHealth
             RoomManager.RemoveEnemyFromList(gameObject);
         }
 
-        Destroy(gameObject, 2.2f);
+        StartCoroutine(Despawn());
     }
 
     IEnumerator WaitToFindPlayer()
@@ -91,5 +90,12 @@ public class EnemyStats : MonoBehaviour, IHealth
         {
             Debug.LogWarning("GameManager Instance not found");
         }
+    }
+
+    IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(2.2f);
+
+        gameObject.SetActive(false);
     }
 }

@@ -74,10 +74,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 100
-  TimeBetweenAttacks: 4
+  TimeBetweenAttacks: 1.6
   MovementSpeed: 6
-  currentHealth: 0
+  IsAlive: 1
   RoomManager: {fileID: 0}
+  agent: {fileID: 0}
   Player: {fileID: 0}
 --- !u!114 &562903212557668286
 MonoBehaviour:
@@ -91,9 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70738f10013bcc146a8b94d4ee80706d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackHitbox: {fileID: 4104420187823965813}
   stats: {fileID: 6170765344176593587}
-  agent: {fileID: 7317437159642706339}
 --- !u!114 &666235153488644225
 MonoBehaviour:
   m_ObjectHideFlags: 0
