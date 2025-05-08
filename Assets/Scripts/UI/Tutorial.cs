@@ -1,83 +1,83 @@
 using UnityEngine;
-using UnityEngine.UI;
+
+public enum TutorialType
+{
+    Attack,
+    Jump,
+    Dash,
+    Puzzle,
+    Navigation
+}
 
 public class Tutorial : MonoBehaviour
 {
+    public TutorialType tutorialType;
+    [SerializeField] private GameObject[] tutorialParts;
 
-    public bool _attackTutorial = false;
-    public bool _jumpTutorial = false;
-    public bool _dashTutorial = false;
-
-    [SerializeField] GameObject _attackScreen;
-
-    [SerializeField] GameObject _jumpScreen;
-
-    [SerializeField] GameObject _dashScreen;
-
-    public bool _finish = false;
-    public bool _isShowing = false;
+    private int currentPartIndex = 0;
+    private bool isFinished = false;
+    private bool isShowing = false;
 
     private void Update()
     {
-        if (_isShowing && Input.GetKeyDown(KeyCode.Escape))
+        if(isShowing && Input.GetKeyDown(KeyCode.Space))
+        {
+            ShowNextPart();
+        }
+
+        if (isShowing && Input.GetKeyDown(KeyCode.Escape))
         {
             CloseTutorial();
-            _finish = true;
-            _isShowing = false;
         }
     }
 
     private void ShowTutorial()
     {
-        if(_attackTutorial)
-        {
-            _attackScreen.SetActive(true);
-        }
-        else if(_jumpTutorial)
-        {
-            _jumpScreen.SetActive(true);
-        }
-        else if(_dashTutorial)
-        {
-            _dashScreen.SetActive(true);
-        }
+        if (tutorialParts.Length == 0 || isFinished) return;
 
-        _isShowing = true;
+        currentPartIndex = 0;
+        tutorialParts[currentPartIndex].SetActive(true);
+        isShowing = true;
+
+        PauseGameManager.PauseGame();
+    }
+
+    private void ShowNextPart()
+    {
+        // Desativa a parte atual
+        tutorialParts[currentPartIndex].SetActive(false);
+
+        currentPartIndex++;
+
+        if(currentPartIndex < tutorialParts.Length)
+        {
+            // Ativa a próxima parte
+            tutorialParts[currentPartIndex].SetActive(true);
+        }
+        else
+        {
+            // Se não houver mais partes, fecha o tutorial
+            CloseTutorial();
+        }
     }
 
     private void CloseTutorial()
     {
-        if (_attackTutorial)
+        if(currentPartIndex < tutorialParts.Length)
         {
-            _attackScreen.SetActive(false);
-
-        }
-        else if (_jumpTutorial)
-        {
-            _jumpScreen.SetActive(false);
-            
-        }
-        else if (_dashTutorial)
-        {
-            _dashScreen.SetActive(false);
-            
+            tutorialParts[currentPartIndex].SetActive(false);
         }
 
+        isFinished = true;
+        isShowing = false;
         PauseGameManager.ResumeGame();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!_finish)
+        if (!isFinished)
         {
             ShowTutorial();
-            PauseGameManager.PauseGame();
         }
     }
-
-  /*  private void OnTriggerExit(Collider other) // temp ate add pause e botoes
-    {
-        CloseTutorial();
-        _finish = true;
-    }*/
 }
