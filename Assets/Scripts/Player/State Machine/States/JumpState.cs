@@ -20,6 +20,7 @@ public class JumpState : State
         _ctx.Animator.SetTrigger("OnAir");
         _ctx.Animator.SetBool("IsGrounded", false);
         _isJumpCanceled = false;
+        _ctx.Movement.FallDeathTimer = 0f;
     }
 
     public override void Do() 
@@ -29,6 +30,18 @@ public class JumpState : State
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
+        }
+
+        if (!_ctx.Movement.HasGround())
+        {
+            Debug.Log("Death counter Start");
+            _ctx.Movement.FallDeathTimer += Time.deltaTime;
+            if (_ctx.Movement.FallDeathTimer >= _ctx.Movement.MaxFallTime)
+            {
+                GameManager.instance.RespawnPlayer();
+                SwitchStates(_factory.Grounded());
+            }
+
         }
     }
     public override void FixedDo()

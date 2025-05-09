@@ -42,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxJumpTime;
     [Range(0, 0.7f)]
     [SerializeField] private float _shortHopMultiplier;
+    [SerializeField] private float _maxFallTime = 5f;
+    [Range(0, 500f)]
+    [SerializeField] private float _groundDetectionDistance;
+    private float _fallDeathTimer;
     private float _jumpVelocity;
     private bool _isJumpButtonPressed;
     private float _buttonPressedTime;
@@ -103,6 +107,8 @@ public class PlayerMovement : MonoBehaviour
     public float MaxJumpTime { get { return _maxJumpTime; } }
     public bool RequireNewJumpPress { get { return _requireNewJumpPress; } set { _requireNewJumpPress = value; } }
     public float ShortHopMultiplier { get { return _shortHopMultiplier; } }
+    public float MaxFallTime { get { return _maxFallTime; } }
+    public float FallDeathTimer { get { return _fallDeathTimer; } set { _fallDeathTimer = value; } }
 
 
     #endregion
@@ -128,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
         UpdateFrictionMaterial();
+        HasGround();
     }
     private void FixedUpdate()
     {
@@ -243,6 +250,17 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetSlopeDirection()
     {
         return Vector3.ProjectOnPlane(_moveDirection, _slopeHit.normal).normalized;
+    }
+
+    public bool HasGround()
+    {
+        Vector3 rayOrigin = transform.position + Vector3.up * (_playerCollider.center.y - _playerCollider.height / 2 + 0.05f);
+        float rayLength = (transform.localScale.y * 0.5f) + _groundDetectionDistance;
+
+        Debug.DrawRay(rayOrigin, Vector3.down * rayLength, Color.green);
+        return Physics.Raycast(rayOrigin, Vector3.down, out _slopeHit, rayLength);
+        
+
     }
     #endregion
 }
