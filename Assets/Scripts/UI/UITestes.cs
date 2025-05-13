@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UITestes : MonoBehaviour, IDataPersistence
 {
@@ -17,6 +18,13 @@ public class UITestes : MonoBehaviour, IDataPersistence
     void Update()
     {
         
+    }
+
+    public void CarregarScene(string NewScene)
+    {
+        SceneManager.LoadScene("LoadScene", LoadSceneMode.Additive);
+        LoadScene.FindAnyObjectByType<LoadScene>();
+
     }
 
     public void Aumenta()
