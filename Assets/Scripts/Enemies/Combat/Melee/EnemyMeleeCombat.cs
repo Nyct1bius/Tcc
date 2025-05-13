@@ -89,7 +89,7 @@ public class EnemyMeleeCombat : MonoBehaviour
 
         attackHitbox.enabled = true;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.85f);
 
         attackHitbox.enabled = false;
     }
