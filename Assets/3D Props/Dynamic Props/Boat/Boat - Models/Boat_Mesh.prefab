@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4944653400147928800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7245647723972152738}
+  m_Layer: 0
+  m_Name: Boat_Mesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7245647723972152738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4944653400147928800}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 62.386284, y: 20.033205, z: 96.20747}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3045834883814385965}
+  - {fileID: 8781897740487720256}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3300650124799282886
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7245647723972152738}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.40644836
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.001958847
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.001991272
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_Name
+      value: Rudder_Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 4061515326317273416, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+      propertyPath: m_Name
+      value: Rudder_Cube
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+--- !u!4 &3045834883814385965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b894a109247c9947a4dc7e4a1cf91ee, type: 3}
+  m_PrefabInstance: {fileID: 3300650124799282886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9103226245569452715
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7245647723972152738}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -20.260475
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -20.033205
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.004562378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 875f395c621097242890c099e1e8f812, type: 3}
+      propertyPath: m_Name
+      value: Boat_Mesh
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 875f395c621097242890c099e1e8f812, type: 3}
+--- !u!4 &8781897740487720256 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 875f395c621097242890c099e1e8f812, type: 3}
+  m_PrefabInstance: {fileID: 9103226245569452715}
+  m_PrefabAsset: {fileID: 0}
