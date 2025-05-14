@@ -12,6 +12,7 @@ public class RoomManager : MonoBehaviour
     public bool isWavedRoom = false;
     public bool isThereWave3 = false;
     [SerializeField] private Door door;
+    [SerializeField] private List<GameObject> closingWalls;
 
 
     private void OnTriggerEnter(Collider other)
@@ -38,6 +39,11 @@ public class RoomManager : MonoBehaviour
             else
             {
                 Debug.Log("Player found");
+                foreach(GameObject walls in closingWalls)
+                {
+                    walls.SetActive(true);
+                }
+                
                 foreach (GameObject enemy in enemiesWave1)
                 {
                     enemy.GetComponent<IdlePathfinding>().enabled = false;
@@ -142,5 +148,10 @@ public class RoomManager : MonoBehaviour
     {
         if(door != null)
             door.OpenDoor();
+
+        foreach (GameObject walls in closingWalls)
+        {
+            walls.SetActive(false);
+        }
     }
 }

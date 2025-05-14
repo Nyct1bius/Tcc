@@ -27,6 +27,9 @@ public class ListComponentEditor : Editor
                 listProperty = serializedObject.FindProperty("enemiesWave3");
                 EditorGUILayout.PropertyField(listProperty, true); // 'true' to allow children (i.e., elements of list)
             }
+
+            SerializedProperty closingWallsProperty = serializedObject.FindProperty("closingWalls");
+            EditorGUILayout.PropertyField(closingWallsProperty, true); // 'true' to allow children (i.e., elements of list)
         }
         else
         {
@@ -36,6 +39,8 @@ public class ListComponentEditor : Editor
 
         SerializedProperty doorProperty = serializedObject.FindProperty("door");
         EditorGUILayout.PropertyField(doorProperty, true); // 'true' to allow children (i.e., elements of list)
+
+        
 
         // Apply property modifications
         serializedObject.ApplyModifiedProperties();
