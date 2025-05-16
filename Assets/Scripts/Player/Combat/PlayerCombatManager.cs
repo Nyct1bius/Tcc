@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class PlayerCombatManager : MonoBehaviour
     [Header("Combat")]
     [SerializeField] private bool _attackIncooldown;
     [SerializeField] private float _timeBetweenAttacks = 0.5f;
-    private int _attackCount;
+    [SerializeField] private int _attackCount;
     private bool _isAttacking;
     [Header("VFX")]
     [SerializeField] private GameObject _vfxAttack;
@@ -46,12 +47,15 @@ public class PlayerCombatManager : MonoBehaviour
         _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
+        PlayerEvents.AttackVfx += SpwanVfxAttack;
     }
+
     private void OnDisable()
     {
         _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
+        PlayerEvents.AttackVfx -= SpwanVfxAttack;
     }
     private void Start()
     {
@@ -91,6 +95,12 @@ public class PlayerCombatManager : MonoBehaviour
 
             Gizmos.DrawWireSphere(_attackCollisionCheck.position, _currentWeaponData.attackRange);
         }
+    }
+
+
+    private void SpwanVfxAttack()
+    {
+        Instantiate(_currentWeaponData.vfxAttacks[_attackCount], _vfxAttack.transform.position,_vfxAttack.transform.rotation);
     }
 
     #endregion

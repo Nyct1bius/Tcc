@@ -12,4 +12,7 @@ public static class PlayerEvents
     public static event UnityAction DashFinished;
     public static void OnDashFinished() => DashFinished?.Invoke();
 
+    public static event UnityAction AttackVfx;
+    public static void OnAttackVfx() => AttackVfx?.Invoke();
+
 }

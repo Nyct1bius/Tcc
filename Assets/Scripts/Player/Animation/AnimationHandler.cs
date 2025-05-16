@@ -12,4 +12,9 @@ public class AnimationHandler : MonoBehaviour
     {
         PlayerEvents.OnDashFinished();
     }
+
+    public void OnSpawnAttackVFX()
+    {
+        PlayerEvents.OnAttackVfx();
+    }
 }
