@@ -8,6 +8,7 @@ public class WeaponSO : ScriptableObject
     public float attackRange;
     public float weaponDamage;
     public GameObject weaponVisual;
+    public GameObject[] vfxAttacks;
     public enum WeaponType
     {
         Sword,

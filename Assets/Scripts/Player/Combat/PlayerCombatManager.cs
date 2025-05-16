@@ -23,6 +23,8 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private float _timeBetweenAttacks = 0.5f;
     private int _attackCount;
     private bool _isAttacking;
+    [Header("VFX")]
+    [SerializeField] private GameObject _vfxAttack;
 
     #region Getters and Setters
 
@@ -33,6 +35,9 @@ public class PlayerCombatManager : MonoBehaviour
     public bool IsAttacking { get { return _isAttacking; } }
     public LayerMask DamageableLayer { get { return _damageableLayer; } }
     public WeaponSO CurrentWeaponData { get { return _currentWeaponData; } }
+
+    //VFX
+    public GameObject VfxAttack { get { return _vfxAttack; } set {_vfxAttack = value; } }
 
     #endregion
 
