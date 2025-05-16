@@ -4,13 +4,13 @@ using UnityEngine.AI;
 
 public class EnemyRangedCombat : MonoBehaviour
 {
+    public EnemyStats Stats;
+
     GameObject player;
-    Vector3 playerPosition;
 
     [SerializeField] GameObject projectile;
     [SerializeField] Transform projectileSpawnPoint;
 
-    public EnemyStats stats;
     NavMeshAgent agent;
     Animator animator;
 
@@ -24,119 +24,39 @@ public class EnemyRangedCombat : MonoBehaviour
 
     private void Start()
     {
-        AnimatorSetIdle();
-
-        player = stats.Player;
-
-        agent = stats.agent;
+        player = Stats.Player;
+        agent = Stats.Agent;
+        animator = Stats.Animator;
     }
 
     private void Update()
     {
-        if (stats.IsAlive)
+        agent.ResetPath();
+
+        transform.LookAt(Stats.PlayerPosition);
+
+        if (!hasAttacked)
         {
-            playerPosition = new Vector3(player.transform.position.x, gameObject.transform.position.y, player.transform.position.z);
-
-            if (!IsTurret)
-            {
-                if (player == null) return;
-
-                if (CanSeePlayer())
-                {
-                    agent.isStopped = true;
-                    agent.ResetPath();
-
-                    transform.LookAt(playerPosition);
-
-                    Shoot();
-                }
-                else
-                {
-                    agent.isStopped = false;
-                    agent.SetDestination(player.transform.position);
-                }
-            }
-
-            if (IsTurret)
-            {
-                Shoot();
-
-                transform.LookAt(playerPosition);
-            }
-        }
-        else
-        {
-            AnimatorSetDead();
+            StartCoroutine(RangedAttack());
         }
     }
 
-    private bool CanSeePlayer()
-    {
-        Vector3 direction = player.transform.position - transform.position;
-        Ray ray = new Ray(transform.position, direction.normalized);
-        LayerMask mask = LayerMask.GetMask("Player");
-
-        if (Physics.Raycast(ray, out RaycastHit hit, mask))
-        {
-            return hit.collider.gameObject == player;
-        }
-
-        return false;
-    }
-
-    private IEnumerator Attack()
+    private IEnumerator RangedAttack()
     {   
-        yield return new WaitForSeconds(stats.TimeBetweenAttacks);
+        hasAttacked = true;
+        
+        yield return new WaitForSeconds(Stats.TimeBetweenAttacks);
 
-        AnimatorRanged();
-
-        hasAttacked = false;
+        animator.SetTrigger("Ranged");
 
         yield return new WaitForSeconds(1.1f);
 
-        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);    
-    }
+        hasAttacked = false;
 
-    private void Shoot()
-    {
-        if (!hasAttacked)
-        {
-            StartCoroutine(Attack());
-            hasAttacked = true;
-        }
-    }
+        projectile.transform.position = projectileSpawnPoint.position;
 
-    private void AnimatorSetIdle()
-    {
-        //animator.SetBool("Moving", false);
-        animator.SetBool("Idle", true);
-    }
+        projectile.GetComponent<EnemyProjectile>().DespawnTimer = projectile.GetComponent<EnemyProjectile>().StartDespawnTimer;
 
-    private void AnimatorSetMoving()
-    {
-        //animator.SetBool("Idle", false);
-        //animator.SetBool("Moving", true);
-    }
-
-    private void AnimatorMelee()
-    {
-        animator.SetTrigger("Melee");
-    }
-
-    private void AnimatorRanged()
-    {
-        animator.SetTrigger("Ranged");
-    }
-
-    public void AnimatorHit()
-    {
-        //animator.SetTrigger("Hit");
-    }
-
-    public void AnimatorSetDead()
-    {
-        animator.SetBool("Idle", false);
-        //animator.SetBool("Moving", false);
-        animator.SetBool("Dead", true);
+        projectile.SetActive(true);    
     }
 }

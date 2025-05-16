@@ -4,79 +4,65 @@ using UnityEngine.AI;
 
 public class EnemyMeleeCombat : MonoBehaviour
 {
-    GameObject player;
-    Vector3 playerPosition;
+    public EnemyStats Stats;
 
+    GameObject player;
     BoxCollider attackHitbox;
-    public EnemyStats stats;
     NavMeshAgent agent;
     Animator animator;
+    Rigidbody rb;
 
     bool hasAttacked = false;
-    float minimumDistanceToPlayer = 5;
+
+    public float knockbackForce, knockbackDuration;
+
+    public bool WasAttacked = false;
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
         attackHitbox = GetComponentInChildren<BoxCollider>();
     }
 
     private void Start()
     {
-        AnimatorSetIdle();
-
-        player = stats.Player;
-
-        agent = stats.agent;
+        player = Stats.Player;
+        agent = Stats.Agent;
+        animator = Stats.Animator;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        if (stats.IsAlive)
+        transform.LookAt(Stats.PlayerPosition);
+        
+        if (!hasAttacked)
         {
-            if (player != null)
-            {
-                playerPosition = new Vector3(player.transform.position.x, gameObject.transform.position.y, player.transform.position.z);
-            }
+            StartCoroutine(MeleeAttack());
+        }
 
-            float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        if (WasAttacked)
+        {
+            agent.enabled = false;
 
-            if (distanceToPlayer > minimumDistanceToPlayer)
-            {
-                agent.SetDestination(playerPosition);
+            hasAttacked = true;
+            
+            StopAllCoroutines();
 
-                AnimatorSetMoving();
-            }
-            else
-            {
-                agent.ResetPath();
-
-                AnimatorSetIdle();
-
-                transform.LookAt(playerPosition);
-
-                if (!hasAttacked)
-                {
-                    StartCoroutine(Attack());
-
-                    Debug.Log("Attacked");
-
-                    hasAttacked = true;
-                }
-            }
+            StartCoroutine(ApplyKnockback());
         }
         else
         {
-            AnimatorSetDead();
+            agent.ResetPath();
         }
     }
 
-    private IEnumerator Attack()
-    { 
-        yield return new WaitForSeconds(stats.TimeBetweenAttacks);
+    private IEnumerator MeleeAttack()
+    {
+        hasAttacked = true;
 
-        AnimatorMelee();
-        MeleeAttack();
+        yield return new WaitForSeconds(Stats.TimeBetweenAttacks);
+
+        animator.SetTrigger("Melee");
 
         StartCoroutine(AttackHitboxOnThenOff());
 
@@ -94,42 +80,18 @@ public class EnemyMeleeCombat : MonoBehaviour
         attackHitbox.enabled = false;
     }
 
-    public void MeleeAttack()
+    private IEnumerator ApplyKnockback()
     {
-        StartCoroutine(AttackHitboxOnThenOff());
-    }
+        Vector3 direction = (transform.position - player.transform.position).normalized;
+        rb.AddForce(direction * knockbackForce, ForceMode.Impulse);
 
-    private void AnimatorSetIdle()
-    {
-        //animator.SetBool("Moving", false);
-        animator.SetBool("Idle", true);
-    }
+        yield return new WaitForSeconds(knockbackDuration);
 
-    private void AnimatorSetMoving()
-    {
-        //animator.SetBool("Idle", false);
-        //animator.SetBool("Moving", true);
-    }
+        rb.linearVelocity = Vector3.zero;
 
-    private void AnimatorMelee()
-    {
-        animator.SetTrigger("Melee");
-    }
+        agent.enabled = true;
 
-    private void AnimatorRanged()
-    {
-        animator.SetTrigger("Ranged");
-    }
-
-    public void AnimatorHit()
-    {
-        //animator.SetTrigger("Hit");
-    }
-
-    public void AnimatorSetDead()
-    {
-        animator.SetBool("Idle", false);
-        //animator.SetBool("Moving", false);
-        animator.SetBool("Dead", true);
+        WasAttacked = false;
+        hasAttacked = false;
     }
 }

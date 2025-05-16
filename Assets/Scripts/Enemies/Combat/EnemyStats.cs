@@ -4,47 +4,56 @@ using UnityEngine.AI;
 
 public class EnemyStats : MonoBehaviour, IHealth
 {
-    public float MaxHealth, TimeBetweenAttacks, MovementSpeed;
-    float currentHealth;
-
-    public bool IsAlive = true;
+    public bool IsAlive, IsMeleeEnemy;
+    public float MaxHealth, CurrentHealth, TimeBetweenAttacks, MovementSpeed, MinimumPlayerDistance;
 
     public RoomManager RoomManager;
-
-    public NavMeshAgent agent;
-
+    public NavMeshAgent Agent;
     public GameObject Player;
+    public Animator Animator;
+
+    public Vector3 PlayerPosition;
 
     void Awake()
     {
-        currentHealth = MaxHealth;
-
-        agent = GetComponent<NavMeshAgent>();
+        CurrentHealth = MaxHealth;
     }
 
     void Start()
     {
-        if (agent != null)
-        {
-            agent.speed = MovementSpeed;
-        }
+        Agent = GetComponent<NavMeshAgent>();
+        if (Agent != null)
+            Agent.speed = MovementSpeed;
+
         Player = GameManager.instance.PlayerInstance;
-        if(Player == null)
+        if (Player == null)
             StartCoroutine(WaitToFindPlayer());
+
+        Animator = GetComponentInChildren<Animator>();
+        Animator.SetBool("Idle", true);
     }
 
     void Update()
     {
-        if (currentHealth <= 0 && IsAlive)
+        if (IsAlive)
         {
-            IsAlive = false;
-            Death();
+            if (CurrentHealth <= 0)
+            {
+                IsAlive = false;
+                Death();
+            }
+            else
+            {
+                CheckPlayerDistance();
+            }
         }
     }
     
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        currentHealth -= damage;
+        CurrentHealth -= damage;
+
+        gameObject.GetComponent<EnemyMeleeCombat>().WasAttacked = true;
     }
     
     public void HealHealth(float health)
@@ -54,17 +63,15 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     public void Death()
     {
-        gameObject.GetComponent<IdlePathfinding>().enabled = false;
-
-        if (gameObject.GetComponent<EnemyMeleeCombat>() != null)
+        if (IsMeleeEnemy)
         {
-            gameObject.GetComponent<EnemyMeleeCombat>().AnimatorSetDead();
             gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
+            gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;
         }
-        if (gameObject.GetComponent<EnemyRangedCombat>() != null)
+        else
         {
-            gameObject.GetComponent<EnemyRangedCombat>().AnimatorSetDead();
             gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
+            gameObject.GetComponent<EnemyRangedPathfinding>().enabled = false;
         }
 
         if (RoomManager != null)
@@ -72,7 +79,7 @@ public class EnemyStats : MonoBehaviour, IHealth
             RoomManager.RemoveEnemyFromList(gameObject);
         }
 
-        StartCoroutine(Despawn());
+        StartCoroutine(Despawn(2.2f));
     }
 
     IEnumerator WaitToFindPlayer()
@@ -92,9 +99,50 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
-    IEnumerator Despawn()
+    private void CheckPlayerDistance()
     {
-        yield return new WaitForSeconds(2.2f);
+        if (Player != null)
+        {
+            PlayerPosition = new Vector3(Player.transform.position.x, gameObject.transform.position.y, Player.transform.position.z);
+
+            if (Vector3.Distance(transform.position, PlayerPosition) <= MinimumPlayerDistance)
+            {
+                if (IsMeleeEnemy)
+                {
+                    gameObject.GetComponent<EnemyMeleeCombat>().enabled = true; 
+                    gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;    
+                }
+                else
+                {
+                    gameObject.GetComponent<EnemyRangedCombat>().enabled = true;
+                    gameObject.GetComponent<EnemyRangedPathfinding>().enabled = false;
+                }
+            }
+            else
+            {
+                if (IsMeleeEnemy)
+                {
+                    gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
+                    gameObject.GetComponent<EnemyMeleePathfinding>().enabled = true;
+                }
+                else
+                {
+                    gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
+                    gameObject.GetComponent<EnemyRangedPathfinding>().enabled = true;
+                }
+            }
+        }
+    }
+
+    private IEnumerator Despawn(float timeToDespawn)
+    {
+        Agent.enabled = false;
+        gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+        Animator.SetBool("Idle", false);
+        Animator.SetBool("Dead", true);
+
+        yield return new WaitForSeconds(timeToDespawn);
 
         gameObject.SetActive(false);
     }
