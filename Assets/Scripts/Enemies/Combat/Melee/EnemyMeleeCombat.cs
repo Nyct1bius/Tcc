@@ -10,7 +10,6 @@ public class EnemyMeleeCombat : MonoBehaviour
     BoxCollider attackHitbox;
     NavMeshAgent agent;
     Animator animator;
-    Rigidbody rb;
 
     bool hasAttacked = false;
 
@@ -28,12 +27,14 @@ public class EnemyMeleeCombat : MonoBehaviour
         player = Stats.Player;
         agent = Stats.Agent;
         animator = Stats.Animator;
-        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         transform.LookAt(Stats.PlayerPosition);
+
+        //animator.SetBool("Walk", false);
+        animator.SetBool("Idle", true);
         
         if (!hasAttacked)
         {
@@ -83,11 +84,8 @@ public class EnemyMeleeCombat : MonoBehaviour
     private IEnumerator ApplyKnockback()
     {
         Vector3 direction = (transform.position - player.transform.position).normalized;
-        rb.AddForce(direction * knockbackForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(knockbackDuration);
-
-        rb.linearVelocity = Vector3.zero;
 
         agent.enabled = true;
 

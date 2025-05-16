@@ -140,6 +140,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
         Animator.SetBool("Idle", false);
+        //Animator.SetBool("Walk", false);
         Animator.SetBool("Dead", true);
 
         yield return new WaitForSeconds(timeToDespawn);

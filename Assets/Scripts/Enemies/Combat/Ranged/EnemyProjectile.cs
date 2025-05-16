@@ -14,15 +14,11 @@ public class EnemyProjectile : MonoBehaviour
 
     [SerializeField] bool isAimedProjectile;
 
-    private void Start()
-    {
-        player = GameManager.instance.PlayerInstance;
-    }
-
     private void OnEnable()
     {
         if (isAimedProjectile)
         {
+            player = GameManager.instance.PlayerInstance;
             playerPosition = player.transform;
 
             targetDirection = (playerPosition.position - transform.position).normalized;

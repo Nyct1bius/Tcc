@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2102856790986989687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: -1.285, z: 0}
+  m_LocalPosition: {x: -173.37169, y: 26.99807, z: -88.22629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -121,4 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe883890f8684814d860c0d47a018e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nonPlayerTarget: {fileID: 0}
   Speed: 8
+  StartDespawnTimer: 3
+  DespawnTimer: 3
+  isAimedProjectile: 1
