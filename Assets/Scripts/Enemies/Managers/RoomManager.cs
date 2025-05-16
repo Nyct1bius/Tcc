@@ -24,16 +24,7 @@ public class RoomManager : MonoBehaviour
                 Debug.Log("Player found");
                 foreach (GameObject enemy in MyEnemies)
                 {
-                    enemy.GetComponent<IdlePathfinding>().enabled = false;
-
-                    if (enemy.GetComponent<EnemyMeleeCombat>() != null)
-                    {
-                        enemy.GetComponent<EnemyMeleeCombat>().enabled = true;
-                    }
-                    if (enemy.GetComponent<EnemyRangedCombat>() != null)
-                    {
-                        enemy.GetComponent <EnemyRangedCombat>().enabled = true;
-                    }
+                    enemy.GetComponent<EnemyStats>().enabled = true;
                 }
             }
             else
@@ -46,16 +37,7 @@ public class RoomManager : MonoBehaviour
                 
                 foreach (GameObject enemy in enemiesWave1)
                 {
-                    enemy.GetComponent<IdlePathfinding>().enabled = false;
-
-                    if (enemy.GetComponent<EnemyMeleeCombat>() != null)
-                    {
-                        enemy.GetComponent<EnemyMeleeCombat>().enabled = true;
-                    }
-                    if (enemy.GetComponent<EnemyRangedCombat>() != null)
-                    {
-                        enemy.GetComponent<EnemyRangedCombat>().enabled = true;
-                    }
+                    enemy.GetComponent<EnemyStats>().enabled = true;
                 }
             }
             Debug.Log("Player found_end");
@@ -69,16 +51,7 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject enemy in enemiesWave2)
         {
             enemy.SetActive(true);
-            enemy.GetComponent<IdlePathfinding>().enabled = false;
-
-            if (enemy.GetComponent<EnemyMeleeCombat>() != null)
-            {
-                enemy.GetComponent<EnemyMeleeCombat>().enabled = true;
-            }
-            if (enemy.GetComponent<EnemyRangedCombat>() != null)
-            {
-                enemy.GetComponent<EnemyRangedCombat>().enabled = true;
-            }
+            enemy.GetComponent<EnemyStats>().enabled = true;
         }
     }
     public void SpawnThirdWave()
@@ -86,16 +59,7 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject enemy in enemiesWave3)
         {
             enemy.SetActive(true);
-            enemy.GetComponent<IdlePathfinding>().enabled = false;
-
-            if (enemy.GetComponent<EnemyMeleeCombat>() != null)
-            {
-                enemy.GetComponent<EnemyMeleeCombat>().enabled = true;
-            }
-            if (enemy.GetComponent<EnemyRangedCombat>() != null)
-            {
-                enemy.GetComponent<EnemyRangedCombat>().enabled = true;
-            }
+            enemy.GetComponent<EnemyStats>().enabled = false;
         }
     }
 

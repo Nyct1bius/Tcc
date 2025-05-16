@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 957a26e24d30a0a4b8b8b03727158163
+guid: e8f13a82eb3d6b448b4b4b9b5fc6c366
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,12 +108,56 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ContinueButton_0
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 401
+        width: 401
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9ad5881150da0499edfd71ddc41cf6
+      internalID: 1837637945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ContinueButton_1
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 274
+        width: 401
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a71928b3d75426c44a2af59e74b66b3c
+      internalID: -1492863940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 2ea1677f62b17554e84e4d64245c31d5
     internalID: 0
     vertices: []
     indices: 
@@ -122,7 +166,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ContinueButton_0: 1837637945
+      ContinueButton_1: -1492863940
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
