@@ -89,12 +89,10 @@ public class PlayerCombatManager : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        if (_currentWeaponData != null)
-        {
-            Gizmos.color = Color.blue;
 
-            Gizmos.DrawWireSphere(_attackCollisionCheck.position, _currentWeaponData.attackRange);
-        }
+        Gizmos.color = Color.blue;
+
+        Gizmos.DrawWireSphere(_attackCollisionCheck.position, _backupWeaponData.attackRange);
     }
 
 
