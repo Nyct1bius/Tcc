@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6379615283846354071}
   - component: {fileID: 6282432353467020894}
   - component: {fileID: 1069372617244992987}
+  - component: {fileID: 6899552969775773947}
   m_Layer: 0
   m_Name: Third Person Camera controller
   m_TagString: Untagged
@@ -103,14 +104,14 @@ MonoBehaviour:
   Radius: 10
   Orbits:
     Top:
-      Radius: 6
-      Height: 8.49
+      Radius: 10
+      Height: 9
     Center:
-      Radius: 11
-      Height: 1.12
+      Radius: 12
+      Height: 1.5
     Bottom:
-      Radius: 2.5
-      Height: -0.96
+      Radius: 7
+      Height: -2
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
@@ -168,9 +169,9 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 0, z: 0}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
+    Enabled: 1
+    Time: 0.35
+    Smoothing: 7.5
     IgnoreY: 0
 --- !u!114 &6379615283846354071
 MonoBehaviour:
@@ -276,3 +277,42 @@ MonoBehaviour:
       m_Bits: 64
     MaximumRaycast: 10
     Damping: 0.5
+--- !u!114 &6899552969775773947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130453660943946744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 65
+  IgnoreTag: 
+  TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  MinimumDistanceFromTarget: 0.3
+  AvoidObstacles:
+    Enabled: 1
+    DistanceLimit: 0
+    MinimumOcclusionTime: 0
+    CameraRadius: 0.7
+    UseFollowTarget:
+      Enabled: 0
+      YOffset: 0
+    Strategy: 0
+    MaximumEffort: 4
+    SmoothingTime: 0
+    Damping: 0.4
+    DampingWhenOccluded: 0.2
+  ShotQualityEvaluation:
+    Enabled: 0
+    OptimalDistance: 10
+    NearLimit: 5
+    FarLimit: 30
+    MaxQualityBoost: 0.2
