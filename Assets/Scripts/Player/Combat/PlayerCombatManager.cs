@@ -25,7 +25,9 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private int _attackCount;
     private bool _isAttacking;
     [Header("VFX")]
-    [SerializeField] private GameObject _vfxAttack;
+    [SerializeField] private Transform _vfxAttackSpawnpoint;
+    [SerializeField] private Transform _vfxLightniningSpawnpoint;
+    [SerializeField] private GameObject _vfxLightnining;
 
     #region Getters and Setters
 
@@ -38,7 +40,8 @@ public class PlayerCombatManager : MonoBehaviour
     public WeaponSO CurrentWeaponData { get { return _currentWeaponData; } }
 
     //VFX
-    public GameObject VfxAttack { get { return _vfxAttack; } set {_vfxAttack = value; } }
+    public GameObject VfxLightnining { get { return _vfxLightnining; } }
+        
 
     #endregion
 
@@ -47,7 +50,7 @@ public class PlayerCombatManager : MonoBehaviour
         _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
-        PlayerEvents.AttackVfx += SpwanVfxAttack;
+        PlayerEvents.AttackVfx += SpawnVFXAttack;
     }
 
     private void OnDisable()
@@ -55,7 +58,7 @@ public class PlayerCombatManager : MonoBehaviour
         _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
-        PlayerEvents.AttackVfx -= SpwanVfxAttack;
+        PlayerEvents.AttackVfx -= SpawnVFXAttack;
     }
     private void Start()
     {
@@ -96,9 +99,14 @@ public class PlayerCombatManager : MonoBehaviour
     }
 
 
-    private void SpwanVfxAttack()
+    private void SpawnVFXAttack()
     {
-        Instantiate(_currentWeaponData.vfxAttacks[_attackCount], _vfxAttack.transform.position,_vfxAttack.transform.rotation);
+        Instantiate(_currentWeaponData.vfxAttacks[_attackCount], _vfxAttackSpawnpoint.position,_vfxAttackSpawnpoint.rotation);
+    }
+    
+    public void SpawnVFXLightining()
+    {
+        Instantiate(_vfxLightnining, _vfxLightniningSpawnpoint);
     }
 
     #endregion

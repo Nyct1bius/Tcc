@@ -10,7 +10,6 @@ public class AttackState : State
 
     public override void Enter()
     {
-        _ctx.Combat.VfxAttack.SetActive(true);
         _ctx.Animator.SetBool("IsAttacking", true);
         PerformAttack();
     }

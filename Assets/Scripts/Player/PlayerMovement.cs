@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Getters and Setters
     //COMPONENTS
-    public Transform PlayerTransform { get { return transform; } }
+    public Transform PlayerTransform { get { return playerVisualTransform; } }
 
     //Phisycs
 

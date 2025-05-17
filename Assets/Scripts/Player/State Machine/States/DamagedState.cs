@@ -10,6 +10,7 @@ public class DamagedState : State
 
     public override void Enter()
     {
+        _ctx.Combat.SpawnVFXLightining();
         _ctx.Animator.SetTrigger("Hited");
         _ctx.Health.CurrentHealth -=  _ctx.Health.DamageToReceive;
         _ctx.Health.IsInvulnerable = true;
