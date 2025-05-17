@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-public class EnemyProjectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour, IPooledObject
 {
     GameObject player;
 
@@ -16,6 +17,34 @@ public class EnemyProjectile : MonoBehaviour
 
     private void OnEnable()
     {
+        
+    }
+
+    private void Update()
+    {
+        transform.position += targetDirection * Speed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PlayerMovement>())
+        {
+            other.GetComponent<PlayerHealthManager>().Damage(10, transform.position);
+
+            StartCoroutine(DeactivateAfterHit());
+        }
+        else if (!other.isTrigger)
+        {
+            StartCoroutine(DeactivateAfterHit());
+        }
+    }
+
+    public void OnObjectSpawn()
+    {
+        print("Has spawen from pool");
+        // The other functionality comes here
+        StartCoroutine(DeactivateFromTime());
+
         if (isAimedProjectile)
         {
             player = GameManager.instance.PlayerInstance;
@@ -29,29 +58,18 @@ public class EnemyProjectile : MonoBehaviour
 
             targetDirection = (nonPlayerTargetPosition.position - transform.position).normalized;
         }
+
     }
-
-    private void Update()
+    IEnumerator DeactivateFromTime()
     {
-        transform.position += targetDirection * Speed * Time.deltaTime;
-
-        if (DespawnTimer <= 0)
-        {
-            gameObject.SetActive(false);
-        }
+        yield return new WaitForSeconds(DespawnTimer);
+        gameObject.SetActive(false);
     }
-
-    private void OnTriggerEnter(Collider other)
+    IEnumerator DeactivateAfterHit()
     {
-        if (other.GetComponent<PlayerMovement>())
-        {
-            other.GetComponent<PlayerHealthManager>().Damage(10, transform.position);
+        StopCoroutine(DeactivateFromTime());
+        yield return new WaitForSeconds(0.05f);
+        gameObject.SetActive(false);
 
-            gameObject.SetActive(false);
-        }
-        else if (!other.isTrigger)
-        {           
-            gameObject.SetActive(false);
-        }
     }
 }

@@ -53,10 +53,12 @@ public class EnemyRangedCombat : MonoBehaviour
 
         hasAttacked = false;
 
-        projectile.transform.position = projectileSpawnPoint.position;
+        EnemyProjectileGenerator.Instance.SpawnProjectile(projectileSpawnPoint);
 
-        projectile.GetComponent<EnemyProjectile>().DespawnTimer = projectile.GetComponent<EnemyProjectile>().StartDespawnTimer;
+        //projectile.transform.position = projectileSpawnPoint.position;
 
-        projectile.SetActive(true);    
+        //projectile.GetComponent<EnemyProjectile>().DespawnTimer = projectile.GetComponent<EnemyProjectile>().StartDespawnTimer;
+
+        //projectile.SetActive(true);    
     }
 }
