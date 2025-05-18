@@ -25,7 +25,6 @@ public class AttackState : State
     {
         //_ctx.Combat.VfxAttack.SetActive(false);
         _ctx.Animator.SetBool("IsAttacking", false);
-        _ctx.Combat.AttackCount++;
     }
 
     public override void CheckSwitchState()
@@ -60,7 +59,8 @@ public class AttackState : State
         _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer);
         _ctx.Animator.SetFloat("AttackCount", _ctx.Combat.AttackCount);
 
-        if (_ctx.Combat.AttackCount >= 3)
+        _ctx.Combat.AttackCount++;
+        if (_ctx.Combat.AttackCount >= 2)
         {
             _ctx.Body.AddForce(_ctx.transform.forward.normalized * 20f, ForceMode.Impulse);
             _ctx.Combat.AttackCount = 0;

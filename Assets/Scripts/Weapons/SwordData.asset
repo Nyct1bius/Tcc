@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e9af83986e44bd43a152d48314cde6f, type: 3}
+  m_Name: SwordData
+  m_EditorClassIdentifier: 
+  attackRange: 5
+  weaponDamage: 30
+  weaponVisual: {fileID: 8755476405608552295, guid: e8bdd787cb79f53449feef82ffc62209, type: 3}
+  vfxAttacks:
+  - {fileID: 4698274703902271682, guid: e00ad31b9ca95cb49a7bfc3b77a8ef12, type: 3}
+  - {fileID: 5262588603669200175, guid: 83f3b7b59c1bd874a8a53f1c3acb6082, type: 3}
+  - {fileID: 4698274703902271682, guid: e00ad31b9ca95cb49a7bfc3b77a8ef12, type: 3}
+  vfxHit: {fileID: 3390200988973274209, guid: 4389dec028addb64e93ef31d99d6d7bd, type: 3}
+  Type: 0

@@ -8,7 +8,9 @@ public class WeaponSO : ScriptableObject
     public float attackRange;
     public float weaponDamage;
     public GameObject weaponVisual;
+    [Header("VFX")]
     public GameObject[] vfxAttacks;
+    public GameObject vfxHit;
     public enum WeaponType
     {
         Sword,
@@ -62,6 +64,7 @@ public class WeaponSO : ScriptableObject
         IHealth health = enemy.GetComponent<IHealth>();
         if (health != null)
         {
+            Instantiate(vfxHit, enemy.transform.position, Quaternion.identity);
             health.Damage(weaponDamage, _posToAttack.position);
         }
 

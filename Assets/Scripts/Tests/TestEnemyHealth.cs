@@ -22,15 +22,9 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
     {
         if (!isImmortal)
         {
-            currenthealth -= damage;
+            //currenthealth -= damage;
             isImmortal = true;
             StartCoroutine(Immortal());
-
-            if (currenthealth <= 0f)
-            {
-                Death();
-
-            }
         }
         
     }
@@ -44,7 +38,7 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
 
     public void Death()
     {
-        Destroy(gameObject);
+        currenthealth = maxHealth;
     }
 
 }
