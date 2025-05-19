@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviour
 
     public bool isWavedRoom = false;
     public bool isThereWave3 = false;
+    public bool isRoomCleared = false;
     [SerializeField] private Door door;
     [SerializeField] private List<GameObject> closingWalls;
 
@@ -29,16 +30,20 @@ public class RoomManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player found");
-                foreach(GameObject walls in closingWalls)
+                if(!isRoomCleared)
                 {
-                    walls.SetActive(true);
+                    Debug.Log("Player found");
+                    foreach (GameObject walls in closingWalls)
+                    {
+                        walls.SetActive(true);
+                    }
+
+                    foreach (GameObject enemy in enemiesWave1)
+                    {
+                        enemy.GetComponent<EnemyStats>().enabled = true;
+                    }
                 }
                 
-                foreach (GameObject enemy in enemiesWave1)
-                {
-                    enemy.GetComponent<EnemyStats>().enabled = true;
-                }
             }
             Debug.Log("Player found_end");
 
@@ -110,7 +115,8 @@ public class RoomManager : MonoBehaviour
 
     public void OpenTheDoor()
     {
-        if(door != null)
+        isRoomCleared = true;
+        if (door != null)
             door.OpenDoor();
 
         foreach (GameObject walls in closingWalls)
