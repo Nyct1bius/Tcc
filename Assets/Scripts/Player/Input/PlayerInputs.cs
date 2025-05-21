@@ -80,6 +80,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b523d28-f5bb-4774-93f1-bfa119983df6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +309,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea44e19f-262e-487b-8bd0-5b0e972572c1"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62e2a29c-4954-4b3b-a54b-0f4042d2af06"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -852,6 +883,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_Dash = m_PlayerControls.FindAction("Dash", throwIfNotFound: true);
         m_PlayerControls_OpenMenu = m_PlayerControls.FindAction("OpenMenu", throwIfNotFound: true);
+        m_PlayerControls_LockOn = m_PlayerControls.FindAction("LockOn", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -938,6 +970,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Interact;
     private readonly InputAction m_PlayerControls_Dash;
     private readonly InputAction m_PlayerControls_OpenMenu;
+    private readonly InputAction m_PlayerControls_LockOn;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -948,6 +981,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputAction @Dash => m_Wrapper.m_PlayerControls_Dash;
         public InputAction @OpenMenu => m_Wrapper.m_PlayerControls_OpenMenu;
+        public InputAction @LockOn => m_Wrapper.m_PlayerControls_LockOn;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -975,6 +1009,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenMenu.started += instance.OnOpenMenu;
             @OpenMenu.performed += instance.OnOpenMenu;
             @OpenMenu.canceled += instance.OnOpenMenu;
+            @LockOn.started += instance.OnLockOn;
+            @LockOn.performed += instance.OnLockOn;
+            @LockOn.canceled += instance.OnLockOn;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -997,6 +1034,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenMenu.started -= instance.OnOpenMenu;
             @OpenMenu.performed -= instance.OnOpenMenu;
             @OpenMenu.canceled -= instance.OnOpenMenu;
+            @LockOn.started -= instance.OnLockOn;
+            @LockOn.performed -= instance.OnLockOn;
+            @LockOn.canceled -= instance.OnLockOn;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -1148,6 +1188,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnOpenMenu(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

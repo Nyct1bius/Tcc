@@ -15,6 +15,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     public event UnityAction <bool>DashEvent;
     public event UnityAction InteractEvent;
     public event UnityAction PauseEvent;
+    public event UnityAction LockOnEnemy;
 
 
     private PlayerInputs inputs;
@@ -135,5 +136,11 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
             inputs.UI.Disable();
             inputs.PlayerControls.Enable();
         }
+    }
+
+    public void OnLockOn(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        LockOnEnemy?.Invoke();
     }
 }

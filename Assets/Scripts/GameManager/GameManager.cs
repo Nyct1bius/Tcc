@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     {
         Started,
         RunningGame,
+        EnterCombat,
+        ExitCombat,
         Paused,
         Resume,
         Respawn,
@@ -72,7 +74,6 @@ public class GameManager : MonoBehaviour
     public void SwitchGameState(GameStates newState)
     {
         State = newState;
-        Debug.Log("Game State: " + State);
         switch(State)
         {
             case GameStates.Started:
@@ -80,6 +81,12 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.RunningGame:
                 OnGame();
+                break;
+            case GameStates.EnterCombat:
+                OnEnterCombat();
+                break;
+            case GameStates.ExitCombat:
+                OnExitCombat();
                 break;
             case GameStates.Paused:
                 break;
@@ -97,7 +104,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private void OnEnterGame()
     {
        
@@ -112,6 +118,17 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
     }
+
+    private void OnEnterCombat()
+    {
+        GameEvents.OnEnterCombat();
+    }
+
+    private void OnExitCombat()
+    {
+        GameEvents.OnExitCombat();
+    }
+
     private void RestarGame()
     {
         DestroyCurrentPlayer();

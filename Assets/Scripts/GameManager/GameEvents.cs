@@ -12,6 +12,12 @@ public static class GameEvents
     public static event UnityAction GameOver;
     public static void OnGameOver() => GameOver?.Invoke();
 
+    public static event UnityAction EnterCombat;
+    public static void OnEnterCombat() => EnterCombat?.Invoke();
+
+    public static event UnityAction ExitCombat;
+    public static void OnExitCombat() => ExitCombat?.Invoke();
+
     public static event UnityAction RestartGame;
     public static void OnRestartGame() => RestartGame?.Invoke();
 

@@ -20,8 +20,9 @@ public class RoomManager : MonoBehaviour
     {
         if (GameManager.instance.PlayerInstance == other.gameObject)
         {
-            if(!isWavedRoom)
+            if (!isWavedRoom)
             {
+                GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
                 Debug.Log("Player found");
                 foreach (GameObject enemy in MyEnemies)
                 {
@@ -32,6 +33,7 @@ public class RoomManager : MonoBehaviour
             {
                 if(!isRoomCleared)
                 {
+                    GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
                     Debug.Log("Player found");
                     foreach (GameObject walls in closingWalls)
                     {
@@ -42,6 +44,7 @@ public class RoomManager : MonoBehaviour
                     {
                         enemy.GetComponent<EnemyStats>().enabled = true;
                     }
+                    
                 }
                 
             }
@@ -115,6 +118,7 @@ public class RoomManager : MonoBehaviour
 
     public void OpenTheDoor()
     {
+        GameManager.instance.SwitchGameState(GameManager.GameStates.ExitCombat);
         isRoomCleared = true;
         if (door != null)
             door.OpenDoor();
