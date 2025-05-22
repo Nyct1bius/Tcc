@@ -64,6 +64,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: cace8107c9550b54286a0696f053a893, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metallic_Roughness_AO:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal_Map:
         m_Texture: {fileID: 2800000, guid: 97a6f46d95b4ea648b0afe1de7adcfbe, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -116,8 +120,10 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Has_Emission_Map: 0
     - _Intensidade_da_Normal: 8
     - _Metallic: 0
+    - _Normal_Intensity: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0

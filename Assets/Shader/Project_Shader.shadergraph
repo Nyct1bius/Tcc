@@ -436,7 +436,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "05db385e271a485e81c8e22c871c5661",
     "m_Id": 0,
-    "m_DisplayName": "Intensidade da Normal",
+    "m_DisplayName": "Normal Intensity",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -761,10 +761,10 @@
     "m_Guid": {
         "m_GuidSerialized": "26880b8b-f619-4165-b313-129cd11ea20b"
     },
-    "m_Name": "Intensidade da Normal",
+    "m_Name": "Normal Intensity",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Intensidade da Normal",
-    "m_DefaultReferenceName": "_Intensidade_da_Normal",
+    "m_RefNameGeneratedByDisplayName": "Normal Intensity",
+    "m_DefaultReferenceName": "_Normal_Intensity",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -853,10 +853,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -611.4285888671875,
-            "y": 179.42855834960938,
-            "width": 155.4285888671875,
-            "height": 34.28575134277344
+            "x": -672.0001220703125,
+            "y": 192.0,
+            "width": 197.14285278320313,
+            "height": 34.28569030761719
         }
     },
     "m_Slots": [
@@ -890,7 +890,7 @@
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
-    "m_RenderFace": 2,
+    "m_RenderFace": 0,
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
@@ -1244,10 +1244,10 @@
     "m_Guid": {
         "m_GuidSerialized": "8310743f-d1fd-40ca-bc63-0893638ac436"
     },
-    "m_Name": "Tem mapa de Emission",
+    "m_Name": "Has Emission Map",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Tem mapa de Emission",
-    "m_DefaultReferenceName": "_Tem_mapa_de_Emission",
+    "m_RefNameGeneratedByDisplayName": "Has Emission Map",
+    "m_DefaultReferenceName": "_Has_Emission_Map",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -1459,7 +1459,7 @@
     "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
     "m_ObjectId": "806121458fc74de3bf25202b2323723e",
     "m_Id": 0,
-    "m_DisplayName": "Tem mapa de Emission",
+    "m_DisplayName": "Has Emission Map",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2051,22 +2051,22 @@
     "m_Name": "",
     "m_ChildObjectList": [
         {
+            "m_Id": "1c65d2f3fe8a42398f9853d8b88ede22"
+        },
+        {
             "m_Id": "fd06964c0b1d4bb49f13c5345e66bab9"
         },
         {
             "m_Id": "83193e95767f44199465a243e631593c"
         },
         {
-            "m_Id": "f17115fee7204146b6b83961861acfa8"
-        },
-        {
-            "m_Id": "1c65d2f3fe8a42398f9853d8b88ede22"
+            "m_Id": "2f56781adfa6472fab9127ab0148623c"
         },
         {
             "m_Id": "5a0c36b52a854b72b1ffe016d15c9e71"
         },
         {
-            "m_Id": "2f56781adfa6472fab9127ab0148623c"
+            "m_Id": "f17115fee7204146b6b83961861acfa8"
         }
     ]
 }
@@ -2487,7 +2487,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "f4e5b167e3c546ee9db782ce0f6e72ed",
     "m_Id": 0,
-    "m_DisplayName": "RGBA Texture",
+    "m_DisplayName": "Metallic Roughness AO",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2632,10 +2632,10 @@
     "m_Guid": {
         "m_GuidSerialized": "0e6e48cc-0170-4c0f-8117-2db372a8debb"
     },
-    "m_Name": "RGBA Texture",
+    "m_Name": "Metallic Roughness AO",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "RGBA Texture",
-    "m_DefaultReferenceName": "_RGBA_Texture",
+    "m_RefNameGeneratedByDisplayName": "Metallic Roughness AO",
+    "m_DefaultReferenceName": "_Metallic_Roughness_AO",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
