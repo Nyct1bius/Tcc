@@ -44,6 +44,7 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private ScreenShakeProfileSO _damagePlayerProfile;
     private bool _canShakeCamera = true;
 
+
     #region Getters and Setters
 
     //COMBAT
@@ -119,7 +120,7 @@ public class PlayerCombatManager : MonoBehaviour
     {
         CleanTargetsList();
         int count = Physics.OverlapSphereNonAlloc(transform.position, _lockOnRange, _lookAtTargets, _damageableLayer);
-        _detectedEnemys = new List<Collider>();
+        _detectedEnemys = new List<Collider>();//@optimize
 
         for (int i = 0; i < count; i++)
         {
@@ -192,11 +193,11 @@ public class PlayerCombatManager : MonoBehaviour
     {
 
         Handles.color = Color.yellow;
-        Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attackArcAngle / 2f, 0) * transform.forward, 
-            _backupWeaponData.attackArcAngle, _backupWeaponData.attackRange);
+        Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
+            _backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
 
-        Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attackRange;
-        Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attackRange;
+        Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
+        Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
@@ -209,7 +210,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void SpawnVFXAttack()
     {
-        Instantiate(_currentWeaponData.vfxAttacks[_attackCount], _vfxAttackSpawnpoint.position,_vfxAttackSpawnpoint.rotation);
+        Instantiate(_backupWeaponData.attacks[_attackCount].vfxAttacks, _vfxAttackSpawnpoint.position,_vfxAttackSpawnpoint.rotation);
     }
     
     public void SpawnVFXLightining()

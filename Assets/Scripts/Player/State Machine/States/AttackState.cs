@@ -64,7 +64,7 @@ public class AttackState : State
             _ctx.Combat.AttackCount = 0;
         }
 
-        _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer);
+        _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
 
     }
     private void TeleportToClosestEnemy()
@@ -74,7 +74,7 @@ public class AttackState : State
 
         if (_ctx.Combat.DetectedEnemys.Count > 0)
         {
-            float range = _ctx.Combat.CurrentWeaponData.attackRange;
+            float range = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackRange;
             Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
             Vector3 posToTeleport = targetPos.position + targetPos.forward * (range - 2f);
             posToTeleport.y = _ctx.Movement.PlayerTransform.position.y;
