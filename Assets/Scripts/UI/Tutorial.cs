@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum TutorialType
 {
@@ -14,70 +16,74 @@ public class Tutorial : MonoBehaviour
     public TutorialType tutorialType;
     [SerializeField] private GameObject[] tutorialParts;
 
+
     private int currentPartIndex = 0;
     private bool isFinished = false;
     private bool isShowing = false;
+    PlayerInputs playerInputs;
 
-    private void Update()
+    private void OnDisable()
     {
-        if(isShowing && Input.GetKeyDown(KeyCode.Space))
-        {
-            ShowNextPart();
-        }
-
-        if (isShowing && Input.GetKeyDown(KeyCode.Escape))
-        {
-            CloseTutorial();
-        }
+        playerInputs.UI.Disable();
+        playerInputs.UI.CloseMenu.performed -= CloseTutorial;
     }
 
     private void ShowTutorial()
     {
         if (tutorialParts.Length == 0 || isFinished) return;
-
-        currentPartIndex = 0;
         tutorialParts[currentPartIndex].SetActive(true);
         isShowing = true;
 
         PauseGameManager.PauseGame();
     }
 
-    private void ShowNextPart()
+    //private void ShowNextPart()
+    //{
+    //    // Desativa a parte atual
+    //    tutorialParts[currentPartIndex].SetActive(false);
+
+    //    currentPartIndex++;
+
+    //    if(currentPartIndex < tutorialParts.Length)
+    //    {
+    //        // Ativa a próxima parte
+    //        tutorialParts[currentPartIndex].SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        //// Se não houver mais partes, fecha o tutorial
+    //        //CloseTutorial();
+    //    }
+    //}
+
+    private void CloseTutorial(InputAction.CallbackContext context)
     {
-        // Desativa a parte atual
         tutorialParts[currentPartIndex].SetActive(false);
-
-        currentPartIndex++;
-
-        if(currentPartIndex < tutorialParts.Length)
+        if (currentPartIndex + 1 < tutorialParts.Length)
         {
-            // Ativa a próxima parte
+            currentPartIndex++;
             tutorialParts[currentPartIndex].SetActive(true);
+            return;
         }
-        else
-        {
-            // Se não houver mais partes, fecha o tutorial
-            CloseTutorial();
-        }
-    }
-
-    private void CloseTutorial()
-    {
-        if(currentPartIndex < tutorialParts.Length)
-        {
-            tutorialParts[currentPartIndex].SetActive(false);
-        }
-
+            
+        tutorialParts[currentPartIndex].SetActive(false);
         isFinished = true;
         isShowing = false;
         PauseGameManager.ResumeGame();
+
+        playerInputs.UI.Disable();
+        playerInputs.UI.CloseMenu.performed -= CloseTutorial;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isFinished)
+        if (!isFinished && GameManager.instance.PlayerInstance == other.gameObject)
         {
             ShowTutorial();
+            playerInputs = new PlayerInputs();
+            playerInputs.UI.Enable();
+            playerInputs.UI.CloseMenu.performed += CloseTutorial;
+
         }
     }
 }
