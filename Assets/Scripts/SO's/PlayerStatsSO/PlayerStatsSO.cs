@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "ScriptableObject / PlayerStats")]
+[CreateAssetMenu(menuName = "PlayerStats / PlayerStats")]
 public class PlayerStatsSO : ScriptableObject
 {
     public float maxHealth;

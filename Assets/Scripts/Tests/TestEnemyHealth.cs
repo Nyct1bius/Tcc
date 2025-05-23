@@ -25,6 +25,7 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
             //currenthealth -= damage;
             isImmortal = true;
             StartCoroutine(Immortal());
+            transform.position += Vector3.forward * -1f;
         }
         
     }

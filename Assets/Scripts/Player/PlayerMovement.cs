@@ -72,10 +72,13 @@ public class PlayerMovement : MonoBehaviour
     private float targetAngle;
     private float turnSmoothVelocity;
     float angle;
+    [Header("Screen Shake Profiles")]
+    [SerializeField] private ScreenShakeProfileSO _landProfile;
+    [SerializeField] private ScreenShakeProfileSO _dashProfile;
 
     #region Getters and Setters
     //COMPONENTS
-    public Transform PlayerTransform { get { return playerVisualTransform; } }
+    public Transform PlayerTransform { get { return transform; } }
 
     //Phisycs
 
@@ -110,7 +113,8 @@ public class PlayerMovement : MonoBehaviour
     public float MaxFallTime { get { return _maxFallTime; } }
     public float FallDeathTimer { get { return _fallDeathTimer; } set { _fallDeathTimer = value; } }
 
-
+    public ScreenShakeProfileSO LandProfile {  get { return _landProfile; } }
+    public ScreenShakeProfileSO DashProfile {  get { return _dashProfile; } }
     #endregion
 
     private void Start()

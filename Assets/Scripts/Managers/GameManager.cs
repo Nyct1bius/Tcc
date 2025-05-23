@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CinemachineCamera cnCameraPrefab;
     [SerializeField] private Camera minimapCameraPrefab;
     private Camera _minimapCamRef;
-    private CinemachineCamera _cnCameraRef;
+    public CinemachineCamera _cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
     private Transform _checkpoint;
     private Transform _spawnPos;

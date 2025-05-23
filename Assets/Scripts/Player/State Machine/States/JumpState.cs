@@ -34,7 +34,6 @@ public class JumpState : State
 
         if (!_ctx.Movement.HasGround())
         {
-            Debug.Log("Death counter Start");
             _ctx.Movement.FallDeathTimer += Time.deltaTime;
             if (_ctx.Movement.FallDeathTimer >= _ctx.Movement.MaxFallTime)
             {
@@ -55,6 +54,7 @@ public class JumpState : State
             _ctx.Movement.RequireNewJumpPress = true;
         }
         _ctx.Animator.SetBool("IsGrounded", true);
+        CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
     }
 
     public override void CheckSwitchState()

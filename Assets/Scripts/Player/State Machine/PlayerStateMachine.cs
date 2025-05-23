@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using UnityEngine;
 using PlayerState;
+using Unity.Cinemachine;
 public class PlayerStateMachine : MonoBehaviour
 {
     [Header("Componets")]
-    [SerializeField] Rigidbody _body;
-    [SerializeField] Animator animator;
-    [SerializeField] GroundSensor _groundSensor;
+    [SerializeField] private Rigidbody _body;
+    [SerializeField] private Animator animator;
+    [SerializeField] private GroundSensor _groundSensor;
+    [SerializeField] private CinemachineImpulseSource _cameraShakeSource;
     public InputReader inputReader;
     private Camera _mainCameraRef;
 
@@ -42,6 +44,9 @@ public class PlayerStateMachine : MonoBehaviour
     public Rigidbody Body { get { return _body; }}
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
+    public CinemachineImpulseSource CameraShakeSource { get { return _cameraShakeSource; } }
+
+
     #endregion
 
     private void Start()

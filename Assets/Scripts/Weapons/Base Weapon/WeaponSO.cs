@@ -8,6 +8,8 @@ public class WeaponSO : ScriptableObject
     public float attackRange;
     public float weaponDamage;
     public GameObject weaponVisual;
+    [Range(45f, 180f)]
+    public float attackArcAngle;
     [Header("VFX")]
     public GameObject[] vfxAttacks;
     public GameObject vfxHit;
@@ -24,12 +26,11 @@ public class WeaponSO : ScriptableObject
         foreach (Collider enemy in GetAllNearbyColliders(damageableLayer))
         {
          
-            Vector3 vectorToCollider = enemy.transform.position - posToAttack.position;
-            vectorToCollider = vectorToCollider.normalized;
+            Vector3 vectorToCollide = (enemy.transform.position - posToAttack.position).normalized;
+            float angleToTarget = Vector3.Angle(posToAttack.forward, vectorToCollide);
 
-            if (Vector3.Dot(vectorToCollider, posToAttack.forward) > 0.5f)
+            if (angleToTarget <= attackArcAngle / 2f)
             {
-                Debug.Log("Damage");
                 OnDamage(enemy);
 
                 //if (!HasWallInfront(enemy.transform))
@@ -64,6 +65,7 @@ public class WeaponSO : ScriptableObject
         IHealth health = enemy.GetComponent<IHealth>();
         if (health != null)
         {
+            PlayerEvents.OnHitEnemy();
             Instantiate(vfxHit, enemy.transform.position, Quaternion.identity);
             health.Damage(weaponDamage, _posToAttack.position);
         }

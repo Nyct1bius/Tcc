@@ -75,6 +75,7 @@ public class FallState : State
     public override void Exit()
     {
         _ctx.Animator.SetBool("IsGrounded", true);
+        CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
 
     }
 }

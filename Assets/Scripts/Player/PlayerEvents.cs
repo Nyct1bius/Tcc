@@ -15,4 +15,7 @@ public static class PlayerEvents
     public static event UnityAction AttackVfx;
     public static void OnAttackVfx() => AttackVfx?.Invoke();
 
+    public static event UnityAction HitEnemy;
+    public static void OnHitEnemy() => HitEnemy?.Invoke();
+
 }

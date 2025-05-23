@@ -50,22 +50,46 @@ public class AttackState : State
         if (!_ctx.Combat.AttackIncooldown)
         {
             _ctx.Combat.AttackIncooldown = true;
-            SelectAttack();
+            TeleportToClosestEnemy();
         }
     }
 
     public void SelectAttack()
     {
-        _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer);
         _ctx.Animator.SetFloat("AttackCount", _ctx.Combat.AttackCount);
 
         _ctx.Combat.AttackCount++;
-        if (_ctx.Combat.AttackCount >= 2)
+        if (_ctx.Combat.AttackCount >= 3)
         {
-            _ctx.Body.AddForce(_ctx.transform.forward.normalized * 20f, ForceMode.Impulse);
             _ctx.Combat.AttackCount = 0;
         }
 
+        _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer);
 
+    }
+    private void TeleportToClosestEnemy()
+    {
+        _ctx.Combat.GetClosestTargets();
+
+
+        if (_ctx.Combat.DetectedEnemys.Count > 0)
+        {
+            float range = _ctx.Combat.CurrentWeaponData.attackRange;
+            Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
+            Vector3 posToTeleport = targetPos.position + targetPos.forward * (range - 2f);
+            posToTeleport.y = _ctx.Movement.PlayerTransform.position.y;
+            _ctx.Movement.PlayerTransform.position = posToTeleport;
+            FaceEnemy();
+
+        }
+
+        SelectAttack();
+    }
+
+    private void FaceEnemy()
+    {
+        Vector3 _lookDirection = (_ctx.Combat.DetectedEnemys[0].transform.position - _ctx.Movement.PlayerTransform.position).normalized;
+        Quaternion _lookRotation = Quaternion.LookRotation(new Vector3(_lookDirection.x, 0, _lookDirection.z));
+        _ctx.Movement.PlayerTransform.rotation = Quaternion.Slerp(_ctx.Movement.PlayerTransform.rotation, _lookRotation, 5);
     }
 }
