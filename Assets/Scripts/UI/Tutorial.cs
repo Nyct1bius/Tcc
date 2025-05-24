@@ -24,8 +24,12 @@ public class Tutorial : MonoBehaviour
 
     private void OnDisable()
     {
-        playerInputs.UI.Disable();
-        playerInputs.UI.CloseMenu.performed -= CloseTutorial;
+        if(playerInputs != null)
+        {
+            playerInputs.UI.Disable();
+            playerInputs.UI.CloseMenu.performed -= CloseTutorial;
+        }
+        
     }
 
     private void ShowTutorial()
