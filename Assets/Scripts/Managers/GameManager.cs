@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
         _cnCameraRef.Follow = PlayerInstance.transform;
         _cnCameraRef.LookAt = PlayerInstance.transform;
         yield return new WaitForSeconds(2f);
-        Destroy(oldCnCameraRef);
+        Destroy(oldCnCameraRef.gameObject);
     }
 
 }

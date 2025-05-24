@@ -27,7 +27,6 @@ public class AttackState : State
     {
         //_ctx.Combat.VfxAttack.SetActive(false);
         _ctx.Animator.SetBool("IsAttacking", false);
-        _ctx.PlayableGraph.Destroy();
 
     }
 
@@ -60,14 +59,15 @@ public class AttackState : State
 
     public void SelectAttack()
     {
-        if (_ctx.Combat.AttackCount >= 2)
-        {
-            _ctx.Combat.AttackCount = 0;
-        }
         PlayAttackAnimation();
         _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
 
         _ctx.Combat.AttackCount++;
+
+        if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
+        {
+            _ctx.Combat.AttackCount = 0;
+        }
     }
 
     private void LockToClosestEnemy()
@@ -80,7 +80,7 @@ public class AttackState : State
             float range = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackRange;
             Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
             Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
-            Vector3 posToTeleport = targetPos.position + dirEnemyToPlayer * (range - 5f);
+            Vector3 posToTeleport = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
             posToTeleport.y = _ctx.Movement.PlayerTransform.position.y;
             _ctx.Movement.PlayerTransform.position = posToTeleport;
             FaceEnemy();
@@ -101,12 +101,7 @@ public class AttackState : State
 
     private void PlayAttackAnimation()
     {
-        _ctx.PlayableGraph = PlayableGraph.Create("AttackGraph");
-        AnimationPlayableOutput playableOutput = AnimationPlayableOutput.Create(_ctx.PlayableGraph, "Attack", _ctx.Animator);
 
-        AnimationClipPlayable clipPlayable = AnimationClipPlayable.Create(_ctx.PlayableGraph, _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
-
-        playableOutput.SetSourcePlayable(clipPlayable);
-        _ctx.PlayableGraph.Play();
+        _ctx.AnimationSystem.PlayOneShot(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
     }
 }
