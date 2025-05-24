@@ -1,5 +1,8 @@
 using UnityEngine;
 using PlayerState;
+using System;
+using UnityEngine.Animations;
+using UnityEngine.Playables;
 public class AttackState : State
 {
     public AttackState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
@@ -10,7 +13,6 @@ public class AttackState : State
 
     public override void Enter()
     {
-        _ctx.Animator.SetBool("IsAttacking", true);
         PerformAttack();
     }
 
@@ -25,6 +27,8 @@ public class AttackState : State
     {
         //_ctx.Combat.VfxAttack.SetActive(false);
         _ctx.Animator.SetBool("IsAttacking", false);
+        _ctx.PlayableGraph.Destroy();
+
     }
 
     public override void CheckSwitchState()
@@ -50,24 +54,23 @@ public class AttackState : State
         if (!_ctx.Combat.AttackIncooldown)
         {
             _ctx.Combat.AttackIncooldown = true;
-            TeleportToClosestEnemy();
+            LockToClosestEnemy();
         }
     }
 
     public void SelectAttack()
     {
-        _ctx.Animator.SetFloat("AttackCount", _ctx.Combat.AttackCount);
-
-        _ctx.Combat.AttackCount++;
-        if (_ctx.Combat.AttackCount >= 3)
+        if (_ctx.Combat.AttackCount >= 2)
         {
             _ctx.Combat.AttackCount = 0;
         }
-
+        PlayAttackAnimation();
         _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
 
+        _ctx.Combat.AttackCount++;
     }
-    private void TeleportToClosestEnemy()
+
+    private void LockToClosestEnemy()
     {
         _ctx.Combat.GetClosestTargets();
 
@@ -76,7 +79,8 @@ public class AttackState : State
         {
             float range = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackRange;
             Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
-            Vector3 posToTeleport = targetPos.position + targetPos.forward * (range - 2f);
+            Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
+            Vector3 posToTeleport = targetPos.position + dirEnemyToPlayer * (range - 5f);
             posToTeleport.y = _ctx.Movement.PlayerTransform.position.y;
             _ctx.Movement.PlayerTransform.position = posToTeleport;
             FaceEnemy();
@@ -91,5 +95,18 @@ public class AttackState : State
         Vector3 _lookDirection = (_ctx.Combat.DetectedEnemys[0].transform.position - _ctx.Movement.PlayerTransform.position).normalized;
         Quaternion _lookRotation = Quaternion.LookRotation(new Vector3(_lookDirection.x, 0, _lookDirection.z));
         _ctx.Movement.PlayerTransform.rotation = Quaternion.Slerp(_ctx.Movement.PlayerTransform.rotation, _lookRotation, 5);
+    }
+
+
+
+    private void PlayAttackAnimation()
+    {
+        _ctx.PlayableGraph = PlayableGraph.Create("AttackGraph");
+        AnimationPlayableOutput playableOutput = AnimationPlayableOutput.Create(_ctx.PlayableGraph, "Attack", _ctx.Animator);
+
+        AnimationClipPlayable clipPlayable = AnimationClipPlayable.Create(_ctx.PlayableGraph, _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
+
+        playableOutput.SetSourcePlayable(clipPlayable);
+        _ctx.PlayableGraph.Play();
     }
 }

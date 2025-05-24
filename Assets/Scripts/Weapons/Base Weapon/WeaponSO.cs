@@ -82,6 +82,6 @@ public class AttackData
     public GameObject vfxAttacks;
     public GameObject vfxHit;
     [Header("Animation")]
-    public Animation attackAnimationClip;
+    public AnimationClip attackAnimationClip;
 
 }

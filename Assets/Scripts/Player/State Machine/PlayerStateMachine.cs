@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using PlayerState;
 using Unity.Cinemachine;
+using UnityEngine.Playables;
 public class PlayerStateMachine : MonoBehaviour
 {
     [Header("Componets")]
@@ -10,6 +11,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GroundSensor _groundSensor;
     [SerializeField] private CinemachineImpulseSource _cameraShakeSource;
+    private PlayableGraph _playableGraph;
     public InputReader inputReader;
     private Camera _mainCameraRef;
 
@@ -45,6 +47,7 @@ public class PlayerStateMachine : MonoBehaviour
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
     public CinemachineImpulseSource CameraShakeSource { get { return _cameraShakeSource; } }
+    public PlayableGraph PlayableGraph {  get { return _playableGraph; } set { _playableGraph = value; } }
 
 
     #endregion
@@ -71,7 +74,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.PauseGame -= OnPauseGame;
-        GameEvents.ResumeGame -= OnResumeGame;;
+        GameEvents.ResumeGame -= OnResumeGame;
     }
     private void Update()
     {
