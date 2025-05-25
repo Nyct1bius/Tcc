@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7073964707448261745
+--- !u!114 &-1368759332274922931
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +42,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_Color:
-        m_Texture: {fileID: 2800000, guid: 8cb2a0110cd614a43932d75159d08016, type: 3}
+        m_Texture: {fileID: 2800000, guid: c59bdb73fdc7d5c48a435d32d719b4e7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -78,11 +78,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic_Roughness_AO:
-        m_Texture: {fileID: 2800000, guid: ec9396fb92e79f845bb858d884322794, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7f2558902474e9047b3f45f69a06f501, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_Map:
-        m_Texture: {fileID: 2800000, guid: 645c2e6b780a89b489a5c80472faf46d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 79bf3ea9efc74f04f9a246370cd5df1e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -90,6 +90,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RGBA_Texture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -117,7 +121,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _Change_tiling: 1
+    - _Change_tiling: 0.4
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -131,6 +135,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Has_Emission_Map: 0
+    - _Intensidade_da_Normal: 8
     - _Metallic: 0
     - _Normal_Intensity: 1
     - _OcclusionStrength: 1
@@ -138,18 +143,19 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Rotate_textures_90_degrees: 0
+    - _Rotate_textures_90_degrees: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _Tem_mapa_de_Emission: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Base_Color_variation: {r: 0.57951474, g: 0.46999595, b: 0.41784418, a: 0}
+    - _Base_Color_variation: {r: 0.35309958, g: 0.35309958, b: 0.35309958, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
