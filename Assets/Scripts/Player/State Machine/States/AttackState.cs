@@ -1,7 +1,8 @@
-using UnityEngine;
 using PlayerState;
 using System;
+using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 public class AttackState : State
 {
@@ -10,7 +11,7 @@ public class AttackState : State
     {
         isRootState = true;
     }
-
+    bool eventTriggered;
     public override void Enter()
     {
         PerformAttack();
@@ -19,15 +20,30 @@ public class AttackState : State
     public override void Do()
     {
         CheckSwitchState();
+        _timeInState += Time.deltaTime;
+        CheckToTriggerSlashVfx();
+    }
+
+    private void CheckToTriggerSlashVfx()
+    {
+        if (!eventTriggered && _timeInState >= _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].timeToSpawnvfxAttack)
+        {
+            eventTriggered = true;
+            PlayerEvents.OnAttackVfx();
+        }
     }
 
     public override void FixedDo() { }
 
     public override void Exit() 
     {
-        //_ctx.Combat.VfxAttack.SetActive(false);
-        _ctx.Animator.SetBool("IsAttacking", false);
-
+        eventTriggered = false;
+        _timeInState = 0f;
+        _ctx.Combat.AttackCount++;
+        if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
+        {
+            _ctx.Combat.AttackCount = 0;
+        }
     }
 
     public override void CheckSwitchState()
@@ -61,13 +77,6 @@ public class AttackState : State
     {
         PlayAttackAnimation();
         _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
-
-        _ctx.Combat.AttackCount++;
-
-        if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
-        {
-            _ctx.Combat.AttackCount = 0;
-        }
     }
 
     private void LockToClosestEnemy()
@@ -102,6 +111,7 @@ public class AttackState : State
     private void PlayAttackAnimation()
     {
 
-        _ctx.AnimationSystem.PlayOneShot(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
+        _ctx.AnimationSystem.PlayAttack(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
+        Debug.Log(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip.name);
     }
 }

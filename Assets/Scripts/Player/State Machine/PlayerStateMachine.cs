@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using PlayerState;
 using Unity.Cinemachine;
-using UnityEngine.Playables;
 public class PlayerStateMachine : MonoBehaviour
 {
     [Header("Componets")]
@@ -42,7 +41,7 @@ public class PlayerStateMachine : MonoBehaviour
 
 
     //COMPONENTS
-    public Animator Animator { get { return animator; } }
+    public Animator PlayerAnimator { get { return animator; } }
     public Rigidbody Body { get { return _body; }}
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }

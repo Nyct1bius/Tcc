@@ -10,9 +10,10 @@ public class AnimationSystem
 {
     PlayableGraph _playableGraph;
     readonly private AnimationMixerPlayable _topLevelMixer;
-    readonly private AnimatorControllerPlayable _locomontioMixer;
+    readonly private AnimatorControllerPlayable _movementController;
 
     AnimationClipPlayable _oneShotPlayable;
+    public AnimationClipPlayable _attackShotPlayable;
 
     CoroutineHandle _blendInHandle;
     CoroutineHandle _blendOutHandle;
@@ -27,11 +28,11 @@ public class AnimationSystem
 
         animationPlayableOutput.SetSourcePlayable(_topLevelMixer);
 
-        _locomontioMixer = AnimatorControllerPlayable.Create(_playableGraph, baseAnimator.runtimeAnimatorController);
+        _movementController = AnimatorControllerPlayable.Create(_playableGraph, baseAnimator.runtimeAnimatorController);
 
-        _topLevelMixer.ConnectInput(0, _locomontioMixer, 0);
+        _topLevelMixer.ConnectInput(0, _movementController, 0);
         _playableGraph.GetRootPlayable(0).SetInputWeight(0, 1f);
-
+        baseAnimator.runtimeAnimatorController = null;
         _playableGraph.Play();
 
     }
@@ -48,7 +49,7 @@ public class AnimationSystem
         float blenDuration = .2f;
 
         BlendIn(blenDuration);
-        BlendOut(blenDuration, oneShotClip.length - blenDuration);
+        BlendOut(blenDuration, oneShotClip.length - blenDuration,DisconnectOneShot);
 
     }
 
@@ -61,13 +62,13 @@ public class AnimationSystem
         }));
     }
 
-    void BlendOut(float duration, float delay)
+    void BlendOut(float duration, float delay, Action finishedCallback)
     {
         _blendOutHandle = Timing.RunCoroutine(Blend(duration, blendTime => {
             float weight = Mathf.Lerp(0f, 1f, blendTime);
             _topLevelMixer.SetInputWeight(0, weight);
             _topLevelMixer.SetInputWeight(1, 1f - weight);
-        }, delay, DisconnectOneShot));
+        }, delay, finishedCallback));
     }
     
 
@@ -92,10 +93,6 @@ public class AnimationSystem
         finishedCallback?.Invoke();
     }
 
-
-
-
-
     private void InterrupOneShot()
     {
         Timing.KillCoroutines(_blendInHandle);
@@ -116,6 +113,72 @@ public class AnimationSystem
         _playableGraph.DestroyPlayable(_oneShotPlayable);
     }
 
+    public void PlayAttack(AnimationClip oneShotClip)
+    {
+        if (_attackShotPlayable.IsValid() && _attackShotPlayable.GetAnimationClip() == oneShotClip) return;
+
+        InterrupAttack();
+        _attackShotPlayable = AnimationClipPlayable.Create(_playableGraph, oneShotClip);
+        _topLevelMixer.ConnectInput(1, _attackShotPlayable, 0);
+        _topLevelMixer.SetInputWeight(1, 1f);
+
+        float blenDuration = .2f;
+
+        BlendIn(blenDuration);
+        BlendOut(blenDuration, oneShotClip.length - blenDuration,DisconnectAttack);
+
+    }
+
+    private void InterrupAttack()
+    {
+        Timing.KillCoroutines(_blendInHandle);
+        Timing.KillCoroutines(_blendOutHandle);
+
+        _topLevelMixer.SetInputWeight(0, 1f);
+        _topLevelMixer.SetInputWeight(1, 0);
+
+        if (_oneShotPlayable.IsValid())
+        {
+            DisconnectAttack();
+        }
+    }
+    private void DisconnectAttack()
+    {
+        PlayerEvents.OnAttackFinished();
+        _topLevelMixer.DisconnectInput(1);
+        _playableGraph.DestroyPlayable(_attackShotPlayable);
+    }
+
+    #region Movement
+    public void UpdateMovement(float speed)
+    {
+        _movementController.SetFloat("Speed",speed);
+    }
+
+    public void UpdateDash(bool active)
+    {
+        _movementController.SetBool("IsDashing", active);
+    }
+
+    public void Jump()
+    {
+        _movementController.SetTrigger("OnAir");
+    }
+    public void UpdateGrounded(bool active)
+    {
+         _movementController.SetBool("IsGrounded", active);
+    }
+
+    public void Hited()
+    {
+        _movementController.SetTrigger("Hited");
+    }
+    public void Death()
+    {
+        _movementController.SetTrigger("Death");
+    }
+
+    #endregion
     public void Destroy()
     {
         if(_playableGraph.IsValid())

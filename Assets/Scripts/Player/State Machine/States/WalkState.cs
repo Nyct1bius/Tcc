@@ -55,8 +55,7 @@ public class WalkState : State
         _ctx.Movement.MovementDelta = _ctx.Movement.MoveDirection * _ctx.Movement.WalkAcceleration;
         _ctx.Movement.HorizontalVelocity += _ctx.Movement.MovementDelta;
         _ctx.Movement.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.Movement.HorizontalVelocity, _ctx.Movement.MaxWalkSpeed);
-
-        _ctx.Animator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
+        _ctx.AnimationSystem.UpdateMovement(_ctx.Body.linearVelocity.magnitude);
     }
 
 }
