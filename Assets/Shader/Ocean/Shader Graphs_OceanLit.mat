@@ -60,10 +60,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _DepthStrength: 0.01
-    - _Displecement: 0
+    - _Displecement: 0.0042
     - _FoamScale: 1000
-    - _FoamSpeed: 0
-    - _Foam_Distance: 1.99
+    - _FoamSpeed: 0.11
+    - _Foam_Distance: 2.19
     - _Foam_Strength: 8.31
     - _IOR: 0.093
     - _NormalStrength: 0.046
@@ -72,12 +72,12 @@ Material:
     - _Refraction: 0
     - _RefractionSpeed: 15
     - _RefractionStrength: 1
-    - _Smoothness: 0.77
-    - _WaterDepth: 1
+    - _Smoothness: 0.9
+    - _WaterDepth: 0
     m_Colors:
     - _DeepColor: {r: 0.25604644, g: 0.2920005, b: 0.2991913, a: 1}
-    - _FoamVelocity: {r: 0, g: 0, b: 0, a: 0}
-    - _Foam_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _FoamVelocity: {r: 5, g: 5, b: 0, a: 0}
+    - _Foam_Color: {r: 0.67747605, g: 0.7419369, b: 0.76280314, a: 0}
     - _RefractionsScale: {r: 10, g: 10, b: 0, a: 0}
     - _ShallowColor: {r: 0.35295072, g: 0.37194896, b: 0.374663, a: 0.6745098}
   m_BuildTextureStacks: []
