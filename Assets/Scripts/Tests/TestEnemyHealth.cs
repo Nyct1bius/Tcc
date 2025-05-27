@@ -7,13 +7,15 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
     [SerializeField] private float immortalityTime;
     [SerializeField] private AnimationClip IdleAnim;
     [SerializeField] private AnimationClip hitAnimation;
-    [SerializeField] private AnimationClip deathAnimetion;
+    [SerializeField] private AnimationClip deathAnimation;
+    [SerializeField] private AnimationClip reviveAnimation;
     [SerializeField] private Material _whiteMat;
     [SerializeField] private SkinnedMeshRenderer _dummyVisual;
     private Material _deafaultMat;
     public bool isImmortal;
     private float currenthealth;
     private Animator animator;
+    private bool _isEnemyDead;
 
     private void Start()
     {
@@ -29,7 +31,7 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
 
     private void Update()
     {
-        if (!isImmortal)
+        if (!isImmortal && !_isEnemyDead)
         {
             animator.CrossFade(IdleAnim.name, 0.2f);
         }
@@ -37,9 +39,9 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        if (!isImmortal)
+        if (!isImmortal && currenthealth > 0)
         {
-            //currenthealth -= damage;
+            currenthealth -= damage;
             isImmortal = true;
             StartCoroutine(Immortal());
             Vector3 dirToKnockBack = (DamageSourcePos - transform.position).normalized;
@@ -47,6 +49,11 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
             transform.position += dirToKnockBack * -1f;
             animator.CrossFade(hitAnimation.name,0.2f);
             FacePlayer(DamageSourcePos);
+        }
+        else
+        {
+            FacePlayer(DamageSourcePos);
+            Death();
         }
         
     }
@@ -66,9 +73,21 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
 
     public void Death()
     {
-        currenthealth = maxHealth;
+        _isEnemyDead = true;
+        animator.CrossFade(deathAnimation.name, 0.2f);
+        StartCoroutine(ReviveEnemy());
     }
-
+    IEnumerator ReviveEnemy()
+    {
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        collider.enabled = false;
+        yield return new WaitForSeconds(3f);
+        animator.CrossFade(reviveAnimation.name, 0.2f);
+        yield return new WaitForSeconds(reviveAnimation.length);
+        collider.enabled = true;
+        currenthealth = maxHealth;
+        _isEnemyDead  = false;
+    }
     public void ChangeMaterialToWhite()
     {
         _dummyVisual.material = _whiteMat;

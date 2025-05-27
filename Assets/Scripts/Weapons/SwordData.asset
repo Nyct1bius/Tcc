@@ -16,16 +16,19 @@ MonoBehaviour:
   - attackRange: 8
     attackArcAngle: 180
     vfxAttacks: {fileID: 4698274703902271682, guid: e00ad31b9ca95cb49a7bfc3b77a8ef12, type: 3}
+    timeToSpawnvfxAttack: 0.08
     vfxHit: {fileID: 3390200988973274209, guid: 4389dec028addb64e93ef31d99d6d7bd, type: 3}
     attackAnimationClip: {fileID: 7400000, guid: cb1dd18e9d8ae174e8e9f8e6fe4213b3, type: 2}
   - attackRange: 8
     attackArcAngle: 180
     vfxAttacks: {fileID: 5262588603669200175, guid: 83f3b7b59c1bd874a8a53f1c3acb6082, type: 3}
+    timeToSpawnvfxAttack: 0.1
     vfxHit: {fileID: 3390200988973274209, guid: 4389dec028addb64e93ef31d99d6d7bd, type: 3}
     attackAnimationClip: {fileID: 7400000, guid: 1aa9dc6bdb7aed443bed894206e9d165, type: 2}
   - attackRange: 8
     attackArcAngle: 180
-    vfxAttacks: {fileID: 5262588603669200175, guid: 83f3b7b59c1bd874a8a53f1c3acb6082, type: 3}
+    vfxAttacks: {fileID: 4698274703902271682, guid: e00ad31b9ca95cb49a7bfc3b77a8ef12, type: 3}
+    timeToSpawnvfxAttack: 0.09
     vfxHit: {fileID: 3390200988973274209, guid: 4389dec028addb64e93ef31d99d6d7bd, type: 3}
     attackAnimationClip: {fileID: 7400000, guid: 49cef194d4e72ce488f8ea6d6bcbccf5, type: 2}
   weaponDamage: 10

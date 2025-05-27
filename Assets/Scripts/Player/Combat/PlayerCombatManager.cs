@@ -210,7 +210,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void SpawnVFXAttack()
     {
-        Instantiate(_backupWeaponData.attacks[_attackCount].vfxAttacks, _vfxAttackSpawnpoint.position,_vfxAttackSpawnpoint.rotation);
+        Instantiate(CurrentWeaponData.attacks[_attackCount].vfxAttacks, _vfxAttackSpawnpoint.position,_vfxAttackSpawnpoint.rotation);
     }
     
     public void SpawnVFXLightining()

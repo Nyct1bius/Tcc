@@ -1,7 +1,8 @@
-using UnityEngine;
 using PlayerState;
 using System;
+using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 public class AttackState : State
 {
@@ -10,7 +11,7 @@ public class AttackState : State
     {
         isRootState = true;
     }
-
+    bool eventTriggered;
     public override void Enter()
     {
         PerformAttack();
@@ -19,16 +20,30 @@ public class AttackState : State
     public override void Do()
     {
         CheckSwitchState();
+        _timeInState += Time.deltaTime;
+        CheckToTriggerSlashVfx();
+    }
+
+    private void CheckToTriggerSlashVfx()
+    {
+        if (!eventTriggered && _timeInState >= _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].timeToSpawnvfxAttack)
+        {
+            eventTriggered = true;
+            PlayerEvents.OnAttackVfx();
+        }
     }
 
     public override void FixedDo() { }
 
     public override void Exit() 
     {
-        //_ctx.Combat.VfxAttack.SetActive(false);
-        _ctx.Animator.SetBool("IsAttacking", false);
-        _ctx.PlayableGraph.Destroy();
-
+        eventTriggered = false;
+        _timeInState = 0f;
+        _ctx.Combat.AttackCount++;
+        if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
+        {
+            _ctx.Combat.AttackCount = 0;
+        }
     }
 
     public override void CheckSwitchState()
@@ -60,14 +75,8 @@ public class AttackState : State
 
     public void SelectAttack()
     {
-        if (_ctx.Combat.AttackCount >= 2)
-        {
-            _ctx.Combat.AttackCount = 0;
-        }
         PlayAttackAnimation();
         _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
-
-        _ctx.Combat.AttackCount++;
     }
 
     private void LockToClosestEnemy()
@@ -80,7 +89,7 @@ public class AttackState : State
             float range = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackRange;
             Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
             Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
-            Vector3 posToTeleport = targetPos.position + dirEnemyToPlayer * (range - 5f);
+            Vector3 posToTeleport = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
             posToTeleport.y = _ctx.Movement.PlayerTransform.position.y;
             _ctx.Movement.PlayerTransform.position = posToTeleport;
             FaceEnemy();
@@ -101,12 +110,8 @@ public class AttackState : State
 
     private void PlayAttackAnimation()
     {
-        _ctx.PlayableGraph = PlayableGraph.Create("AttackGraph");
-        AnimationPlayableOutput playableOutput = AnimationPlayableOutput.Create(_ctx.PlayableGraph, "Attack", _ctx.Animator);
 
-        AnimationClipPlayable clipPlayable = AnimationClipPlayable.Create(_ctx.PlayableGraph, _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
-
-        playableOutput.SetSourcePlayable(clipPlayable);
-        _ctx.PlayableGraph.Play();
+        _ctx.AnimationSystem.PlayAttack(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
+        Debug.Log(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip.name);
     }
 }

@@ -80,6 +80,7 @@ public class AttackData
     public float attackArcAngle;
     [Header("VFX")]
     public GameObject vfxAttacks;
+    public float timeToSpawnvfxAttack;
     public GameObject vfxHit;
     [Header("Animation")]
     public AnimationClip attackAnimationClip;

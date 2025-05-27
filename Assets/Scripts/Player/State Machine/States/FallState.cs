@@ -15,15 +15,15 @@ public class FallState : State
     {
         _timeSinceEntered = 0f;
 
-        _ctx.Animator.SetTrigger("OnAir");
-        _ctx.Animator.SetBool("IsGrounded",false);
+        _ctx.AnimationSystem.Jump();
+        _ctx.AnimationSystem.UpdateGrounded(false);
         _ctx.Movement.FallDeathTimer = 0f;  
     }
 
     public override void Do()
     {
         _timeSinceEntered += Time.deltaTime;
-        _ctx.Animator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
+        _ctx.PlayerAnimator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
@@ -74,7 +74,7 @@ public class FallState : State
 
     public override void Exit()
     {
-        _ctx.Animator.SetBool("IsGrounded", true);
+        _ctx.AnimationSystem.UpdateGrounded(true);
         CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
 
     }

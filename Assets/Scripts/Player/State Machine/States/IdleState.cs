@@ -15,7 +15,7 @@ public class IdleState : State
 
     public override void FixedDo() 
     {
-        _ctx.Animator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
+        _ctx.AnimationSystem.UpdateMovement(_ctx.Body.linearVelocity.magnitude);
     }
 
     public override void Exit() { }

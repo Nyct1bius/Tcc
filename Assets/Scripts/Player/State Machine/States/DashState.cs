@@ -13,7 +13,7 @@ public class DashState : State
     public override void Enter()
     {
         currentTime = 0f;
-        _ctx.Animator.SetBool("IsDashing", true);
+        _ctx.AnimationSystem.UpdateDash(true);
         ApllyDashForce();
         ApplyDashCameraShake();
     }
@@ -27,7 +27,7 @@ public class DashState : State
     }
     public override void Exit() 
     {
-        _ctx.Animator.SetBool("IsDashing", false);
+        _ctx.AnimationSystem.UpdateDash(false);
         _ctx.Movement.ResetDash();
     }
 

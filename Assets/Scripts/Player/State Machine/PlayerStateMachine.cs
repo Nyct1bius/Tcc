@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using PlayerState;
 using Unity.Cinemachine;
-using UnityEngine.Playables;
 public class PlayerStateMachine : MonoBehaviour
 {
     [Header("Componets")]
@@ -11,7 +10,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GroundSensor _groundSensor;
     [SerializeField] private CinemachineImpulseSource _cameraShakeSource;
-    private PlayableGraph _playableGraph;
+    private AnimationSystem _animationSystem;
     public InputReader inputReader;
     private Camera _mainCameraRef;
 
@@ -42,12 +41,13 @@ public class PlayerStateMachine : MonoBehaviour
 
 
     //COMPONENTS
-    public Animator Animator { get { return animator; } }
+    public Animator PlayerAnimator { get { return animator; } }
     public Rigidbody Body { get { return _body; }}
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
     public CinemachineImpulseSource CameraShakeSource { get { return _cameraShakeSource; } }
-    public PlayableGraph PlayableGraph {  get { return _playableGraph; } set { _playableGraph = value; } }
+
+    public AnimationSystem AnimationSystem {  get { return _animationSystem; } }
 
 
     #endregion
@@ -62,6 +62,7 @@ public class PlayerStateMachine : MonoBehaviour
         //Get Components
         _mainCameraRef = Camera.main;
 
+        _animationSystem = new AnimationSystem(animator);
     }
 
 
@@ -95,6 +96,10 @@ public class PlayerStateMachine : MonoBehaviour
         _gameIsPaused = false;
     }
 
+    private void OnDestroy()
+    {
+        _animationSystem.Destroy();
+    }
     #endregion
 
 

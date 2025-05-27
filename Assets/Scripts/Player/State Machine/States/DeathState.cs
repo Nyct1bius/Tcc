@@ -10,7 +10,7 @@ public class DeathState : State
     bool CalledDeath;
     public override void Enter()
     {
-        _ctx.Animator.SetTrigger("Death");
+        _ctx.AnimationSystem.Death();
         _ctx.Movement.enabled = false;
         _ctx.Combat.enabled = false;
         _ctx.Health.enabled = false;
