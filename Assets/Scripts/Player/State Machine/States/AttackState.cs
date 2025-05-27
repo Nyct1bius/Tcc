@@ -11,7 +11,6 @@ public class AttackState : State
     {
         isRootState = true;
     }
-    bool eventTriggered;
     public override void Enter()
     {
         PerformAttack();
@@ -21,24 +20,14 @@ public class AttackState : State
     {
         CheckSwitchState();
         _timeInState += Time.deltaTime;
-        CheckToTriggerSlashVfx();
     }
 
-    private void CheckToTriggerSlashVfx()
-    {
-        if (!eventTriggered && _timeInState >= _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].timeToSpawnvfxAttack)
-        {
-            eventTriggered = true;
-            PlayerEvents.OnAttackVfx();
-        }
-    }
+
 
     public override void FixedDo() { }
 
     public override void Exit() 
     {
-        eventTriggered = false;
-        _timeInState = 0f;
         _ctx.Combat.AttackCount++;
         if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
         {
@@ -110,8 +99,6 @@ public class AttackState : State
 
     private void PlayAttackAnimation()
     {
-
         _ctx.AnimationSystem.PlayAttack(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
-        Debug.Log(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip.name);
     }
 }
