@@ -26,17 +26,22 @@ public class EnemyRangedCombat : MonoBehaviour
 
     private void Update()
     {
+        if (agent.enabled)
+            agent.ResetPath();
+
         if (Stats.IsAlive)
             transform.LookAt(Stats.PlayerPosition);
 
         animator.SetBool("Walk", false);
         animator.SetBool("Idle", true);
 
-        if (!hasAttacked)       
+        if (!hasAttacked && Stats.IsAlive)       
             StartCoroutine(RangedAttack());
+    }
 
-        if (agent.enabled)
-            agent.ResetPath();
+    private void OnDisable()
+    {
+        StopRangedCoroutines();
     }
 
     private IEnumerator RangedAttack()
