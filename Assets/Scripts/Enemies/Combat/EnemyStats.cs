@@ -50,7 +50,7 @@ public class EnemyStats : MonoBehaviour, IHealth
     {
         CurrentHealth -= damage;
 
-        StartCoroutine(Knockback(PlayerPosition, 5f, .2f));
+        StartCoroutine(Knockback(PlayerPosition, 4f, .2f));
 
         Animator.SetTrigger("Hit");
     }
@@ -111,7 +111,7 @@ public class EnemyStats : MonoBehaviour, IHealth
             {
                 if (IsMeleeEnemy)
                 {
-                    gameObject.GetComponent<EnemyMeleeCombat>().enabled = true; 
+                    gameObject.GetComponent<EnemyMeleeCombat>().enabled = true;
                     gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;    
                 }
                 else

@@ -27,17 +27,22 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     private void Update()
     {
+        if (agent.enabled)
+            agent.ResetPath();
+
         if (Stats.IsAlive)
             transform.LookAt(Stats.PlayerPosition);
 
         animator.SetBool("Walk", false);
         animator.SetBool("Idle", true);
 
-        if (!hasAttacked)
+        if (!hasAttacked && Stats.IsAlive)
             StartCoroutine(MeleeAttack(Random.Range(1, 3)));     
+    }
 
-        if (agent.enabled)
-            agent.ResetPath();
+    private void OnDisable()
+    {
+        StopMeleeCoroutines();
     }
 
     private IEnumerator MeleeAttack(int meleeAnimDice)
