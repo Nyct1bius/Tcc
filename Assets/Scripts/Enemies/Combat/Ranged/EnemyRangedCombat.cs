@@ -17,11 +17,6 @@ public class EnemyRangedCombat : MonoBehaviour
     bool hasAttacked = false;
     public bool IsTurret;
 
-    private void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
-
     private void Start()
     {
         player = Stats.Player;
@@ -31,14 +26,17 @@ public class EnemyRangedCombat : MonoBehaviour
 
     private void Update()
     {
-        agent.ResetPath();
+        if (Stats.IsAlive)
+            transform.LookAt(Stats.PlayerPosition);
 
-        transform.LookAt(Stats.PlayerPosition);
+        animator.SetBool("Walk", false);
+        animator.SetBool("Idle", true);
 
-        if (!hasAttacked)
-        {
+        if (!hasAttacked)       
             StartCoroutine(RangedAttack());
-        }
+
+        if (agent.enabled)
+            agent.ResetPath();
     }
 
     private IEnumerator RangedAttack()
@@ -49,16 +47,18 @@ public class EnemyRangedCombat : MonoBehaviour
 
         animator.SetTrigger("Ranged");
 
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(0.6f);
 
         hasAttacked = false;
 
-        EnemyProjectileGenerator.Instance.SpawnProjectile(projectileSpawnPoint);
+        EnemyProjectileGenerator.Instance.SpawnProjectile(projectileSpawnPoint);  
+    }
 
-        //projectile.transform.position = projectileSpawnPoint.position;
+    public void StopRangedCoroutines()
+    {
+        StopAllCoroutines();
 
-        //projectile.GetComponent<EnemyProjectile>().DespawnTimer = projectile.GetComponent<EnemyProjectile>().StartDespawnTimer;
-
-        //projectile.SetActive(true);    
+        if (hasAttacked)
+            hasAttacked = false;
     }
 }

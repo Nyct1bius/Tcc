@@ -16,9 +16,17 @@ public class EnemyRangedPathfinding : MonoBehaviour
 
     void Update()
     {
-        agent.SetDestination(Stats.PlayerPosition);
+        if (agent.enabled && Stats.IsAlive)
+        {
+            agent.SetDestination(Stats.PlayerPosition);
+        }
 
-        animator.SetBool("Idle", true);
-        //animator.SetBool("Walk", true);
+        if (agent.enabled && !Stats.IsAlive)
+        {
+            agent.isStopped = true;
+        }
+
+        animator.SetBool("Idle", false);
+        animator.SetBool("Walk", true);
     }
 }

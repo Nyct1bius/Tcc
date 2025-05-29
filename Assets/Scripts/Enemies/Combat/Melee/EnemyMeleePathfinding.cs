@@ -16,16 +16,17 @@ public class EnemyMeleePathfinding : MonoBehaviour
 
     void Update()
     {
-        if (agent.enabled)
+        if (agent.enabled && Stats.IsAlive)
         {
             agent.SetDestination(Stats.PlayerPosition);
         }
-        else
+        
+        if (agent.enabled && !Stats.IsAlive)
         {
-            agent.enabled = true;
+            agent.isStopped = true;
         }
 
-        animator.SetBool("Idle", true);
-        //animator.SetBool("Walk", true);
+        animator.SetBool("Idle", false);
+        animator.SetBool("Walk", true);
     }
 }

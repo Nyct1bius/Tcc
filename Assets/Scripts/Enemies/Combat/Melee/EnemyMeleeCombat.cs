@@ -13,10 +13,6 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     bool hasAttacked = false;
 
-    public float knockbackForce, knockbackDuration;
-
-    public bool WasAttacked = false;
-
     private void Awake()
     {
         attackHitbox = GetComponentInChildren<BoxCollider>();
@@ -31,39 +27,30 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     private void Update()
     {
-        transform.LookAt(Stats.PlayerPosition);
+        if (Stats.IsAlive)
+            transform.LookAt(Stats.PlayerPosition);
 
-        //animator.SetBool("Walk", false);
+        animator.SetBool("Walk", false);
         animator.SetBool("Idle", true);
-        
+
         if (!hasAttacked)
-        {
-            StartCoroutine(MeleeAttack());
-        }
+            StartCoroutine(MeleeAttack(Random.Range(1, 3)));     
 
-        if (WasAttacked)
-        {
-            agent.enabled = false;
-
-            hasAttacked = true;
-            
-            StopAllCoroutines();
-
-            StartCoroutine(ApplyKnockback());
-        }
-        else
-        {
+        if (agent.enabled)
             agent.ResetPath();
-        }
     }
 
-    private IEnumerator MeleeAttack()
+    private IEnumerator MeleeAttack(int meleeAnimDice)
     {
         hasAttacked = true;
 
         yield return new WaitForSeconds(Stats.TimeBetweenAttacks);
 
-        animator.SetTrigger("Melee");
+        if (meleeAnimDice == 1)
+            animator.SetTrigger("Melee1");
+
+        if (meleeAnimDice == 2)
+            animator.SetTrigger("Melee2");
 
         StartCoroutine(AttackHitboxOnThenOff());
 
@@ -72,7 +59,7 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     private IEnumerator AttackHitboxOnThenOff()
     {
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(0.7f);
 
         attackHitbox.enabled = true;
 
@@ -81,15 +68,14 @@ public class EnemyMeleeCombat : MonoBehaviour
         attackHitbox.enabled = false;
     }
 
-    private IEnumerator ApplyKnockback()
+    public void StopMeleeCoroutines()
     {
-        Vector3 direction = (transform.position - player.transform.position).normalized;
+        StopAllCoroutines();
 
-        yield return new WaitForSeconds(knockbackDuration);
+        if (hasAttacked)
+            hasAttacked = false;
 
-        agent.enabled = true;
-
-        WasAttacked = false;
-        hasAttacked = false;
+        if (attackHitbox.enabled)
+            attackHitbox.enabled = false;
     }
 }

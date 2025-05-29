@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyStats : MonoBehaviour, IHealth
 {
-    public bool IsAlive, IsMeleeEnemy;
+    public bool IsAlive, IsMeleeEnemy, WasAttacked;
     public float MaxHealth, CurrentHealth, TimeBetweenAttacks, MovementSpeed, MinimumPlayerDistance;
 
     public RoomManager RoomManager;
@@ -35,17 +35,14 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     void Update()
     {
-        if (IsAlive)
+        if (CurrentHealth <= 0 && IsAlive)
         {
-            if (CurrentHealth <= 0)
-            {
-                IsAlive = false;
-                Death();
-            }
-            else
-            {
-                CheckPlayerDistance();
-            }
+            IsAlive = false;
+            Death();
+        }
+        else
+        {
+            CheckEnemyState();
         }
     }
     
@@ -53,7 +50,9 @@ public class EnemyStats : MonoBehaviour, IHealth
     {
         CurrentHealth -= damage;
 
-        gameObject.GetComponent<EnemyMeleeCombat>().WasAttacked = true;
+        StartCoroutine(Knockback(PlayerPosition, 5f, .2f));
+
+        Animator.SetTrigger("Hit");
     }
     
     public void HealHealth(float health)
@@ -63,8 +62,11 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     public void Death()
     {
+        IsAlive = false;
+        
         if (IsMeleeEnemy)
         {
+            gameObject.GetComponent<EnemyMeleeCombat>().StopMeleeCoroutines();
             gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
             gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;
         }
@@ -99,9 +101,9 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
-    private void CheckPlayerDistance()
+    private void CheckEnemyState()
     {
-        if (Player != null)
+        if (Player != null && !WasAttacked)
         {
             PlayerPosition = new Vector3(Player.transform.position.x, gameObject.transform.position.y, Player.transform.position.z);
 
@@ -132,16 +134,59 @@ public class EnemyStats : MonoBehaviour, IHealth
                 }
             }
         }
+
+        if (WasAttacked)
+        {
+            if (IsMeleeEnemy)
+            {
+                gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
+                gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;
+            }
+            else
+            {
+                gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
+                gameObject.GetComponent<EnemyRangedPathfinding>().enabled = false;
+            }
+
+            gameObject.GetComponent<EnemyStunned>().enabled = true;
+        }
+    }
+
+    private IEnumerator Knockback(Vector3 direction, float force, float duration)
+    {
+        if (IsMeleeEnemy)
+        {
+            gameObject.GetComponent<EnemyMeleeCombat>().StopMeleeCoroutines();
+        }
+        else
+        {
+            gameObject.GetComponent<EnemyRangedCombat>().StopRangedCoroutines();
+
+        }
+
+        Agent.enabled = false;
+
+        float timer = 0f;
+        while (timer < duration)
+        {
+            transform.position += direction.normalized * force * Time.deltaTime;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        Agent.enabled = true;
     }
 
     private IEnumerator Despawn(float timeToDespawn)
     {
-        Agent.enabled = false;
+        if (Agent.enabled)
+            Agent.isStopped = true;
+
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
         Animator.SetBool("Idle", false);
-        //Animator.SetBool("Walk", false);
-        Animator.SetBool("Dead", true);
+        Animator.SetBool("Walk", false);
+        Animator.SetBool("Dead1", true);
 
         yield return new WaitForSeconds(timeToDespawn);
 
