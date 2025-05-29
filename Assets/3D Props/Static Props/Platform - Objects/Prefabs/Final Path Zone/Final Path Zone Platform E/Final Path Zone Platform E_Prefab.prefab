@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &327341063484475118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4662912287422673223}
+  m_Layer: 0
+  m_Name: Final Path Zone Platform E_Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4662912287422673223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327341063484475118}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.73784775, y: 29.044226, z: 40.08225}
+  m_LocalScale: {x: 0.7692308, y: 0.7692308, z: 0.7692308}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5270905443259866041}
+  - {fileID: 8882184065405774954}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &774203285685899726
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4662912287422673223}
+    m_Modifications:
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7390722223015746716, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+      propertyPath: m_Name
+      value: Final Path Zone Platform E Top_Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+--- !u!4 &5270905443259866041 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4870785227746888311, guid: 97af7aeb398c05a4dbafc46288a9fb09, type: 3}
+  m_PrefabInstance: {fileID: 774203285685899726}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7832475588361019693
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4662912287422673223}
+    m_Modifications:
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509231322942026084, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+      propertyPath: m_Name
+      value: Final Path Zone Platform E Bottom_Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+--- !u!4 &8882184065405774954 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1725248461014043975, guid: f6b7db4a5c78c784b954d3e985b1bf1d, type: 3}
+  m_PrefabInstance: {fileID: 7832475588361019693}
+  m_PrefabAsset: {fileID: 0}
