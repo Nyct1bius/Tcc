@@ -14,6 +14,7 @@ public class AttackState : State
     public override void Enter()
     {
         PerformAttack();
+        PlayerEvents.StartAttackDetection += StartAttackCollisionDetection;
     }
 
     public override void Do()
@@ -28,6 +29,7 @@ public class AttackState : State
 
     public override void Exit() 
     {
+        PlayerEvents.StartAttackDetection -= StartAttackCollisionDetection;
         _ctx.Combat.AttackCount++;
         if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
         {
@@ -65,6 +67,10 @@ public class AttackState : State
     public void SelectAttack()
     {
         PlayAttackAnimation();
+    }
+
+    private void StartAttackCollisionDetection()
+    {
         _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
     }
 

@@ -14,6 +14,7 @@ public class DashState : State
     {
         currentTime = 0f;
         _ctx.AnimationSystem.UpdateDash(true);
+        PlayerEvents.OnDashSFX();
         ApllyDashForce();
         ApplyDashCameraShake();
     }

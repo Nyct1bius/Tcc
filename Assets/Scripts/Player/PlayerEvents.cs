@@ -15,7 +15,23 @@ public static class PlayerEvents
     public static event UnityAction AttackVfx;
     public static void OnAttackVfx() => AttackVfx?.Invoke();
 
-    public static event UnityAction HitEnemy;
-    public static void OnHitEnemy() => HitEnemy?.Invoke();
+
+    public static event UnityAction StartAttackDetection;
+    public static void OnStartAttackDetection() => StartAttackDetection?.Invoke();
+
+    public static event UnityAction<Vector3> HitEnemy;
+    public static void OnHitEnemy(Vector3 enemyPos) => HitEnemy?.Invoke(enemyPos);
+    #region SFX
+    public static event UnityAction AttackSFX;
+    public static void OnAttackSFX() => AttackSFX?.Invoke();
+
+    public static event UnityAction WalkSFX;
+    public static void OnWalkSFX() => WalkSFX?.Invoke();
+
+    public static event UnityAction DashSFX;
+    public static void OnDashSFX() => DashSFX?.Invoke();
+
+
+    #endregion
 
 }

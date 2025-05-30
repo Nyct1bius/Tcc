@@ -7,6 +7,7 @@ public class WeaponSO : ScriptableObject
     public AttackData[] attacks;
     public float weaponDamage;
     public GameObject weaponVisual;
+    public LayerMask damageableLayer;
     private int _currentAttack;
     public enum WeaponType
     {
@@ -15,6 +16,10 @@ public class WeaponSO : ScriptableObject
     }
     public WeaponType Type;
     private Transform _posToAttack;
+    private void OnDisable()
+    {
+        
+    }
     public void OnAttack(Transform posToAttack, LayerMask damageableLayer,int performedAttack)
     {
         _posToAttack = posToAttack;
@@ -61,7 +66,7 @@ public class WeaponSO : ScriptableObject
         IHealth health = enemy.GetComponent<IHealth>();
         if (health != null)
         {
-            PlayerEvents.OnHitEnemy();
+            PlayerEvents.OnHitEnemy(enemy.transform.position);
             Instantiate(attacks[_currentAttack].vfxHit, enemy.transform.position, Quaternion.identity);
             health.Damage(weaponDamage, _posToAttack.position);
         }
@@ -80,7 +85,6 @@ public class AttackData
     public float attackArcAngle;
     [Header("VFX")]
     public GameObject vfxAttacks;
-    public float timeToSpawnvfxAttack;
     public GameObject vfxHit;
     [Header("Animation")]
     public AnimationClip attackAnimationClip;
