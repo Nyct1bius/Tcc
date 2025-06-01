@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f001060d74165547b5f9bf48195b4a5, type: 3}
+  m_Name: PlayerFMODEvents
+  m_EditorClassIdentifier: 
+  <_attack>k__BackingField:
+    Guid:
+      Data1: 136053326
+      Data2: 1122587849
+      Data3: -1169306476
+      Data4: -1365108053
+    Path: event:/PlayerAttack
+  <_hit>k__BackingField:
+    Guid:
+      Data1: 1544054068
+      Data2: 1114358516
+      Data3: -2094324814
+      Data4: 290737845
+    Path: event:/PlayerHit
+  <_walk>k__BackingField:
+    Guid:
+      Data1: 2040509958
+      Data2: 1086624395
+      Data3: 1580308917
+      Data4: -667555690
+    Path: event:/PlayerWalk
+  <_dash>k__BackingField:
+    Guid:
+      Data1: 397717556
+      Data2: 1250277769
+      Data3: -269455455
+      Data4: 1776530940
+    Path: event:/PlayerDash

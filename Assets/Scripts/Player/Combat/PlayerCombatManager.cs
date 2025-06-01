@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerCombatManager : MonoBehaviour
 {
@@ -43,6 +41,8 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private ScreenShakeProfileSO _damageEnemyProfile;
     [SerializeField] private ScreenShakeProfileSO _damagePlayerProfile;
     private bool _canShakeCamera = true;
+    private float _nextHitAudioTime = 0f;
+    [SerializeField] private float _hitAudioCooldown = 0.5f;
 
 
     #region Getters and Setters
@@ -71,7 +71,7 @@ public class PlayerCombatManager : MonoBehaviour
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
         PlayerEvents.AttackVfx += SpawnVFXAttack;
-        PlayerEvents.HitEnemy += ShakeCamera;
+        PlayerEvents.HitEnemy += HitEnemy;
         GameEvents.EnterCombat += OnEnterCombat;
         GameEvents.ExitCombat += OnExitCombat;
         _machine.inputReader.LockOnEnemy += LockOnEnemy;
@@ -82,7 +82,7 @@ public class PlayerCombatManager : MonoBehaviour
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.AttackFinished += HandleResetAttack;
         PlayerEvents.AttackVfx -= SpawnVFXAttack;
-        PlayerEvents.HitEnemy -= ShakeCamera;
+        PlayerEvents.HitEnemy -= HitEnemy;
         GameEvents.EnterCombat -= OnEnterCombat;
         GameEvents.ExitCombat -= OnExitCombat;
         _machine.inputReader.LockOnEnemy -= LockOnEnemy;
@@ -218,27 +218,32 @@ public class PlayerCombatManager : MonoBehaviour
         Instantiate(_vfxLightnining, _vfxLightniningSpawnpoint);
     }
 
-    private void ShakeCamera()
+    private void HitEnemy(Vector3 enemyPos)
     {
         if (_canShakeCamera)
         {
             Debug.Log("Damage");
             _canShakeCamera = false;
             CameraShakeManager.CameraShakeFromProfile(_damageEnemyProfile, _machine.CameraShakeSource);
-            StartCoroutine(waitToShakeCamera());
+            StartCoroutine(WaitToShakeCamera());
 
         }
+
+        if (Time.time >= _nextHitAudioTime)
+        {
+            _nextHitAudioTime = Time.time + _hitAudioCooldown;
+            AudioManager.PlayOneShot(_machine.PlayerSounds._hit, enemyPos);
+        }
     }
-    private IEnumerator waitToShakeCamera()
+    private IEnumerator WaitToShakeCamera()
     {
         float time = 0;
-        while(time < _damageEnemyProfile.impactTime)
+        while (time < _damageEnemyProfile.impactTime)
         {
             time += Time.deltaTime;
             _canShakeCamera = true;
             yield return null;
         }
     }
-
     #endregion
 }
