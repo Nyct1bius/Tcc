@@ -13,13 +13,10 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     bool hasAttacked = false;
 
-    private void Awake()
-    {
-        attackHitbox = GetComponentInChildren<BoxCollider>();
-    }
-
     private void Start()
     {
+        attackHitbox = GetComponentInChildren<BoxCollider>();
+
         player = Stats.Player;
         agent = Stats.Agent;
         animator = Stats.Animator;

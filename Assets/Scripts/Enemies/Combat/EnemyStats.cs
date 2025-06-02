@@ -14,6 +14,13 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     public Vector3 PlayerPosition;
 
+    private EnemyMeleeCombat meleeCombatScript;
+    private EnemyMeleePathfinding meleePathfindingScript;
+    private EnemyRangedCombat rangedCombatScript;
+    private EnemyRangedPathfinding rangedPathfindingScript;
+
+    private CapsuleCollider capsuleCollider;
+
     void Awake()
     {
         CurrentHealth = MaxHealth;
@@ -21,16 +28,24 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     void Start()
     {
-        Agent = GetComponent<NavMeshAgent>();
-        if (Agent != null)
-            Agent.speed = MovementSpeed;
+        Animator.SetBool("Idle", true);
 
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
             StartCoroutine(WaitToFindPlayer());
 
-        Animator = GetComponentInChildren<Animator>();
-        Animator.SetBool("Idle", true);
+        if (IsMeleeEnemy)
+        {
+            meleeCombatScript = GetComponent<EnemyMeleeCombat>();
+            meleePathfindingScript = GetComponent<EnemyMeleePathfinding>();
+        }
+        else
+        {
+            rangedCombatScript = GetComponent<EnemyRangedCombat>();
+            rangedPathfindingScript = GetComponent<EnemyRangedPathfinding>();
+        }
+
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     void Update()
@@ -63,18 +78,8 @@ public class EnemyStats : MonoBehaviour, IHealth
     public void Death()
     {
         IsAlive = false;
-        
-        if (IsMeleeEnemy)
-        {
-            gameObject.GetComponent<EnemyMeleeCombat>().StopMeleeCoroutines();
-            gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
-            gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;
-        }
-        else
-        {
-            gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
-            gameObject.GetComponent<EnemyRangedPathfinding>().enabled = false;
-        }
+
+        DisableAllBehaviours();
 
         if (RoomManager != null)
         {
@@ -109,46 +114,63 @@ public class EnemyStats : MonoBehaviour, IHealth
 
             if (Vector3.Distance(transform.position, PlayerPosition) <= MinimumPlayerDistance)
             {
-                if (IsMeleeEnemy)
-                {
-                    gameObject.GetComponent<EnemyMeleeCombat>().enabled = true;
-                    gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;    
-                }
-                else
-                {
-                    gameObject.GetComponent<EnemyRangedCombat>().enabled = true;
-                    gameObject.GetComponent<EnemyRangedPathfinding>().enabled = false;
-                }
+                EnableCombat();
             }
             else
             {
-                if (IsMeleeEnemy)
-                {
-                    gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
-                    gameObject.GetComponent<EnemyMeleePathfinding>().enabled = true;
-                }
-                else
-                {
-                    gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
-                    gameObject.GetComponent<EnemyRangedPathfinding>().enabled = true;
-                }
+                EnablePathfinding();
             }
         }
 
         if (WasAttacked)
         {
-            if (IsMeleeEnemy)
-            {
-                gameObject.GetComponent<EnemyMeleeCombat>().enabled = false;
-                gameObject.GetComponent<EnemyMeleePathfinding>().enabled = false;
-            }
-            else
-            {
-                gameObject.GetComponent<EnemyRangedCombat>().enabled = false;
-                gameObject.GetComponent<EnemyRangedPathfinding>().enabled = false;
-            }
+            DisableAllBehaviours();
+        }
+    }
 
-            gameObject.GetComponent<EnemyStunned>().enabled = true;
+    private void EnableCombat()
+    {
+        if (IsMeleeEnemy)
+        {
+            meleeCombatScript.enabled = true;
+            meleePathfindingScript.enabled = false;
+        }
+        else
+        {
+            rangedCombatScript.enabled = true;
+            rangedPathfindingScript.enabled = false;
+        }
+    }
+
+    private void EnablePathfinding()
+    {
+        if (IsMeleeEnemy)
+        {
+            meleeCombatScript.StopMeleeCoroutines();
+            meleeCombatScript.enabled = false;
+            meleePathfindingScript.enabled = true;
+        }
+        else
+        {
+            rangedCombatScript.StopRangedCoroutines();
+            rangedCombatScript.enabled = false;
+            rangedPathfindingScript.enabled = true;
+        }
+    }
+
+    private void DisableAllBehaviours()
+    {
+        if (IsMeleeEnemy)
+        {
+            meleeCombatScript.StopMeleeCoroutines();
+            meleeCombatScript.enabled = false;
+            meleePathfindingScript.enabled = false;
+        }
+        else
+        {
+            rangedCombatScript.StopRangedCoroutines();
+            rangedCombatScript.enabled = false;
+            rangedPathfindingScript.enabled = false;
         }
     }
 
