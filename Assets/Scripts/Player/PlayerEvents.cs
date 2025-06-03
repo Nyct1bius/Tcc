@@ -31,6 +31,9 @@ public static class PlayerEvents
     public static event UnityAction DashSFX;
     public static void OnDashSFX() => DashSFX?.Invoke();
 
+    public static event UnityAction JumpSFX;
+    public static void OnJumpSFX() => JumpSFX?.Invoke();
+
 
     #endregion
 

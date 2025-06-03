@@ -10,6 +10,7 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.AttackSFX += PlayAttackAudio;
         PlayerEvents.WalkSFX += PlayWalkAudio;
         PlayerEvents.DashSFX += PlayDashAudio;
+        PlayerEvents.JumpSFX += PlayJumpAudio;
 
     }
 
@@ -18,6 +19,8 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.AttackSFX -= PlayAttackAudio;
         PlayerEvents.WalkSFX -= PlayWalkAudio;
         PlayerEvents.DashSFX -= PlayDashAudio;
+        PlayerEvents.JumpSFX -= PlayJumpAudio;
+
     }
 
     private void PlayAttackAudio()
@@ -32,5 +35,9 @@ public class PlayerAudioManager : MonoBehaviour
     private void PlayDashAudio()
     {
         AudioManager.PlayOneShot(_playerFmodEvents._dash, transform.position);
+    }
+    private void PlayJumpAudio()
+    {
+        AudioManager.PlayOneShot(_playerFmodEvents._jump, transform.position);
     }
 }

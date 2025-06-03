@@ -30,7 +30,6 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private List<Collider> _detectedEnemys;
     [SerializeField] private float _lookRotationSpeed;
     private bool _searchForTargets;
-    private Vector3 _targetPosition;
     private Vector3 _lookDirection;
     private Quaternion _lookRotation;
    [Header("VFX")]
@@ -40,7 +39,6 @@ public class PlayerCombatManager : MonoBehaviour
     [Header("Screen Shake Profiles")]
     [SerializeField] private ScreenShakeProfileSO _damageEnemyProfile;
     [SerializeField] private ScreenShakeProfileSO _damagePlayerProfile;
-    private bool _canShakeCamera = true;
     private float _nextHitAudioTime = 0f;
     [SerializeField] private float _hitAudioCooldown = 0.5f;
 
@@ -220,29 +218,13 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void HitEnemy(Vector3 enemyPos)
     {
-        if (_canShakeCamera)
-        {
-            Debug.Log("Damage");
-            _canShakeCamera = false;
-            CameraShakeManager.CameraShakeFromProfile(_damageEnemyProfile, _machine.CameraShakeSource);
-            StartCoroutine(WaitToShakeCamera());
-
-        }
 
         if (Time.time >= _nextHitAudioTime)
         {
             _nextHitAudioTime = Time.time + _hitAudioCooldown;
             AudioManager.PlayOneShot(_machine.PlayerSounds._hit, enemyPos);
-        }
-    }
-    private IEnumerator WaitToShakeCamera()
-    {
-        float time = 0;
-        while (time < _damageEnemyProfile.impactTime)
-        {
-            time += Time.deltaTime;
-            _canShakeCamera = true;
-            yield return null;
+            Debug.Log("Damage");
+            CameraShakeManager.CameraShakeFromProfile(_damageEnemyProfile, _machine.CameraShakeSource);
         }
     }
     #endregion

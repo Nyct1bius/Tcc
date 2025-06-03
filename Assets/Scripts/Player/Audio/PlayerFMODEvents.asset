@@ -18,25 +18,32 @@ MonoBehaviour:
       Data2: 1122587849
       Data3: -1169306476
       Data4: -1365108053
-    Path: event:/PlayerAttack
+    Path: event:/Player/PlayerAttack
   <_hit>k__BackingField:
     Guid:
       Data1: 1544054068
       Data2: 1114358516
       Data3: -2094324814
       Data4: 290737845
-    Path: event:/PlayerHit
+    Path: event:/Player/PlayerHit
   <_walk>k__BackingField:
     Guid:
       Data1: 2040509958
       Data2: 1086624395
       Data3: 1580308917
       Data4: -667555690
-    Path: event:/PlayerWalk
+    Path: event:/Player/PlayerWalk
   <_dash>k__BackingField:
     Guid:
       Data1: 397717556
       Data2: 1250277769
       Data3: -269455455
       Data4: 1776530940
-    Path: event:/PlayerDash
+    Path: event:/Player/PlayerDash
+  <_jump>k__BackingField:
+    Guid:
+      Data1: 30615557
+      Data2: 1137886139
+      Data3: -688525382
+      Data4: 132602476
+    Path: event:/Player/PlayerJump

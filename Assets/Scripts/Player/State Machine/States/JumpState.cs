@@ -16,6 +16,7 @@ public class JumpState : State
     {
 
         HandleJump();
+        PlayerEvents.OnJumpSFX();
         _timeSinceEntered = 0f;
         _ctx.AnimationSystem.Jump();
         _ctx.AnimationSystem.UpdateGrounded(false);
