@@ -7,6 +7,10 @@ public class IdleState : State
    : base(contex, playerStateFactory) { }
     public override void Enter()
     {
+        if (_ctx.Movement.HasGround())
+        {
+            PlayerEvents.OnIdleSFX();
+        }
     }
     public override void Do() 
     {

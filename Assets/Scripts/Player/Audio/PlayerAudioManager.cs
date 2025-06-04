@@ -11,6 +11,8 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.WalkSFX += PlayWalkAudio;
         PlayerEvents.DashSFX += PlayDashAudio;
         PlayerEvents.JumpSFX += PlayJumpAudio;
+        PlayerEvents.IdleSFX += PlayIdleAudio;
+        PlayerEvents.ChickenSFX += PlayChickenSpinAudio;
 
     }
 
@@ -20,6 +22,8 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.WalkSFX -= PlayWalkAudio;
         PlayerEvents.DashSFX -= PlayDashAudio;
         PlayerEvents.JumpSFX -= PlayJumpAudio;
+        PlayerEvents.IdleSFX -= PlayIdleAudio;
+        PlayerEvents.ChickenSFX -= PlayChickenSpinAudio;
 
     }
 
@@ -39,5 +43,14 @@ public class PlayerAudioManager : MonoBehaviour
     private void PlayJumpAudio()
     {
         AudioManager.PlayOneShot(_playerFmodEvents._jump, transform.position);
+    }
+    private void PlayIdleAudio()
+    {
+        AudioManager.PlayOneShot(_playerFmodEvents._idle, transform.position);
+    }
+
+    private void PlayChickenSpinAudio()
+    {
+        AudioManager.PlayOneShot(_playerFmodEvents._chickenSpin, transform.position);
     }
 }

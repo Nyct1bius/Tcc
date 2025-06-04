@@ -32,5 +32,10 @@ public class AnimationHandler : MonoBehaviour
     {
         PlayerEvents.OnWalkSFX();
     }
+
+    public void OnPLayChickenSFX()
+    {
+        PlayerEvents.OnChickenSFX();
+    }
     #endregion
 }

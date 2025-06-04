@@ -34,6 +34,12 @@ public static class PlayerEvents
     public static event UnityAction JumpSFX;
     public static void OnJumpSFX() => JumpSFX?.Invoke();
 
+    public static event UnityAction IdleSFX;
+    public static void OnIdleSFX() => IdleSFX?.Invoke();
+
+    public static event UnityAction ChickenSFX;
+    public static void OnChickenSFX() => ChickenSFX?.Invoke();
+
 
     #endregion
 
