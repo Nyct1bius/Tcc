@@ -1,10 +1,17 @@
 using System;
 using UnityEngine;
+using FMOD.Studio;
 
 public class PlayerAudioManager : MonoBehaviour
 {
-    [SerializeField] FMODEvents _playerFmodEvents;
+    public FMODEvents playerFmodEvents;
+    public AudioManager audioManager;
 
+    private EventInstance chickenSpininstance;
+    private void Start()
+    {
+        chickenSpininstance = audioManager.CreateInstance(playerFmodEvents._chickenSpin);
+    }
     private void OnEnable()
     {
         PlayerEvents.AttackSFX += PlayAttackAudio;
@@ -13,6 +20,8 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.JumpSFX += PlayJumpAudio;
         PlayerEvents.IdleSFX += PlayIdleAudio;
         PlayerEvents.ChickenSFX += PlayChickenSpinAudio;
+        PlayerEvents.StopChickenSFX += StopChickenSpinAudio;
+        PlayerEvents.LandSFX += PlayLandAudio;
 
     }
 
@@ -24,33 +33,58 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.JumpSFX -= PlayJumpAudio;
         PlayerEvents.IdleSFX -= PlayIdleAudio;
         PlayerEvents.ChickenSFX -= PlayChickenSpinAudio;
+        PlayerEvents.StopChickenSFX -= StopChickenSpinAudio;
+        PlayerEvents.LandSFX -= PlayLandAudio;
 
     }
 
     private void PlayAttackAudio()
     {
-        AudioManager.PlayOneShot(_playerFmodEvents._attack,transform.parent.position);
+        audioManager.PlayOneShot(playerFmodEvents._attack,transform.parent.position);
     }
 
     private void PlayWalkAudio()
     {
-        AudioManager.PlayOneShot(_playerFmodEvents._walk, transform.position);
+        audioManager.PlayOneShot(playerFmodEvents._walk, transform.position);
     }
     private void PlayDashAudio()
     {
-        AudioManager.PlayOneShot(_playerFmodEvents._dash, transform.position);
+        audioManager.PlayOneShot(playerFmodEvents._dash, transform.position);
     }
     private void PlayJumpAudio()
     {
-        AudioManager.PlayOneShot(_playerFmodEvents._jump, transform.position);
-    }
-    private void PlayIdleAudio()
-    {
-        AudioManager.PlayOneShot(_playerFmodEvents._idle, transform.position);
+        audioManager.PlayOneShot(playerFmodEvents._jump, transform.position);
     }
 
-    private void PlayChickenSpinAudio()
+    private void PlayLandAudio()
     {
-        AudioManager.PlayOneShot(_playerFmodEvents._chickenSpin, transform.position);
+        audioManager.PlayOneShot(playerFmodEvents._land, transform.position);
+    }
+
+    private void PlayIdleAudio()
+    {
+        audioManager.PlayOneShot(playerFmodEvents._idle, transform.position);
+    }
+
+    public void PlayChickenSpinAudio()
+    {
+        PLAYBACK_STATE playbackState;
+        chickenSpininstance.getPlaybackState(out playbackState);
+        if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+        {
+            chickenSpininstance.start();
+        }
+       
+    }
+
+    public void SetChickenVelocity(float speed)
+    {
+        chickenSpininstance.setParameterByName("ChickenVelocity", speed);
+    }
+
+    private void StopChickenSpinAudio()
+    {
+        chickenSpininstance.stop(STOP_MODE.ALLOWFADEOUT);
+
     }
 }

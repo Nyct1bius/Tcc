@@ -12,6 +12,7 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference _walk{ get; private set; }
     [field: SerializeField] public EventReference _dash { get; private set; }
     [field: SerializeField] public EventReference _jump { get; private set; }
+    [field: SerializeField] public EventReference _land { get; private set; }
 
     [field: Header("Idle")]
     [field: SerializeField] public EventReference _idle { get; private set; }

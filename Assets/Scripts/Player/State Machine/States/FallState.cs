@@ -28,7 +28,7 @@ public class FallState : State
         {
             CheckSwitchState();
         }
-        if (!_ctx.Movement.HasGround())
+        if (!_ctx.Movement.IsGroundAtLandingPoint())
         {
             Debug.Log("Death counter Start");
             _ctx.Movement.FallDeathTimer += Time.deltaTime;

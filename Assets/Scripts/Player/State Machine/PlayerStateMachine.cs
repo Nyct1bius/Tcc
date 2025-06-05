@@ -10,7 +10,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GroundSensor _groundSensor;
     [SerializeField] private CinemachineImpulseSource _cameraShakeSource;
-    [SerializeField] private FMODEvents _playerSounds;
+    [SerializeField] private PlayerAudioManager _audioManager;
     private AnimationSystem _animationSystem;
     public InputReader inputReader;
     private Camera _mainCameraRef;
@@ -47,7 +47,7 @@ public class PlayerStateMachine : MonoBehaviour
     public GroundSensor GroundSensor { get { return _groundSensor; } }
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
     public CinemachineImpulseSource CameraShakeSource { get { return _cameraShakeSource; } }
-    public FMODEvents PlayerSounds { get { return _playerSounds; } }
+    public PlayerAudioManager AudioManager { get { return _audioManager; } }
     public AnimationSystem AnimationSystem {  get { return _animationSystem; } }
 
 

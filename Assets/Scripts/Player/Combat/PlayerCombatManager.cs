@@ -222,7 +222,7 @@ public class PlayerCombatManager : MonoBehaviour
         if (Time.time >= _nextHitAudioTime)
         {
             _nextHitAudioTime = Time.time + _hitAudioCooldown;
-            AudioManager.PlayOneShot(_machine.PlayerSounds._hit, enemyPos);
+            _machine.AudioManager.audioManager.PlayOneShot(_machine.AudioManager.playerFmodEvents._hit, enemyPos);
             Debug.Log("Damage");
             CameraShakeManager.CameraShakeFromProfile(_damageEnemyProfile, _machine.CameraShakeSource);
         }

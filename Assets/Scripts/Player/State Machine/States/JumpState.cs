@@ -27,13 +27,13 @@ public class JumpState : State
     public override void Do() 
     {
         _timeSinceEntered += Time.deltaTime;
-        _ctx.PlayerAnimator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
+        _ctx.AnimationSystem.UpdateJump(_ctx.Body.linearVelocity.y);
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
         }
 
-        if (!_ctx.Movement.HasGround())
+        if (!_ctx.Movement.IsGroundAtLandingPoint())
         {
             _ctx.Movement.FallDeathTimer += Time.deltaTime;
             if (_ctx.Movement.FallDeathTimer >= _ctx.Movement.MaxFallTime)
@@ -56,6 +56,7 @@ public class JumpState : State
         }
         _ctx.AnimationSystem.UpdateGrounded(true);
         CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
+        PlayerEvents.OnLandSFX();
     }
 
     public override void CheckSwitchState()

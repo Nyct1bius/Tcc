@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{7a0b2701-4dd3-4f5f-9aa5-65ee9971ffa0}">
+		<property name="name">
+			<value>ChickenVelocity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{a0aa44e3-9593-4cc7-83f9-1891a2892a93}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{19fe8758-62ea-4064-8920-40316be4e7fc}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{19fe8758-62ea-4064-8920-40316be4e7fc}">
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>10</value>
+		</property>
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

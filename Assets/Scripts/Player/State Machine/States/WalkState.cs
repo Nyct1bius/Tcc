@@ -10,7 +10,6 @@ public class WalkState : State
 
     public override void Enter()
     {
-         
     }
     public override void FixedDo()
     {
@@ -19,12 +18,22 @@ public class WalkState : State
 
     public override void Exit()
     {
-
+        PlayerEvents.OnStopChickenSFX();
     }
 
     public override void Do()
     {
         CheckSwitchState();
+        Debug.Log(_ctx.GroundSensor.IsGrounded());
+        if (_ctx.GroundSensor.IsGrounded())
+        {
+            PlayerEvents.OnChickenSFX();
+            _ctx.AudioManager.SetChickenVelocity(Mathf.Clamp(_ctx.Body.linearVelocity.magnitude,1f,10f));
+        }
+        else
+        {
+            PlayerEvents.OnStopChickenSFX();
+        }
 
     }
 

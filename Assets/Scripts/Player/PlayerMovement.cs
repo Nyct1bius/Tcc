@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
         UpdateFrictionMaterial();
-        HasGround();
+        IsGroundAtLandingPoint();
     }
     private void FixedUpdate()
     {
@@ -255,7 +255,7 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.ProjectOnPlane(_moveDirection, _slopeHit.normal).normalized;
     }
 
-    public bool HasGround()
+    public bool IsGroundAtLandingPoint()
     {
         Vector3 rayOrigin = transform.position + Vector3.up * (_playerCollider.center.y - _playerCollider.height / 2 + 0.05f);
         float rayLength = (transform.localScale.y * 0.5f) + _groundDetectionDistance;

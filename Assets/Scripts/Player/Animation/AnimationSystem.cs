@@ -154,7 +154,10 @@ public class AnimationSystem
     {
         _movementController.SetFloat("Speed",speed);
     }
-
+    public void UpdateJump(float speed)
+    {
+        _movementController.SetFloat("YSpeed", speed);
+    }
     public void UpdateDash(bool active)
     {
         _movementController.SetBool("IsDashing", active);

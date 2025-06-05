@@ -37,5 +37,9 @@ public class AnimationHandler : MonoBehaviour
     {
         PlayerEvents.OnChickenSFX();
     }
+    public void OnStopChickenSFX()
+    {
+        PlayerEvents.OnStopChickenSFX();
+    }
     #endregion
 }
