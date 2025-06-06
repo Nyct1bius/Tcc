@@ -159,7 +159,8 @@ public class GameManager : MonoBehaviour
         SwitchGameState(GameStates.Started);
         PlayerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
         _cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
-        _minimapCamRef = Instantiate(minimapCameraPrefab);
+        if(_minimapCamRef != null)
+            _minimapCamRef = Instantiate(minimapCameraPrefab);
         Camera.main.GetComponent<StudioListener>().AttenuationObject = PlayerInstance;
         _cnCameraRef.Follow = PlayerInstance.transform;
         _cnCameraRef.LookAt = PlayerInstance.transform;
