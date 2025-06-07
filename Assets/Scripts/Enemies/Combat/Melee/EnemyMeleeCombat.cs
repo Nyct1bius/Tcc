@@ -5,9 +5,9 @@ using UnityEngine.AI;
 public class EnemyMeleeCombat : MonoBehaviour
 {
     public EnemyStats Stats;
+    public BoxCollider AttackHitbox;
 
     GameObject player;
-    BoxCollider attackHitbox;
     NavMeshAgent agent;
     Animator animator;
 
@@ -15,8 +15,6 @@ public class EnemyMeleeCombat : MonoBehaviour
 
     private void Start()
     {
-        attackHitbox = GetComponentInChildren<BoxCollider>();
-
         player = Stats.Player;
         agent = Stats.Agent;
         animator = Stats.Animator;
@@ -63,11 +61,11 @@ public class EnemyMeleeCombat : MonoBehaviour
     {
         yield return new WaitForSeconds(0.7f);
 
-        attackHitbox.enabled = true;
+        AttackHitbox.enabled = true;
 
         yield return new WaitForSeconds(0.85f);
 
-        attackHitbox.enabled = false;
+        AttackHitbox.enabled = false;
     }
 
     public void StopMeleeCoroutines()
@@ -77,7 +75,7 @@ public class EnemyMeleeCombat : MonoBehaviour
         if (hasAttacked)
             hasAttacked = false;
 
-        if (attackHitbox.enabled)
-            attackHitbox.enabled = false;
+        if (AttackHitbox.enabled)
+            AttackHitbox.enabled = false;
     }
 }

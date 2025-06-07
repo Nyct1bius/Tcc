@@ -84,7 +84,7 @@ MonoBehaviour:
   RoomManager: {fileID: 0}
   Agent: {fileID: 7317437159642706339}
   Player: {fileID: 0}
-  Animator: {fileID: 0}
+  Animator: {fileID: 3126189201008492731}
   PlayerPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &562903212557668286
 MonoBehaviour:
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stats: {fileID: 6170765344176593587}
+  AttackHitbox: {fileID: 207317314093163768}
 --- !u!114 &1953947059489775801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +574,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e078eb112e3fb4ba984f41f25a2d08, type: 3}
+--- !u!95 &3126189201008492731 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 39e078eb112e3fb4ba984f41f25a2d08, type: 3}
+  m_PrefabInstance: {fileID: 8793525843499859242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9043888134004923073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 39e078eb112e3fb4ba984f41f25a2d08, type: 3}
