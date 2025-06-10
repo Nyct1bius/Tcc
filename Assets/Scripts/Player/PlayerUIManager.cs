@@ -42,12 +42,14 @@ public class PlayerUIManager : MonoBehaviour
     {
         _inputs.PauseEvent += OpenPauseMenu;
         GameEvents.GameOver += OnGameOver;
+        Time.timeScale = 1.4f;
     }
 
     private void OnDisable()
     {
         _inputs.PauseEvent -= OpenPauseMenu;
         GameEvents.GameOver -= OnGameOver;
+        Time.timeScale = 1.4f;
     }
 
     public void AtualizePlayerHealthUI(float currentHealth)

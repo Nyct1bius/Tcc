@@ -39,7 +39,7 @@ public class LoadScene : MonoBehaviour
         {
             yield return null;
         }
-        layer.Hide(0.5f, 0.25f);
+        layer.Hide(0.5f, 1.25f);
 
     }
 }

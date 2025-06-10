@@ -6195,6 +6195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3565811411411811918}
   - component: {fileID: 5788725866680835043}
+  - component: {fileID: 5916821046538374523}
   m_Layer: 3
   m_Name: UIManager
   m_TagString: Untagged
@@ -6240,6 +6241,19 @@ MonoBehaviour:
   _inputs: {fileID: 11400000, guid: 12337715a3680b24cb9047a0f4e3a238, type: 2}
   _mainMenuScreen: {fileID: 16562198944548923}
   _gameOverMenu: {fileID: 7684114621437310516}
+--- !u!114 &5916821046538374523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231017232543103801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a47e282837bda4392cf2c13487ea9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barraProgresso: {fileID: 0}
 --- !u!1 &2237577794929868138
 GameObject:
   m_ObjectHideFlags: 0
@@ -12655,16 +12669,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Title
-        m_Mode: 1
+      - m_Target: {fileID: 5916821046538374523}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: StartLoad
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Title Screen
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!95 &2468575396307852258
@@ -20924,16 +20938,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2495950569717077622}
-        m_TargetAssemblyTypeName: GameOverScreen, Assembly-CSharp
-        m_MethodName: Continue
-        m_Mode: 1
+      - m_Target: {fileID: 5916821046538374523}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: StartLoad
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Programmers_TestScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!95 &4038987358301678649
