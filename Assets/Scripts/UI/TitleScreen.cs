@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 public class TitleScreen : MonoBehaviour
 {
     public GameObject _fase1, _fase2;
+    private LoadScene loadscene;
+
+    private void Awake()
+    {
+        loadscene = GetComponent<LoadScene>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,17 +27,17 @@ public class TitleScreen : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadSceneAsync("Programmers_TestScene");
+        loadscene.StartLoad("Programmers_TestScene");
     }
 
     public void NewGame()
     {
-        SceneManager.LoadSceneAsync("Programmers_TestScene");
+        loadscene.StartLoad("Programmers_TestScene");
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadSceneAsync("Programmers_TestScene");
+        loadscene.StartLoad("Programmers_TestScene");
     }
 
     public void ExitGame()

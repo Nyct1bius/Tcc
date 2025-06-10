@@ -16,11 +16,30 @@ public class LoadScene : MonoBehaviour
 
     private IEnumerator Load(string levelToLoad)
     {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(levelToLoad);
-        while(!asyncOperation.isDone)
+        TransitionLayer layer = TransitionManager.Instance.layer;
+        layer.Show(0.5f, 0.0f);
+
+        while(!layer.isDone)
         {
-            this.barraProgresso.value = asyncOperation.progress;
             yield return null;
         }
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(levelToLoad);
+        asyncOperation.allowSceneActivation = false;
+
+
+        while(asyncOperation.progress < 0.9f)
+        {
+            //this.barraProgresso.value = asyncOperation.progress;
+            yield return null;
+        }
+
+        asyncOperation.allowSceneActivation = true;
+
+        while(!layer.isDone)
+        {
+            yield return null;
+        }
+        layer.Hide(0.5f, 0.25f);
+
     }
 }
