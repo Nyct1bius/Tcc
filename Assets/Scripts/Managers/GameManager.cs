@@ -107,9 +107,9 @@ public class GameManager : MonoBehaviour
 
     private void OnEnterGame()
     {
-       
-        //do something more when the game is initializing
 
+        //do something more when the game is initializing
+        GameEvents.OnStartGame();
 
         SwitchGameState(GameStates.RunningGame);
     }
@@ -156,7 +156,6 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer(Transform spawnPoint)
     {
-        SwitchGameState(GameStates.Started);
         PlayerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
         _cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
         if(_minimapCamRef != null)

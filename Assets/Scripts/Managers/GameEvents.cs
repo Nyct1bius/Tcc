@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public static class GameEvents
 {
+    public static event UnityAction StartGame;
+    public static void OnStartGame() => StartGame?.Invoke();
     public static event UnityAction PauseGame;
     public static void OnGamePause() => PauseGame?.Invoke();
 
