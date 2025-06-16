@@ -5,7 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class UITestes : MonoBehaviour, IDataPersistence
 {
-
+    public GameObject telaInicio;
+    public GameObject telaOver;
+    public GameObject telaMenu;
+    public GameObject telaMapa;
 
     public int money; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,7 +20,28 @@ public class UITestes : MonoBehaviour, IDataPersistence
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("a"))
+        {
+            telaInicio.SetActive(true);
+        }
+
+        if (Input.GetKeyDown("s"))
+        {
+            telaOver.SetActive(true);
+        }
+
+        if (Input.GetKeyDown("d"))
+        {
+            telaMenu.SetActive(true);
+        }
+
+        if (Input.GetKeyDown("f"))
+        {
+            telaInicio.SetActive(false);
+            telaOver.SetActive(false);
+            telaMenu.SetActive(false);
+            telaMapa.SetActive(true);
+        }
     }
 
     public void CarregarScene(string NewScene)
