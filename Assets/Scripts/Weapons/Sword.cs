@@ -11,8 +11,8 @@ public class Sword : Item
         {
             Destroy(gameObject);
         }
-        transform.DORotate(new Vector3(0, 180f, 0),4f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        transform.DOMoveY(1.3f, 3f).SetEase(Ease.InOutSine).SetLoops(-1,LoopType.Yoyo);
+        transform.DORotate(new Vector3(0, 180f, 0),10f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        transform.DOLocalMoveY(transform.position.y + 1f, 3f).SetEase(Ease.InOutSine).SetLoops(-1,LoopType.Yoyo);
     }
     private void OnEnable()
     {

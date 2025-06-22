@@ -15,6 +15,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         GameEvents.StartGame -= SpawnPlayer;
     }
+    [ContextMenu("SpawnPlayer")]
     private void SpawnPlayer()
     {
         GameManager.instance.SpawnPlayer(transform);

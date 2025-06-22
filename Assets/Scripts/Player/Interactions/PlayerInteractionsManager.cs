@@ -80,7 +80,7 @@ public class PlayerInteractionsManager : MonoBehaviour
     private void SetupItensToInteract()
     {
         hasItemToInteract = true;
-        uiSpawned = Instantiate(uiPickUp, currentItemTransform.position + Vector3.up * (currentInteractable.height + uiOffset), Quaternion.identity); 
+        uiSpawned = Instantiate(uiPickUp,currentItemTransform.position + Vector3.up * (currentInteractable.height + uiOffset), Quaternion.identity); 
         interactableItens.Add(currentInteractable);
         spawnedUIs.Add(uiSpawned);
     }
