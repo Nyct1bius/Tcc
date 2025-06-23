@@ -21,6 +21,10 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     private CapsuleCollider capsuleCollider;
 
+    private SkinnedMeshRenderer enemyRenderer;
+    private Material[] enemyMaterials;
+    private Color[] originalColors;
+
     void Awake()
     {
         CurrentHealth = MaxHealth;
@@ -33,6 +37,33 @@ public class EnemyStats : MonoBehaviour, IHealth
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
             StartCoroutine(WaitToFindPlayer());
+
+        enemyRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+
+        /*
+        if (enemyRenderer != null)
+        {
+            enemyMaterials = enemyRenderer.materials;
+            originalColors = new Color[enemyMaterials.Length];
+
+            for (int i = 0; i < enemyMaterials.Length; i++)
+            {
+                if (enemyMaterials[i].HasProperty("_BaseColor"))
+                {
+                    originalColors[i] = enemyMaterials[i].GetColor("_BaseColor");
+                }
+                else if (enemyMaterials[i].HasProperty("_Color"))
+                {
+                    originalColors[i] = enemyMaterials[i].GetColor("_Color");
+                }
+                else
+                {
+                    Debug.LogWarning($"Material {i} has no _BaseColor or _Color.");
+                    originalColors[i] = Color.white;
+                }
+            }
+        }
+        */
 
         if (IsMeleeEnemy)
         {
@@ -61,22 +92,30 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
     
+    //Take damage and play hit animation
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
         CurrentHealth -= damage;
 
-        StartCoroutine(Knockback(PlayerPosition, 4f, .2f));
+        Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
+        StartCoroutine(Knockback(knockbackDir, 8f, .4f));
 
         Animator.SetTrigger("Hit");
+
+        //StartCoroutine(ChangeColor(0.8f));
     }
     
+    //Enemy doesn't heal
     public void HealHealth(float health)
     {
 
     }
 
+    //Start despawn coroutine, disable combat and pathfinding, remove self from room list
     public void Death()
     {
+        int deathAnimDice = Random.Range(0, 2);
+
         IsAlive = false;
 
         DisableAllBehaviours();
@@ -86,9 +125,22 @@ public class EnemyStats : MonoBehaviour, IHealth
             RoomManager.RemoveEnemyFromList(gameObject);
         }
 
+        Animator.SetBool("Idle", false);
+        Animator.SetBool("Walk", false);
+
+        if (deathAnimDice == 0)
+        {
+            Animator.SetBool("Dead1", true);
+        }
+        if (deathAnimDice == 1)
+        {
+            Animator.SetBool("Dead2", true);
+        }
+
         StartCoroutine(Despawn(2.2f));
     }
 
+    //Wait to store player on scene start
     IEnumerator WaitToFindPlayer()
     {
         yield return new WaitForSeconds(0.25f);
@@ -106,6 +158,8 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
+
+    //Check player distance and switch between combat and pathfinding
     private void CheckEnemyState()
     {
         if (Player != null && !WasAttacked)
@@ -128,6 +182,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
+    //Disable pathfinding and enable combat
     private void EnableCombat()
     {
         if (IsMeleeEnemy)
@@ -142,6 +197,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
+    //Disable combat and combat coroutines and enable pathfinding
     private void EnablePathfinding()
     {
         if (IsMeleeEnemy)
@@ -158,6 +214,7 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
+    //Stop all combat coroutines, disable combat and pathfinding
     private void DisableAllBehaviours()
     {
         if (IsMeleeEnemy)
@@ -174,19 +231,22 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
     }
 
+    //Quickly move backwards on getting hit
     private IEnumerator Knockback(Vector3 direction, float force, float duration)
     {
         if (IsMeleeEnemy)
         {
-            gameObject.GetComponent<EnemyMeleeCombat>().StopMeleeCoroutines();
+            meleeCombatScript.StopMeleeCoroutines();
         }
         else
         {
-            gameObject.GetComponent<EnemyRangedCombat>().StopRangedCoroutines();
+            rangedCombatScript.StopRangedCoroutines();
 
         }
 
         Agent.enabled = false;
+
+        yield return new WaitForSeconds(0.1f);
 
         float timer = 0f;
         while (timer < duration)
@@ -199,18 +259,56 @@ public class EnemyStats : MonoBehaviour, IHealth
         Agent.enabled = true;
     }
 
+    //Flash white on getting hit
+    private IEnumerator ChangeColor(float colorTimer)
+    {
+        for (int i = 0; i < enemyMaterials.Length; i++)
+        {
+            if (enemyMaterials[i].HasProperty("_BaseColor"))
+            {
+                enemyMaterials[i].SetColor("_BaseColor", Color.white);
+            }
+            else if (enemyMaterials[i].HasProperty("_Color"))
+            {
+                enemyMaterials[i].SetColor("_Color", Color.white);
+            }
+        }
+
+        yield return new WaitForSeconds(colorTimer);
+
+        for (int i = 0; i < enemyMaterials.Length; i++)
+        {
+            if (enemyMaterials[i].HasProperty("_BaseColor"))
+            {
+                enemyMaterials[i].SetColor("_BaseColor", originalColors[i]);
+            }
+            else if (enemyMaterials[i].HasProperty("_Color"))
+            {
+                enemyMaterials[i].SetColor("_Color", originalColors[i]);
+            }
+        }
+    }
+
+    //Disable agent component, collider component, play death animation and disable object
     private IEnumerator Despawn(float timeToDespawn)
     {
         if (Agent.enabled)
             Agent.isStopped = true;
 
-        gameObject.GetComponent<CapsuleCollider>().enabled = false;
-
-        Animator.SetBool("Idle", false);
-        Animator.SetBool("Walk", false);
-        Animator.SetBool("Dead1", true);
+        GetComponent<CapsuleCollider>().enabled = false;
 
         yield return new WaitForSeconds(timeToDespawn);
+
+        Vector3 originalScale = transform.localScale;
+        float timer = 0f;
+
+        while (timer < timeToDespawn)
+        {
+            float t = 1f - Mathf.Pow(1f - (timer / timeToDespawn), 2f);
+            transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, t);
+            timer += Time.deltaTime;
+            yield return null;
+        }
 
         gameObject.SetActive(false);
     }
