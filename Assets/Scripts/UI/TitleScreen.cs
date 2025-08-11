@@ -7,6 +7,8 @@ public class TitleScreen : MonoBehaviour
     public GameObject _fase1, _fase2;
     private LoadScene loadscene;
 
+    private bool fase2 = false;
+
     private void Awake()
     {
         loadscene = GetComponent<LoadScene>();
@@ -22,7 +24,14 @@ public class TitleScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!fase2)
+        {
+            if(Input.anyKeyDown)
+            {
+                _fase1.SetActive(false);
+                _fase2.SetActive(true);
+            }
+        }
     }
 
     public void Continue()
