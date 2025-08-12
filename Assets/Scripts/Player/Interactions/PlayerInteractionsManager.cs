@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,12 @@ public class PlayerInteractionsManager : MonoBehaviour
     private Item currentInteractable;
     private Transform currentItemTransform;
     private GameObject uiSpawned;
+    [Header("Scenes Interactions")]
+    [Range(0f, 5f)]
+    [SerializeField] private float interactionRange;
+    [SerializeField] private LayerMask interactionLayer;
+    private Collider[] interactables = new Collider[10];
+    private List<Collider> colliders = new List<Collider>();
 
 
     //Itens
@@ -49,10 +56,9 @@ public class PlayerInteractionsManager : MonoBehaviour
         {
             checkPoint.SetupCheckpoint();
         }
-        
+        DetectNearEvents(trigger => trigger.OnEnter());
 
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (interactableItens.Count != 0)
@@ -60,6 +66,7 @@ public class PlayerInteractionsManager : MonoBehaviour
             Item exitItem = other.GetComponent<Item>();
            CleanListOfItens(exitItem);
         }
+        DetectNearEvents(trigger => trigger.OnExit());
     }
 
     private void CleanListOfItens(Item exitItem)
@@ -104,6 +111,45 @@ public class PlayerInteractionsManager : MonoBehaviour
             }
         }
     }
+    private void DetectNearEvents(Action<IProximityEventTrigger> eventAction)
+    {
+        CleanTargetsList();
+        int count = Physics.OverlapSphereNonAlloc(transform.position, interactionRange, interactables);
+        colliders = new List<Collider>();
 
+        for (int i = 0; i < count; i++)
+        {
+            Collider col = interactables[i];
+            colliders.Add(col);
+        }
+
+        colliders.Sort((a, b) =>
+        {
+            float distA = Vector3.Distance(a.transform.position, transform.position);
+            float distB = Vector3.Distance(b.transform.position, transform.position);
+            return distA.CompareTo(distB);
+        });
+
+        for (int i = 0; i < count; i++)
+        {
+            IProximityEventTrigger eventTrigger = colliders[i].gameObject.GetComponent<IProximityEventTrigger>();
+            if (eventTrigger != null)
+            {
+                eventAction(eventTrigger);
+                break;
+            }
+        }
+    }
+
+    public void CleanTargetsList()
+    {
+        colliders.RemoveAll(item => item == null);
+        colliders.RemoveAll(item => Vector3.Distance(item.transform.position, transform.position) > interactionRange);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
+    }
 
 }

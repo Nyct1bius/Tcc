@@ -118,7 +118,7 @@ public class PlayerCombatManager : MonoBehaviour
     {
         CleanTargetsList();
         int count = Physics.OverlapSphereNonAlloc(transform.position, _lockOnRange, _lookAtTargets, _damageableLayer);
-        _detectedEnemys = new List<Collider>();//@optimize
+        _detectedEnemys = new List<Collider>();
 
         for (int i = 0; i < count; i++)
         {
