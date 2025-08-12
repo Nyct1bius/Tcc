@@ -28,7 +28,13 @@ public class Sword : Item, IProximityEventTrigger
     {
         CameraTargetingTrigger.Instance.TrackingTriggerEnter(this.transform);
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.GetComponent<PlayerInteractionsManager>() != null)
+        {
+            CameraTargetingTrigger.Instance.TrackingTriggerExit();
+        }
+    }
     public void OnExit()
     {
         CameraTargetingTrigger.Instance.TrackingTriggerExit();
