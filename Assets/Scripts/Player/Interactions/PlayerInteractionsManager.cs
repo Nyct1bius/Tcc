@@ -66,7 +66,7 @@ public class PlayerInteractionsManager : MonoBehaviour
             Item exitItem = other.GetComponent<Item>();
            CleanListOfItens(exitItem);
         }
-        DetectNearEvents(trigger => trigger.OnExit());
+        //DetectNearEvents(trigger => trigger.OnExit());
     }
 
     private void CleanListOfItens(Item exitItem)
@@ -136,6 +136,7 @@ public class PlayerInteractionsManager : MonoBehaviour
             if (eventTrigger != null)
             {
                 eventAction(eventTrigger);
+                Debug.Log(eventAction);
                 break;
             }
         }
