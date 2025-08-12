@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1069372617244992987}
   - component: {fileID: 6899552969775773947}
   - component: {fileID: 3225101007201754854}
+  - component: {fileID: 4738493940346360716}
   m_Layer: 0
   m_Name: Third Person Camera controller
   m_TagString: Untagged
@@ -340,3 +341,19 @@ MonoBehaviour:
     FrequencyGain: 3
     Duration: 0.5
     m_NoiseOffsets: {x: 265.1336, y: -324.51855, z: 646.7998}
+--- !u!114 &4738493940346360716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130453660943946744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af12b430c814e1429fd633345127313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalTarget:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0

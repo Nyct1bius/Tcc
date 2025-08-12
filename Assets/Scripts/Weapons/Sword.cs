@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Sword : Item
+public class Sword : Item, IProximityEventTrigger
 {
     [SerializeField] private PlayerStatsSO _playerStats;
    
@@ -22,6 +22,16 @@ public class Sword : Item
     {
        PlayerEvents.OnSwordPickUp(weaponData);
        Destroy(gameObject);
+    }
+
+    public void OnEnter()
+    {
+        CameraTargetingTrigger.Instance.TrackingTriggerEnter(this.transform);
+    }
+
+    public void OnExit()
+    {
+        CameraTargetingTrigger.Instance.TrackingTriggerExit();
     }
 }
 
