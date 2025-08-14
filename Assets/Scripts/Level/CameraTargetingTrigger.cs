@@ -31,6 +31,11 @@ public class CameraTargetingTrigger : MonoBehaviour
         thisCamera.Target.LookAtTarget = originalTarget.LookAtTarget;
     }
 
+    public void EndCustceneSetting()
+    {
+        thisCamera.Priority = 2;
+    }
+
     private IEnumerator DelayStart()
     {
         yield return new WaitForSeconds(0.25f);

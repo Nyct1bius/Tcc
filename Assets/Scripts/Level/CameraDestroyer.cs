@@ -12,4 +12,5 @@ public class CameraDestroyer : MonoBehaviour
     {
         GameManager.instance.SwitchGameState(GameManager.GameStates.Started);
     }
+
 }

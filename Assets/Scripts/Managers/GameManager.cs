@@ -198,6 +198,11 @@ public class GameManager : MonoBehaviour
        StartCoroutine(RespawningPlayer());
     }
 
+    public GameObject GetPlayerPrefab()
+    {
+        return playerPrefab;
+    }
+
 
     IEnumerator RespawningPlayer()
     {
