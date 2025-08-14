@@ -21,10 +21,6 @@ public class EnemyStats : MonoBehaviour, IHealth
 
     private CapsuleCollider capsuleCollider;
 
-    private SkinnedMeshRenderer enemyRenderer;
-    private Material[] enemyMaterials;
-    private Color[] originalColors;
-
     void Awake()
     {
         CurrentHealth = MaxHealth;
@@ -37,33 +33,6 @@ public class EnemyStats : MonoBehaviour, IHealth
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
             StartCoroutine(WaitToFindPlayer());
-
-        enemyRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-
-        /*
-        if (enemyRenderer != null)
-        {
-            enemyMaterials = enemyRenderer.materials;
-            originalColors = new Color[enemyMaterials.Length];
-
-            for (int i = 0; i < enemyMaterials.Length; i++)
-            {
-                if (enemyMaterials[i].HasProperty("_BaseColor"))
-                {
-                    originalColors[i] = enemyMaterials[i].GetColor("_BaseColor");
-                }
-                else if (enemyMaterials[i].HasProperty("_Color"))
-                {
-                    originalColors[i] = enemyMaterials[i].GetColor("_Color");
-                }
-                else
-                {
-                    Debug.LogWarning($"Material {i} has no _BaseColor or _Color.");
-                    originalColors[i] = Color.white;
-                }
-            }
-        }
-        */
 
         if (IsMeleeEnemy)
         {
@@ -130,11 +99,11 @@ public class EnemyStats : MonoBehaviour, IHealth
 
         if (deathAnimDice == 0)
         {
-            Animator.SetBool("Dead1", true);
+            Animator.SetTrigger("Dead1");
         }
         if (deathAnimDice == 1)
         {
-            Animator.SetBool("Dead2", true);
+            Animator.SetTrigger("Dead2");
         }
 
         StartCoroutine(Despawn(2.2f));
@@ -257,36 +226,6 @@ public class EnemyStats : MonoBehaviour, IHealth
         }
 
         Agent.enabled = true;
-    }
-
-    //Flash white on getting hit
-    private IEnumerator ChangeColor(float colorTimer)
-    {
-        for (int i = 0; i < enemyMaterials.Length; i++)
-        {
-            if (enemyMaterials[i].HasProperty("_BaseColor"))
-            {
-                enemyMaterials[i].SetColor("_BaseColor", Color.white);
-            }
-            else if (enemyMaterials[i].HasProperty("_Color"))
-            {
-                enemyMaterials[i].SetColor("_Color", Color.white);
-            }
-        }
-
-        yield return new WaitForSeconds(colorTimer);
-
-        for (int i = 0; i < enemyMaterials.Length; i++)
-        {
-            if (enemyMaterials[i].HasProperty("_BaseColor"))
-            {
-                enemyMaterials[i].SetColor("_BaseColor", originalColors[i]);
-            }
-            else if (enemyMaterials[i].HasProperty("_Color"))
-            {
-                enemyMaterials[i].SetColor("_Color", originalColors[i]);
-            }
-        }
     }
 
     //Disable agent component, collider component, play death animation and disable object
