@@ -18,6 +18,7 @@ public class EnemyStats : MonoBehaviour, IHealth
     private EnemyMeleePathfinding meleePathfindingScript;
     private EnemyRangedCombat rangedCombatScript;
     private EnemyRangedPathfinding rangedPathfindingScript;
+    private IdlePathfinding idlePathfindingScript;
 
     private CapsuleCollider capsuleCollider;
 
@@ -44,6 +45,8 @@ public class EnemyStats : MonoBehaviour, IHealth
             rangedCombatScript = GetComponent<EnemyRangedCombat>();
             rangedPathfindingScript = GetComponent<EnemyRangedPathfinding>();
         }
+
+        idlePathfindingScript = GetComponent<IdlePathfinding>();
 
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
