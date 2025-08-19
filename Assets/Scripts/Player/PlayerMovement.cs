@@ -77,8 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Getters and Setters
     //COMPONENTS
-    public Transform PlayerTransform { get { return playerVisualTransform; } }
-
+    public Transform PlayerTransform { get { return transform; } }
     //Phisycs
 
     public float Gravity { get { return _gravity; } }
@@ -201,8 +200,8 @@ public class PlayerMovement : MonoBehaviour
         if (_currentMovementInput != Vector2.zero)
         {
             targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg + _machine.MainCameraRef.transform.eulerAngles.y;
-            angle = Mathf.SmoothDampAngle(playerVisualTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            playerVisualTransform.rotation = Quaternion.Euler(0f, angle, 0f);
+            angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
     }

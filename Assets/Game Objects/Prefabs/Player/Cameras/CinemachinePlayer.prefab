@@ -64,10 +64,10 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 80
+    FieldOfView: 90
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 500
+    FarClipPlane: 200
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -353,7 +353,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af12b430c814e1429fd633345127313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCamera: {fileID: 0}
   originalTarget:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  temporaryTarget:
     TrackingTarget: {fileID: 0}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
