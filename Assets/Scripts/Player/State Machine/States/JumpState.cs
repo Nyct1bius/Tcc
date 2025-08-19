@@ -27,7 +27,6 @@ public class JumpState : State
     public override void Do() 
     {
         _timeSinceEntered += Time.deltaTime;
-        _ctx.AnimationSystem.UpdateJump(_ctx.Body.linearVelocity.y);
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
@@ -47,6 +46,8 @@ public class JumpState : State
     public override void FixedDo()
     {
         CheckIfStillJumping();
+        if (_ctx.GameIsPaused) return;
+        _ctx.AnimationSystem.UpdateJump(_ctx.Body.linearVelocity.y);
     }
     public override void Exit()
     {

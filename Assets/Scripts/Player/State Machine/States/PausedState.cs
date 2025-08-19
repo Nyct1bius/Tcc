@@ -22,7 +22,8 @@ public class PausedState : State
 
     public override void Enter()
     {
-       
+        Debug.Log("Enter");
+        PlayerEvents.OnStopChickenSFX();
     }
 
     public override void Exit()

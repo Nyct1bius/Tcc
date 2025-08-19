@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using FMOD.Studio;
 
@@ -6,6 +5,7 @@ public class PlayerAudioManager : MonoBehaviour
 {
     public FMODEvents playerFmodEvents;
     public AudioManager audioManager;
+    [SerializeField] private GameObject audioSource;
 
     private EventInstance chickenSpininstance;
     private void Start()
@@ -22,6 +22,8 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.ChickenSFX += PlayChickenSpinAudio;
         PlayerEvents.StopChickenSFX += StopChickenSpinAudio;
         PlayerEvents.LandSFX += PlayLandAudio;
+        GameEvents.PauseGame += () => audioSource.SetActive(false);
+        GameEvents.ResumeGame += () => audioSource.SetActive(true);
 
     }
 
@@ -35,6 +37,9 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.ChickenSFX -= PlayChickenSpinAudio;
         PlayerEvents.StopChickenSFX -= StopChickenSpinAudio;
         PlayerEvents.LandSFX -= PlayLandAudio;
+        GameEvents.PauseGame -= () => audioSource.SetActive(false);
+        GameEvents.ResumeGame -= () => audioSource.SetActive(true);
+
 
     }
 
