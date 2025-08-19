@@ -21,6 +21,7 @@ public class Sword : Item, IProximityEventTrigger
     public override void OnPickedUp()
     {
        PlayerEvents.OnSwordPickUp(weaponData);
+        OnExit();
        Destroy(gameObject);
     }
 

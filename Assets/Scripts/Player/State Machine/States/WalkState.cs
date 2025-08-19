@@ -23,8 +23,12 @@ public class WalkState : State
 
     public override void Do()
     {
+        if (_ctx.GameIsPaused)
+        {
+            PlayerEvents.OnStopChickenSFX();
+            return;
+        }
         CheckSwitchState();
-        Debug.Log(_ctx.GroundSensor.IsGrounded());
         if (_ctx.GroundSensor.IsGrounded())
         {
             PlayerEvents.OnChickenSFX();

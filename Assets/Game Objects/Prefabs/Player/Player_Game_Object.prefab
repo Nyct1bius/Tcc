@@ -465,6 +465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerFmodEvents: {fileID: 11400000, guid: bf97dcb12e469cd4a95d128b8e57a01a, type: 2}
   audioManager: {fileID: 11400000, guid: f0008c42c7fb8344b912904e45144379, type: 2}
+  audioSource: {fileID: 5129493042684230465}
 --- !u!1 &4487148893677440410
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,8 +574,8 @@ MonoBehaviour:
       Data4: 1448070939
     Path: event:/Player/Idle/Idle
   Event: 
-  EventPlayTrigger: 1
-  EventStopTrigger: 2
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
@@ -10736,6 +10737,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c42a19175f8de234d9a98e7c7992ba86, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 93556c6241c8d534b812d75486870c48, type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6094242117266456493, guid: 93556c6241c8d534b812d75486870c48, type: 3}
       propertyPath: m_Layer
       value: 3

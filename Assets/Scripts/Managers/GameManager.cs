@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
     {
         _cnCameraRef.Follow = null;
         _cnCameraRef.LookAt = null;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         if (_checkpoint == null)
         {
             PlayerInstance.transform.position = _spawnPos.position;
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
           
         oldCnCameraRef = _cnCameraRef;
         oldCnCameraRef.Priority = 0;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         _cnCameraRef = Instantiate(cnCameraPrefab, PlayerInstance.transform.position, Quaternion.identity);
         cnCameraPrefab.Priority = 1;
         _cnCameraRef.Follow = PlayerInstance.transform;

@@ -50,7 +50,10 @@ public class PlayerInteractionsManager : MonoBehaviour
             currentItemTransform = other.transform;
             SetupItensToInteract();
         }
-
+        if(other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            GameManager.instance.RespawnPlayer();
+        }
         checkPoint = other.GetComponent<CheckPoint>();
         if(checkPoint!= null)
         {

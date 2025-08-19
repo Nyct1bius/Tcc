@@ -12,6 +12,7 @@ public class ManagerOfScenes : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
         GameManager.instance.SwitchGameState(GameManager.GameStates.Started);
+        GameManager.instance.PlayerInstance.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
 
     }

@@ -23,7 +23,6 @@ public class FallState : State
     public override void Do()
     {
         _timeSinceEntered += Time.deltaTime;
-        _ctx.PlayerAnimator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
         if (_timeSinceEntered >= _switchDelay)
         {
             CheckSwitchState();
@@ -44,8 +43,9 @@ public class FallState : State
 
     public override void FixedDo()
     {
-       
         _ctx.Body.AddForce(Vector3.up * _ctx.Movement.Gravity, ForceMode.Force);
+        if (_ctx.GameIsPaused) return;
+        _ctx.PlayerAnimator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
 
     public override void InitializeSubState()

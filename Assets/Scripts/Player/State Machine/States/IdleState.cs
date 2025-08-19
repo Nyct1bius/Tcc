@@ -2,7 +2,6 @@ using UnityEngine;
 using PlayerState;
 public class IdleState : State
 {
-    [SerializeField] AnimationClip idleAnimation;
     public IdleState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
    : base(contex, playerStateFactory) { }
     public override void Enter()
@@ -10,11 +9,17 @@ public class IdleState : State
     }
     public override void Do() 
     {
+        if (_ctx.GameIsPaused)
+        {
+            PlayerEvents.OnStopChickenSFX();
+            return;
+        }
         CheckSwitchState();
         if (!_ctx.Movement.IsGroundAtLandingPoint())
         {
             PlayerEvents.OnStopChickenSFX();
         }
+
     }
 
     public override void FixedDo() 
