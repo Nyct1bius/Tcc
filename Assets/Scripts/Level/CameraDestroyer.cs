@@ -10,7 +10,9 @@ public class CameraDestroyer : MonoBehaviour
 
     public void StartGame()
     {
-        GameManager.instance.SwitchGameState(GameManager.GameStates.Started);
+        if (!GameManager.instance.PlayerInstance.activeSelf)
+            GameManager.instance.PlayerInstance.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
 }

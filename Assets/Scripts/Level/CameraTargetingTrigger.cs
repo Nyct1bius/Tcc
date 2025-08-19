@@ -8,6 +8,7 @@ public class CameraTargetingTrigger : MonoBehaviour
     public CinemachineCamera thisCamera;
     [SerializeField] private CameraTarget originalTarget;
     [SerializeField] private CameraTarget temporaryTarget;
+
     private void Awake()
     {
         if (Instance == null)
@@ -34,6 +35,7 @@ public class CameraTargetingTrigger : MonoBehaviour
     public void EndCustceneSetting()
     {
         thisCamera.Priority = 2;
+        GameManager.instance.PlayerInstance.SetActive(true);
     }
 
     private IEnumerator DelayStart()
