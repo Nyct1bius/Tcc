@@ -4,6 +4,7 @@ using UnityEngine;
 public class ManagerOfScenes : MonoBehaviour
 {
     [SerializeField] CameraDestroyer[] cameraDestroyers;
+    public GameObject fogGameObject;
     private void Awake()
     {
         StartCoroutine(DelayedStart());
@@ -13,6 +14,7 @@ public class ManagerOfScenes : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         GameManager.instance.SwitchGameState(GameManager.GameStates.Started);
         GameManager.instance.PlayerInstance.SetActive(false);
+        fogGameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
 
     }

@@ -18,6 +18,7 @@ public class CameraTargetingTrigger : MonoBehaviour
 
 
         thisCamera = GetComponent<CinemachineCamera>();
+        thisCamera.Priority = 0;
         StartCoroutine(DelayStart());
     }
 
@@ -36,6 +37,7 @@ public class CameraTargetingTrigger : MonoBehaviour
     {
         thisCamera.Priority = 2;
         GameManager.instance.PlayerInstance.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private IEnumerator DelayStart()

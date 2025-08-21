@@ -27,6 +27,7 @@ public class Button : MonoBehaviour,IHealth
     {
         if (isActivated)
         {
+            isActivated = false;
             isPressed = true;
             steppingTrigger?.ButtonPressedDeactivation();
             Debug.Log("OpenDoor");
