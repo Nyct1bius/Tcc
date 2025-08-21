@@ -1,12 +1,13 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
 
 public class HorizontalMovePlatform : MonoBehaviour
 {
     public List<Transform> points;
     [SerializeField] float movementSpeed = 5f;
-    private int currentIndex;
+    private int currentIndex = 1;
     private Vector3 lastPosition;
     public Vector3 velocity { get; private set; }
 
@@ -24,56 +25,69 @@ public class HorizontalMovePlatform : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        MovePlatform();
+        //MovePlatform();
     }
 
     private void MovePlatform()
     {
+        print("MovePlatformCalled");
         if (points.Count == 0) return;
 
         Vector3 target = points[currentIndex].position;
-        transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, target) < 0.01f)
+        transform.parent.DOMove(target, 4f).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.15f).OnComplete(() =>
+                transform.parent.position = target).OnComplete(() => SetNextIndex()));
+
+        //if (Vector3.Distance(transform.position, target) < 0.01f)
+        //{
+            
+        //}
+    }
+
+    public void SetNextIndex()
+    {
+        if (!isGoingBack)
         {
-            if (!isGoingBack)
+            if (currentIndex < points.Count - 1)
             {
-                if (currentIndex < points.Count - 1)
-                {
-                    currentIndex++;
-                }
-                else
-                {
-                    isGoingBack = true;
-                    currentIndex--;
-                }
+                currentIndex++;
+                MovePlatform();
             }
             else
             {
-                if (currentIndex > 0)
-                {
-                    currentIndex--;
-                }
-                else
-                {
-                    isGoingBack = false;
-                    currentIndex++;
-                }
+                isGoingBack = true;
+                currentIndex--;
+            }
+        }
+        else
+        {
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+                MovePlatform();
+            }
+            else
+            {
+                isGoingBack = false;
+                currentIndex++;
             }
         }
     }
 
     private void LateUpdate()
     {
-        velocity = (transform.position - lastPosition) / Time.deltaTime;
-        lastPosition = transform.position;     
+        //velocity = (transform.position - lastPosition) / Time.deltaTime;
+        //lastPosition = transform.position;     
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        print("OnTriggerCalled");
         if(other.CompareTag("Player"))
         {
             other.transform.parent = transform;
+            MovePlatform();
         }
     }
 

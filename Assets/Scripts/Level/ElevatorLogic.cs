@@ -32,11 +32,11 @@ public class ElevatorLogic : MonoBehaviour
 
             if (transform.parent.position.y != transforms[1].position.y)
             {
-                transform.parent.DOMoveY(transforms[1].position.y, 10f).SetEase(Ease.InOutSine).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.25f).OnComplete(() =>
+                transform.parent.DOMoveY(transforms[1].position.y, 10f).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.25f).OnComplete(() =>
                 transform.parent.position = transforms[1].position));
             }
             else
-                transform.parent.DOMoveY(transforms[0].position.y, 10f).SetEase(Ease.InOutSine).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.25f).OnComplete(() =>
+                transform.parent.DOMoveY(transforms[0].position.y, 10f).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.25f).OnComplete(() =>
                 transform.parent.position = transforms[0].position));
         }
     }
