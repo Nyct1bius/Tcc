@@ -211,14 +211,18 @@ MonoBehaviour:
   _playerCollider: {fileID: 4180338343420396380}
   jumpHeight: 25
   _maxJumpTime: 0.5
+  _coyoteTime: 0.3
   _shortHopMultiplier: 0.3
   _maxFallTime: 5
   _groundDetectionDistance: 200
+  _jumpBufferTime: 0.1
+  _timeSinceJumpPressed: Infinity
   _dashDistance: 40
   _dashTime: 0.3
   _dashCooldownTime: 1
-  _gravity: -50
+  _gravity: -90
   groundDecay: 50
+  jumpSustainGravity: 0.4
   turnSmoothTime: 0.2
   _landProfile: {fileID: 11400000, guid: d950b44adbfc5d64b95bd354cad1ddbe, type: 2}
   _dashProfile: {fileID: 11400000, guid: 34cae606f6959154c8f99545d9614267, type: 2}

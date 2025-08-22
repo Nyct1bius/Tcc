@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
+
 public class AttackState : State
 {
     public AttackState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
-   : base(contex, playerStateFactory) 
+   : base(contex, playerStateFactory)
     {
         isRootState = true;
     }
@@ -23,11 +24,9 @@ public class AttackState : State
         _timeInState += Time.deltaTime;
     }
 
-
-
     public override void FixedDo() { }
 
-    public override void Exit() 
+    public override void Exit()
     {
         PlayerEvents.StartAttackDetection -= StartAttackCollisionDetection;
         _ctx.Combat.AttackCount++;
@@ -50,10 +49,7 @@ public class AttackState : State
         }
     }
 
-    public override void InitializeSubState()
-    {
-        
-    }
+    public override void InitializeSubState() { }
 
     private void PerformAttack()
     {
@@ -78,30 +74,49 @@ public class AttackState : State
     {
         _ctx.Combat.GetClosestTargets();
 
-
         if (_ctx.Combat.DetectedEnemys.Count > 0)
         {
             float range = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackRange;
             Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
-            Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
-            Vector3 posToTeleport = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
-            posToTeleport.y = _ctx.Movement.PlayerTransform.position.y;
-            _ctx.Movement.PlayerTransform.position = posToTeleport;
-            FaceEnemy();
 
+            Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
+            Vector3 posToMove = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
+            posToMove.y = _ctx.Movement.PlayerTransform.position.y;
+
+            _ctx.StartCoroutine(SmoothDash(posToMove, targetPos, 0.15f)); // duração do dash suave
         }
 
         SelectAttack();
     }
 
-    private void FaceEnemy()
+    private System.Collections.IEnumerator SmoothDash(Vector3 targetPos, Transform enemy, float duration)
     {
-        Vector3 _lookDirection = (_ctx.Combat.DetectedEnemys[0].transform.position - _ctx.Movement.PlayerTransform.position).normalized;
-        Quaternion _lookRotation = Quaternion.LookRotation(new Vector3(_lookDirection.x, 0, _lookDirection.z));
-        _ctx.Movement.PlayerTransform.rotation = Quaternion.Slerp(_ctx.Movement.PlayerTransform.rotation, _lookRotation, 5);
+        Transform player = _ctx.Movement.PlayerTransform;
+        Vector3 startPos = player.position;
+        Quaternion startRot = player.rotation;
+
+        Vector3 lookDir = (enemy.position - player.position).normalized;
+        Quaternion targetRot = Quaternion.LookRotation(new Vector3(lookDir.x, 0, lookDir.z));
+
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+
+            // easing exponencial (mais rápido no começo, suave no final)
+            float easedT = 1f - Mathf.Pow(2f, -10f * t);
+
+            player.position = Vector3.Lerp(startPos, targetPos, easedT);
+            player.rotation = Quaternion.Slerp(startRot, targetRot, easedT);
+
+            yield return null;
+        }
+
+        player.position = targetPos;
+        player.rotation = targetRot;
     }
-
-
 
     private void PlayAttackAnimation()
     {

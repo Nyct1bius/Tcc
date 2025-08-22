@@ -1,41 +1,62 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using PlayerState;
+
 public class GroundState : State
 {
     public GroundState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
-    : base(contex, playerStateFactory) {
+        : base(contex, playerStateFactory)
+    {
         isRootState = true;
         InitializeSubState();
     }
+
     public override void Enter()
     {
     }
+
     public override void CheckSwitchState()
     {
+        // Ataque
         if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null)
         {
             SwitchStates(_factory.Attack());
+            return;
         }
 
+        // Pulo com input buffer
+        bool canCoyoteJump = _ctx.Movement.TimeSinceUnground < _ctx.Movement.CoyoteTime
+                              && !_ctx.Movement.UngroudedDueToJump;
 
-        if (_ctx.Movement.IsJumpButtonPressed && !_ctx.Movement.RequireNewJumpPress)
+        if (_ctx.Movement.HasBufferedJump)
         {
-            SwitchStates(_factory.Jump());
-        }else if (!_ctx.GroundSensor.IsGrounded())
+            if (canCoyoteJump || _ctx.Movement.IsGrounded)
+            {
+                SwitchStates(_factory.Jump());
+                _ctx.Movement._timeSinceJumpPressed = Mathf.Infinity;
+                return;
+            }
+        }
+
+        // Queda
+        if (_ctx.Body.linearVelocity.y < 0 && !canCoyoteJump)
         {
             SwitchStates(_factory.Fall());
+            return;
         }
 
-
+        // Dash
         if (!_ctx.Movement.DashInCooldown && _ctx.Movement.IsDashButtonPressed)
         {
             SwitchStates(_factory.Dash());
+            return;
         }
 
+        // Recebeu dano
         if (_ctx.Health.IsDamaged)
         {
             SwitchStates(_factory.Damaged());
+            return;
         }
     }
 
@@ -44,15 +65,12 @@ public class GroundState : State
         CheckSwitchState();
     }
 
-
     public override void Exit()
     {
-      
     }
 
     public override void FixedDo()
     {
-       
     }
 
     public override void InitializeSubState()
@@ -66,5 +84,4 @@ public class GroundState : State
             SetSubState(_factory.Idle());
         }
     }
-
 }

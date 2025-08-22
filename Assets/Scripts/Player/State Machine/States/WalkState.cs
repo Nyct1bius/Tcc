@@ -29,7 +29,7 @@ public class WalkState : State
             return;
         }
         CheckSwitchState();
-        if (_ctx.GroundSensor.IsGrounded())
+        if (_ctx.Movement.IsGrounded)
         {
             PlayerEvents.OnChickenSFX();
             _ctx.AudioManager.SetChickenVelocity(Mathf.Clamp(_ctx.Body.linearVelocity.magnitude,1f,10f));

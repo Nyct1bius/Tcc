@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveDirection;
     private Vector3 _movementDelta;
     private Vector3 _newVelocity;
+    private bool _isGrounded;
 
     [Header("Slope")]
     [Range(0f, 90f)]
@@ -34,11 +36,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CapsuleCollider _playerCollider;
     private RaycastHit _slopeHit;
 
-
-
     [Header("Jump")]
     public float jumpHeight;
     [SerializeField] private float _maxJumpTime;
+    [SerializeField] private float _coyoteTime;
     [Range(0, 0.7f)]
     [SerializeField] private float _shortHopMultiplier;
     [SerializeField] private float _maxFallTime = 5f;
@@ -49,7 +50,11 @@ public class PlayerMovement : MonoBehaviour
     private bool _isJumpButtonPressed;
     private float _buttonPressedTime;
     private bool _requireNewJumpPress;
+    private float _timeSinceUnground = 0f;
 
+
+    [SerializeField] private float _jumpBufferTime = 0.1f;
+    public float _timeSinceJumpPressed = Mathf.Infinity;
 
     [Header("Dash")]
     [SerializeField] private float _dashDistance;
@@ -60,30 +65,28 @@ public class PlayerMovement : MonoBehaviour
     private bool _dashInCooldown;
 
     [Header("Physics")]
-    [Range(0f, -50f)]
+    [Range(0f, -180f)]
     [SerializeField] private float _gravity;
     [Range(0f, 100f)]
     [SerializeField] private float groundDecay;
-
+    [SerializeField] private float jumpSustainGravity = 0.4f;
 
     [Header("Rotation")]
     [SerializeField] private float turnSmoothTime;
     private float targetAngle;
     private float turnSmoothVelocity;
     float angle;
+
     [Header("Screen Shake Profiles")]
     [SerializeField] private ScreenShakeProfileSO _landProfile;
     [SerializeField] private ScreenShakeProfileSO _dashProfile;
+    private bool _ungroudedDueToJump;
 
     #region Getters and Setters
-    //COMPONENTS
     public Transform PlayerTransform { get { return transform; } }
-    //Phisycs
-
+    public bool IsGrounded { get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } }
 
-
-    //MOVEMENT
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
     public Vector3 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
     public float WalkAcceleration { get { return _walkAcceleration; } }
@@ -94,14 +97,14 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 CameraRightXZ { get { return _cameraRightXZ; } set { _cameraRightXZ = value; } }
     public Vector3 MovementDelta { get { return _movementDelta; } set { _movementDelta = value; } }
 
-    //DASH
     public float DashTime { get { return _dashTime; } }
     public bool IsDashButtonPressed { get { return _isDashButtonPressed; } }
     public float DashVelocity { get { return _dashVelocity; } }
     public bool DashInCooldown { get { return _dashInCooldown; } set { _dashInCooldown = value; } }
 
-
-    //JUMP
+    public bool UngroudedDueToJump { get { return _ungroudedDueToJump; } }
+    public float CoyoteTime { get { return _coyoteTime; } }
+    public float TimeSinceUnground { get { return _timeSinceUnground; } }
     public bool IsJumpButtonPressed { get { return _isJumpButtonPressed; } }
     public float ButtonPressedTime { get { return _buttonPressedTime; } set { _buttonPressedTime = value; } }
     public float JumpVelocity { get { return _jumpVelocity; } }
@@ -111,14 +114,19 @@ public class PlayerMovement : MonoBehaviour
     public float MaxFallTime { get { return _maxFallTime; } }
     public float FallDeathTimer { get { return _fallDeathTimer; } set { _fallDeathTimer = value; } }
 
-    public ScreenShakeProfileSO LandProfile {  get { return _landProfile; } }
-    public ScreenShakeProfileSO DashProfile {  get { return _dashProfile; } }
+    public ScreenShakeProfileSO LandProfile { get { return _landProfile; } }
+    public ScreenShakeProfileSO DashProfile { get { return _dashProfile; } }
+
+    // --- INPUT BUFFER ---
+    public bool HasBufferedJump => _timeSinceJumpPressed <= _jumpBufferTime;
     #endregion
 
     private void Start()
     {
         SetUpJumpVariables();
+        StartCoroutine(HandleGrounded());
     }
+
     private void OnEnable()
     {
         _machine.inputReader.MoveEvent += SetUpMoveInput;
@@ -132,12 +140,15 @@ public class PlayerMovement : MonoBehaviour
         _machine.inputReader.JumpEvent -= OnjumpButton;
         _machine.inputReader.DashEvent -= HandleDash;
     }
+
     private void Update()
     {
+        _timeSinceJumpPressed += Time.deltaTime; // atualiza buffer
         Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
         UpdateFrictionMaterial();
         IsGroundAtLandingPoint();
     }
+
     private void FixedUpdate()
     {
         if (!_machine.GameIsPaused)
@@ -145,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
             FaceInput();
             ApplyGravity();
             ApplyFinalVelocity();
+            _timeSinceUnground += Time.deltaTime;
         }
     }
 
@@ -153,7 +165,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _jumpVelocity = MathF.Sqrt(jumpHeight * _gravity * -2) * _machine.Body.mass;
         _dashVelocity = MathF.Sqrt(_dashDistance * _gravity * -2) * _machine.Body.mass;
-
     }
 
     private void SetUpMoveInput(Vector2 inputDirection)
@@ -161,22 +172,48 @@ public class PlayerMovement : MonoBehaviour
         _currentMovementInput = inputDirection;
     }
 
-
     private void OnjumpButton(bool isJumpButtonPressed)
     {
-        this._isJumpButtonPressed = isJumpButtonPressed;
+        _isJumpButtonPressed = isJumpButtonPressed;
         _requireNewJumpPress = false;
 
+        if (isJumpButtonPressed)
+        {
+            _timeSinceJumpPressed = 0f;
+            _ungroudedDueToJump = true;
+        }
+    }
+
+    private IEnumerator HandleGrounded()
+    {
+        while (true)
+        {
+            if (_machine.GroundSensor.IsGrounded())
+            {
+                _ungroudedDueToJump = false;
+                _timeSinceUnground = 0;
+                _isGrounded = true;
+                _verticalVelocity = 0f;
+            }
+            else
+            {
+                _isGrounded = false;
+            }
+
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 
     private void HandleDash(bool isDashing)
     {
         _isDashButtonPressed = isDashing;
     }
+
     public void ResetDash()
     {
         StartCoroutine(DashCoolingdown());
     }
+
     private IEnumerator DashCoolingdown()
     {
         yield return new WaitForSeconds(_dashCooldownTime);
@@ -203,13 +240,12 @@ public class PlayerMovement : MonoBehaviour
             angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
-
     }
+
     private void UpdateFrictionMaterial()
     {
         if (OnSlope() && _currentMovementInput == Vector2.zero)
         {
-            Debug.Log("On a Slope");
             _playerCollider.material = _highFrictionMaterial;
         }
         else
@@ -217,20 +253,25 @@ public class PlayerMovement : MonoBehaviour
             _playerCollider.material = _lowFrictionMaterial;
         }
     }
+
     private void ApplyGravity()
     {
-        //_machine.Body.useGravity = OnSlope();
-        //if (OnSlope()) return;
+        if (_timeSinceUnground < _coyoteTime && !_ungroudedDueToJump) return;
+        if (_isGrounded) return;
 
-        if (_machine.Body.linearVelocity.y > 0)
-        {
-            _machine.Body.AddForce(Vector3.up * -0.1f, ForceMode.Force);
+        var effectiveGravity = _gravity;
+        var verticalSpeed = Vector3.Dot(_machine.Body.linearVelocity, transform.up);
 
-        }
-        else
+        if (_isJumpButtonPressed && verticalSpeed > 0)
         {
-            _machine.Body.AddForce(Vector3.up * _gravity, ForceMode.Force);
+            effectiveGravity *= jumpSustainGravity;
         }
+        else if (!_isJumpButtonPressed && verticalSpeed > 0)
+        {
+            effectiveGravity *= 2f;
+        }
+
+        _machine.Body.linearVelocity += effectiveGravity * Time.deltaTime * transform.up;
     }
 
     public bool OnSlope()
@@ -261,9 +302,6 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.DrawRay(rayOrigin, Vector3.down * rayLength, Color.green);
         return Physics.Raycast(rayOrigin, Vector3.down, out _slopeHit, rayLength);
-        
-
     }
     #endregion
 }
-

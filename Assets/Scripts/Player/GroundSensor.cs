@@ -7,21 +7,23 @@ public class GroundSensor : MonoBehaviour
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundMask;
 
+    private Collider[] hitColliders = new Collider[3];
+
     public bool IsGrounded()
     {
-       
-        return Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundMask);
+        int hits = Physics.OverlapSphereNonAlloc(
+            groundCheckTransform.position,
+            groundCheckRadius,
+            hitColliders,
+            groundMask
+        );
+
+        return hits > 0;
     }
-
-
-    #region Debug
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-
         Gizmos.DrawWireSphere(groundCheckTransform.position, groundCheckRadius);
     }
-    #endregion
 }
-

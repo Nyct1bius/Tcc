@@ -11,7 +11,7 @@ public class JumpState : State
 
     private float _timeSinceEntered;
     private float _switchDelay = 0.3f;
-    private bool _isJumpCanceled;
+
     public override void Enter()
     {
 
@@ -20,7 +20,6 @@ public class JumpState : State
         _timeSinceEntered = 0f;
         _ctx.AnimationSystem.Jump();
         _ctx.AnimationSystem.UpdateGrounded(false);
-        _isJumpCanceled = false;
         _ctx.Movement.FallDeathTimer = 0f;
     }
 
@@ -45,16 +44,11 @@ public class JumpState : State
     }
     public override void FixedDo()
     {
-        CheckIfStillJumping();
         if (_ctx.GameIsPaused) return;
         _ctx.AnimationSystem.UpdateJump(_ctx.Body.linearVelocity.y);
     }
     public override void Exit()
     {
-        if (_ctx.Movement.IsJumpButtonPressed)
-        {
-            _ctx.Movement.RequireNewJumpPress = true;
-        }
         _ctx.AnimationSystem.UpdateGrounded(true);
         CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
         PlayerEvents.OnLandSFX();
@@ -62,7 +56,7 @@ public class JumpState : State
 
     public override void CheckSwitchState()
     {
-        if (_ctx.GroundSensor.IsGrounded())
+        if (_ctx.Movement.IsGrounded)
         {
             SwitchStates(_factory.Grounded());
         }
@@ -86,43 +80,11 @@ public class JumpState : State
 
     private void HandleJump()
     {
-        _ctx.Body.AddForce(Vector3.up * _ctx.Movement.JumpVelocity, ForceMode.Impulse);
-        _ctx.Movement.ButtonPressedTime = 0;
+
+        var currentVerticalSpeed = Vector3.Dot(_ctx.Body.linearVelocity, _ctx.transform.up);
+        var targetVerticalSpeed = Mathf.Max(currentVerticalSpeed, _ctx.Movement.JumpVelocity);
+        _ctx.Body.linearVelocity += _ctx.transform.up * (targetVerticalSpeed - currentVerticalSpeed);
+        _ctx.Movement.RequireNewJumpPress = true;
+
     }
-
-    public void CheckIfStillJumping()
-    {
-
-        _ctx.Movement.ButtonPressedTime += Time.deltaTime;
-        if (!_ctx.Movement.IsJumpButtonPressed)
-        {
-            JumpButtonCanceled();
-            _isJumpCanceled = true;
-        }
-        if (_ctx.Movement.ButtonPressedTime > _ctx.Movement.MaxJumpTime)
-        {
-            _isJumpCanceled = true;
-        }
-
-
-        CancelJump();
-    }
-    private void JumpButtonCanceled()
-    {
-        if (!_isJumpCanceled && _ctx.Body.linearVelocity.y > 0f)
-        {
-            _ctx.Body.linearVelocity = new Vector3(
-                _ctx.Body.linearVelocity.x,
-                _ctx.Body.linearVelocity.y * _ctx.Movement.ShortHopMultiplier, 
-                _ctx.Body.linearVelocity.z
-            );
-            _isJumpCanceled = true;
-        }
-    }
-    private void CancelJump()
-    {
-        if (_isJumpCanceled)
-        _ctx.Body.AddForce(Vector3.up * _ctx.Movement.Gravity, ForceMode.Force);
-    }
-
 }

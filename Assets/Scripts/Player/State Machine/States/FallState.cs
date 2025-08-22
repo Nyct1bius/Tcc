@@ -43,7 +43,7 @@ public class FallState : State
 
     public override void FixedDo()
     {
-        _ctx.Body.AddForce(Vector3.up * _ctx.Movement.Gravity, ForceMode.Force);
+
         if (_ctx.GameIsPaused) return;
         _ctx.PlayerAnimator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
@@ -61,7 +61,7 @@ public class FallState : State
     }
     public override void CheckSwitchState()
     {
-        if (_ctx.GroundSensor.IsGrounded())
+        if (_ctx.Movement.IsGrounded)
         {
             SwitchStates(_factory.Grounded());
         }
