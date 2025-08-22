@@ -1,79 +1,71 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
 public class MovablePlataformOcean : MonoBehaviour
 {
-     private Vector3 startPosition;
     [SerializeField] private float movePlataformTime = 2f;
-    [SerializeField] private Transform downPosition;
-    [SerializeField] private float timeBetweenStates;
-    private float t;
+    [SerializeField] private float amountToLower = 2f;
+    [SerializeField] private float timeBetweenStates = 2f;
+    [SerializeField] private int shakesBeforeGoingDown = 3;
+    [SerializeField] private float shakeForce = 0.3f;
+    [SerializeField] private float shakeMultiply = 1.5f;
 
-
-    private enum OceanStates
-    {
-        down,
-        up
-    }
-    [SerializeField] private OceanStates state;
-
+    private bool isDown;
+    private Vector3 startPos;
 
     private void Start()
     {
-        //downPosition.position -= transform.position;
-        startPosition = transform.position;
-        StartCoroutine(ChangeState());
-    }
-    private void OnEnable()
-    {
-        OceanTest.OnOceanDown += MoveDown;
-        OceanTest.OnOceanUp += MoveUp;
+        startPos = transform.position;
+        StartCoroutine(ShakePlataform());
     }
 
-    private void OnDisable()
+    private IEnumerator ShakePlataform()
     {
-        OceanTest.OnOceanDown -= MoveDown;
-        OceanTest.OnOceanUp -= MoveUp;
+        yield return new WaitForSeconds(timeBetweenStates);
+
+        float currentShake = shakeForce;
+        float shakeDuration = 0.3f;
+
+        for (int i = 0; i < shakesBeforeGoingDown; i++)
+        {
+            yield return transform.DOShakePosition(
+                shakeDuration,
+                currentShake,
+                10,
+                90,
+                false,
+                true
+            ).SetEase(Ease.OutBack).WaitForCompletion();
+
+            currentShake *= shakeMultiply;
+            shakeDuration += 0.1f;
+            yield return new WaitForSeconds(1.5f);
+        }
+
+        StartCoroutine(ChangeState());
     }
 
     private void MoveDown()
     {
-        StartCoroutine(MovePlataform(downPosition.position));
+        transform.DOMoveY(startPos.y - amountToLower, 1f).SetEase(Ease.InCubic)
+            .OnComplete(() => StartCoroutine(ChangeState(timeBetweenStates)));
     }
 
     private void MoveUp()
     {
-        StartCoroutine(MovePlataform(startPosition));
+        transform.DOMoveY(startPos.y, movePlataformTime).SetEase(Ease.InOutSine)
+            .OnComplete(() => StartCoroutine(ShakePlataform()));
     }
 
-
-    private IEnumerator MovePlataform(Vector3 targetPosition)
+    private IEnumerator ChangeState(float time = 0)
     {
-        float time = 0f;
-        Vector3 startPosition = transform.position;
-        while (time < movePlataformTime)
-        {
-            t = time / movePlataformTime;
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        transform.position = targetPosition;
-        StartCoroutine(ChangeState());
-    }
+        yield return new WaitForSeconds(time);
+        isDown = !isDown;
 
-    IEnumerator ChangeState()
-    {
-        yield return new WaitForSeconds(timeBetweenStates);
-        if (state == OceanStates.down)
-        {
-            MoveUp();
-            state = OceanStates.up;
-        }
+        if (isDown)
+            MoveDown();
         else
-        {
-           MoveDown();
-           state = OceanStates.down;
-        }
+            MoveUp();
     }
 }

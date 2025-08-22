@@ -80,6 +80,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Update()
     {
+        if (_gameIsPaused) return;
         _currentState.UpdateStates();
     }
     private void FixedUpdate()

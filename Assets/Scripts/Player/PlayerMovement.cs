@@ -143,21 +143,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (_machine.GameIsPaused) return;
         _timeSinceJumpPressed += Time.deltaTime; // atualiza buffer
         Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
         UpdateFrictionMaterial();
         IsGroundAtLandingPoint();
+        ApplyGravity();
     }
 
     private void FixedUpdate()
     {
-        if (!_machine.GameIsPaused)
-        {
-            FaceInput();
-            ApplyGravity();
-            ApplyFinalVelocity();
-            _timeSinceUnground += Time.deltaTime;
-        }
+        FaceInput();
+        ApplyFinalVelocity();
+        _timeSinceUnground += Time.deltaTime;
     }
 
     #region Movement
