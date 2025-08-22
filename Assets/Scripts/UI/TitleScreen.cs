@@ -11,15 +11,9 @@ public class TitleScreen : MonoBehaviour
     private LoadScene loadscene;
     private bool fase2 = false;
 
-    public PlayerInputs inputActions;
-
-    public GameObject botaoInicial;
-
     private void Awake()
     {
         loadscene = GetComponent<LoadScene>();
-
-        inputActions = new PlayerInputs();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -43,37 +37,6 @@ public class TitleScreen : MonoBehaviour
             }
         }
     }
-
-    private void OnEnable()
-    {
-        inputActions.Enable();
-       // StartCoroutine(SelecionarQuandoAtivar());
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
-
-  /*  private IEnumerator SelecionarQuandoAtivar()
-    {
-        Debug.Log("Esperando botão ficar ativo...");
-
-        // Espera até o botão estar ativo
-        yield return new WaitUntil(() =>
-            botaoInicial != null &&
-            botaoInicial.activeInHierarchy &&
-            botaoInicial.GetComponent<Button>().interactable);
-
-        Debug.Log("Botão está ativo e interagível.");
-
-        yield return null; // espera 1 frame
-
-        EventSystem.current.SetSelectedGameObject(null); // limpa seleção atual
-        EventSystem.current.SetSelectedGameObject(botaoInicial);
-
-        Debug.Log("Botão selecionado: " + EventSystem.current.currentSelectedGameObject?.name);
-    }*/
 
     public void Continue()
     {
