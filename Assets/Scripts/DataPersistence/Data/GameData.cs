@@ -6,10 +6,15 @@ public class GameData
 {
     public int money;
 
-    // the values defined in this constructor will be the default values
-    // the game starts whuen there is no data to load
+    // Último totem usado pelo jogador (por ID ou nome do objeto)
+    public string lastTotemId;
+
+
+    
+    // valores padrão quando não há save
     public GameData()
     {
         this.money = 0;
+        this.lastTotemId = null; // nenhum totem ainda
     }
 }

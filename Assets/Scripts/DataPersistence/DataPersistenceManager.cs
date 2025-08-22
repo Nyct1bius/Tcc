@@ -82,9 +82,11 @@ public class DataPersistenceManager : MonoBehaviour
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
-        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
+        IEnumerable<IDataPersistence> dataPersistenceObjects =
+            FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None) // mais rápido
             .OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
+
 }
