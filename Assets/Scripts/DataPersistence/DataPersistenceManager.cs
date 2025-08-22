@@ -33,7 +33,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-       // LoadGame(); // Load game at start 
+        LoadGame(); // Load game at start 
     }
 
     public void NewGame()
@@ -60,6 +60,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
 
         Debug.Log("Loaded money count " + gameData.money);
+        Debug.Log("Loaded Totem " + gameData.lastTotemId);
     }
 
     public void SaveGame()
