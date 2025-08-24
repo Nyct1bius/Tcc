@@ -21,13 +21,15 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null && instance != this)
         {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene");
+            Destroy(gameObject);
+            return;
         }
-
         instance = this;
+        DontDestroyOnLoad(gameObject); // <- mantém o objeto entre cenas
     }
+
 
     private void Start()
     {
@@ -89,5 +91,16 @@ public class DataPersistenceManager : MonoBehaviour
 
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
+
+    public bool HasGameData()
+    {
+        return gameData != null;
+    }
+
+    public GameData GetGameData()
+    {
+        return gameData;
+    }
+
 
 }

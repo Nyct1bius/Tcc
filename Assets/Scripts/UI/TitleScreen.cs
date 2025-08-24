@@ -11,6 +11,8 @@ public class TitleScreen : MonoBehaviour
     private LoadScene loadscene;
     private bool fase2 = false;
 
+    public UnityEngine.UI.Button continueButton;
+
     private void Awake()
     {
         loadscene = GetComponent<LoadScene>();
@@ -22,6 +24,15 @@ public class TitleScreen : MonoBehaviour
         _fase1.SetActive(true);
         _fase2.SetActive(false);
 
+        if(DataPersistenceManager.instance != null)
+        {
+            bool hasSave = DataPersistenceManager.instance.HasGameData();
+            continueButton.interactable = hasSave;
+        }
+        else
+        {
+            continueButton.interactable = false;
+        }
         
     }
 
@@ -40,11 +51,23 @@ public class TitleScreen : MonoBehaviour
 
     public void Continue()
     {
+        // Garante que existe um DataPersistenceManager
+        if (DataPersistenceManager.instance != null)
+        {
+            DataPersistenceManager.instance.LoadGame();
+        }
+
         loadscene.StartLoad("Programmers_TestScene");
     }
 
     public void NewGame()
     {
+        // verificar se tem um save e se tiver mostrar uma menssagem de que vai perder o progresso do outro save
+        if (DataPersistenceManager.instance != null)
+        {
+            DataPersistenceManager.instance.NewGame();
+        }
+
         loadscene.StartLoad("Programmers_TestScene");
     }
 

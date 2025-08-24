@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveTotem : MonoBehaviour, IDataPersistence
 {
@@ -13,6 +14,7 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
         if (isPlayerNearby) // só salva se o player estiver nesse totem
         {
             data.lastTotemId = totemId;
+            data.lastSceneName = SceneManager.GetActiveScene().name;
         }
     }
 
@@ -32,7 +34,7 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
 
             saveText.SetActive(true); // trocar para animação depois
 
-            Debug.Log("Salvou no totem: " + totemId);
+            Debug.Log($"Salvou no totem {totemId} na cena {SceneManager.GetActiveScene().name}");
         }
     }
 

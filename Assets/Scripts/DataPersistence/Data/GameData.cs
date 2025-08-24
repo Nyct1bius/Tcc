@@ -8,13 +8,15 @@ public class GameData
 
     // Último totem usado pelo jogador (por ID ou nome do objeto)
     public string lastTotemId;
+    public string lastSceneName;
 
 
-    
+
     // valores padrão quando não há save
     public GameData()
     {
         this.money = 0;
-        this.lastTotemId = null; // nenhum totem ainda
+        this.lastTotemId = null; 
+        this.lastSceneName = null;
     }
 }
