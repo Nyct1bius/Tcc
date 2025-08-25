@@ -258,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
         var effectiveGravity = _gravity;
         var verticalSpeed = Vector3.Dot(_machine.Body.linearVelocity, transform.up);
 
-        if (!_isGrounded && verticalSpeed > 0)
+        if (_isJumpButtonPressed && verticalSpeed > 0)
         {
             effectiveGravity *= jumpSustainGravity;
         }
