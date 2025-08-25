@@ -32,31 +32,28 @@ public class GroundState : State
         {
             if (canCoyoteJump || _ctx.Movement.IsGrounded)
             {
+                Debug.Log("Jumping from GroundState");
                 SwitchStates(_factory.Jump());
                 _ctx.Movement._timeSinceJumpPressed = Mathf.Infinity;
                 return;
             }
         }
-
-        // Queda
+        // Fall
         if (_ctx.Body.linearVelocity.y < 0 && !canCoyoteJump)
         {
             SwitchStates(_factory.Fall());
-            return;
         }
 
         // Dash
         if (!_ctx.Movement.DashInCooldown && _ctx.Movement.IsDashButtonPressed)
         {
             SwitchStates(_factory.Dash());
-            return;
         }
 
         // Recebeu dano
         if (_ctx.Health.IsDamaged)
         {
             SwitchStates(_factory.Damaged());
-            return;
         }
     }
 

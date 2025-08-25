@@ -102,10 +102,10 @@ public class PlayerMovement : MonoBehaviour
     public float DashVelocity { get { return _dashVelocity; } }
     public bool DashInCooldown { get { return _dashInCooldown; } set { _dashInCooldown = value; } }
 
-    public bool UngroudedDueToJump { get { return _ungroudedDueToJump; } }
+    public bool UngroudedDueToJump { get { return _ungroudedDueToJump; } set { _ungroudedDueToJump = value; } }
     public float CoyoteTime { get { return _coyoteTime; } }
     public float TimeSinceUnground { get { return _timeSinceUnground; } }
-    public bool IsJumpButtonPressed { get { return _isJumpButtonPressed; } }
+    public bool IsJumpButtonPressed { get { return _isJumpButtonPressed; } set { _isJumpButtonPressed = value; } }
     public float ButtonPressedTime { get { return _buttonPressedTime; } set { _buttonPressedTime = value; } }
     public float JumpVelocity { get { return _jumpVelocity; } }
     public float MaxJumpTime { get { return _maxJumpTime; } }
@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (_machine.GameIsPaused) return;
-        _timeSinceJumpPressed += Time.deltaTime; // atualiza buffer
+        _timeSinceJumpPressed += Time.deltaTime; 
         Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
         UpdateFrictionMaterial();
         IsGroundAtLandingPoint();
@@ -178,7 +178,6 @@ public class PlayerMovement : MonoBehaviour
         if (isJumpButtonPressed)
         {
             _timeSinceJumpPressed = 0f;
-            _ungroudedDueToJump = true;
         }
     }
 
@@ -198,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
                 _isGrounded = false;
             }
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.03f);
         }
     }
 
@@ -254,13 +253,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (_timeSinceUnground < _coyoteTime && !_ungroudedDueToJump) return;
         if (_isGrounded) return;
 
         var effectiveGravity = _gravity;
         var verticalSpeed = Vector3.Dot(_machine.Body.linearVelocity, transform.up);
 
-        if (_isJumpButtonPressed && verticalSpeed > 0)
+        if (!_isGrounded && verticalSpeed > 0)
         {
             effectiveGravity *= jumpSustainGravity;
         }

@@ -14,12 +14,8 @@ public class JumpState : State
 
     public override void Enter()
     {
-
         HandleJump();
-        PlayerEvents.OnJumpSFX();
         _timeSinceEntered = 0f;
-        _ctx.AnimationSystem.Jump();
-        _ctx.AnimationSystem.UpdateGrounded(false);
         _ctx.Movement.FallDeathTimer = 0f;
     }
 
@@ -80,7 +76,10 @@ public class JumpState : State
 
     private void HandleJump()
     {
-
+        PlayerEvents.OnJumpSFX();
+        _ctx.AnimationSystem.Jump();
+        _ctx.AnimationSystem.UpdateGrounded(false);
+        _ctx.Movement.UngroudedDueToJump = true;
         var currentVerticalSpeed = Vector3.Dot(_ctx.Body.linearVelocity, _ctx.transform.up);
         var targetVerticalSpeed = Mathf.Max(currentVerticalSpeed, _ctx.Movement.JumpVelocity);
         _ctx.Body.linearVelocity += _ctx.transform.up * (targetVerticalSpeed - currentVerticalSpeed);
