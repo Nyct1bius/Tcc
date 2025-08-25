@@ -1,76 +1,69 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Weapons/ New Weapon")]
+[CreateAssetMenu(menuName = "Weapons/New Weapon")]
 public class WeaponSO : ScriptableObject
 {
     public AttackData[] attacks;
     public float weaponDamage;
     public GameObject weaponVisual;
     public LayerMask damageableLayer;
-    private int _currentAttack;
+
     public enum WeaponType
     {
         Sword,
         Spear,
     }
     public WeaponType Type;
-    private Transform _posToAttack;
-    private void OnDisable()
+
+    public void OnAttack(Transform posToAttack, LayerMask damageableLayer, int performedAttack)
     {
-        
-    }
-    public void OnAttack(Transform posToAttack, LayerMask damageableLayer,int performedAttack)
-    {
-        _posToAttack = posToAttack;
-        _currentAttack = performedAttack;
-        foreach (Collider enemy in GetAllNearbyColliders(damageableLayer))
+        foreach (Collider enemy in GetAllNearbyColliders(posToAttack, damageableLayer, performedAttack))
         {
-         
             Vector3 vectorToCollide = (enemy.transform.position - posToAttack.position).normalized;
             float angleToTarget = Vector3.Angle(posToAttack.forward, vectorToCollide);
-
-            if (angleToTarget <= attacks[_currentAttack].attackArcAngle / 2f)
+            if (angleToTarget <= attacks[performedAttack].attackArcAngle / 2f)
             {
-                OnDamage(enemy);
-
-                //if (!HasWallInfront(enemy.transform))
-                //{
-                //}
+                if (!HasWallInfront(posToAttack, enemy.transform, attacks[performedAttack].attackRange))
+                {
+                    OnDamage(enemy, posToAttack, performedAttack);
+                }
             }
         }
     }
 
-    private Collider[] GetAllNearbyColliders(LayerMask damageableLayer)
+    private Collider[] GetAllNearbyColliders(Transform posToAttack, LayerMask damageableLayer, int performedAttack)
     {
-        return Physics.OverlapSphere(_posToAttack.position, attacks[_currentAttack].attackRange, damageableLayer);
+        return Physics.OverlapSphere(
+            posToAttack.position,
+            attacks[performedAttack].attackRange,
+            damageableLayer
+        );
     }
 
-    private bool HasWallInfront(Transform enemyTransform)
+    private bool HasWallInfront(Transform posToAttack, Transform enemyTransform, float attackRange)
     {
-        Vector3 direction = (enemyTransform.position - _posToAttack.position).normalized;
-        Ray ray = new Ray(_posToAttack.position, direction);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        Vector3 direction = (enemyTransform.position - posToAttack.position).normalized;
+        if (Physics.Raycast(posToAttack.position, direction, out RaycastHit hit, attackRange))
         {
-            Debug.DrawLine(_posToAttack.position, hit.transform.position, Color.red, 1f);
-            if (hit.transform != enemyTransform)
-            {
-                return true;
-            }
+            Debug.DrawLine(posToAttack.position, hit.point, Color.red, 1f);
+            if (hit.transform != enemyTransform) return true;
         }
         return false;
     }
 
-    private void OnDamage(Collider enemy)
+    private void OnDamage(Collider enemy, Transform posToAttack, int performedAttack)
     {
         IHealth health = enemy.GetComponent<IHealth>();
         if (health != null)
         {
             PlayerEvents.OnHitEnemy(enemy.transform.position);
-            Instantiate(attacks[_currentAttack].vfxHit, enemy.transform.position, Quaternion.identity);
-            health.Damage(weaponDamage, _posToAttack.position);
-        }
 
+            if (attacks[performedAttack].vfxHit != null)
+                Instantiate(attacks[performedAttack].vfxHit, enemy.transform.position, Quaternion.identity);
+
+            health.Damage(weaponDamage, posToAttack.position);
+        }
     }
 
     public void Equip() { }
@@ -81,12 +74,12 @@ public class WeaponSO : ScriptableObject
 public class AttackData
 {
     public float attackRange;
-    [Range(45f, 360f)]
-    public float attackArcAngle;
+    [Range(45f, 360f)] public float attackArcAngle;
+
     [Header("VFX")]
     public GameObject vfxAttacks;
     public GameObject vfxHit;
+
     [Header("Animation")]
     public AnimationClip attackAnimationClip;
-
 }

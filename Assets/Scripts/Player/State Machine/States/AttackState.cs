@@ -1,20 +1,19 @@
 using PlayerState;
 using System;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.EventSystems;
-using UnityEngine.Playables;
 
 public class AttackState : State
 {
     public AttackState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
-   : base(contex, playerStateFactory)
+        : base(contex, playerStateFactory)
     {
         isRootState = true;
     }
+
     public override void Enter()
     {
-        PerformAttack();
+        _ctx.Combat.AttackIncooldown = true;
+        LockToClosestEnemy();
         PlayerEvents.StartAttackDetection += StartAttackCollisionDetection;
     }
 
@@ -29,10 +28,12 @@ public class AttackState : State
     public override void Exit()
     {
         PlayerEvents.StartAttackDetection -= StartAttackCollisionDetection;
-        _ctx.Combat.AttackCount++;
-        if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
+        _ctx.Combat.IsAttacking = false;
+        if (!_ctx.Health.IsDamaged) // só avança combo se não foi interrompido
         {
-            _ctx.Combat.AttackCount = 0;
+            _ctx.Combat.AttackCount++;
+            if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
+                _ctx.Combat.AttackCount = 0;
         }
     }
 
@@ -51,23 +52,13 @@ public class AttackState : State
 
     public override void InitializeSubState() { }
 
-    private void PerformAttack()
-    {
-        if (!_ctx.Combat.AttackIncooldown)
-        {
-            _ctx.Combat.AttackIncooldown = true;
-            LockToClosestEnemy();
-        }
-    }
-
-    public void SelectAttack()
-    {
-        PlayAttackAnimation();
-    }
-
     private void StartAttackCollisionDetection()
     {
-        _ctx.Combat.CurrentWeaponData.OnAttack(_ctx.Movement.PlayerTransform, _ctx.Combat.DamageableLayer, _ctx.Combat.AttackCount);
+        _ctx.Combat.CurrentWeaponData.OnAttack(
+            _ctx.Movement.PlayerTransform,
+            _ctx.Combat.DamageableLayer,
+            _ctx.Combat.AttackCount
+        );
     }
 
     private void LockToClosestEnemy()
@@ -79,14 +70,15 @@ public class AttackState : State
             float range = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackRange;
             Transform targetPos = _ctx.Combat.DetectedEnemys[0].transform;
 
-            Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
-            Vector3 posToMove = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
-            posToMove.y = _ctx.Movement.PlayerTransform.position.y;
+            if (Vector3.Distance(_ctx.Movement.PlayerTransform.position, targetPos.position) <= range * 1.5f)
+            {
+                Vector3 dirEnemyToPlayer = (_ctx.Movement.PlayerTransform.position - targetPos.position).normalized;
+                Vector3 posToMove = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
+                posToMove.y = _ctx.Movement.PlayerTransform.position.y;
 
-            _ctx.StartCoroutine(SmoothDash(posToMove, targetPos, 0.15f)); // duração do dash suave
+                _ctx.StartCoroutine(SmoothDash(posToMove, targetPos, 0.15f));
+            }
         }
-
-        SelectAttack();
     }
 
     private System.Collections.IEnumerator SmoothDash(Vector3 targetPos, Transform enemy, float duration)
@@ -105,7 +97,6 @@ public class AttackState : State
             time += Time.deltaTime;
             float t = time / duration;
 
-            // easing exponencial (mais rápido no começo, suave no final)
             float easedT = 1f - Mathf.Pow(2f, -10f * t);
 
             player.position = Vector3.Lerp(startPos, targetPos, easedT);
@@ -118,8 +109,4 @@ public class AttackState : State
         player.rotation = targetRot;
     }
 
-    private void PlayAttackAnimation()
-    {
-        _ctx.AnimationSystem.PlayAttack(_ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip);
-    }
 }

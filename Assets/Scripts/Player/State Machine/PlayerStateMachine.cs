@@ -80,7 +80,6 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(_currentState.GetType().Name);
         if (_gameIsPaused) return;
         _currentState.UpdateStates();
     }

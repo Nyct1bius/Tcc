@@ -9,7 +9,7 @@ public class PlayerCombatManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private PlayerStateMachine _machine;
     [SerializeField] private PlayerStatsSO _playerStats;
-
+    [SerializeField] private PlayerAudioManager _audioManager;
     [Header("Weapon")]
     [SerializeField] private LayerMask _damageableLayer;
     [SerializeField] private Transform _attackCollisionCheck;
@@ -49,7 +49,7 @@ public class PlayerCombatManager : MonoBehaviour
     public int AttackCount { get { return _attackCount; } set { _attackCount = value; } }
     public bool AttackIncooldown { get { return _attackIncooldown; } set { _attackIncooldown = value; } }
     public float TimeBetweenAttacks { get { return _timeBetweenAttacks; } }
-    public bool IsAttacking { get { return _isAttacking; } }
+    public bool IsAttacking { get { return _isAttacking; } set{ _isAttacking = value; }}
     public LayerMask DamageableLayer { get { return _damageableLayer; } }
     public WeaponSO CurrentWeaponData { get { return _currentWeaponData; } }
     public List<Collider> DetectedEnemys { get { return _detectedEnemys; } }
@@ -76,9 +76,9 @@ public class PlayerCombatManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        _machine.inputReader.AttackEvent += CheckAttackButton;
-        PlayerEvents.SwordPickUp += AddSword;
-        PlayerEvents.AttackFinished += HandleResetAttack;
+        _machine.inputReader.AttackEvent -= CheckAttackButton;
+        PlayerEvents.SwordPickUp -= AddSword;
+        PlayerEvents.AttackFinished -= HandleResetAttack;
         PlayerEvents.AttackVfx -= SpawnVFXAttack;
         PlayerEvents.HitEnemy -= HitEnemy;
         GameEvents.EnterCombat -= OnEnterCombat;
@@ -96,6 +96,7 @@ public class PlayerCombatManager : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log(_isAttacking);
         if (!_searchForTargets) return;
         LookAtTarget();
     }
@@ -180,35 +181,47 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void CheckAttackButton(bool attacking)
     {
-        _isAttacking = attacking;
+        if (attacking && !_attackIncooldown && _currentWeaponData != null)
+        {
+            _isAttacking = true;
+            StartCoroutine(AttackVisual());
+            var clip = _currentWeaponData.attacks[_attackCount].attackAnimationClip;
+            _machine.AnimationSystem.PlayAttack(clip);
+        }
     }
 
+    IEnumerator AttackVisual()
+    {
+        yield return new WaitForSeconds(0.05f);
+        Instantiate(CurrentWeaponData.attacks[_attackCount].vfxAttacks, _vfxAttackSpawnpoint.position, _vfxAttackSpawnpoint.rotation);
+        _audioManager.PlayAttackAudio();
+    }
     public void HandleResetAttack()
     {
         _attackIncooldown = false;
     }
-    //private void OnDrawGizmos()
-    //{
+   
+    private void OnDrawGizmos()
+    {
 
-    //    Handles.color = Color.yellow;
-    //    Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
-    //        _backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
+        Handles.color = Color.yellow;
+        Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
+            _backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
 
-    //    Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
-    //    Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
+        Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
+        Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
 
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
-    //    Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
+        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
 
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, _lockOnRange);
-    //}
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _lockOnRange);
+    }
 
 
     private void SpawnVFXAttack()
     {
-        Instantiate(CurrentWeaponData.attacks[_attackCount].vfxAttacks, _vfxAttackSpawnpoint.position,_vfxAttackSpawnpoint.rotation);
     }
     
     public void SpawnVFXLightining()
