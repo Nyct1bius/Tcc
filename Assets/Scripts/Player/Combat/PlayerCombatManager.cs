@@ -193,6 +193,7 @@ public class PlayerCombatManager : MonoBehaviour
     IEnumerator AttackVisual()
     {
         yield return new WaitForSeconds(0.05f);
+        PlayerEvents.OnStartAttackDetection();
         Instantiate(CurrentWeaponData.attacks[_attackCount].vfxAttacks, _vfxAttackSpawnpoint.position, _vfxAttackSpawnpoint.rotation);
         _audioManager.PlayAttackAudio();
     }
