@@ -16,7 +16,7 @@ public class EnemyCritterHealth : MonoBehaviour
     public Animator Animator;
 
     //Script references
-    private IdlePathfinding pathfindingScript;
+    [SerializeField] private IdlePathfinding pathfindingScript;
 
     void Start()
     {
@@ -24,11 +24,11 @@ public class EnemyCritterHealth : MonoBehaviour
 
         Animator.SetBool("Idle", true);
 
+        Agent.speed = CritterMovementSpeed;
+
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
             StartCoroutine(WaitToFindPlayer());
-
-        pathfindingScript = GetComponent<IdlePathfinding>();
     }
 
     void Update()
@@ -60,6 +60,11 @@ public class EnemyCritterHealth : MonoBehaviour
         {
             RoomManager.RemoveEnemyFromList(gameObject);
         }
+
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        pathfindingScript.enabled = false;
+        Agent.isStopped = true;
 
         Animator.SetBool("Idle", false);
         Animator.SetBool("Walk", false);
