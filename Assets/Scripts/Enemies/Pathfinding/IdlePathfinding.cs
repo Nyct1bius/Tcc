@@ -7,7 +7,7 @@ public class IdlePathfinding : MonoBehaviour
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private float waitTimer = 2f;
 
-    public EnemyStats Stats;
+    public EnemyCritterHealth CritterHealth;
 
     NavMeshAgent agent;
     Animator animator;
@@ -18,8 +18,8 @@ public class IdlePathfinding : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        agent = Stats.Agent;
-        animator = Stats.Animator;
+        agent = CritterHealth.Agent;
+        animator = CritterHealth.Animator;
 
         if (patrolPoints.Length > 0)
         {

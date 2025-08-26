@@ -116,9 +116,9 @@ public class EnemyStats : MonoBehaviour, IHealth
     IEnumerator WaitToFindPlayer()
     {
         yield return new WaitForSeconds(0.25f);
-        if(GameManager.instance.PlayerInstance != null)
+        if (GameManager.instance.PlayerInstance != null)
         {
-            while(Player == null)
+            while (Player == null)
             {
                 Player = GameManager.instance.PlayerInstance;
                 yield return null;
