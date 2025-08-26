@@ -14,7 +14,6 @@ public class PlayerAudioManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        PlayerEvents.AttackSFX += PlayAttackAudio;
         PlayerEvents.WalkSFX += PlayWalkAudio;
         PlayerEvents.DashSFX += PlayDashAudio;
         PlayerEvents.JumpSFX += PlayJumpAudio;
@@ -29,7 +28,6 @@ public class PlayerAudioManager : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerEvents.AttackSFX -= PlayAttackAudio;
         PlayerEvents.WalkSFX -= PlayWalkAudio;
         PlayerEvents.DashSFX -= PlayDashAudio;
         PlayerEvents.JumpSFX -= PlayJumpAudio;
@@ -43,7 +41,7 @@ public class PlayerAudioManager : MonoBehaviour
 
     }
 
-    private void PlayAttackAudio()
+    public void PlayAttackAudio()
     {
         audioManager.PlayOneShot(playerFmodEvents._attack,transform.parent.position);
     }
