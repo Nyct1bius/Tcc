@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SaveTotem : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] private string totemId;
+    public string totemId;
 
     private bool isPlayerNearby = false;
 

@@ -4,27 +4,73 @@ using System.Linq;
 
 public class GameLoader : MonoBehaviour
 {
+    [Tooltip("Offset em relação ao totem salvo (por exemplo, (0, 0, 2) para spawnar 2 unidades à frente).")]
+    public Vector3 spawnOffset = new Vector3(0, 0, 2);
+
+    [SerializeField] private GameObject spawner;
+
+    public GameObject maquinaDeVendas1;
+    public GameObject maquinaDeVendas2;
+
+    public SaveTotem totem1;
+    public SaveTotem totem2;
+
+
     private void Start()
     {
         GameData data = DataPersistenceManager.instance.GetGameData();
 
         if (data != null && !string.IsNullOrEmpty(data.lastTotemId))
         {
-            // Se o save não é dessa cena, ignora e deixa o spawn padrão
+            // Confere se o save é da mesma cena
             if (data.lastSceneName != SceneManager.GetActiveScene().name)
             {
                 Debug.Log("Save é de outra cena, spawnando no início desta fase.");
                 return;
             }
 
-            // Procura o spawner referente ao último totem salvo
-            var spawners = Object.FindObjectsByType<PlayerSpawner>(FindObjectsSortMode.None);
-            var target = spawners.FirstOrDefault(s => s.name == data.lastTotemId);
+            // Procura o totem salvo na cena
+            // var totems = GameObject.FindObjectsByType<SaveTotem>(FindObjectsSortMode.None);
+            // var targetTotem = totems.FirstOrDefault(t => t.name == data.lastTotemId);
+            var targetTotem = data.lastTotemId;
 
-            if (target != null)
+            if (targetTotem != null)
             {
-                GameManager.instance.SpawnPlayer(target.transform);
-                Debug.Log($"Player spawnado no totem {data.lastTotemId} na cena {SceneManager.GetActiveScene().name}");
+                // Acha o PlayerSpawner padrão
+                // var spawner = FindObjectOfType<PlayerSpawner>();
+                //spawner = GameObject.Find("PlayerSpawner");
+
+                if(targetTotem == totem1.totemId)
+                {
+                    if (spawner != null)
+                    {
+                        // Move o PlayerSpawner para a frente do totem
+                        spawner.transform.position = maquinaDeVendas1.transform.position + spawnOffset;
+                        GameManager.instance.SpawnPlayer(spawner.transform);
+
+                        Debug.Log($"PlayerSpawner movido para próximo ao totem {data.lastTotemId} e player spawnado.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Nenhum PlayerSpawner encontrado na cena!");
+                    }
+                }
+                else if(targetTotem == totem2.totemId)
+                {
+                    if (spawner != null)
+                    {
+                        // Move o PlayerSpawner para a frente do totem
+                        spawner.transform.position = maquinaDeVendas2.transform.position + spawnOffset;
+                        GameManager.instance.SpawnPlayer(spawner.transform);
+
+                        Debug.Log($"PlayerSpawner movido para próximo ao totem {data.lastTotemId} e player spawnado.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Nenhum PlayerSpawner encontrado na cena!");
+                    }
+                }
+
             }
             else
             {
