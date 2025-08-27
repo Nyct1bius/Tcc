@@ -796,9 +796,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSound: {fileID: 8300000, guid: b665b4667dba35c4dad874b958ad43c5, type: 3}
-  clickSound: {fileID: 8300000, guid: 05a747927a9e49b43bb84e8ae9428cf1, type: 3}
-  audioSource: {fileID: 0}
+  hoverSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  clickSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &389129740
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,8 +1002,8 @@ GameObject:
   m_Component:
   - component: {fileID: 448434550}
   - component: {fileID: 448434549}
-  - component: {fileID: 448434548}
   - component: {fileID: 448434551}
+  - component: {fileID: 448434552}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1000,14 +1011,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &448434548
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 448434547}
-  m_Enabled: 1
 --- !u!20 &448434549
 Camera:
   m_ObjectHideFlags: 0
@@ -1118,6 +1121,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &448434552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448434547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &531463561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &531463562
 Transform:
   m_ObjectHideFlags: 0
@@ -2901,9 +2918,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSound: {fileID: 8300000, guid: b665b4667dba35c4dad874b958ad43c5, type: 3}
-  clickSound: {fileID: 8300000, guid: 05a747927a9e49b43bb84e8ae9428cf1, type: 3}
-  audioSource: {fileID: 0}
+  hoverSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  clickSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1289631026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3771,9 +3799,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSound: {fileID: 8300000, guid: b665b4667dba35c4dad874b958ad43c5, type: 3}
-  clickSound: {fileID: 8300000, guid: 05a747927a9e49b43bb84e8ae9428cf1, type: 3}
-  audioSource: {fileID: 0}
+  hoverSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  clickSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &1631305505
 GameObject:
   m_ObjectHideFlags: 0
@@ -4275,9 +4314,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSound: {fileID: 8300000, guid: b665b4667dba35c4dad874b958ad43c5, type: 3}
-  clickSound: {fileID: 8300000, guid: 05a747927a9e49b43bb84e8ae9428cf1, type: 3}
-  audioSource: {fileID: 0}
+  hoverSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  clickSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2005594181
 GameObject:
   m_ObjectHideFlags: 0
@@ -4447,9 +4497,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSound: {fileID: 8300000, guid: b665b4667dba35c4dad874b958ad43c5, type: 3}
-  clickSound: {fileID: 8300000, guid: 05a747927a9e49b43bb84e8ae9428cf1, type: 3}
-  audioSource: {fileID: 0}
+  hoverSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  clickSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &2012305300
 GameObject:
   m_ObjectHideFlags: 0

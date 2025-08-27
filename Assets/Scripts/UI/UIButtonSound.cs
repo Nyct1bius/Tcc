@@ -1,29 +1,22 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using FMODUnity;
 
 public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
-    public AudioClip hoverSound;
-    public AudioClip clickSound;
-    [SerializeField] private AudioSource audioSource;
-
-    private void Start()
-    {
-        // Pega ou adiciona um AudioSource
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-            audioSource = gameObject.AddComponent<AudioSource>();
-    }
+    [Header("FMOD Events")]
+    public EventReference hoverSound;
+    public EventReference clickSound;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (hoverSound != null)
-            audioSource.PlayOneShot(hoverSound);
+        if (!hoverSound.IsNull)
+            RuntimeManager.PlayOneShot(hoverSound);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (clickSound != null)
-            audioSource.PlayOneShot(clickSound);
+        if (!clickSound.IsNull)
+            RuntimeManager.PlayOneShot(clickSound);
     }
 }
