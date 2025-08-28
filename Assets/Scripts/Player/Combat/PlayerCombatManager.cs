@@ -96,6 +96,7 @@ public class PlayerCombatManager : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log(_isAttacking);
         if (!_searchForTargets) return;
         LookAtTarget();
     }
