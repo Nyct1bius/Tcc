@@ -686,7 +686,7 @@ MonoBehaviour:
   sourceBankPath: FMODAssets/Desktop
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
-  ShowBankRefreshWindow: 1
+  ShowBankRefreshWindow: 0
   AutomaticEventLoading: 1
   BankLoadType: 0
   AutomaticSampleLoading: 0
@@ -705,13 +705,11 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - Desktop/Master
-  - Desktop/Master
+  - Master
   Banks:
-  - Desktop/SFX
-  - Desktop/UI
+  - LosAudios
   - SFX
-  - UI
+  - TesteUI
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
