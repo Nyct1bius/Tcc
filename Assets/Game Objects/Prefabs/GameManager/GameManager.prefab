@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7440796392747032182}
   - component: {fileID: 8809040911272489947}
+  - component: {fileID: 2195799626624855402}
+  - component: {fileID: 3710605680338978086}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47,6 +49,37 @@ MonoBehaviour:
   playerPrefab: {fileID: 1479004193044153031, guid: d631992ca173e2642b95d14caee2eb1a, type: 3}
   cnCameraPrefab: {fileID: 8548062860129387934, guid: 2e0749c66bb0d434d8080b6b0b0e4e58, type: 3}
   minimapCameraPrefab: {fileID: 1372824546751938144, guid: 3a69fe84217adbc4cbf5c4793b9b9813, type: 3}
+  loader: {fileID: 2195799626624855402}
+  _cnCameraRef: {fileID: 0}
   IsRestartingGame: 0
+  isNewGame: 0
   _playerStats: {fileID: 11400000, guid: fd92c0ac67ed7e74699d100ad81051f8, type: 2}
+  lastCheckPointIndex: 0
   State: 0
+--- !u!114 &2195799626624855402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6843750948325392643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0ad45672b69444f9f255c20d5f5f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOffset: {x: 0, y: 0, z: 2}
+--- !u!114 &3710605680338978086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6843750948325392643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df765f2012258947a61e887ce62dbb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.game
+  useEncryption: 0

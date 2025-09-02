@@ -56,7 +56,7 @@ public class TitleScreen : MonoBehaviour
         {
             DataPersistenceManager.instance.LoadGame();
         }
-
+        GameManager.instance.isNewGame = false;
         loadscene.StartLoad("Programmers_TestScene");
     }
 
@@ -67,7 +67,7 @@ public class TitleScreen : MonoBehaviour
         {
             DataPersistenceManager.instance.NewGame();
         }
-
+        GameManager.instance.isNewGame = true;
         loadscene.StartLoad("Programmers_TestScene");
     }
 

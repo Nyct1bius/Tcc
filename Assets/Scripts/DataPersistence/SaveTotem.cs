@@ -8,17 +8,17 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
     private bool isPlayerNearby = false;
 
     [SerializeField] private GameObject saveText;
-
-    public void SaveData(ref GameData data)
+    public void SaveData(PlayerData data)
     {
         if (isPlayerNearby) // só salva se o player estiver nesse totem
         {
             data.lastTotemId = totemId;
             data.lastSceneName = SceneManager.GetActiveScene().name;
+            data.spawnPos = transform.position;
         }
     }
 
-    public void LoadData(GameData data)
+    public void LoadData(PlayerData data)
     {
         
     }
