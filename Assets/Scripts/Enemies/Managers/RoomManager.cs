@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -16,6 +17,18 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Door door;
     [SerializeField] private List<GameObject> closingWalls;
 
+    /*
+    private void Start()
+    {
+        foreach (GameObject enemy in MyEnemies)
+        {
+            if (enemy.GetComponent<MeleeEnemy>() != null)
+            {
+                enemy.GetComponent<MeleeEnemy>().RoomManager = this;
+            }
+        }
+    }
+    */
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +40,8 @@ public class RoomManager : MonoBehaviour
                 Debug.Log("Player found");
                 foreach (GameObject enemy in MyEnemies)
                 {
-                    enemy.GetComponent<EnemyStats>().enabled = true;
+                    if (enemy.GetComponent<EnemyStats>())
+                        enemy.GetComponent<EnemyStats>().enabled = true;
                 }
             }
             else
@@ -43,7 +57,8 @@ public class RoomManager : MonoBehaviour
 
                     foreach (GameObject enemy in enemiesWave1)
                     {
-                        enemy.GetComponent<EnemyStats>().enabled = true;
+                        if (enemy.GetComponent<EnemyStats>())
+                            enemy.GetComponent<EnemyStats>().enabled = true;
                     }
                     
                 }

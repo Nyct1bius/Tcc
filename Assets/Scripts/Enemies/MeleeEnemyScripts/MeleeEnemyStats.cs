@@ -7,17 +7,19 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
 {
     public MeleeEnemy enemy;
     
-    [SerializeField] private float maxHealth = 100f;
-    public float CurrentHealth { get; private set; }
-    public float MovementSpeed { get; private set; }
-    public float TimeBetweenAttacks { get; private set; }
-    public float MeleeAttackDistance { get; private set; }
-    public float KnockbackForce { get; private set; }
+    [SerializeField] private float maxHealth;
+    public float CurrentHealth;
+    public float MovementSpeed;
+    public float TimeBetweenAttacks;
+    public float MeleeAttackDistance;
+    public float KnockbackForce;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        CurrentHealth = maxHealth;
+
+        enemy.Agent.speed = MovementSpeed;
     }
 
     // Update is called once per frame
@@ -31,9 +33,7 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         CurrentHealth -= damage;
 
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
-        StartCoroutine(Knockback(knockbackDir, .4f));
-
-        
+        StartCoroutine(Knockback(knockbackDir, .4f));       
     }
     public void HealHealth(float health)
     {

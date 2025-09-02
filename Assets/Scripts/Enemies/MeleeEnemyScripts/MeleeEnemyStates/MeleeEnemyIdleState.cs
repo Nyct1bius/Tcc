@@ -4,7 +4,10 @@ public class MeleeEnemyIdleState : EnemyState
 {
     private MeleeEnemy enemy;
 
-    public MeleeEnemyIdleState(MeleeEnemyStateMachine stateMachine) : base(stateMachine) { }
+    public MeleeEnemyIdleState(MeleeEnemyStateMachine stateMachine, MeleeEnemy enemy) : base(stateMachine)
+    {
+        this.enemy = enemy;
+    }
 
     public override void Enter()
     {
@@ -17,8 +20,12 @@ public class MeleeEnemyIdleState : EnemyState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        
+
         if (enemy.RoomManager.EnemiesAlerted)
-            stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine));
+        {
+            stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
+
+            Debug.Log("Fight!");
+        }
     }
 }

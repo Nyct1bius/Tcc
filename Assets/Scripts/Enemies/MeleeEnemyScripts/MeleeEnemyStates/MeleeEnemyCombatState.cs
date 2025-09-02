@@ -7,29 +7,37 @@ public class MeleeEnemyCombatState : EnemyState
 {
     private MeleeEnemy enemy;
 
+    private Vector3 playerPosition;
+
     private bool hasAttacked = false;
-    
-    public MeleeEnemyCombatState(MeleeEnemyStateMachine stateMachine) : base(stateMachine)
+
+    public MeleeEnemyCombatState(MeleeEnemyStateMachine stateMachine, MeleeEnemy enemy) : base(stateMachine)
     {
-        enemy = stateMachine as MeleeEnemy;
+        this.enemy = enemy;
     }
 
     public override void Enter()
     {
         base.Enter();
-        // Enter combat (e.g., draw weapon, play combat animation)
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
-        if (enemy.Stats.CurrentHealth <= 0)       
-            stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine));
+        playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
 
-        if (Vector3.Distance(enemy.transform.position, enemy.PlayerPosition) > enemy.Stats.MeleeAttackDistance)
+        if (enemy.Stats.CurrentHealth <= 0)       
+            stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
+
+        CombatLogic();
+    }
+
+    private void CombatLogic()
+    {
+        if (Vector3.Distance(enemy.transform.position, playerPosition) > enemy.Stats.MeleeAttackDistance)
         {
-            enemy.Agent.SetDestination(enemy.PlayerPosition);
+            enemy.Agent.SetDestination(playerPosition);
 
             enemy.Animator.SetBool("Idle", false);
             enemy.Animator.SetBool("Walk", true);
