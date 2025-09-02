@@ -59,7 +59,7 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.Enter();
-
+        DataPersistenceManager.instance.LoadGame();
         //Get Components
         _mainCameraRef = Camera.main;
 
@@ -91,12 +91,14 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
 
     public void LoadData(PlayerData data)
     {
-        currentData = data;
+        currentData.hasSword = data.hasSword;
+        currentData.hasShield = data.hasShield; 
     }
 
     public void SaveData(PlayerData data)
     {
-       data = currentData;  
+       data.hasSword = currentData.hasSword;  
+        data.hasShield = currentData.hasShield;
     }
     #region Game States
     private void OnPauseGame()
