@@ -106,13 +106,13 @@ MonoBehaviour:
   Radius: 10
   Orbits:
     Top:
-      Radius: 2.5
+      Radius: 5
       Height: 11
     Center:
       Radius: 12
       Height: 1.5
     Bottom:
-      Radius: 2
+      Radius: 3
       Height: -9
     SplineCurvature: 0.5
   RecenteringTarget: 2
@@ -127,14 +127,14 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 24
+    Value: 15
     Center: 17.5
-    Range: {x: -10, y: 45}
+    Range: {x: -10, y: 30}
     Wrap: 0
     Recentering:
-      Enabled: 0
-      Wait: 1
-      Time: 2
+      Enabled: 1
+      Wait: 8
+      Time: 5
     Restrictions: 0
   RadialAxis:
     Value: 1
@@ -168,13 +168,13 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 2, z: 0}
+  TargetOffset: {x: 0, y: 3, z: 0}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
-    Enabled: 1
+    Enabled: 0
     Time: 0.343
     Smoothing: 7.5
-    IgnoreY: 0
+    IgnoreY: 1
 --- !u!114 &6379615283846354071
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     [SerializeField] private bool useEncryption;
 
-    private GameData gameData;
+    private PlayerData gameData;
 
     private List<IDataPersistence> dataPersistenceObjects;
 
@@ -27,20 +27,23 @@ public class DataPersistenceManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject); // <- mantém o objeto entre cenas
     }
 
 
     private void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        this.dataHandler = new FileDataHandler(Application.dataPath, fileName, useEncryption);
+        FindData();
         LoadGame(); // Load game at start 
     }
-
+    void FindData()
+    {
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+    }
     public void NewGame()
     {
-        this.gameData = new GameData();
+        this.gameData = new PlayerData();
+        SaveGame();
     }
 
     public void LoadGame()
@@ -52,27 +55,24 @@ public class DataPersistenceManager : MonoBehaviour
         // if no data can be loaded, initialize to a new game  
         if(this.gameData == null)
         {
-            Debug.Log("No data was found. Initializing data to defaults");
             NewGame();
         }
-
+        FindData();
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.LoadData(gameData);
         }
-
-        Debug.Log("Loaded money count " + gameData.money);
-        Debug.Log("Loaded Totem " + gameData.lastTotemId);
     }
 
     public void SaveGame()
     {
+        FindData();
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
-            dataPersistenceObj.SaveData(ref gameData);
+            dataPersistenceObj.SaveData(gameData);
         }
 
-        Debug.Log("Saved money count " + gameData.money);
+        //Debug.Log("Saved money count " + gameData.money);
 
         //  save that data to a file using the data handler 
         dataHandler.Save(gameData);
@@ -97,7 +97,7 @@ public class DataPersistenceManager : MonoBehaviour
         return gameData != null;
     }
 
-    public GameData GetGameData()
+    public PlayerData GetGameData()
     {
         return gameData;
     }

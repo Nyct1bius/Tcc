@@ -1,5 +1,6 @@
 using UnityEngine;
 using FMOD.Studio;
+using System;
 
 public class PlayerAudioManager : MonoBehaviour
 {
@@ -21,8 +22,8 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.ChickenSFX += PlayChickenSpinAudio;
         PlayerEvents.StopChickenSFX += StopChickenSpinAudio;
         PlayerEvents.LandSFX += PlayLandAudio;
-        GameEvents.PauseGame += () => audioSource.SetActive(false);
-        GameEvents.ResumeGame += () => audioSource.SetActive(true);
+        GameEvents.PauseGame += PauseGame;
+        GameEvents.ResumeGame += ResumeGame;
 
     }
 
@@ -35,10 +36,18 @@ public class PlayerAudioManager : MonoBehaviour
         PlayerEvents.ChickenSFX -= PlayChickenSpinAudio;
         PlayerEvents.StopChickenSFX -= StopChickenSpinAudio;
         PlayerEvents.LandSFX -= PlayLandAudio;
-        GameEvents.PauseGame -= () => audioSource.SetActive(false);
-        GameEvents.ResumeGame -= () => audioSource.SetActive(true);
+        GameEvents.PauseGame -= PauseGame;
+        GameEvents.ResumeGame -= ResumeGame;
 
 
+    }
+    private void ResumeGame()
+    {
+        audioSource.SetActive(true);
+    }
+    private void PauseGame()
+    {
+        audioSource.SetActive(false);
     }
 
     public void PlayAttackAudio()

@@ -13,12 +13,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private CinemachineCamera cnCameraPrefab;
     [SerializeField] private Camera minimapCameraPrefab;
+    [Header("Game Data")]
+    public GameLoader loader;
     private Camera _minimapCamRef;
     public CinemachineCamera _cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
     private Transform _checkpoint;
     private Transform _spawnPos;
     public bool IsRestartingGame;
+    public bool isNewGame;
     public GameObject PlayerInstance { get; private set; }
     [SerializeField] private PlayerStatsSO _playerStats;
 
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
     private void OnEnable()
     {
@@ -156,6 +160,14 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer(Transform spawnPoint)
     {
+        if (!isNewGame)
+        {
+            DataPersistenceManager.instance.LoadGame();
+            if(loader.LoadSpawnPos() != Vector3.zero)
+            {
+                spawnPoint.position = loader.LoadSpawnPos();
+            }
+        }
         PlayerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
         _cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
         if(_minimapCamRef != null)

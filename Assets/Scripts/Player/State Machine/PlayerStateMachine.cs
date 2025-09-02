@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using PlayerState;
 using Unity.Cinemachine;
-public class PlayerStateMachine : MonoBehaviour
+public class PlayerStateMachine : MonoBehaviour,IDataPersistence
 {
     [Header("Componets")]
     [SerializeField] private Rigidbody _body;
@@ -19,7 +19,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private PlayerCombatManager _combat;
     [SerializeField] private PlayerHealthManager _health;
-
+    public PlayerData currentData;
 
 
     [Header("State variables")]
@@ -59,7 +59,7 @@ public class PlayerStateMachine : MonoBehaviour
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.Enter();
-
+        DataPersistenceManager.instance.LoadGame();
         //Get Components
         _mainCameraRef = Camera.main;
 
@@ -77,6 +77,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         GameEvents.PauseGame -= OnPauseGame;
         GameEvents.ResumeGame -= OnResumeGame;
+        DataPersistenceManager.instance.SaveGame();
     }
     private void Update()
     {
@@ -88,6 +89,17 @@ public class PlayerStateMachine : MonoBehaviour
         _currentState.FixedUpdateStates();
     }
 
+    public void LoadData(PlayerData data)
+    {
+        currentData.hasSword = data.hasSword;
+        currentData.hasShield = data.hasShield; 
+    }
+
+    public void SaveData(PlayerData data)
+    {
+       data.hasSword = currentData.hasSword;  
+        data.hasShield = currentData.hasShield;
+    }
     #region Game States
     private void OnPauseGame()
     {
@@ -102,9 +114,28 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _animationSystem.Destroy();
     }
+
     #endregion
 
 
 
 
+}
+[Serializable]
+public class PlayerData
+{
+    public float health;
+    public bool hasSword, hasShield;
+    public Vector3 spawnPos;
+    public string lastTotemId;
+    public string lastSceneName;
+    public PlayerData()
+    {
+        health = 100;
+        hasSword = false;
+        spawnPos = Vector3.zero;  
+        lastTotemId = null;
+        lastSceneName = null;  
+       
+    }  
 }

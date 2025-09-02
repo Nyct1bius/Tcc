@@ -89,7 +89,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void Start()
     {
-        if (_playerStats.hasSword)
+        if (_machine.currentData.hasSword)
         {
             AddSword(_backupWeaponData);
         }
@@ -174,7 +174,8 @@ public class PlayerCombatManager : MonoBehaviour
         }
         _currentWeaponData = currentWeapon;
         _currentWeaponVisual = Instantiate(_currentWeaponData.weaponVisual, _weaponPos);
-        _playerStats.hasSword = true;
+        _machine.currentData.hasSword = true;
+        DataPersistenceManager.instance.SaveGame();
 
     }
 

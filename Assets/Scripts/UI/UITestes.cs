@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UITestes : MonoBehaviour, IDataPersistence
+public class UITestes : MonoBehaviour
 {
     public GameObject telaInicio;
     public GameObject telaOver;
@@ -72,13 +72,5 @@ public class UITestes : MonoBehaviour, IDataPersistence
         DataPersistenceManager.instance.NewGame();
     }*/
 
-    public void LoadData(GameData data)
-    {
-        this.money = data.money;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.money = this.money;
-    }
+  
 }
