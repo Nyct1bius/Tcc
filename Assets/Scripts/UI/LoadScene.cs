@@ -13,7 +13,11 @@ public class LoadScene : MonoBehaviour
 
     public void StartLoad(string levelToLoad)
     {
-        loadScreen.SetActive(true);
+
+        if(loadScreen !=  null)
+        {
+            loadScreen.SetActive(true);
+        }
         StartCoroutine(Load(levelToLoad));
     }
 
