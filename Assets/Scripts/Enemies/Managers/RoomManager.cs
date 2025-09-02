@@ -9,6 +9,7 @@ public class RoomManager : MonoBehaviour
     public List<GameObject> enemiesWave2;
     public List<GameObject> enemiesWave3;
 
+    public bool EnemiesAlerted = false;
     public bool isWavedRoom = false;
     public bool isThereWave3 = false;
     public bool isRoomCleared = false;
@@ -50,7 +51,7 @@ public class RoomManager : MonoBehaviour
             }
             Debug.Log("Player found_end");
 
-            
+            EnemiesAlerted = true;
         }
     }
 
