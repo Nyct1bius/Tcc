@@ -1,13 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Sword : Item, IProximityEventTrigger
+public class Sword : Item, IProximityEventTrigger, IDataPersistence
 {
-    [SerializeField] private PlayerStatsSO _playerStats;
-   
+    bool hasSword;
     private void Start()
     {
-        if (_playerStats.hasSword)
+        DataPersistenceManager.instance.LoadGame();
+        if (hasSword)
         {
             Destroy(gameObject);
         }
@@ -39,6 +39,16 @@ public class Sword : Item, IProximityEventTrigger
     public void OnExit()
     {
         CameraTargetingTrigger.Instance.TrackingTriggerExit();
+    }
+
+    public void LoadData(PlayerData data)
+    {
+       hasSword = data.hasSword;
+    }
+
+    public void SaveData(PlayerData data)
+    {
+   
     }
 }
 
