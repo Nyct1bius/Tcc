@@ -9,8 +9,11 @@ public class LoadScene : MonoBehaviour
 {
     [SerializeField] private Slider barraProgresso;
 
+    public GameObject loadScreen;
+
     public void StartLoad(string levelToLoad)
     {
+        loadScreen.SetActive(true);
         StartCoroutine(Load(levelToLoad));
     }
 

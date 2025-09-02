@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI; 
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class UIInputManager : MonoBehaviour
 {
@@ -12,6 +13,23 @@ public class UIInputManager : MonoBehaviour
     private void Awake()
     {
         inputActions = new PlayerInputs();
+    }
+
+    private void Update()
+    {
+        // Se não tiver nada selecionado
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            // Detecta navegação por teclado/controle
+            if (Keyboard.current != null &&
+               (Keyboard.current.upArrowKey.wasPressedThisFrame ||
+                Keyboard.current.downArrowKey.wasPressedThisFrame ||
+                Keyboard.current.leftArrowKey.wasPressedThisFrame ||
+                Keyboard.current.rightArrowKey.wasPressedThisFrame))
+            {
+                EventSystem.current.SetSelectedGameObject(botaoInicial);
+            }
+        }
     }
 
     private void OnEnable()

@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
             _minimapCamRef = Instantiate(minimapCameraPrefab);
         Camera.main.GetComponent<StudioListener>().AttenuationObject = PlayerInstance;
         _cnCameraRef.Follow = PlayerInstance.transform;
-        _cnCameraRef.LookAt = PlayerInstance.transform;
+        // _cnCameraRef.LookAt = PlayerInstance.transform;
 
         _spawnPos = spawnPoint;
     }
