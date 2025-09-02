@@ -18,9 +18,14 @@ public class Sword : Item, IProximityEventTrigger, IDataPersistence
     {
         GetItemHeight();
     }
+    private void OnDisable()
+    {
+        transform.DOKill();
+    }
     public override void OnPickedUp()
     {
-       PlayerEvents.OnSwordPickUp(weaponData);
+       transform.DOKill();
+        PlayerEvents.OnSwordPickUp(weaponData);
         OnExit();
        Destroy(gameObject);
     }

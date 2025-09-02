@@ -122,12 +122,14 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
         inputs.PlayerControls.Disable();
         inputs.UI.Enable();
     }
-    private void MenuInputs(bool isEneable = false)
+    private void MenuInputs(bool isEnable = false)
     {
-        if (isEneable)
+        if (isEnable)
         {
             inputs.PlayerControls.Disable();
             inputs.UI.Enable();
+
+            inputs.UI.CloseMenu.performed -= OnCloseMenu;
             inputs.UI.CloseMenu.performed += OnCloseMenu;
         }
         else
@@ -137,6 +139,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
             inputs.PlayerControls.Enable();
         }
     }
+
 
     public void OnLockOn(InputAction.CallbackContext context)
     {

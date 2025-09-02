@@ -129,4 +129,13 @@ public class PlayerData
     public Vector3 spawnPos;
     public string lastTotemId;
     public string lastSceneName;
+    public PlayerData()
+    {
+        health = 100;
+        hasSword = false;
+        spawnPos = Vector3.zero;  
+        lastTotemId = null;
+        lastSceneName = null;  
+       
+    }  
 }
