@@ -1,6 +1,4 @@
 using System.Collections;
-//using System.Xml;
-//using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class MeleeEnemyCombatState : EnemyState
@@ -30,7 +28,8 @@ public class MeleeEnemyCombatState : EnemyState
         if (enemy.Stats.CurrentHealth <= 0)       
             stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
 
-        CombatLogic();
+        if (!enemy.TookDamage)
+            CombatLogic();
     }
 
     private void CombatLogic()
@@ -41,6 +40,11 @@ public class MeleeEnemyCombatState : EnemyState
 
             enemy.Animator.SetBool("Idle", false);
             enemy.Animator.SetBool("Walk", true);
+
+            enemy.StopCoroutine(MeleeAttack(Random.Range(1, 3)));
+
+            hasAttacked = false;
+            enemy.AttackHitbox.enabled = false;
         }
         else
         {

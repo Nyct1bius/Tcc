@@ -12,6 +12,10 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     public Animator Animator;
     public BoxCollider AttackHitbox;
 
+    public bool TookDamage = false;
+
+    public Transform[] PatrolPoints;
+
     private void Awake()
     {
         Stats = GetComponent<MeleeEnemyStats>();

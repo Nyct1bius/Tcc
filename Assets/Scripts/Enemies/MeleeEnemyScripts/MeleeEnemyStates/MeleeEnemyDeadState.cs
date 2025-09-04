@@ -14,7 +14,10 @@ public class MeleeEnemyDeadState : EnemyState
     {
         base.Enter();
 
-        enemy.Agent.ResetPath();
+        enemy.StopAllCoroutines();
+
+        ChooseDeathAnimation(Random.Range(1, 3));
+
         enemy.Animator.SetTrigger("Dead1");
         enemy.GetComponent<CapsuleCollider>().enabled = false;
 
@@ -51,5 +54,14 @@ public class MeleeEnemyDeadState : EnemyState
         }
 
         enemy.enabled = false;
+    }
+
+    private void ChooseDeathAnimation(int deathAnimationDice)
+    {
+        if (deathAnimationDice == 1)
+            enemy.Animator.SetTrigger("Dead1");
+
+        if (deathAnimationDice == 2)
+            enemy.Animator.SetTrigger("Dead2");
     }
 }

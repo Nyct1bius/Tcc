@@ -40,16 +40,16 @@ public class EnemyMeleeCombat : MonoBehaviour
         StopMeleeCoroutines();
     }
 
-    private IEnumerator MeleeAttack(int meleeAnimDice)
+    private IEnumerator MeleeAttack(int meleeAnimationDice)
     {
         hasAttacked = true;
 
         yield return new WaitForSeconds(Stats.TimeBetweenAttacks);
 
-        if (meleeAnimDice == 1)
+        if (meleeAnimationDice == 1)
             animator.SetTrigger("Melee1");
 
-        if (meleeAnimDice == 2)
+        if (meleeAnimationDice == 2)
             animator.SetTrigger("Melee2");
 
         StartCoroutine(AttackHitboxOnThenOff());

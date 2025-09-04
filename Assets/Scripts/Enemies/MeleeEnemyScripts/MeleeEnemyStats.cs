@@ -33,7 +33,9 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         CurrentHealth -= damage;
 
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
-        StartCoroutine(Knockback(knockbackDir, .4f));       
+        StartCoroutine(Knockback(knockbackDir, .4f));
+
+        enemy.TookDamage = true;
     }
     public void HealHealth(float health)
     {
@@ -59,6 +61,7 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
             yield return null;
         }
 
+        enemy.TookDamage = false;
         enemy.Agent.enabled = true;
     }
 }
