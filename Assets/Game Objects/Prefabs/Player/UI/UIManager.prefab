@@ -558,8 +558,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paused: 0
-  _testes: {fileID: 0}
   _mainMenuScreen: {fileID: 16562198944548923}
+  mapaAtual: {fileID: 6125255192669988871}
   inventoryManager: {fileID: 4709963525708250027}
 --- !u!114 &9150008658984482465
 MonoBehaviour:
@@ -7801,6 +7801,7 @@ GameObject:
   - component: {fileID: 724927124736102964}
   - component: {fileID: 8206633596088381764}
   - component: {fileID: 1871145916335760692}
+  - component: {fileID: 2931981569521253582}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -7944,6 +7945,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2931981569521253582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6213082093937808756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound:
+    Guid:
+      Data1: -646969507
+      Data2: 1291118547
+      Data3: 635241913
+      Data4: -1805824115
+    Path: event:/Teste/Button3/ButtonSelect1
+  clickSound:
+    Guid:
+      Data1: 1253941890
+      Data2: 1102867205
+      Data3: -298148180
+      Data4: 812966085
+    Path: event:/Teste/Button3/ButtonPress1
 --- !u!1 &6272737532375764665
 GameObject:
   m_ObjectHideFlags: 0
@@ -8307,6 +8334,7 @@ GameObject:
   - component: {fileID: 471714200179626283}
   - component: {fileID: 4489069904945900369}
   - component: {fileID: 4038987358301678649}
+  - component: {fileID: 3599199196593701379}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -8450,6 +8478,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3599199196593701379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6869276842143261281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e861b17064cc98e4092568bbd2705a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound:
+    Guid:
+      Data1: -646969507
+      Data2: 1291118547
+      Data3: 635241913
+      Data4: -1805824115
+    Path: event:/Teste/Button3/ButtonSelect1
+  clickSound:
+    Guid:
+      Data1: 1253941890
+      Data2: 1102867205
+      Data3: -298148180
+      Data4: 812966085
+    Path: event:/Teste/Button3/ButtonPress1
 --- !u!1 &6870581296012367723
 GameObject:
   m_ObjectHideFlags: 0
@@ -10076,6 +10130,7 @@ GameObject:
   - component: {fileID: 5213471460467155394}
   - component: {fileID: 2481907862628490621}
   - component: {fileID: 2495950569717077622}
+  - component: {fileID: 1675255297130680129}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -10118,7 +10173,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7684114621437310516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -10153,6 +10208,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d17080d8c717d46b59813e2218b1cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1675255297130680129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684114621437310516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb935b2b0a92584ea0998635b99b477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botaoInicial: {fileID: 6869276842143261281}
 --- !u!1 &7714845982338004496
 GameObject:
   m_ObjectHideFlags: 0
