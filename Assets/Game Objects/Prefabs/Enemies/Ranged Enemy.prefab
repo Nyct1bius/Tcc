@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 850296958386918652}
   - component: {fileID: 1413238458002036065}
-  - component: {fileID: 4423831765372149865}
-  - component: {fileID: 3230871373467491907}
-  - component: {fileID: 7492884775431311204}
   - component: {fileID: 7570544844877955337}
+  - component: {fileID: 486352731900335017}
+  - component: {fileID: 1027441766565590753}
   m_Layer: 8
   m_Name: Ranged Enemy
   m_TagString: Untagged
@@ -61,60 +60,6 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 2
   m_Center: {x: 0, y: -0.2, z: 0}
---- !u!114 &4423831765372149865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108515154749169036}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28a005056250504eaab6b21f65125a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsAlive: 1
-  IsMeleeEnemy: 0
-  WasAttacked: 0
-  MaxHealth: 30
-  CurrentHealth: 30
-  TimeBetweenAttacks: 1.5
-  MovementSpeed: 4
-  MinimumPlayerDistance: 16
-  RoomManager: {fileID: 0}
-  Agent: {fileID: 7570544844877955337}
-  Player: {fileID: 0}
-  Animator: {fileID: 4245235924909549332}
-  PlayerPosition: {x: 0, y: 0, z: 0}
---- !u!114 &3230871373467491907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108515154749169036}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1c3e84bdb2b29b40ac2dea7ed857ff7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Stats: {fileID: 4423831765372149865}
-  projectile: {fileID: 2102856790986989687, guid: 1df588c11fe364840b1b88332f8bf039, type: 3}
-  projectileSpawnPoint: {fileID: 4504851409974770029}
-  IsTurret: 0
---- !u!114 &7492884775431311204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108515154749169036}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89b70a1dd2acd94cacf8feb9ab4b08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Stats: {fileID: 4423831765372149865}
 --- !u!195 &7570544844877955337
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -137,6 +82,43 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
+--- !u!114 &486352731900335017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108515154749169036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed68adcf105a2249bfb95493398bd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  Agent: {fileID: 7570544844877955337}
+  RoomManager: {fileID: 0}
+  Animator: {fileID: 4245235924909549332}
+  ProjectileSpawnPoint: {fileID: 4504851409974770029}
+  TookDamage: 0
+--- !u!114 &1027441766565590753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108515154749169036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0685658e4aa0e9f4087d0fde3f831cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 486352731900335017}
+  maxHealth: 20
+  CurrentHealth: 1
+  MovementSpeed: 6
+  TimeBetweenAttacks: 2
+  RangedAttackDistance: 10
+  KnockbackForce: 15
 --- !u!1 &8832908196202817931
 GameObject:
   m_ObjectHideFlags: 0

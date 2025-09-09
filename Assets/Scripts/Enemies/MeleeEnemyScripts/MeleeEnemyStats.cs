@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Splines;
 
 public class MeleeEnemyStats : MonoBehaviour, IHealth
 {
@@ -14,18 +12,11 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     public float MeleeAttackDistance;
     public float KnockbackForce;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CurrentHealth = maxHealth;
 
         enemy.Agent.speed = MovementSpeed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void Damage(float damage, Vector3 DamageSourcePos)
@@ -39,12 +30,12 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     }
     public void HealHealth(float health)
     {
-        Debug.Log("This shouldn't happen!");
+
     }
 
     public void Death()
     {
-        Debug.Log("Enemy died!");
+
     }
 
     private IEnumerator Knockback(Vector3 direction, float duration)

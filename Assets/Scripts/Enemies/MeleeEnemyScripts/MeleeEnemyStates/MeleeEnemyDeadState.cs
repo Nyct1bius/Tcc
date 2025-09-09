@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MeleeEnemyDeadState : EnemyState
+public class MeleeEnemyDeadState : MeleeEnemyState
 {
     private MeleeEnemy enemy;
 
@@ -18,7 +18,6 @@ public class MeleeEnemyDeadState : EnemyState
 
         ChooseDeathAnimation(Random.Range(1, 3));
 
-        enemy.Animator.SetTrigger("Dead1");
         enemy.GetComponent<CapsuleCollider>().enabled = false;
 
         enemy.StartCoroutine(Despawn(2.2f));

@@ -13,6 +13,7 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     public BoxCollider AttackHitbox;
 
     public bool TookDamage = false;
+    public bool IsPatroller;
 
     public Transform[] PatrolPoints;
 
@@ -24,18 +25,14 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InitializeStateMachine(new MeleeEnemyIdleState(this, this));
+        if (IsPatroller)
+            InitializeStateMachine(new MeleeEnemyPatrolState(this, this));
+        else
+            InitializeStateMachine(new MeleeEnemyIdleState(this, this));
 
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
-        {
             StartCoroutine(WaitToFindPlayer());
-        }
-        else
-        {
-            Debug.Log("Player found");
-        }
-
     }
 
     IEnumerator WaitToFindPlayer()

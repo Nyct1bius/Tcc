@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7317437159642706339}
   - component: {fileID: 2452787464731627628}
   - component: {fileID: 3473728194571692397}
-  - component: {fileID: 8560811519879827072}
   m_Layer: 8
   m_Name: Melee Enemy
   m_TagString: Untagged
@@ -100,6 +99,9 @@ MonoBehaviour:
   RoomManager: {fileID: 0}
   Animator: {fileID: 3126189201008492731}
   AttackHitbox: {fileID: 207317314093163768}
+  TookDamage: 0
+  IsPatroller: 0
+  PatrolPoints: []
 --- !u!114 &3473728194571692397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,22 +117,10 @@ MonoBehaviour:
   enemy: {fileID: 2452787464731627628}
   maxHealth: 30
   CurrentHealth: 1
-  MovementSpeed: 5
+  MovementSpeed: 4
   TimeBetweenAttacks: 2
   MeleeAttackDistance: 6
-  KnockbackForce: 16
---- !u!114 &8560811519879827072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705542044431384098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2591c61d6b526a41886727f5033fa1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  KnockbackForce: 10
 --- !u!1 &4104420187823965813
 GameObject:
   m_ObjectHideFlags: 0

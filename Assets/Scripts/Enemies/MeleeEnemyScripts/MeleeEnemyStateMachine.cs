@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public abstract class EnemyState
+public abstract class MeleeEnemyState
 {
     protected MeleeEnemyStateMachine stateMachine;
 
-    public EnemyState(MeleeEnemyStateMachine stateMachine)
+    public MeleeEnemyState(MeleeEnemyStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
     }
@@ -17,15 +17,15 @@ public abstract class EnemyState
 
 public class MeleeEnemyStateMachine : MonoBehaviour
 {
-    private EnemyState currentState;
+    private MeleeEnemyState currentState;
 
-    public void InitializeStateMachine(EnemyState startingState)
+    public void InitializeStateMachine(MeleeEnemyState startingState)
     {
         currentState = startingState;
         currentState.Enter();
     }
 
-    public void ChangeState(EnemyState newState)
+    public void ChangeState(MeleeEnemyState newState)
     {
         currentState.Exit();
         currentState = newState;

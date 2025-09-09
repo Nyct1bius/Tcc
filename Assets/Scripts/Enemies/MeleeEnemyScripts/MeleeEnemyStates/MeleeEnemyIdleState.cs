@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MeleeEnemyIdleState : EnemyState
+public class MeleeEnemyIdleState : MeleeEnemyState
 {
     private MeleeEnemy enemy;
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MeleeEnemyCombatState : EnemyState
+public class MeleeEnemyCombatState : MeleeEnemyState
 {
     private MeleeEnemy enemy;
 
@@ -17,6 +17,8 @@ public class MeleeEnemyCombatState : EnemyState
     public override void Enter()
     {
         base.Enter();
+
+        enemy.Agent.ResetPath();
     }
 
     public override void UpdateLogic()
