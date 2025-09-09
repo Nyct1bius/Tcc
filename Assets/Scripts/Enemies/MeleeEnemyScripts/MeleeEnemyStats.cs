@@ -53,6 +53,8 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         }
 
         enemy.TookDamage = false;
-        enemy.Agent.enabled = true;
+
+        if (CurrentHealth > 0)
+            enemy.Agent.enabled = true;
     }
 }

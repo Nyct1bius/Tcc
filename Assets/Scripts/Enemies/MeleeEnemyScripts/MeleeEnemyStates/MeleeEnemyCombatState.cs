@@ -27,11 +27,16 @@ public class MeleeEnemyCombatState : MeleeEnemyState
 
         playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
 
-        if (enemy.Stats.CurrentHealth <= 0)       
-            stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
-
         if (!enemy.TookDamage)
             CombatLogic();
+
+        if (enemy.Stats.CurrentHealth <= 0)
+        {
+            stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
+
+            if (enemy.RoomManager != null)
+                enemy.RemoveSelfFromList();
+        }
     }
 
     private void CombatLogic()
@@ -55,6 +60,8 @@ public class MeleeEnemyCombatState : MeleeEnemyState
             enemy.Animator.SetBool("Walk", false);
             enemy.Animator.SetBool("Idle", true);
 
+            enemy.transform.LookAt(playerPosition);
+
             if (!hasAttacked)
             {
                 enemy.StartCoroutine(MeleeAttack(Random.Range(1, 3)));
@@ -74,13 +81,6 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         if (meleeAnimDice == 2)
             enemy.Animator.SetTrigger("Melee2");
 
-        enemy.StartCoroutine(AttackHitboxOnThenOff());
-
-        hasAttacked = false;
-    }
-
-    private IEnumerator AttackHitboxOnThenOff()
-    {
         yield return new WaitForSeconds(0.7f);
 
         enemy.AttackHitbox.enabled = true;
@@ -88,5 +88,7 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         yield return new WaitForSeconds(0.85f);
 
         enemy.AttackHitbox.enabled = false;
+
+        hasAttacked = false;
     }
 }

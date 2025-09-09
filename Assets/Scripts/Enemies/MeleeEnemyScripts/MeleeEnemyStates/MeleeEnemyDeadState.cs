@@ -21,11 +21,6 @@ public class MeleeEnemyDeadState : MeleeEnemyState
         enemy.GetComponent<CapsuleCollider>().enabled = false;
 
         enemy.StartCoroutine(Despawn(2.2f));
-
-        if (enemy.RoomManager != null)
-        {
-            enemy.RemoveSelfFromList();
-        }
     }
 
     public override void UpdateLogic()

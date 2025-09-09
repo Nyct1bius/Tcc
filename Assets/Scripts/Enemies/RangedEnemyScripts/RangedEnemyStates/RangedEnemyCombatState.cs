@@ -44,8 +44,6 @@ public class RangedEnemyCombatState : RangedEnemyState
             enemy.Animator.SetBool("Walk", true);
 
             enemy.StopCoroutine(RangedAttack(Random.Range(1, 3)));
-
-            hasAttacked = false;
         }
         else
         {
@@ -53,6 +51,8 @@ public class RangedEnemyCombatState : RangedEnemyState
 
             enemy.Animator.SetBool("Walk", false);
             enemy.Animator.SetBool("Idle", true);
+
+            enemy.transform.LookAt(playerPosition);
 
             if (!hasAttacked)
             {

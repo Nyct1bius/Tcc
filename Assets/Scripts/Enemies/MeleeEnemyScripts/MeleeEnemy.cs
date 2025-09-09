@@ -11,11 +11,11 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     public RoomManager RoomManager;
     public Animator Animator;
     public BoxCollider AttackHitbox;
+    public Transform[] PatrolPoints;
 
     public bool TookDamage = false;
+    public bool HasHyperarmor;
     public bool IsPatroller;
-
-    public Transform[] PatrolPoints;
 
     private void Awake()
     {
@@ -25,10 +25,17 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (IsPatroller)
-            InitializeStateMachine(new MeleeEnemyPatrolState(this, this));
+        if (!RoomManager.EnemiesAlerted)
+        {
+            if (IsPatroller)
+                InitializeStateMachine(new MeleeEnemyPatrolState(this, this));
+            else
+                InitializeStateMachine(new MeleeEnemyIdleState(this, this));
+        }
         else
-            InitializeStateMachine(new MeleeEnemyIdleState(this, this));
+        {
+            InitializeStateMachine(new MeleeEnemyCombatState(this, this));
+        }
 
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)

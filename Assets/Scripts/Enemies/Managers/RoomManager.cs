@@ -17,19 +17,6 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Door door;
     [SerializeField] private List<GameObject> closingWalls;
 
-    /*
-    private void Start()
-    {
-        foreach (GameObject enemy in MyEnemies)
-        {
-            if (enemy.GetComponent<MeleeEnemy>() != null)
-            {
-                enemy.GetComponent<MeleeEnemy>().RoomManager = this;
-            }
-        }
-    }
-    */
-
     private void OnTriggerEnter(Collider other)
     {
         if (GameManager.instance.PlayerInstance == other.gameObject)
@@ -75,7 +62,8 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject enemy in enemiesWave2)
         {
             enemy.SetActive(true);
-            enemy.GetComponent<EnemyStats>().enabled = true;
+            if (enemy.GetComponent<EnemyStats>())
+                enemy.GetComponent<EnemyStats>().enabled = true;
         }
     }
     public void SpawnThirdWave()
@@ -83,7 +71,8 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject enemy in enemiesWave3)
         {
             enemy.SetActive(true);
-            enemy.GetComponent<EnemyStats>().enabled = false;
+            if (enemy.GetComponent<EnemyStats>())
+                enemy.GetComponent<EnemyStats>().enabled = true;
         }
     }
 

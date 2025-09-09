@@ -21,7 +21,10 @@ public class RangedEnemy : RangedEnemyStateMachine
 
     void Start()
     {
-        InitializeStateMachine(new RangedEnemyIdleState(this, this));
+        if (!RoomManager.EnemiesAlerted)
+            InitializeStateMachine(new RangedEnemyIdleState(this, this));
+        else
+            InitializeStateMachine(new RangedEnemyCombatState(this, this));
 
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
