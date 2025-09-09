@@ -1,24 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public bool paused = false;
 
-    public GameObject _testes;
-
-    [SerializeField]
-    private GameObject _mainMenuScreen;
+    [SerializeField] TMP_Text mapaAtual;
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown("l"))
-        {
-            _testes.SetActive(true);
-        }
-
         if(Input.GetKeyDown("1"))
         {
             // pega item
@@ -41,10 +32,6 @@ public class MainMenu : MonoBehaviour
         }
 
 
-    }
-    public void Title()
-    {
-        SceneManager.LoadSceneAsync("Title Screen");
     }
 
     // testes
