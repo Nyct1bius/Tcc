@@ -30,6 +30,9 @@ public class ListComponentEditor : Editor
 
             SerializedProperty closingWallsProperty = serializedObject.FindProperty("closingWalls");
             EditorGUILayout.PropertyField(closingWallsProperty, true); // 'true' to allow children (i.e., elements of list)
+
+            SerializedProperty doorsProperty = serializedObject.FindProperty("doors");
+            EditorGUILayout.PropertyField(doorsProperty, true); // 'true' to allow children (i.e., elements of list)
         }
         else
         {
@@ -37,8 +40,8 @@ public class ListComponentEditor : Editor
             EditorGUILayout.PropertyField(listProperty, true); // 'true' to allow children (i.e., elements of list)
         }
 
-        SerializedProperty doorProperty = serializedObject.FindProperty("door");
-        EditorGUILayout.PropertyField(doorProperty, true); // 'true' to allow children (i.e., elements of list)
+        //SerializedProperty doorProperty = serializedObject.FindProperty("door");
+        //EditorGUILayout.PropertyField(doorProperty, true); // 'true' to allow children (i.e., elements of list)
 
         
 
