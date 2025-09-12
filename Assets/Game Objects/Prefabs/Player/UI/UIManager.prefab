@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8710410993878591302}
   - component: {fileID: 2072179230427255901}
+  - component: {fileID: 8251116908487397982}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -53,6 +54,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botaoInicial: {fileID: 892277787443366386}
+--- !u!114 &8251116908487397982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16562198944548923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c945395366e4b5343aacf0ddd8c7ff00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapaAtual: {fileID: 6125255192669988871}
+  healthText: {fileID: 9088915663926706743}
+  healthSlider: {fileID: 818872921779010364}
+  timeText: {fileID: 2976123315725730486}
+  playerUIManager: {fileID: 5788725866680835043}
+  inventoryManager: {fileID: 4709963525708250027}
 --- !u!1 &47298403845510379
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,14 +571,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110742701253570250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c945395366e4b5343aacf0ddd8c7ff00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paused: 0
-  _mainMenuScreen: {fileID: 16562198944548923}
   mapaAtual: {fileID: 6125255192669988871}
+  healthText: {fileID: 0}
+  healthSlider: {fileID: 0}
+  timeText: {fileID: 0}
+  playerUIManager: {fileID: 0}
   inventoryManager: {fileID: 4709963525708250027}
 --- !u!114 &9150008658984482465
 MonoBehaviour:
@@ -609,9 +630,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2672380341083330974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.809021, y: 0}
+  m_AnchoredPosition: {x: -3.809021, y: 0}
   m_SizeDelta: {x: 2.382, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4998946356849866408
@@ -635,7 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1860,7 +1881,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1892889981047254515}
   m_HandleRect: {fileID: 0}
@@ -3010,7 +3031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3251,12 +3272,14 @@ MonoBehaviour:
   _healthText: {fileID: 4456777092119504259}
   _stats: {fileID: 11400000, guid: fd92c0ac67ed7e74699d100ad81051f8, type: 2}
   _healthSlider: {fileID: 1430688944405253269}
+  _currentHealth: 0
   _uiHolder: {fileID: 8756191138968592834}
   _timeText: {fileID: 8182047993833910720}
   _timeSlider: {fileID: 3312057449233119290}
   _inputs: {fileID: 11400000, guid: 12337715a3680b24cb9047a0f4e3a238, type: 2}
   _mainMenuScreen: {fileID: 16562198944548923}
   _gameOverMenu: {fileID: 7684114621437310516}
+  tempoDeJogo: 0
 --- !u!114 &5916821046538374523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3695,15 +3718,15 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 278521256681600727}
   m_HandleRect: {fileID: 0}
-  m_Direction: 1
+  m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 500
+  m_MaxValue: 75
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 75
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4011,7 +4034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -2.5, y: 0}
+  m_AnchoredPosition: {x: 2.5, y: 0}
   m_SizeDelta: {x: -5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2846355600261764891

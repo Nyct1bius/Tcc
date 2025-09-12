@@ -16,6 +16,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthText;
     [SerializeField] private PlayerStatsSO _stats;
     [SerializeField] private Slider _healthSlider;
+    public float _currentHealth;
 
     [Header("Timers")]
     [SerializeField] public GameObject _uiHolder;
@@ -31,12 +32,19 @@ public class PlayerUIManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private GameObject _gameOverMenu;
 
+    public float tempoDeJogo = 0f;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        tempoDeJogo += Time.deltaTime;
     }
     private void OnEnable()
     {
@@ -54,11 +62,12 @@ public class PlayerUIManager : MonoBehaviour
 
     public void AtualizePlayerHealthUI(float currentHealth)
     {
+        _currentHealth = currentHealth;
+
         _healthText.text = currentHealth.ToString() + "/" + _stats.maxHealth.ToString();
 
         _healthSlider.value = currentHealth;
     }
-
 
     public void OpenPauseMenu()
     {
