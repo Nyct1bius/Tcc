@@ -69,7 +69,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 705542044431384098}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4.5
+  m_Radius: 3.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -99,9 +99,10 @@ MonoBehaviour:
   RoomManager: {fileID: 0}
   Animator: {fileID: 7466787245121628389}
   AttackHitbox: {fileID: 207317314093163768}
-  TookDamage: 0
-  IsPatroller: 0
   PatrolPoints: []
+  TookDamage: 0
+  HasHyperarmor: 0
+  IsPatroller: 0
 --- !u!114 &3473728194571692397
 MonoBehaviour:
   m_ObjectHideFlags: 0

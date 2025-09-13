@@ -12,6 +12,8 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     public float MeleeAttackDistance;
     public float KnockbackForce;
 
+    public LayerMask GroundLayer;
+
     void Start()
     {
         CurrentHealth = maxHealth;
@@ -24,7 +26,9 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         CurrentHealth -= damage;
 
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
-        StartCoroutine(Knockback(knockbackDir, .4f));
+
+        if (!enemy.HasHyperarmor)
+            StartCoroutine(Knockback(knockbackDir, .4f));
 
         enemy.TookDamage = true;
     }
@@ -48,7 +52,9 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         while (timer < duration)
         {
             transform.position += direction.normalized * KnockbackForce * Time.deltaTime;
+
             timer += Time.deltaTime;
+
             yield return null;
         }
 
@@ -56,5 +62,10 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
 
         if (CurrentHealth > 0)
             enemy.Agent.enabled = true;
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, 5f);
     }
 }

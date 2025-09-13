@@ -205,9 +205,9 @@ public class PlayerCombatManager : MonoBehaviour
     private void OnDrawGizmos()
     {
 
-        Handles.color = Color.yellow;
-        Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
-            _backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
+        //Handles.color = Color.yellow;
+        //Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
+            //_backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
 
         Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
         Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;

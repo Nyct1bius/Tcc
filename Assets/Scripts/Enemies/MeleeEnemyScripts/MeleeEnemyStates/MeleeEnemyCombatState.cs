@@ -30,13 +30,11 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         if (!enemy.TookDamage)
             CombatLogic();
 
-        if (enemy.Stats.CurrentHealth <= 0)
-        {
+        if (enemy.Stats.CurrentHealth <= 0 && enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
 
-            if (enemy.RoomManager != null)
-                enemy.RemoveSelfFromList();
-        }
+        if (!enemy.Stats.IsGrounded())
+            stateMachine.ChangeState(new MeleeEnemyFallingState(stateMachine, enemy));
     }
 
     private void CombatLogic()

@@ -27,11 +27,14 @@ public class RangedEnemyCombatState : RangedEnemyState
 
         playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
 
-        if (enemy.Stats.CurrentHealth <= 0)
-            stateMachine.ChangeState(new RangedEnemyDeadState(stateMachine, enemy));
-
         if (!enemy.TookDamage)
             CombatLogic();
+
+        if (enemy.Stats.CurrentHealth <= 0 && enemy.Stats.IsGrounded())
+            stateMachine.ChangeState(new RangedEnemyDeadState(stateMachine, enemy));
+
+        if (!enemy.Stats.IsGrounded())
+            stateMachine.ChangeState(new RangedEnemyFallingState(stateMachine, enemy));
     }
 
     private void CombatLogic()

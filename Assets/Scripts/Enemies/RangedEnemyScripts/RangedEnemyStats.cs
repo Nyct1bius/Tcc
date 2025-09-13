@@ -57,4 +57,9 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
         if (CurrentHealth > 0)
             enemy.Agent.enabled = true;
     }
+
+    public bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, 5f);
+    }
 }
