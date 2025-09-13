@@ -37,10 +37,14 @@ public class RoomManager : MonoBehaviour
                 {
                     GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
                     Debug.Log("Player found");
-                    //foreach (GameObject walls in closingWalls)
-                    //{
-                    //    walls.SetActive(true);
-                    //}
+                    if(closingWalls.Count > 0)
+                    {
+                        foreach (GameObject walls in closingWalls)
+                        {
+                            walls.SetActive(true);
+                        }
+                    }
+
 
                     foreach (GameObject enemy in enemiesWave1)
                     {
@@ -140,10 +144,13 @@ public class RoomManager : MonoBehaviour
             }
         }
             
+        if(closingWalls.Count > 0)
+        {
+            foreach (GameObject walls in closingWalls)
+            {
+                walls.SetActive(false);
+            }
+        }
 
-        //foreach (GameObject walls in closingWalls)
-        //{
-        //    walls.SetActive(false);
-        //}
     }
 }

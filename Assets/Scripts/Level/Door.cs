@@ -13,7 +13,8 @@ public class Door : MonoBehaviour
     private float t;
     public bool isClosed = true;
     [SerializeField] private GameObject[] gateDoors;
-    [SerializeField] private float[] targetAxisRotations;
+    [SerializeField] private float[] targetAxisRotationsOpen;
+    [SerializeField] private float[] targetAxisRotationsClosed;
 
     void Start()
     {
@@ -65,8 +66,8 @@ public class Door : MonoBehaviour
     {
         if(command == 1 && isClosed)
         {
-            gateDoors[0].transform.DORotate(new Vector3(0, targetAxisRotations[0], 0), openDoorTime);
-            gateDoors[1].transform.DORotate(new Vector3(0, targetAxisRotations[1], 0), openDoorTime);
+            gateDoors[0].transform.DORotate(new Vector3(0, targetAxisRotationsOpen[0], 0), openDoorTime);
+            gateDoors[1].transform.DORotate(new Vector3(0, targetAxisRotationsOpen[1], 0), openDoorTime);
 
             if (gameObject.GetComponent<BoxCollider>())
                 gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -75,8 +76,8 @@ public class Door : MonoBehaviour
         }
         else if (command == 0 && !isClosed)
         {
-            gateDoors[0].transform.DORotate(new Vector3(0, 0, 0), openDoorTime);
-            gateDoors[1].transform.DORotate(new Vector3(0, 0, 0), openDoorTime);
+            gateDoors[0].transform.DORotate(new Vector3(0, targetAxisRotationsClosed[0], 0), openDoorTime);
+            gateDoors[1].transform.DORotate(new Vector3(0, targetAxisRotationsClosed[1], 0), openDoorTime);
 
             if (gameObject.GetComponent<BoxCollider>())
                 gameObject.GetComponent<BoxCollider>().enabled = true;
