@@ -1,17 +1,22 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class Button : MonoBehaviour,IHealth
 {
     [SerializeField] private bool isActivated;
     [SerializeField] private bool isPressed;
     [SerializeField] Door doorToOpen;
-    [SerializeField] private Material newMat;
-    private MeshRenderer meshRenderer;
+    [SerializeField] private MeshRenderer meshRenderer;
     public SteppingTrigger steppingTrigger;
+
+    private float activatedButton = -110f;
+    [SerializeField] GameObject buttonLever;
+    [SerializeField] private GameObject leverGameObject;
+    private Material meshMaterial;
 
     private void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshMaterial = meshRenderer.material;
     }
     public void Death()
     {
@@ -25,6 +30,7 @@ public class Button : MonoBehaviour,IHealth
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
+        
         if (isActivated)
         {
             isActivated = false;
@@ -32,7 +38,9 @@ public class Button : MonoBehaviour,IHealth
             steppingTrigger?.ButtonPressedDeactivation();
             Debug.Log("OpenDoor");
             doorToOpen.CheckIfAllButtonsIsActivated();
-            meshRenderer.material = newMat;
+
+            buttonLever.transform.DORotate(new Vector3(activatedButton, 0, 0), 1.5f);
+            meshMaterial.SetColor("_Emission_Color_Variation", Color.green);
         }
     }
 
