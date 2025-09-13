@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 
@@ -10,6 +11,8 @@ public class Button : MonoBehaviour,IHealth
     public SteppingTrigger steppingTrigger;
 
     private float activatedButton = -110f;
+    public float activatedButtonYAdjust;
+    public bool isRotated = false;
     [SerializeField] GameObject buttonLever;
     [SerializeField] private GameObject leverGameObject;
     private Material meshMaterial;
@@ -28,9 +31,21 @@ public class Button : MonoBehaviour,IHealth
         throw new System.NotImplementedException();
     }
 
+    [ContextMenu("PressTheButton")]
+    public void PressTheButton()
+    {
+        if(isRotated)
+        {
+            buttonLever.transform.DORotate(new Vector3(activatedButton, activatedButtonYAdjust, 0), 1.5f);
+        }
+        else
+            buttonLever.transform.DORotate(new Vector3(activatedButton, 0, 0), 1.5f);
+        meshMaterial.SetColor("_Emission_Color_Variation", Color.green);
+    }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        
+        PressTheButton();
+
         if (isActivated)
         {
             isActivated = false;
@@ -39,8 +54,7 @@ public class Button : MonoBehaviour,IHealth
             Debug.Log("OpenDoor");
             doorToOpen.CheckIfAllButtonsIsActivated();
 
-            buttonLever.transform.DORotate(new Vector3(activatedButton, 0, 0), 1.5f);
-            meshMaterial.SetColor("_Emission_Color_Variation", Color.green);
+
         }
     }
 
