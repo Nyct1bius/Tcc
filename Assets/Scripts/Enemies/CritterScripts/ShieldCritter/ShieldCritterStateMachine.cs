@@ -1,31 +1,31 @@
 using UnityEngine;
 
-public abstract class CritterState
+public abstract class ShieldCritterState
 {
-    protected CritterStateMachine stateMachine;
+    protected ShieldCritterStateMachine stateMachine;
 
-    public CritterState(CritterStateMachine stateMachine)
+    public ShieldCritterState(ShieldCritterStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
     }
 
     public virtual void Enter() { }
     public virtual void UpdateLogic() { }
-    public virtual void UpdatePhysics() { }
+    public virtual void FixedUpdateLogic() { }
     public virtual void Exit() { }
 }
 
-public class CritterStateMachine : MonoBehaviour
+public class ShieldCritterStateMachine : MonoBehaviour
 {
-    private CritterState currentState;
+    private ShieldCritterState currentState;
 
-    public void InitializeStateMachine(CritterState startingState)
+    public void InitializeStateMachine(ShieldCritterState startingState)
     {
         currentState = startingState;
         currentState.Enter();
     }
 
-    public void ChangeState(CritterState newState)
+    public void ChangeState(ShieldCritterState newState)
     {
         currentState.Exit();
         currentState = newState;
@@ -39,6 +39,6 @@ public class CritterStateMachine : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentState?.UpdatePhysics();
+        currentState?.FixedUpdateLogic();
     }
 }

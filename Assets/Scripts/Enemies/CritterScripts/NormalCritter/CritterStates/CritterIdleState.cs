@@ -23,10 +23,7 @@ public class CritterIdleState : CritterState
 
         if (critter.RoomManager.EnemiesAlerted)
         {
-            if (!critter.IsShieldCritter)
-                stateMachine.ChangeState(new CritterFleeState(stateMachine, critter));
-            else
-                stateMachine.ChangeState(new ShieldCritterFleeState(stateMachine, critter));
+            stateMachine.ChangeState(new CritterFleeState(stateMachine, critter));
         }
     }
 }
