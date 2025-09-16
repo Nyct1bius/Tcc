@@ -31,6 +31,20 @@ public class ShieldCritterFleePoint : MonoBehaviour
                 critter.SetL1OrL2();
                 chaseStarted = true;
             }
+            if (isM1 && chaseStarted)
+            {
+                if (playerOnMyLeft)
+                    critter.SetR1();
+                else
+                    critter.SetL1();
+            }
+            if (isL1)
+            {
+                if (playerOnMyLeft)
+                    critter.SetL2();
+                else
+                    critter.SetM1();
+            }
         }
     }
 

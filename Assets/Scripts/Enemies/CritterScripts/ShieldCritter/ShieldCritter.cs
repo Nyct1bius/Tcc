@@ -57,9 +57,17 @@ public class ShieldCritter : ShieldCritterStateMachine
         else
             NextPoint = R1Point;
     }
+    public void SetL1()
+    {
+        NextPoint = L1Point;
+    }
     public void SetL2()
     {
         NextPoint = L2Point;
+    }
+    public void SetR1()
+    {
+        NextPoint = R1Point;
     }
     public void SetR2()
     {
