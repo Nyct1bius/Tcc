@@ -8,6 +8,7 @@ public class CameraTargetingTrigger : MonoBehaviour
     public CinemachineCamera thisCamera;
     [SerializeField] private CameraTarget originalTarget;
     [SerializeField] private CameraTarget temporaryTarget;
+    private float standardFOV, focusedFOV;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class CameraTargetingTrigger : MonoBehaviour
 
         thisCamera = GetComponent<CinemachineCamera>();
         thisCamera.Priority = 0;
+        focusedFOV = 45f;
         StartCoroutine(DelayStart());
     }
 
@@ -26,11 +28,13 @@ public class CameraTargetingTrigger : MonoBehaviour
     {
         temporaryTarget.LookAtTarget = targetToLookAt;
         thisCamera.Target.LookAtTarget = temporaryTarget.LookAtTarget;
+        //StartCoroutine(FOVChangerIn());
     }
 
     public void TrackingTriggerExit()
     {
         thisCamera.Target.LookAtTarget = originalTarget.LookAtTarget;
+        //StartCoroutine(FOVChangerOut());
     }
 
     public void EndCustceneSetting()
@@ -44,5 +48,26 @@ public class CameraTargetingTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
         originalTarget = thisCamera.Target;
+        standardFOV = thisCamera.Lens.FieldOfView;
+    }
+
+    private IEnumerator FOVChangerIn()
+    {
+        float timer = 0;
+        while (timer < 2f)
+        {
+            thisCamera.Lens.FieldOfView = Mathf.Lerp(standardFOV, focusedFOV, timer / 2f);
+            yield return null;
+            timer += Time.deltaTime;
+        }
+    }private IEnumerator FOVChangerOut()
+    {
+        float timer = 0;
+        while (timer < 2f)
+        {
+            thisCamera.Lens.FieldOfView = Mathf.Lerp(focusedFOV, standardFOV, timer / 2f);
+            yield return null;
+            timer += Time.deltaTime;
+        }
     }
 }

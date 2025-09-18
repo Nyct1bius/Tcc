@@ -67,7 +67,7 @@ MonoBehaviour:
     FieldOfView: 90
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 200
+    FarClipPlane: 150
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -98,7 +98,7 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 5, z: 1}
+    PositionDamping: {x: 1, y: 1, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -106,11 +106,11 @@ MonoBehaviour:
   Radius: 10
   Orbits:
     Top:
-      Radius: 5
-      Height: 11
+      Radius: 4
+      Height: 15
     Center:
-      Radius: 12
-      Height: 1.5
+      Radius: 14
+      Height: 2
     Bottom:
       Radius: 3
       Height: -9
@@ -169,7 +169,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 3, z: 0}
-  Damping: {x: 0.5, y: 0.5}
+  Damping: {x: 0.5, y: 1.5}
   Lookahead:
     Enabled: 0
     Time: 0.343
