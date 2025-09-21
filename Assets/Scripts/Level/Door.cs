@@ -20,6 +20,12 @@ public class Door : MonoBehaviour
     {
         closedPosition = transform.position;
         targetPosition += transform.position;
+
+        if(!isClosed)
+        {
+            isClosed = true;
+            OpenDoor();
+        }
     }
 
 
