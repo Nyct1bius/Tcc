@@ -20,6 +20,11 @@ public class WorldMapUI : MonoBehaviour
         // Alterna o mapa com a tecla P
         if (Input.GetKeyDown(KeyCode.M))
         {
+            if(player == null)
+            {
+                GetPlayerReference();
+            }
+
             mapaPanel.SetActive(!mapaPanel.activeSelf);
         }
 
@@ -43,4 +48,33 @@ public class WorldMapUI : MonoBehaviour
         // Atualiza a posição do ícone
         playerIcon.localPosition = new Vector3(x, y, 0f);
     }
+
+    void GetPlayerReference()
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+        if (obj != null)
+            player = obj.transform;
+    }
+
+    /*
+    Posição obj para calcular tamnha do mundo (mapa nao esta centralizado)
+    X = -212
+    Y = 5.9   (nao importa para o mapa)
+    Z = -133
+
+    Escala do obj usado para calcular tamanho do mundo 
+    X = 376
+    Z = 376
+
+    Calcular metade da escala 
+    Half = 376 / 2 = 188
+
+    Limites em X
+    MinX = -212 ? 188 = -400
+    MaxX = -212 + 188 = -24
+
+    Limites em Z
+    MinZ = -133 ? 188 = -321
+    MaxZ = -133 + 188 =  55
+    */
 }
