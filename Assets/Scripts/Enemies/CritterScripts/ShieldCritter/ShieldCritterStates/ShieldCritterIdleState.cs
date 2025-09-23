@@ -13,8 +13,8 @@ public class ShieldCritterIdleState : ShieldCritterState
     {
         base.Enter();
 
-        critter.Animator.SetBool("Walk", false);
-        critter.Animator.SetBool("Idle", true);
+        //critter.Animator.SetBool("Walk", false);
+        //critter.Animator.SetBool("Idle", true);
     }
 
     public override void UpdateLogic()

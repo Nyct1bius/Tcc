@@ -8,7 +8,7 @@ public class ShieldCritterFleePoint : MonoBehaviour
 
     [SerializeField] private bool isM1, isM2, isL1, isL2, isR1, isR2;
 
-    private bool chaseStarted = false, playerOnMyLeft;
+    private bool chaseStarted = false, playerOnMyRight;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class ShieldCritterFleePoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == Player)
+        if (GameManager.instance.PlayerInstance == other.gameObject)
         {
             if (isM1 && !chaseStarted)
             {
@@ -33,18 +33,48 @@ public class ShieldCritterFleePoint : MonoBehaviour
             }
             if (isM1 && chaseStarted)
             {
-                if (playerOnMyLeft)
-                    critter.SetR1();
-                else
+                if (playerOnMyRight)
                     critter.SetL1();
+                else
+                    critter.SetR1();
             }
             if (isL1)
             {
-                if (playerOnMyLeft)
+                if (playerOnMyRight)
                     critter.SetL2();
                 else
                     critter.SetM1();
             }
+            if (isL2)
+            {
+                if (playerOnMyRight)
+                    critter.SetL1();
+                else
+                    critter.SetM2();
+            }
+            if (isR1)
+            {
+                if (playerOnMyRight)
+                    critter.SetM1();
+                else
+                    critter.SetR2();
+            }
+            if (isR2)
+            {
+                if (playerOnMyRight)
+                    critter.SetM2();
+                else
+                    critter.SetR1();
+            }
+            if (isM2)
+            {
+                if (playerOnMyRight)
+                    critter.SetL2();
+                else
+                    critter.SetR2();
+            }
+
+            critter.IsWaiting = false;
         }
     }
 
@@ -67,9 +97,9 @@ public class ShieldCritterFleePoint : MonoBehaviour
 
     private void CheckPlayerSide()
     {
-        if (Player.transform.position.x > transform.position.x)
-            playerOnMyLeft = true;
+        if (Player.transform.position.x < transform.position.x)
+            playerOnMyRight = true;
         else
-            playerOnMyLeft = false;
+            playerOnMyRight = false;
     }
 }
