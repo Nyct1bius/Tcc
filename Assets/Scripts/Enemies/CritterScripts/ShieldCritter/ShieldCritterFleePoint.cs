@@ -4,11 +4,12 @@ using UnityEngine;
 public class ShieldCritterFleePoint : MonoBehaviour
 {
     public GameObject Player;
-    public ShieldCritter critter;
+    public ShieldCritter Critter;
+    public ShieldCritterFleePointActivator Activator;
 
-    [SerializeField] private bool isM1, isM2, isL1, isL2, isR1, isR2;
+    [SerializeField] private bool isM1, isM2, isM3, isL1, isL2, isR1, isR2;
 
-    private bool chaseStarted = false, playerOnMyRight;
+    private bool chaseStarted = false, playerOnMyRight, isMyTurn;
 
     void Start()
     {
@@ -20,61 +21,69 @@ public class ShieldCritterFleePoint : MonoBehaviour
     private void FixedUpdate()
     {
         CheckPlayerSide();
+        CheckCritterDistance();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (GameManager.instance.PlayerInstance == other.gameObject)
+        if (GameManager.instance.PlayerInstance == other.gameObject && isMyTurn)
         {
             if (isM1 && !chaseStarted)
             {
-                critter.SetL1OrL2();
+                Critter.SetL1OrL2();
                 chaseStarted = true;
             }
             if (isM1 && chaseStarted)
             {
                 if (playerOnMyRight)
-                    critter.SetL1();
+                    Critter.SetL1();
                 else
-                    critter.SetR1();
+                    Critter.SetR1();
             }
             if (isL1)
             {
                 if (playerOnMyRight)
-                    critter.SetL2();
+                    Critter.SetL2();
                 else
-                    critter.SetM1();
+                    Critter.SetM1();
             }
             if (isL2)
             {
                 if (playerOnMyRight)
-                    critter.SetL1();
+                    Critter.SetL1();
                 else
-                    critter.SetM2();
+                    Critter.SetM2();
             }
             if (isR1)
             {
                 if (playerOnMyRight)
-                    critter.SetM1();
+                    Critter.SetM1();
                 else
-                    critter.SetR2();
+                    Critter.SetR2();
             }
             if (isR2)
             {
                 if (playerOnMyRight)
-                    critter.SetM2();
+                    Critter.SetM2();
                 else
-                    critter.SetR1();
+                    Critter.SetR1();
             }
-            if (isM2)
+            if (isM2 && !Critter.IsCornered)
             {
                 if (playerOnMyRight)
-                    critter.SetL2();
+                    Critter.SetL2();
                 else
-                    critter.SetR2();
+                    Critter.SetR2();
+            }
+            if (isM2 && Critter.IsCornered)
+            {
+                Critter.SetM3();
+
+                Activator.EndChase();
             }
 
-            critter.IsWaiting = false;
+            Critter.IsWaiting = false;
+            isMyTurn = false;
         }
     }
 
@@ -101,5 +110,13 @@ public class ShieldCritterFleePoint : MonoBehaviour
             playerOnMyRight = true;
         else
             playerOnMyRight = false;
+    }
+
+    private void CheckCritterDistance()
+    {
+        if (Vector3.Distance(transform.position, Critter.gameObject.transform.position) <= 10)
+            isMyTurn = true;
+        else
+            isMyTurn = false;
     }
 }

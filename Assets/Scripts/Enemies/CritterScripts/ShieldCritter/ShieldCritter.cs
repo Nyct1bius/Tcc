@@ -11,9 +11,10 @@ public class ShieldCritter : ShieldCritterStateMachine
     public RoomManager RoomManager;
     public Animator Animator;
 
-    public bool IsAtM1, IsAtM2, IsAtL1, IsAtL2, IsAtR1, IsAtR2, IsCornered, IsWaiting;
+    public bool IsCornered, IsWaiting;
 
-    public Transform M1Point, M2Point, L1Point, L2Point, R1Point, R2Point, CurrentPoint, NextPoint;
+    public Transform M1Point, M2Point, M3Point, L1Point, L2Point, R1Point, R2Point;
+    public Transform CurrentPoint, NextPoint;
 
     private void Awake()
     {
@@ -84,5 +85,9 @@ public class ShieldCritter : ShieldCritterStateMachine
     public void SetM2()
     {
         NextPoint = M2Point;
+    }
+    public void SetM3()
+    {
+        NextPoint = M3Point;
     }
 }
