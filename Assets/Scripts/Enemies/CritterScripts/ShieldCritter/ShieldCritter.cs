@@ -22,12 +22,16 @@ public class ShieldCritter : ShieldCritterStateMachine
 
     private void Start()
     {
-        
+        InitializeStateMachine(new ShieldCritterIdleState(this, this));
+
+        Player = GameManager.instance.PlayerInstance;
+        if (Player == null)
+            StartCoroutine(WaitToFindPlayer());
     }
 
     IEnumerator WaitToFindPlayer()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1);
         if (GameManager.instance.PlayerInstance != null)
         {
             while (Player == null)
