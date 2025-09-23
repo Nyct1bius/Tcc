@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class PlayerHealthManager : MonoBehaviour,IHealth
 {
     [SerializeField] private PlayerUIManager _playerUIManager;
+    [SerializeField] private Shield _shield;  
     [SerializeField] private PlayerStatsSO _stats;
     private float _currentHealth;
     [SerializeField] private float _immortalityTime;
@@ -57,6 +58,9 @@ public class PlayerHealthManager : MonoBehaviour,IHealth
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
+   
+        if (_shield.CanBlock(DamageSourcePos)) return;
+
         _knockBackDirection = (transform.position - DamageSourcePos).normalized;
         if (!_isInvulnerable)
         {

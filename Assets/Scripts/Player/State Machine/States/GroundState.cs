@@ -17,14 +17,18 @@ public class GroundState : State
 
     public override void CheckSwitchState()
     {
-        // Ataque
-        if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null)
+        //if(_ctx.IsBlocking && _ctx.Movement.IsGrounded)
+        //{
+        //    SwitchStates(_factory.Blocking());
+        //    return;
+        //}
+
+        if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null && _ctx.Movement.IsGrounded)
         {
             SwitchStates(_factory.Attack());
             return;
         }
 
-        // Pulo com input buffer
         bool canCoyoteJump = _ctx.Movement.TimeSinceUnground < _ctx.Movement.CoyoteTime
                               && !_ctx.Movement.UngroudedDueToJump;
 
@@ -38,19 +42,17 @@ public class GroundState : State
                 return;
             }
         }
-        // Fall
+
         if (_ctx.Body.linearVelocity.y < 0 && !canCoyoteJump)
         {
             SwitchStates(_factory.Fall());
         }
 
-        // Dash
         if (!_ctx.Movement.DashInCooldown && _ctx.Movement.IsDashButtonPressed)
         {
             SwitchStates(_factory.Dash());
         }
 
-        // Recebeu dano
         if (_ctx.Health.IsDamaged)
         {
             SwitchStates(_factory.Damaged());

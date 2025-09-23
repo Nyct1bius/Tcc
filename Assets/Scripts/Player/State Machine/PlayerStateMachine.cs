@@ -19,6 +19,7 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private PlayerCombatManager _combat;
     [SerializeField] private PlayerHealthManager _health;
+    [SerializeField] private Shield _shield;
     public PlayerData currentData;
 
 
@@ -34,12 +35,13 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     public State CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool GameIsPaused { get { return _gameIsPaused; } }
     public State OldState { get { return _oldState; } set { _oldState = value; } }
-   
+    public bool IsBlocking;   
+
     //Managers
     public PlayerMovement Movement { get { return _movement; } }
     public PlayerCombatManager Combat { get { return _combat; } }
     public PlayerHealthManager Health { get { return _health; } }
-
+    public Shield Shield { get { return _shield; } }
 
     //COMPONENTS
     public Animator PlayerAnimator { get { return animator; } }
@@ -86,6 +88,7 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     }
     private void FixedUpdate()
     {
+        Debug.Log(_currentState);   
         _currentState.FixedUpdateStates();
     }
 

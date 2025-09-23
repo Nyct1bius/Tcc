@@ -12,6 +12,7 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     public event UnityAction<Vector2> MoveEvent;
     public event UnityAction<bool> JumpEvent;
     public event UnityAction<bool> AttackEvent;
+    public event UnityAction<bool> HandleShieldEvent;
     public event UnityAction <bool>DashEvent;
     public event UnityAction InteractEvent;
     public event UnityAction PauseEvent;
@@ -145,5 +146,17 @@ public class InputReader : ScriptableObject, PlayerInputs.IPlayerControlsActions
     {
         if(context.performed)
         LockOnEnemy?.Invoke();
+    }
+
+    public void OnOpenShield(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            HandleShieldEvent?.Invoke(true);
+        }
+        if (context.canceled)
+        {
+            HandleShieldEvent?.Invoke(false);
+        }
     }
 }

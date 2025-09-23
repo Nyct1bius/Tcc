@@ -47,9 +47,13 @@ public class PlayerStateFactory
     {
         return new DeathState(_contex, this);
     }
-    public State PausedState()
+    public State Paused()
     {
         return new PausedState(_contex, this);
+    }
+    public State Blocking()
+    {
+        return new BlockingState(_contex, this);
     }
 
 }

@@ -104,7 +104,6 @@ public class AttackState : State
 
             yield return null;
         }
-
         player.position = targetPos;
         player.rotation = targetRot;
     }

@@ -36,7 +36,10 @@ public class TestEnemyHealth : MonoBehaviour, IHealth
             animator.CrossFade(IdleAnim.name, 0.2f);
         }
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        collision.gameObject.GetComponent<IHealth>()?.Damage(10, transform.position);
+    }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
         if (!isImmortal && currenthealth > 0)

@@ -89,6 +89,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenShield"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f89af57-e30c-48ed-9c05-344ef784bdd6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -342,6 +351,39 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8520f3c7-ae5b-496a-a71b-be4aa41a84dd"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenShield"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d26d29a4-2c21-41c1-a179-93d33e82798b"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenShield"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77fcb07c-446a-4205-a262-e3e018d826fc"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenShield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -970,6 +1012,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_Dash = m_PlayerControls.FindAction("Dash", throwIfNotFound: true);
         m_PlayerControls_OpenMenu = m_PlayerControls.FindAction("OpenMenu", throwIfNotFound: true);
         m_PlayerControls_LockOn = m_PlayerControls.FindAction("LockOn", throwIfNotFound: true);
+        m_PlayerControls_OpenShield = m_PlayerControls.FindAction("OpenShield", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1058,6 +1101,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Dash;
     private readonly InputAction m_PlayerControls_OpenMenu;
     private readonly InputAction m_PlayerControls_LockOn;
+    private readonly InputAction m_PlayerControls_OpenShield;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1069,6 +1113,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_PlayerControls_Dash;
         public InputAction @OpenMenu => m_Wrapper.m_PlayerControls_OpenMenu;
         public InputAction @LockOn => m_Wrapper.m_PlayerControls_LockOn;
+        public InputAction @OpenShield => m_Wrapper.m_PlayerControls_OpenShield;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1099,6 +1144,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
+            @OpenShield.started += instance.OnOpenShield;
+            @OpenShield.performed += instance.OnOpenShield;
+            @OpenShield.canceled += instance.OnOpenShield;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -1124,6 +1172,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
+            @OpenShield.started -= instance.OnOpenShield;
+            @OpenShield.performed -= instance.OnOpenShield;
+            @OpenShield.canceled -= instance.OnOpenShield;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -1284,6 +1335,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnOpenMenu(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
+        void OnOpenShield(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

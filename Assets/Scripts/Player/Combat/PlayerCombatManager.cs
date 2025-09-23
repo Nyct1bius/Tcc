@@ -67,6 +67,7 @@ public class PlayerCombatManager : MonoBehaviour
     {
         _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
+        PlayerEvents.ShieldPickUp += AddShield;
         PlayerEvents.AttackFinished += HandleResetAttack;
         PlayerEvents.AttackVfx += SpawnVFXAttack;
         PlayerEvents.HitEnemy += HitEnemy;
@@ -77,6 +78,7 @@ public class PlayerCombatManager : MonoBehaviour
     private void OnDisable()
     {
         _machine.inputReader.AttackEvent -= CheckAttackButton;
+        _machine.inputReader.HandleShieldEvent -= _machine.Shield.ToggleShield;
         PlayerEvents.SwordPickUp -= AddSword;
         PlayerEvents.AttackFinished -= HandleResetAttack;
         PlayerEvents.AttackVfx -= SpawnVFXAttack;
@@ -92,6 +94,11 @@ public class PlayerCombatManager : MonoBehaviour
         if (_machine.currentData.hasSword)
         {
             AddSword(_backupWeaponData);
+        }
+
+        if (_machine.currentData.hasShield)
+        {
+            AddShield();
         }
     }
     private void Update()
@@ -177,6 +184,12 @@ public class PlayerCombatManager : MonoBehaviour
         _machine.currentData.hasSword = true;
         DataPersistenceManager.instance.SaveGame();
 
+    }
+    private void AddShield()
+    {
+        _machine.currentData.hasShield = true;
+        _machine.inputReader.HandleShieldEvent += _machine.Shield.ToggleShield;
+        DataPersistenceManager.instance.SaveGame();
     }
 
     private void CheckAttackButton(bool attacking)

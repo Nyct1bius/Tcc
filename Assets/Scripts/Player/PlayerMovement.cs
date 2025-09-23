@@ -120,8 +120,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        SetUpJumpVariables();
-        StartCoroutine(HandleGrounded());
+        SetUpJumpVariables();;
     }
 
     private void OnEnable()
@@ -146,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
         UpdateFrictionMaterial();
         IsGroundAtLandingPoint();
         ApplyGravity();
+        HandleGrounded();
     }
 
     private void FixedUpdate()
@@ -178,24 +178,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator HandleGrounded()
+    private void HandleGrounded()
     {
-        while (true)
+        if (_machine.GroundSensor.IsGrounded())
         {
-            if (_machine.GroundSensor.IsGrounded())
-            {
-                _ungroudedDueToJump = false;
-                _timeSinceUnground = 0;
-                _isGrounded = true;
-                _verticalVelocity = 0f;
-            }
-            else
-            {
-                _isGrounded = false;
-            }
-
-            yield return new WaitForSeconds(0.03f);
+            _ungroudedDueToJump = false;
+            _timeSinceUnground = 0;
+            _isGrounded = true;
+            _verticalVelocity = 0f;
         }
+        else
+        {
+            _isGrounded = false;
+        }
+
     }
 
     private void HandleDash(bool isDashing)
@@ -228,13 +224,37 @@ public class PlayerMovement : MonoBehaviour
 
     private void FaceInput()
     {
-        if (_currentMovementInput != Vector2.zero)
+        if (_currentMovementInput != Vector2.zero || _machine.IsBlocking)
         {
-            targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg + _machine.MainCameraRef.transform.eulerAngles.y;
-            angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (_machine.IsBlocking)
+            {
+                Vector3 cameraForward = _machine.MainCameraRef.transform.forward;
+                cameraForward.y = 0f; 
+                cameraForward.Normalize();
+
+                if (cameraForward.sqrMagnitude > 0.01f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                    transform.rotation = Quaternion.Slerp(
+                        transform.rotation,
+                        targetRotation,
+                        Time.deltaTime / turnSmoothTime
+                    );
+                }
+
+                _moveDirection = transform.forward * _currentMovementInput.y +
+                                 transform.right * _currentMovementInput.x;
+            }
+            else
+            {
+                targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg +
+                              _machine.MainCameraRef.transform.eulerAngles.y;
+                angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            }
         }
     }
+
 
     private void UpdateFrictionMaterial()
     {
