@@ -9,11 +9,27 @@ public class WorldMapUI : MonoBehaviour
     public GameObject mapaPanel;          // O painel do mapa (UI)
     public Transform player;              // O Transform do jogador no mundo
 
-    [Header("Limites do mundo (X/Z)")]
-    public float minX = -700f;
-    public float maxX = 276f;
-    public float minZ = -377f;
-    public float maxZ = 172f;
+    [Header("Referências do Mundo")]
+    public Transform worldBottomLeft; // Ponto inferior esquerdo do mundo
+    public Transform worldTopRight;   // Ponto superior direito do mundo
+
+    private float minX, maxX, minZ, maxZ;
+
+    void Start()
+    {
+        // Calcula os limites do mundo com base nos dois pontos
+        if (worldBottomLeft != null && worldTopRight != null)
+        {
+            minX = worldBottomLeft.position.x;
+            minZ = worldBottomLeft.position.z;
+            maxX = worldTopRight.position.x;
+            maxZ = worldTopRight.position.z;
+        }
+        else
+        {
+            Debug.LogWarning("WorldMapUI: Pontos de referência não atribuídos!");
+        }
+    }
 
     void Update()
     {
