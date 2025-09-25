@@ -44,11 +44,12 @@ public class Button : MonoBehaviour,IHealth
     }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        PressTheButton();
+        
 
         if (isActivated)
         {
             isActivated = false;
+            PressTheButton();
             isPressed = true;
             steppingTrigger?.ButtonPressedDeactivation();
             Debug.Log("OpenDoor");
