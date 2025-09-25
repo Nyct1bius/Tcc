@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public CinemachineCamera _cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
     private Transform _checkpoint;
+    public int _checkpointIndex;
     private Transform _spawnPos;
     public bool IsRestartingGame;
     public bool isNewGame;
@@ -186,6 +187,7 @@ public class GameManager : MonoBehaviour
     public void SetCheckpoint(Transform newCheckpoint, int cpIndex)
     {
         _checkpoint = newCheckpoint;
+        _checkpointIndex = cpIndex;
         if(cpIndex != lastCheckPointIndex)
         {
             lastCheckPointIndex = cpIndex;

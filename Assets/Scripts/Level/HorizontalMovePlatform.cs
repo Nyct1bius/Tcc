@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using System.Collections;
+using System.Linq;
 
 public class HorizontalMovePlatform : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class HorizontalMovePlatform : MonoBehaviour
 
     public bool loop = false;
     public bool isGoingBack = false;
+
+    public bool needsToReturn = false;
+    public int checkpointIndexChecker = 0;
 
 
 
@@ -34,6 +38,7 @@ public class HorizontalMovePlatform : MonoBehaviour
         if (points.Count == 0) return;
 
         Vector3 target = points[currentIndex].position;
+        print(points.Count);
         //transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
 
         transform.parent.DOMove(target, 4f).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.15f).OnComplete(() =>
@@ -94,5 +99,22 @@ public class HorizontalMovePlatform : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         other.transform.parent = null;
+        if(needsToReturn)
+        {
+            print("HasLeftTrigger");
+            StartCoroutine(DelayReturn());
+        }
+    }
+
+    private IEnumerator DelayReturn()
+    {
+        yield return new WaitForSeconds(2f);
+        print("Has Waited");
+        print(currentIndex);
+        if(currentIndex  == 0 && GameManager.instance._checkpointIndex < checkpointIndexChecker)
+        {
+            print("HasAccessedIF");
+            MovePlatform();
+        }
     }
 }
