@@ -10,6 +10,7 @@ public class RoomManager : MonoBehaviour
     public List<GameObject> enemiesWave2;
     public List<GameObject> enemiesWave3;
 
+    public bool isTriggered = false;
     public bool EnemiesAlerted = false;
     public bool isWavedRoom = false;
     public bool isThereWave3 = false;
@@ -19,8 +20,9 @@ public class RoomManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (GameManager.instance.PlayerInstance == other.gameObject)
+        if (GameManager.instance.PlayerInstance == other.gameObject && !isTriggered)
         {
+            isTriggered = true;
             if (!isWavedRoom)
             {
                 GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
