@@ -2,13 +2,14 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+
 
 public class SteppingTrigger : MonoBehaviour
 {
-    [SerializeField] private Material pressedMat;
-    [SerializeField] private Material normalMat;
+    [SerializeField] private GameObject plateObject;
+
     [SerializeField] private Button[] ButtonsToActivate;
-    private MeshRenderer triggerMeshRenderer;
     [SerializeField] BoxCollider boxCollider;
 
     [SerializeField] private float activationTimer;
@@ -25,7 +26,6 @@ public class SteppingTrigger : MonoBehaviour
 
     private void Awake()
     {
-        triggerMeshRenderer = GetComponent<MeshRenderer>();
     }
     private void Start()
     {
@@ -55,7 +55,6 @@ public class SteppingTrigger : MonoBehaviour
 
     private void ActivateTrigger()
     {
-        triggerMeshRenderer.material = pressedMat;
         if(countdownCoroutine != null ) StopCoroutine(CountdownTimerRoutine(activationTimer));
         for( int i = 0; i < ButtonsToActivate.Length; i++ )
         {
@@ -65,15 +64,19 @@ public class SteppingTrigger : MonoBehaviour
         if(activatesEnemies && !roomsToActivate.activeSelf)
             roomsToActivate.SetActive(true);
 
+        plateObject.transform.DOMoveY(plateObject.transform.position.y - 0.7f, 1f);
+        boxCollider.enabled = false;
+
         
     }
     private void DeactivateTrigger()
     {
-        triggerMeshRenderer.material = normalMat;
         for (int i = 0; i < ButtonsToActivate.Length; i++)
         {
             ButtonsToActivate[i].DeactivatedButton();
         }
+        plateObject.transform.DOMoveY(plateObject.transform.position.y + 0.7f, 1f);
+        boxCollider.enabled = true;
     }
 
     private IEnumerator CountdownTimerRoutine(float time)
