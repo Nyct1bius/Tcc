@@ -8,7 +8,7 @@ public class HorizontalMovePlatform : MonoBehaviour
 {
     public List<Transform> points;
     [SerializeField] float movementSpeed = 5f;
-    private int currentIndex = 1;
+    public int currentIndex = 1;
     private Vector3 lastPosition;
     public Vector3 velocity { get; private set; }
 
@@ -27,27 +27,18 @@ public class HorizontalMovePlatform : MonoBehaviour
         lastPosition = transform.position;
 
     }
-    private void FixedUpdate()
-    {
-        //MovePlatform();
-    }
 
-    private void MovePlatform()
+    [ContextMenu("MovePlatform")]
+    public void MovePlatform()
     {
         print("MovePlatformCalled");
         if (points.Count == 0) return;
 
         Vector3 target = points[currentIndex].position;
-        print(points.Count);
-        //transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
 
         transform.parent.DOMove(target, 4f).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.15f).OnComplete(() =>
                 transform.parent.position = target).OnComplete(() => SetNextIndex()));
 
-        //if (Vector3.Distance(transform.position, target) < 0.01f)
-        //{
-            
-        //}
     }
 
     public void SetNextIndex()
@@ -102,7 +93,7 @@ public class HorizontalMovePlatform : MonoBehaviour
         if(needsToReturn)
         {
             print("HasLeftTrigger");
-            StartCoroutine(DelayReturn());
+            //StartCoroutine(DelayReturn());
         }
     }
 
