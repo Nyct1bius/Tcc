@@ -52,6 +52,12 @@ public class JumpState : State
 
     public override void CheckSwitchState()
     {
+        if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null && _ctx.Movement.IsGrounded)
+        {
+            SwitchStates(_factory.Attack());
+            return;
+        }
+
         if (_ctx.Movement.IsGrounded)
         {
             SwitchStates(_factory.Grounded());

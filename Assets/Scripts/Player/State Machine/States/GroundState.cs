@@ -17,11 +17,11 @@ public class GroundState : State
 
     public override void CheckSwitchState()
     {
-        //if(_ctx.IsBlocking && _ctx.Movement.IsGrounded)
-        //{
-        //    SwitchStates(_factory.Blocking());
-        //    return;
-        //}
+        if(_ctx.IsBlocking && _ctx.Movement.IsGrounded)
+        {
+            SwitchStates(_factory.Blocking());
+            return;
+        }
 
         if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null && _ctx.Movement.IsGrounded)
         {

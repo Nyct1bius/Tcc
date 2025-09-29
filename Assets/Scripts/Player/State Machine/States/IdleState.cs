@@ -24,6 +24,11 @@ public class IdleState : State
 
     public override void FixedDo() 
     {
+        if (_ctx.IsBlocking)
+        {
+            _ctx.AnimationSystem.UpdateShieldMovement(_ctx.Movement.CurrentMovementInput);
+            return;
+        }
         _ctx.AnimationSystem.UpdateMovement(_ctx.Body.linearVelocity.magnitude);
     }
 

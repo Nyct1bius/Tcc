@@ -182,6 +182,23 @@ public class AnimationSystem
     }
 
     #endregion
+
+    #region Shield
+    public void UpdateShieldMovement(Vector2 input)
+    {
+        _movementController.SetFloat("inputX", input.x);
+        _movementController.SetFloat("inputY", input.y);
+    }
+    public void ShieldUp()
+    {
+        _movementController.SetTrigger("ShieldUp");
+        _movementController.SetBool("IsBlocking", true);
+    }
+    public void ShieldDown()
+    {
+        _movementController.SetBool("IsBlocking", false);
+    }
+    #endregion
     public void Destroy()
     {
         if(_playableGraph.IsValid())

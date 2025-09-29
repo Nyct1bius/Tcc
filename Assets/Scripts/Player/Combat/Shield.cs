@@ -5,12 +5,24 @@ public class Shield : MonoBehaviour
     [SerializeField] private PlayerStateMachine _machine;
     [SerializeField] private GameObject shieldVisual;
     [SerializeField] private float defenseAngle;
-
+    private Animator _shieldAnimator;
+    private void Awake()
+    {
+        _shieldAnimator = shieldVisual.GetComponent<Animator>();    
+    }
     public void ToggleShield(bool isBlocking)
     {
         _machine.IsBlocking = isBlocking;
-        shieldVisual.SetActive(_machine.IsBlocking);
-        Debug.Log(_machine.IsBlocking ? "Shield is raised." : "Shield is lowered.");
+       if(_machine.IsBlocking)
+        {
+            shieldVisual.SetActive(true);
+            _shieldAnimator.Play("Shield_Open");
+        }
+        else if(shieldVisual.activeInHierarchy)
+        {
+
+            _shieldAnimator.Play("Shield_Close");
+        }
     }
 
     public bool CanBlock(Vector3 enemyPos)
