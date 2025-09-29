@@ -65,7 +65,6 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _machine.inputReader.AttackEvent += CheckAttackButton;
         PlayerEvents.SwordPickUp += AddSword;
         PlayerEvents.ShieldPickUp += AddShield;
         PlayerEvents.AttackFinished += HandleResetAttack;
@@ -183,6 +182,7 @@ public class PlayerCombatManager : MonoBehaviour
         _currentWeaponVisual = Instantiate(_currentWeaponData.weaponVisual, _weaponPos);
         _machine.currentData.hasSword = true;
         DataPersistenceManager.instance.SaveGame();
+        _machine.inputReader.AttackEvent += CheckAttackButton;
 
     }
     private void AddShield()
@@ -194,7 +194,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void CheckAttackButton(bool attacking)
     {
-        if (attacking && !_attackIncooldown && _currentWeaponData != null)
+        if (attacking && !_attackIncooldown && _currentWeaponData != null && _machine.Movement.IsGrounded)
         {
             _isAttacking = true;
             StartCoroutine(AttackVisual());

@@ -12,6 +12,8 @@ public class Shield : MonoBehaviour
     }
     public void ToggleShield(bool isBlocking)
     {
+        if (!_machine.Movement.IsGrounded) return;
+
         _machine.IsBlocking = isBlocking;
        if(_machine.IsBlocking)
         {

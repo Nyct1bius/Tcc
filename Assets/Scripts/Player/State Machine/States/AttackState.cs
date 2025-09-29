@@ -48,24 +48,6 @@ public class AttackState : State
         {
             SwitchStates(_factory.Damaged());
         }
-        bool canCoyoteJump = _ctx.Movement.TimeSinceUnground < _ctx.Movement.CoyoteTime
-                              && !_ctx.Movement.UngroudedDueToJump;
-
-        if (_ctx.Movement.HasBufferedJump)
-        {
-            if (canCoyoteJump || _ctx.Movement.IsGrounded)
-            {
-                Debug.Log("Jumping from GroundState");
-                SwitchStates(_factory.Jump());
-                _ctx.Movement._timeSinceJumpPressed = Mathf.Infinity;
-                return;
-            }
-        }
-
-        if (_ctx.Body.linearVelocity.y < 0 && !canCoyoteJump)
-        {
-            SwitchStates(_factory.Fall());
-        }
     }
 
     public override void InitializeSubState() { }
