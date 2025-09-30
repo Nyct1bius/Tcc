@@ -9,6 +9,8 @@ public class ShieldCritterFleePoint : MonoBehaviour
 
     [SerializeField] private bool isM1, isM2, isM3, isL1, isL2, isR1, isR2;
 
+    [SerializeField] private Transform sideChecker;
+
     private bool chaseStarted = false, playerOnMyRight, isMyTurn;
 
     void Start()
@@ -106,7 +108,7 @@ public class ShieldCritterFleePoint : MonoBehaviour
 
     private void CheckPlayerSide()
     {
-        if (Player.transform.position.x < transform.position.x)
+        if (Player.transform.position.x < sideChecker.position.x)
             playerOnMyRight = true;
         else
             playerOnMyRight = false;

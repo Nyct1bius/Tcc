@@ -18,6 +18,9 @@ public class ShieldCritterFleeState : ShieldCritterState
         critter.CurrentPoint = critter.NextPoint;
         critter.Agent.SetDestination(critter.CurrentPoint.position);
         critter.IsWaiting = false;
+
+        critter.Animator.SetBool("Running", true);
+        critter.Animator.SetBool("Idle", false);
     }
 
     public override void UpdateLogic()
@@ -29,11 +32,17 @@ public class ShieldCritterFleeState : ShieldCritterState
             critter.Agent.ResetPath();
             critter.CurrentPoint = critter.NextPoint;
 
+            critter.Animator.SetBool("Trembling", true);
+            critter.Animator.SetBool("Running", false);
+
             critter.IsWaiting = true;
         }
         if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) > 10 && !critter.IsWaiting)
         {
             critter.Agent.SetDestination(critter.NextPoint.position);
+
+            critter.Animator.SetBool("Running", true);
+            critter.Animator.SetBool("Trembling", false);
 
             critter.IsWaiting = false;
         }
