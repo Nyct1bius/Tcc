@@ -62,6 +62,8 @@ public class ShieldCritterFleePoint : MonoBehaviour
                     Critter.SetM1();
                 else
                     Critter.SetR2();
+
+                Debug.Log("R1");
             }
             if (isR2)
             {
@@ -79,9 +81,7 @@ public class ShieldCritterFleePoint : MonoBehaviour
             }
             if (isM2 && Critter.IsCornered)
             {
-                Critter.SetM3();
-
-                Activator.EndChase();
+                Critter.SetM3();;
             }
 
             Critter.IsWaiting = false;
