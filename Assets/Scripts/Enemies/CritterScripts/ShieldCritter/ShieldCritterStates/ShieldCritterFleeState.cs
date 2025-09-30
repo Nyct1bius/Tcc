@@ -27,7 +27,7 @@ public class ShieldCritterFleeState : ShieldCritterState
     {
         base.UpdateLogic();
 
-        if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) <= 10 && !critter.IsWaiting)
+        if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) <= 4 && !critter.IsWaiting)
         {
             critter.Agent.ResetPath();
             critter.CurrentPoint = critter.NextPoint;
@@ -37,7 +37,7 @@ public class ShieldCritterFleeState : ShieldCritterState
 
             critter.IsWaiting = true;
         }
-        if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) > 10 && !critter.IsWaiting)
+        if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) > 4 && !critter.IsWaiting)
         {
             critter.Agent.SetDestination(critter.NextPoint.position);
 
