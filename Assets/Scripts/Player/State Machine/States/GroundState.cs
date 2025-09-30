@@ -17,16 +17,14 @@ public class GroundState : State
 
     public override void CheckSwitchState()
     {
-        //if(_ctx.IsBlocking && _ctx.Movement.IsGrounded)
-        //{
-        //    SwitchStates(_factory.Blocking());
-        //    return;
-        //}
+        if(_ctx.IsBlocking && _ctx.Movement.IsGrounded)
+        {
+            SwitchStates(_factory.Blocking());
+        }
 
         if (_ctx.Combat.IsAttacking && _ctx.Combat.CurrentWeaponData != null && _ctx.Movement.IsGrounded)
         {
             SwitchStates(_factory.Attack());
-            return;
         }
 
         bool canCoyoteJump = _ctx.Movement.TimeSinceUnground < _ctx.Movement.CoyoteTime
@@ -39,7 +37,6 @@ public class GroundState : State
                 Debug.Log("Jumping from GroundState");
                 SwitchStates(_factory.Jump());
                 _ctx.Movement._timeSinceJumpPressed = Mathf.Infinity;
-                return;
             }
         }
 

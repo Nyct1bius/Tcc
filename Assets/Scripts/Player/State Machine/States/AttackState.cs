@@ -29,7 +29,7 @@ public class AttackState : State
     {
         PlayerEvents.StartAttackDetection -= StartAttackCollisionDetection;
         _ctx.Combat.IsAttacking = false;
-        if (!_ctx.Health.IsDamaged) // só avança combo se não foi interrompido
+        if (!_ctx.Health.IsDamaged)
         {
             _ctx.Combat.AttackCount++;
             if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)

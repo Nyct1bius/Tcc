@@ -5,13 +5,13 @@ public class WorldMapUI : MonoBehaviour
 {
     [Header("Referências")]
     public RectTransform mapaImage;       // A imagem do mapa (RectTransform da UI)
-    public RectTransform playerIcon;      // O ícone do jogador (UI)
-    public GameObject mapaPanel;          // O painel do mapa (UI)
-    public Transform player;              // O Transform do jogador no mundo
+    public RectTransform playerIcon;      
+    public GameObject mapaPanel;          
+    public Transform player;              
 
     [Header("Referências do Mundo")]
-    public Transform worldBottomLeft; // Ponto inferior esquerdo do mundo
-    public Transform worldTopRight;   // Ponto superior direito do mundo
+    public Transform worldBottomLeft; 
+    public Transform worldTopRight;   
 
     private float minX, maxX, minZ, maxZ;
 
@@ -63,6 +63,10 @@ public class WorldMapUI : MonoBehaviour
 
         // Atualiza a posição do ícone
         playerIcon.localPosition = new Vector3(x, y, 0f);
+
+        // Pega a rotação do jogador no eixo Y e inverte para alinhar com a UI
+        float rotY = -player.eulerAngles.y;
+        playerIcon.localRotation = Quaternion.Euler(0f, 0f, rotY);
     }
 
     void GetPlayerReference()
@@ -71,26 +75,4 @@ public class WorldMapUI : MonoBehaviour
         if (obj != null)
             player = obj.transform;
     }
-
-    /*
-    Posição obj para calcular tamnha do mundo (mapa nao esta centralizado)
-    X = -212
-    Y = 5.9   (nao importa para o mapa)
-    Z = -133
-
-    Escala do obj usado para calcular tamanho do mundo 
-    X = 376
-    Z = 376
-
-    Calcular metade da escala 
-    Half = 376 / 2 = 188
-
-    Limites em X
-    MinX = -212 ? 188 = -400
-    MaxX = -212 + 188 = -24
-
-    Limites em Z
-    MinZ = -133 ? 188 = -321
-    MaxZ = -133 + 188 =  55
-    */
 }
