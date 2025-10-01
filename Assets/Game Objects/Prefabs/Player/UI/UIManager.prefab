@@ -3294,6 +3294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barraProgresso: {fileID: 7364247200267942798}
   loadScreen: {fileID: 6479047318790349307}
+  engrenagem: {fileID: 8284666042170080229}
 --- !u!1 &2239345812522250842
 GameObject:
   m_ObjectHideFlags: 0
@@ -11725,7 +11726,6 @@ GameObject:
   - component: {fileID: 5262303117828826236}
   - component: {fileID: 4324423777259893301}
   - component: {fileID: 1119030456571785229}
-  - component: {fileID: 6876170895681176765}
   m_Layer: 5
   m_Name: LoadSimbolo
   m_TagString: Untagged
@@ -11790,28 +11790,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &6876170895681176765
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8284666042170080229}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7feed27956ce1a3478733b7287708921, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8308283871130297002
 GameObject:
   m_ObjectHideFlags: 0

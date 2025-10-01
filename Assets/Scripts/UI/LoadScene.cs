@@ -10,6 +10,8 @@ public class LoadScene : MonoBehaviour
 
     public GameObject loadScreen;
 
+    public GameObject engrenagem;
+
     public void StartLoad(string levelToLoad)
     {
         StartCoroutine(Load(levelToLoad));
@@ -23,9 +25,12 @@ public class LoadScene : MonoBehaviour
         yield return null;
 
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(levelToLoad);
+        
 
         while (!asyncOperation.isDone)
         {
+            engrenagem.transform.Rotate(0f, 0f, -90f * Time.deltaTime);
+
             float loadProgress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
 
             barraProgresso.value = loadProgress;
@@ -34,5 +39,9 @@ public class LoadScene : MonoBehaviour
         }
 
         barraProgresso.value = 1f;
+
+        yield return new WaitForSeconds(0.3f);
+
+        
     }
 }
