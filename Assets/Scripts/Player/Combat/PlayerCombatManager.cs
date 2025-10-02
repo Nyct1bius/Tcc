@@ -181,7 +181,7 @@ public class PlayerCombatManager : MonoBehaviour
         _currentWeaponData = currentWeapon;
         _currentWeaponVisual = Instantiate(_currentWeaponData.weaponVisual, _weaponPos);
         _machine.currentData.hasSword = true;
-        DataPersistenceManager.instance.SaveGame();
+        DataPersistenceManager.Instance.SaveGame();
         _machine.inputReader.AttackEvent += CheckAttackButton;
 
     }
@@ -189,7 +189,7 @@ public class PlayerCombatManager : MonoBehaviour
     {
         _machine.currentData.hasShield = true;
         _machine.inputReader.HandleShieldEvent += _machine.Shield.ToggleShield;
-        DataPersistenceManager.instance.SaveGame();
+        DataPersistenceManager.Instance.SaveGame();
     }
 
     private void CheckAttackButton(bool attacking)

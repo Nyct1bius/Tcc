@@ -31,7 +31,7 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
             isPlayerNearby = true;
 
             // dispara o save automaticamente
-            DataPersistenceManager.instance.SaveGame();
+            DataPersistenceManager.Instance.SaveGame();
 
             saveText.SetActive(true); // trocar para animação depois
             StartCoroutine(HideSaveTextAfterDelay(3f));

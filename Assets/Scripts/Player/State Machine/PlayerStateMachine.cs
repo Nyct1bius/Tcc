@@ -61,7 +61,7 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.Enter();
-        DataPersistenceManager.instance.LoadGame();
+        DataPersistenceManager.Instance.LoadGame();
         //Get Components
         _mainCameraRef = Camera.main;
 
@@ -79,7 +79,7 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     {
         GameEvents.PauseGame -= OnPauseGame;
         GameEvents.ResumeGame -= OnResumeGame;
-        DataPersistenceManager.instance.SaveGame();
+        DataPersistenceManager.Instance.SaveGame();
     }
     private void Update()
     {

@@ -10,7 +10,7 @@ public class GameLoader : MonoBehaviour
 
     public Vector3 LoadSpawnPos()
     {
-        PlayerData data = DataPersistenceManager.instance.GetGameData();
+        PlayerData data = DataPersistenceManager.Instance.GetGameData();
         var posToSpawn = Vector3.zero;
         if (data != null && !string.IsNullOrEmpty(data.lastTotemId))
         {

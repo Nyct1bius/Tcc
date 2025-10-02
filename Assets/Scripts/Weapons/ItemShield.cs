@@ -3,16 +3,13 @@ using UnityEngine;
 
 public class ItemShield : Item, IProximityEventTrigger, IDataPersistence
 {
-    bool hasSword;
+   [SerializeField] bool hasShield;
     private void Start()
     {
-        DataPersistenceManager.instance.LoadGame();
-        if (hasSword)
-        {
-            Destroy(gameObject);
-        }
+        
         transform.DORotate(new Vector3(0, 180f, 0), 10f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
         transform.DOLocalMoveY(transform.position.y + 1f, 3f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+
     }
     private void OnEnable()
     {
@@ -28,6 +25,8 @@ public class ItemShield : Item, IProximityEventTrigger, IDataPersistence
         PlayerEvents.OnShieldPickUp();
         OnExit();
         Destroy(gameObject);
+        hasShield = true;
+        DataPersistenceManager.Instance.SaveGame();
     }
 
     public void OnEnter()
@@ -48,11 +47,17 @@ public class ItemShield : Item, IProximityEventTrigger, IDataPersistence
 
     public void LoadData(PlayerData data)
     {
-        hasSword = data.hasShield;
+        hasShield = data.hasShield;
+
+        if (hasShield)
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     public void SaveData(PlayerData data)
     {
-
+        data.hasShield = hasShield;
     }
 }

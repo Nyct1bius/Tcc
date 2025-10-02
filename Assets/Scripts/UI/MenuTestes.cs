@@ -18,16 +18,16 @@ public class MenuTestes : MonoBehaviour
 
     public void SaveGame()
     {
-        DataPersistenceManager.instance.SaveGame(); // não pode salvar sem inicializar o game data primeiro
+        DataPersistenceManager.Instance.SaveGame(); // não pode salvar sem inicializar o game data primeiro
     }
 
     public void LoadGame()
     {
-        DataPersistenceManager.instance.LoadGame();
+        DataPersistenceManager.Instance.LoadGame();
     }
 
     public void NewGame()
     {
-        DataPersistenceManager.instance.NewGame();
+        DataPersistenceManager.Instance.NewGame();
     }
 }

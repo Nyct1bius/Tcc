@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isNewGame)
         {
-            DataPersistenceManager.instance.LoadGame();
+            DataPersistenceManager.Instance.LoadGame();
             if(loader.LoadSpawnPos() != Vector3.zero)
             {
                 spawnPoint.position = loader.LoadSpawnPos();

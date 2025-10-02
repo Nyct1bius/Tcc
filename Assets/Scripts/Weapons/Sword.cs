@@ -6,10 +6,11 @@ public class Sword : Item, IProximityEventTrigger, IDataPersistence
     bool hasSword;
     private void Start()
     {
-        DataPersistenceManager.instance.LoadGame();
+        DataPersistenceManager.Instance.LoadGame();
         if (hasSword)
         {
             Destroy(gameObject);
+            return;
         }
         transform.DORotate(new Vector3(0, 180f, 0),10f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
         transform.DOLocalMoveY(transform.position.y + 1f, 3f).SetEase(Ease.InOutSine).SetLoops(-1,LoopType.Yoyo);
@@ -28,6 +29,8 @@ public class Sword : Item, IProximityEventTrigger, IDataPersistence
         PlayerEvents.OnSwordPickUp(weaponData);
         OnExit();
        Destroy(gameObject);
+        hasSword = true;
+        DataPersistenceManager.Instance.SaveGame();
     }
 
     public void OnEnter()
@@ -53,7 +56,7 @@ public class Sword : Item, IProximityEventTrigger, IDataPersistence
 
     public void SaveData(PlayerData data)
     {
-   
+        data.hasSword = hasSword;
     }
 }
 

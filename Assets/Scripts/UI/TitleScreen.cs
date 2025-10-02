@@ -24,9 +24,9 @@ public class TitleScreen : MonoBehaviour
         _fase1.SetActive(true);
         _fase2.SetActive(false);
 
-        if(DataPersistenceManager.instance != null)
+        if(DataPersistenceManager.Instance != null)
         {
-            bool hasSave = DataPersistenceManager.instance.HasGameData();
+            bool hasSave = DataPersistenceManager.Instance.HasGameData();
             continueButton.interactable = hasSave;
         }
         else
@@ -52,9 +52,9 @@ public class TitleScreen : MonoBehaviour
     public void Continue()
     {
         // Garante que existe um DataPersistenceManager
-        if (DataPersistenceManager.instance != null)
+        if (DataPersistenceManager.Instance != null)
         {
-            DataPersistenceManager.instance.LoadGame();
+            DataPersistenceManager.Instance.LoadGame();
         }
         GameManager.instance.isNewGame = false;
         loadscene.StartLoad("1 - First Level");
@@ -63,9 +63,9 @@ public class TitleScreen : MonoBehaviour
     public void NewGame()
     {
         // verificar se tem um save e se tiver mostrar uma menssagem de que vai perder o progresso do outro save
-        if (DataPersistenceManager.instance != null)
+        if (DataPersistenceManager.Instance != null)
         {
-            DataPersistenceManager.instance.NewGame();
+            DataPersistenceManager.Instance.NewGame();
         }
         GameManager.instance.isNewGame = true;
         loadscene.StartLoad("1 - First Level");
