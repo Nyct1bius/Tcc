@@ -51,6 +51,7 @@ public class SteppingTrigger : MonoBehaviour
         {
             ActivateTrigger();
         }
+
     }
 
     private void ActivateTrigger()
