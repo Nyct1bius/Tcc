@@ -41,18 +41,12 @@ public class ShieldCritter : ShieldCritterStateMachine
                 yield return null;
             }
         }
-        else
-        {
-            Debug.LogWarning("GameManager Instance not found");
-        }
     }
 
     public void RemoveSelfFromList()
     {
         if (RoomManager != null)
-        {
             RoomManager.RemoveEnemyFromList(gameObject);
-        }
     }
 
     public void SetL1OrL2()

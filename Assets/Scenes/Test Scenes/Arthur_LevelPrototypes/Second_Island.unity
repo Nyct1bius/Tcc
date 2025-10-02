@@ -57487,6 +57487,74 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4acb424706787fc40a9b3441100c500e, type: 2}
+--- !u!1 &1167850822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167850823}
+  - component: {fileID: 1167850825}
+  - component: {fileID: 1167850824}
+  m_Layer: 0
+  m_Name: 'Objective Reset Point '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167850823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167850822}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.82, y: -8.72, z: 197.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1884106473}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1167850824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167850822}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 10, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1167850825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167850822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aed6af7038410f43a1246d9276b317b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  critter: {fileID: 1285115689}
+  isResetPoint: 1
 --- !u!1001 &1168452231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63156,15 +63224,15 @@ GameObject:
   - component: {fileID: 1285115687}
   - component: {fileID: 1285115691}
   - component: {fileID: 1285115690}
-  - component: {fileID: 1285115689}
   - component: {fileID: 1285115688}
+  - component: {fileID: 1285115689}
   m_Layer: 0
   m_Name: Shield Critter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1285115687
 Transform:
   m_ObjectHideFlags: 0
@@ -63173,14 +63241,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285115686}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: -5.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 542194612}
   m_Father: {fileID: 1884106473}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1285115688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63196,7 +63264,7 @@ MonoBehaviour:
   critter: {fileID: 1285115689}
   maxHealth: 100
   CurrentHealth: 1
-  MovementSpeed: 14
+  MovementSpeed: 22
 --- !u!114 &1285115689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71072,7 +71140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1447756272
 Transform:
   m_ObjectHideFlags: 0
@@ -71082,7 +71150,7 @@ Transform:
   m_GameObject: {fileID: 1447756271}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.82, y: -9.19, z: 195.98}
+  m_LocalPosition: {x: -0.82, y: -4.84, z: 170.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -71107,7 +71175,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 10, z: 20}
+  m_Size: {x: 30, y: 10, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1447756274
 MonoBehaviour:
@@ -71122,6 +71190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   critter: {fileID: 1285115689}
+  isResetPoint: 0
 --- !u!1 &1455286706
 GameObject:
   m_ObjectHideFlags: 0
@@ -80242,7 +80311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a3af29d257d89874880ebaf8c1b6c8f8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -89899,6 +89968,7 @@ Transform:
   - {fileID: 539551352}
   - {fileID: 1529627896}
   - {fileID: 1447756272}
+  - {fileID: 1167850823}
   m_Father: {fileID: 858302712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1884106474
