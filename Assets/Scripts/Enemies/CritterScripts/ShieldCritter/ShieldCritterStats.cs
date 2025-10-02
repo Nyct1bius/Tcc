@@ -11,7 +11,6 @@ public class ShieldCritterStats : MonoBehaviour, IHealth
     void Start()
     {
         CurrentHealth = maxHealth;
-
         critter.Agent.speed = MovementSpeed;
     }
 

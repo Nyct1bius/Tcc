@@ -5,6 +5,8 @@ public class ShieldCritterFleeState : ShieldCritterState
 {
     private ShieldCritter critter;
 
+    private Vector3 playerPosition;
+
     public ShieldCritterFleeState(ShieldCritterStateMachine stateMachine, ShieldCritter critter) : base(stateMachine)
     {
         this.critter = critter;
@@ -27,24 +29,25 @@ public class ShieldCritterFleeState : ShieldCritterState
     {
         base.UpdateLogic();
 
-        if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) <= 4 && !critter.IsWaiting)
+         playerPosition = new Vector3(critter.Player.transform.position.x, critter.transform.position.y, critter.Player.transform.position.z);
+
+        if (Vector3.Distance(critter.transform.position, playerPosition) <= 5 && !critter.IsWaiting)
         {
-            critter.Agent.ResetPath();
             critter.CurrentPoint = critter.NextPoint;
 
-            critter.Animator.SetBool("Trembling", true);
-            critter.Animator.SetBool("Running", false);
+            critter.Animator.SetBool("Tremble", true);
+            critter.Animator.SetBool("Run", false);
+
+            critter.transform.LookAt(playerPosition);
 
             critter.IsWaiting = true;
         }
-        if (Vector3.Distance(critter.transform.position, critter.NextPoint.transform.position) > 4 && !critter.IsWaiting)
+        if (Vector3.Distance(critter.transform.position, playerPosition) > 5 && !critter.IsWaiting)
         {
             critter.Agent.SetDestination(critter.NextPoint.position);
 
-            critter.Animator.SetBool("Running", true);
-            critter.Animator.SetBool("Trembling", false);
-
-            critter.IsWaiting = false;
+            critter.Animator.SetBool("Run", true);
+            critter.Animator.SetBool("Tremble", false);
         }
     }
 }
