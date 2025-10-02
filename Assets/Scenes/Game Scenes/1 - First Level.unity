@@ -43731,6 +43731,14 @@ PrefabInstance:
       value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2126981283516054751, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
+      propertyPath: roomsToActivate
+      value: 
+      objectReference: {fileID: 1566394324}
+    - target: {fileID: 2126981283516054751, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
+      propertyPath: activatesEnemies
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2126981283516054751, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: 'ButtonsToActivate.Array.data[0]'
       value: 
       objectReference: {fileID: 716055314}
@@ -43748,15 +43756,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -183.89603
+      value: -184.36
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 43.53
+      value: 43.01
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.17
+      value: -33.09
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -74541,7 +74549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 49
+      value: 48.21
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -94948,6 +94956,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 380118043}
     m_Modifications:
     - target: {fileID: 2126981283516054751, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
+      propertyPath: buttonsCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2126981283516054751, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: activationTimer
       value: 60
       objectReference: {fileID: 0}
@@ -94981,7 +94993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 45.05
+      value: 44.64
       objectReference: {fileID: 0}
     - target: {fileID: 7332604860441195928, guid: 62313bb91661f034b88cbc87dbc62ac0, type: 3}
       propertyPath: m_LocalPosition.z
