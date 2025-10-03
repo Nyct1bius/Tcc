@@ -4763,7 +4763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3670657282106681371
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8563,8 +8563,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5916821046538374523}
         m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
-        m_MethodName: StartLoad
-        m_Mode: 5
+        m_MethodName: Continue
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

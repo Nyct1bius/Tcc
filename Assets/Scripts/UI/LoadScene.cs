@@ -12,6 +12,9 @@ public class LoadScene : MonoBehaviour
 
     public GameObject engrenagem;
 
+    [SerializeField]
+    private string mapaAtual;
+
     public void StartLoad(string levelToLoad)
     {
         StartCoroutine(Load(levelToLoad));
@@ -43,5 +46,12 @@ public class LoadScene : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         
+    }
+
+    public void Continue()
+    {
+        mapaAtual = SceneManager.GetActiveScene().name;
+
+        StartLoad(name);
     }
 }
