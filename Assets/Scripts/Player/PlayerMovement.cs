@@ -97,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 MovementDelta { get { return _movementDelta; } set { _movementDelta = value; } }
 
     public float DashTime { get { return _dashTime; } }
+    public float DashDistance { get { return _dashDistance; } }
     public bool IsDashButtonPressed { get { return _isDashButtonPressed; } }
     public float DashVelocity { get { return _dashVelocity; } }
     public bool DashInCooldown { get { return _dashInCooldown; } set { _dashInCooldown = value; } }
