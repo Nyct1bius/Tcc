@@ -1,32 +1,62 @@
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using PlayerState;
+
 public class DashState : State
 {
     float currentTime;
-    public DashState(PlayerStateMachine contex, PlayerStateFactory playerStateFactory)
-   : base(contex, playerStateFactory) 
+    Vector3 dashDir;
+    float currentSpeed;
+
+    public DashState(PlayerStateMachine context, PlayerStateFactory factory) : base(context, factory)
     {
         isRootState = true;
     }
+
     public override void Enter()
     {
         currentTime = 0f;
         _ctx.AnimationSystem.UpdateDash(true);
         PlayerEvents.OnDashSFX();
-        ApllyDashForce();
-        ApplyDashCameraShake();
+
+        _ctx.Body.linearVelocity = Vector3.zero;
+        SetupDashDirection();
+        _ctx.Movement.DashInCooldown = true;
+
+        CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.DashProfile, _ctx.CameraShakeSource);
     }
 
     public override void Do()
     {
         CheckSwitchState();
     }
+
     public override void FixedDo()
     {
+        var move = _ctx.Movement;
+        currentTime += Time.fixedDeltaTime;
+
+        float normalizedTime = currentTime / move.DashTime;
+        float curveValue = move.DashSpeedCurve.Evaluate(normalizedTime);
+        currentSpeed = move.DashVelocity * curveValue;
+
+        Vector3 step = dashDir * currentSpeed * Time.fixedDeltaTime;
+        Vector3 start = _ctx.Body.position;
+        float checkDistance = step.magnitude + 0.3f;
+
+        if (Physics.Raycast(start, dashDir, out RaycastHit hit, checkDistance, move.DashCollisionMask))
+        {
+            _ctx.Body.position = hit.point - dashDir * 0.1f;
+            SwitchStates(_factory.Grounded());
+            return;
+        }
+
+        _ctx.Body.MovePosition(start + step);
+
+        if (currentTime >= move.DashTime)
+            SwitchStates(_factory.Grounded());
     }
-    public override void Exit() 
+
+    public override void Exit()
     {
         _ctx.AnimationSystem.UpdateDash(false);
         _ctx.Movement.ResetDash();
@@ -34,38 +64,34 @@ public class DashState : State
 
     public override void CheckSwitchState()
     {
-        currentTime += Time.deltaTime;
+        if (currentTime >= _ctx.Movement.DashTime)
+            SwitchStates(_factory.Grounded());
+    }
 
-        if (currentTime > _ctx.Movement.DashTime)
+    public override void InitializeSubState() { }
+
+    private void SetupDashDirection()
+    {
+        var cam = _ctx.MainCameraRef.transform;
+        var move = _ctx.Movement;
+
+        var camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+        var camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
+
+        var moveDir = camRight * move.CurrentMovementInput.x + camForward * move.CurrentMovementInput.y;
+        dashDir = moveDir == Vector3.zero
+            ? (cam.position - move.PlayerTransform.position).normalized
+            : moveDir.normalized;
+
+        dashDir.y = 0f;
+        dashDir.Normalize();
+
+        if (Physics.Raycast(move.PlayerTransform.position, dashDir, out RaycastHit hit, 0.5f, move.DashCollisionMask))
         {
             SwitchStates(_factory.Grounded());
+            return;
         }
-    }
 
-    public override void InitializeSubState()
-    {
-        
-    }
-    private void ApplyDashCameraShake()
-    {
-       
-    }
-    private void ApllyDashForce()
-    {
-        _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
-        _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
-        _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
-
-        Vector3 defaultDashDir = (_ctx.MainCameraRef.transform.position - _ctx.Movement.PlayerTransform.position).normalized;
-        defaultDashDir.y = 0f;
-
-        Vector3 dashDir = _ctx.Movement.MoveDirection == Vector3.zero ? defaultDashDir.normalized : _ctx.Movement.MoveDirection.normalized;
-
-        Quaternion _lookRotation = Quaternion.LookRotation(new Vector3(dashDir.x,0, dashDir.z));
-        _ctx.Movement.PlayerTransform.rotation = Quaternion.Slerp(_ctx.Movement.PlayerTransform.rotation, _lookRotation, 1f);
-        _ctx.Body.AddForce(dashDir * _ctx.Movement.DashVelocity, ForceMode.Impulse);
-        _ctx.Movement.DashInCooldown = true;
-
-        CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.DashProfile, _ctx.CameraShakeSource);
+        move.PlayerTransform.rotation = Quaternion.LookRotation(dashDir);
     }
 }

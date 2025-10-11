@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _dashDistance;
     [SerializeField] private float _dashTime = 1f;
     [SerializeField] private float _dashCooldownTime;
+    public AnimationCurve DashSpeedCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
+    public LayerMask DashCollisionMask;
     private bool _isDashButtonPressed;
     private float _dashVelocity;
     private bool _dashInCooldown;

@@ -54,28 +54,31 @@ public class WalkState : State
        
     }
 
-    public void HandleHorizontalMovement()
+    private void HandleHorizontalMovement()
     {
-       _ctx.Movement.CameraFowardXZ = new Vector3(_ctx.MainCameraRef.transform.forward.x, 0, _ctx.MainCameraRef.transform.forward.z).normalized;
-        _ctx.Movement.CameraRightXZ = new Vector3(_ctx.MainCameraRef.transform.right.x, 0, _ctx.MainCameraRef.transform.right.z).normalized;
-        _ctx.Movement.MoveDirection = _ctx.Movement.CameraRightXZ * _ctx.Movement.CurrentMovementInput.x + _ctx.Movement.CameraFowardXZ * _ctx.Movement.CurrentMovementInput.y;
-        if (_ctx.Movement.OnSlope())
-        {
-            _ctx.Movement.MoveDirection = _ctx.Movement.GetSlopeDirection();
-        }
+        var cam = _ctx.MainCameraRef.transform;
+        var move = _ctx.Movement;
 
+        var camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+        var camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
 
-        _ctx.Movement.MovementDelta = _ctx.Movement.MoveDirection * _ctx.Movement.WalkAcceleration;
-        _ctx.Movement.HorizontalVelocity += _ctx.Movement.MovementDelta;
+        move.MoveDirection = camRight * move.CurrentMovementInput.x + camForward * move.CurrentMovementInput.y;
+        if (move.OnSlope())
+            move.MoveDirection = move.GetSlopeDirection();
+
+        move.MovementDelta = move.MoveDirection * move.WalkAcceleration;
+        move.HorizontalVelocity += move.MovementDelta;
+
         if (_ctx.IsBlocking)
         {
-            _ctx.AnimationSystem.UpdateShieldMovement(_ctx.Movement.CurrentMovementInput);
-            _ctx.Movement.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.Movement.HorizontalVelocity, _ctx.Movement.MaxWalkSpeed) * 0.5f;
+            _ctx.AnimationSystem.UpdateShieldMovement(move.CurrentMovementInput);
+            move.HorizontalVelocity = Vector3.ClampMagnitude(move.HorizontalVelocity, move.MaxWalkSpeed) * 0.5f;
             return;
         }
+
         _ctx.AnimationSystem.UpdateMovement(_ctx.Body.linearVelocity.magnitude);
-        _ctx.Movement.HorizontalVelocity = Vector3.ClampMagnitude(_ctx.Movement.HorizontalVelocity, _ctx.Movement.MaxWalkSpeed);
-    
+        move.HorizontalVelocity = Vector3.ClampMagnitude(move.HorizontalVelocity, move.MaxWalkSpeed);
     }
+
 
 }
