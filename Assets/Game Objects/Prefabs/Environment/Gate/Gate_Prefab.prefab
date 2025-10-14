@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7272486149707816280}
   - component: {fileID: 7200504256091825794}
   - component: {fileID: 1736087540152463020}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gate_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,12 +51,12 @@ MonoBehaviour:
   buttonsActivatedToOpenDoor: 0
   targetPosition: {x: 0, y: 0, z: 0}
   openDoorTime: 2
+  isClosed: 1
   gateDoors:
   - {fileID: 6954465439858343260}
   - {fileID: 8000020017440823367}
-  targetAxisRotations:
-  - 135
-  - -135
+  targetAxisRotationsOpen: []
+  targetAxisRotationsClosed: []
 --- !u!65 &1736087540152463020
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 531046052818688091}
   - component: {fileID: 3499333118991724029}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GateLeftPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2617266354463023183}
   - component: {fileID: 3252664747799981465}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GateRightPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,8 +255,16 @@ PrefabInstance:
       value: GateRightDoor_Object
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 53cfc67ed58c5514da96ada877cdb7cd, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 53cfc67ed58c5514da96ada877cdb7cd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 53cfc67ed58c5514da96ada877cdb7cd, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 53cfc67ed58c5514da96ada877cdb7cd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -359,8 +367,16 @@ PrefabInstance:
       value: GatePillars_Object
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2b6341b38e8759245a636edc00519a09, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2b6341b38e8759245a636edc00519a09, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 2b6341b38e8759245a636edc00519a09, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 2b6341b38e8759245a636edc00519a09, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -475,8 +491,16 @@ PrefabInstance:
       value: GateLeftDoor_Object
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe9b7f098950aa441aa3270a082c7232, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fe9b7f098950aa441aa3270a082c7232, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: fe9b7f098950aa441aa3270a082c7232, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: fe9b7f098950aa441aa3270a082c7232, type: 3}
       propertyPath: m_StaticEditorFlags

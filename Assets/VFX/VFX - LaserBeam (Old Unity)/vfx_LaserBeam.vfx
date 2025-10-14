@@ -20,7 +20,7 @@ MonoBehaviour:
     x: 695
     y: -370
     width: 2801
-    height: 1945
+    height: 2150
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1377,7 +1377,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 1599, y: 548}
+  m_UIPosition: {x: 1599, y: 549}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -2173,7 +2173,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614716}
   - {fileID: 8926484042661614723}
   - {fileID: 8926484042661614729}
-  m_UIPosition: {x: 1599, y: 701}
+  m_UIPosition: {x: 1616, y: 712}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -2907,8 +2907,7 @@ MonoBehaviour:
       m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
   m_Direction: 0
-  m_LinkedSlots:
-  - {fileID: 8926484042661614900}
+  m_LinkedSlots: []
 --- !u!114 &8926484042661614716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6400,7 +6399,8 @@ MonoBehaviour:
       m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
   m_Direction: 0
-  m_LinkedSlots: []
+  m_LinkedSlots:
+  - {fileID: 8926484042661614900}
 --- !u!114 &8926484042661614886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6886,23 +6886,11 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614900}
       inputSlot: {fileID: 8926484042661614872}
-    position: {x: 695.2, y: 1092}
-    expandedSlots: []
-    expanded: 1
-    supecollapsed: 0
-  - m_Id: 1
-    linkedSlots:
-    - outputSlot: {fileID: 8926484042661614900}
-      inputSlot: {fileID: 8926484042661614715}
-    position: {x: 1417.6, y: 1055.2}
-    expandedSlots: []
-    expanded: 1
-    supecollapsed: 0
-  - m_Id: 2
-    linkedSlots:
     - outputSlot: {fileID: 8926484042661614900}
       inputSlot: {fileID: 8926484042661614890}
-    position: {x: 2057.5999, y: 1097.6}
+    - outputSlot: {fileID: 8926484042661614900}
+      inputSlot: {fileID: 8926484042661614885}
+    position: {x: 1714, y: 1712}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -6941,8 +6929,8 @@ MonoBehaviour:
   m_Direction: 1
   m_LinkedSlots:
   - {fileID: 8926484042661614872}
-  - {fileID: 8926484042661614715}
   - {fileID: 8926484042661614890}
+  - {fileID: 8926484042661614885}
 --- !u!114 &8926484042661614901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6966,7 +6954,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614902}
   m_ExposedName: CoreLaserColor
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 3
   m_Category: 
   m_Min:
     m_Type:
@@ -7183,7 +7171,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614908}
   m_ExposedName: DistortionLaserColor
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:
@@ -7393,14 +7381,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661614914}
   m_ExposedName: DarkLaserColor
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 2
   m_Category: 
   m_Min:
     m_Type:
