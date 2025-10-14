@@ -19,6 +19,8 @@ public class HorizontalMovePlatform : MonoBehaviour
     public int checkpointIndexChecker = 0;
 
 
+    public HorizontalPlatformLever lever;
+
 
     private void Start()
     {
@@ -84,6 +86,11 @@ public class HorizontalMovePlatform : MonoBehaviour
         {
             other.transform.parent = transform;
             MovePlatform();
+
+            if(lever != null && !lever.enabled)
+            {
+                lever.enabled = true;
+            }
         }
     }
 
