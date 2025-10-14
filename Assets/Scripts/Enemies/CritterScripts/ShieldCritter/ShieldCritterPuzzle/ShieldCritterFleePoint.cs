@@ -83,6 +83,10 @@ public class ShieldCritterFleePoint : MonoBehaviour
             {
                 Critter.SetM3();;
             }
+            if (isM3)
+            {
+                Critter.InitializeStateMachine(new ShieldCritterCorneredState(Critter, Critter));
+            }
 
             Critter.IsWaiting = false;
             isMyTurn = false;

@@ -6,7 +6,7 @@ public class ShieldCritter : ShieldCritterStateMachine
 {
     public ShieldCritterStats Stats { get; private set; }
 
-    public GameObject Player;
+    public GameObject Player, Shield;
     public NavMeshAgent Agent;
     public RoomManager RoomManager;
     public Animator Animator;
@@ -15,6 +15,7 @@ public class ShieldCritter : ShieldCritterStateMachine
 
     public Transform M1Point, M2Point, M3Point, L1Point, L2Point, R1Point, R2Point;
     public Transform CurrentPoint, NextPoint;
+    public Transform ShieldDropPosition;
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class ShieldCritter : ShieldCritterStateMachine
             StartCoroutine(WaitToFindPlayer());
     }
 
-    IEnumerator WaitToFindPlayer()
+    private IEnumerator WaitToFindPlayer()
     {
         yield return new WaitForSeconds(1);
         if (GameManager.instance.PlayerInstance != null)
@@ -41,6 +42,18 @@ public class ShieldCritter : ShieldCritterStateMachine
                 yield return null;
             }
         }
+    }
+
+    public void StartThrowShieldCoroutine()
+    {
+        StartCoroutine(ThrowShield());
+    }
+
+    private IEnumerator ThrowShield()
+    {
+        Animator.SetTrigger("Throw");
+        yield return new WaitForSeconds(1.8f);
+        Instantiate(Shield, ShieldDropPosition);
     }
 
     public void RemoveSelfFromList()

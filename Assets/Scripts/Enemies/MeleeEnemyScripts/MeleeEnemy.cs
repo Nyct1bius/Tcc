@@ -33,9 +33,7 @@ public class MeleeEnemy : MeleeEnemyStateMachine
                 InitializeStateMachine(new MeleeEnemyIdleState(this, this));
         }
         else
-        {
             InitializeStateMachine(new MeleeEnemyCombatState(this, this));
-        }
 
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
@@ -53,17 +51,11 @@ public class MeleeEnemy : MeleeEnemyStateMachine
                 yield return null;
             }
         }
-        else
-        {
-            Debug.LogWarning("GameManager Instance not found");
-        }
     }
 
     public void RemoveSelfFromList()
     {
         if (RoomManager != null)
-        {
             RoomManager.RemoveEnemyFromList(gameObject);
-        }
     }
 }
