@@ -12,12 +12,10 @@ public class ShieldCritterObjectivePoint : MonoBehaviour
             if (!isResetPoint)
             {
                 critter.IsCornered = true;
-                Debug.Log("Cornered");
             }
             else
             {
                 critter.IsCornered = false;
-                Debug.Log("Not cornered");
             }
         }
     }

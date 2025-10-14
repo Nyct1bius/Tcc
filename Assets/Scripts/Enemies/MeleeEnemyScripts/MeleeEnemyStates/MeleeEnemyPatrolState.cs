@@ -6,7 +6,6 @@ public class MeleeEnemyPatrolState : MeleeEnemyState
     private MeleeEnemy enemy;
 
     private int currentPatrolPoint = 0;
-
     private bool isWaiting = false;
 
     public MeleeEnemyPatrolState(MeleeEnemyStateMachine stateMachine, MeleeEnemy enemy) : base(stateMachine)

@@ -22,8 +22,6 @@ public class MeleeEnemyIdleState : MeleeEnemyState
         base.UpdateLogic();
 
         if (enemy.RoomManager.EnemiesAlerted)
-        {
             stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
-        }
     }
 }
