@@ -1,27 +1,34 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class FollowPlayer : MonoBehaviour
 {
     private Transform playerTransform;
-    private Vector3 currentPos, targetPos;
-    float followSpeed = 5f;
+    private Vector3 velocity = Vector3.zero;
+
+    [SerializeField] float smoothTime = 0.5f;
+    [SerializeField] Vector3 offset = new Vector3(-2f, 0f, -2f);
+    [SerializeField] float minFollowDistance = 0.5f;
 
     private void Awake()
     {
         StartCoroutine(DelayStart());
     }
+
     private void LateUpdate()
     {
-        if(playerTransform != null)
-        {
-            currentPos = transform.position;
+        if (playerTransform == null) return;
 
-            targetPos = new Vector3(playerTransform.position.x, currentPos.y, playerTransform.position.z);
+        Vector3 targetPos = new Vector3(
+            playerTransform.position.x + offset.x,
+            transform.position.y,
+            playerTransform.position.z + offset.z
+        );
 
-            transform.position = Vector3.Lerp(currentPos, targetPos, followSpeed * Time.deltaTime);
-        }
-        
+        float distance = Vector3.Distance(transform.position, targetPos);
+
+        if (distance > minFollowDistance)
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
     }
 
     private IEnumerator DelayStart()

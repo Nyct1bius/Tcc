@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 98d570ee6002e4d4d8f28d0bdd9e7faa, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: cc20e450db07c0a4a9c7e08dcf364fdc, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -16783,6 +16783,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 7114201308974596813, guid: 4d88386ed3a336f49a3dd7ec24edd711, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_7_Prefab
+      objectReference: {fileID: 0}
     - target: {fileID: 7633998056953518199, guid: 4d88386ed3a336f49a3dd7ec24edd711, type: 3}
       propertyPath: m_LocalPosition.x
       value: -57.29
@@ -16822,10 +16826,6 @@ PrefabInstance:
     - target: {fileID: 7633998056953518199, guid: 4d88386ed3a336f49a3dd7ec24edd711, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114201308974596813, guid: 4d88386ed3a336f49a3dd7ec24edd711, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_7_Prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18760,27 +18760,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 487.77454
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 487.77454
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 487.77454
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -198.40257
+      value: 9.700001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -41.63028
+      value: -41.630283
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.1345673
+      value: 125.80001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18837,6 +18837,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 467658807}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 467658813}
   m_SourcePrefab: {fileID: 100100000, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
 --- !u!1 &467658806 stripped
 GameObject:
@@ -18869,6 +18872,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80aa827e822edc04ab7531f19b62e79f, type: 3}
   m_PrefabInstance: {fileID: 467658805}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &467658813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467658806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b400392b670b8649aa5f5ed61d47038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothTime: 6
+  offset: {x: -2, y: 0, z: -2}
+  minFollowDistance: 20
 --- !u!1 &469273010
 GameObject:
   m_ObjectHideFlags: 0
@@ -22482,6 +22500,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b400392b670b8649aa5f5ed61d47038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothTime: 3
+  offset: {x: 0, y: 0, z: 0}
+  minFollowDistance: 0.5
 --- !u!1 &528260242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 705542044431384098, guid: 97db3a02feed4054695492bad4a898d3, type: 3}
@@ -26506,10 +26527,10 @@ Transform:
   m_LocalScale: {x: 0.7692308, y: 0.7692308, z: 0.7692308}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 467658810}
   - {fileID: 8667974068187192443}
   - {fileID: 1942311190}
   - {fileID: 2139906520}
+  - {fileID: 467658810}
   m_Father: {fileID: 1681226699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &591593846 stripped
@@ -28083,6 +28104,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 130166934660336091, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_6_Prefab (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 758190850422215521, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -158.12
@@ -28122,10 +28147,6 @@ PrefabInstance:
     - target: {fileID: 758190850422215521, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 130166934660336091, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_6_Prefab (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40942,6 +40963,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 118454562246519240, guid: 267cc5569b71f08428a0189df9127ab6, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_1_Prefab (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 787854401397732210, guid: 267cc5569b71f08428a0189df9127ab6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -251.79
@@ -40981,10 +41006,6 @@ PrefabInstance:
     - target: {fileID: 787854401397732210, guid: 267cc5569b71f08428a0189df9127ab6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 118454562246519240, guid: 267cc5569b71f08428a0189df9127ab6, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_1_Prefab (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -53865,6 +53886,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 130166934660336091, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_6_Prefab (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 758190850422215521, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -289.61
@@ -53904,10 +53929,6 @@ PrefabInstance:
     - target: {fileID: 758190850422215521, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 130166934660336091, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_6_Prefab (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -61630,6 +61651,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 130166934660336091, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_6_Prefab
+      objectReference: {fileID: 0}
     - target: {fileID: 758190850422215521, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.43
@@ -61669,10 +61694,6 @@ PrefabInstance:
     - target: {fileID: 758190850422215521, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 130166934660336091, guid: 70ac00cd58f9d7b42ba3abc98423216c, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_6_Prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -103312,6 +103333,7 @@ GameObject:
   - component: {fileID: 1795354476}
   - component: {fileID: 1795354475}
   - component: {fileID: 1795354480}
+  - component: {fileID: 1795354481}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -103454,7 +103476,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795354474}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00031997112, y: 0.996725, z: -0.0039486047, w: -0.08076859}
+  m_LocalRotation: {x: -0.016864346, y: -0.854273, z: -0.027768934, w: 0.51880836}
   m_LocalPosition: {x: 7.8, y: 21.49, z: 68.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -103475,6 +103497,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!114 &1795354481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795354474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e1f8716f9de1e40bc0152a6eec0f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skyboxMaterial: {fileID: 2100000, guid: cc20e450db07c0a4a9c7e08dcf364fdc, type: 2}
+  skyboxCubemap: {fileID: 8900000, guid: fd566e741a6856649962e7821ee6eec4, type: 3}
+  rotationSpeed: 0.1
+  rotationDirection: {x: 4.35, y: 0.83, z: -5.47}
 --- !u!1 &1799069136
 GameObject:
   m_ObjectHideFlags: 0
