@@ -3,9 +3,8 @@ using System.Collections;
 
 public class FollowPlayer : MonoBehaviour
 {
-    private Transform playerTransform;
+    [SerializeField] private Transform playerTransform;
     private Vector3 velocity = Vector3.zero;
-
     [SerializeField] float smoothTime = 0.5f;
     [SerializeField] Vector3 offset = new Vector3(-2f, 0f, -2f);
     [SerializeField] float minFollowDistance = 0.5f;
@@ -34,6 +33,7 @@ public class FollowPlayer : MonoBehaviour
     private IEnumerator DelayStart()
     {
         yield return new WaitForSeconds(0.35f);
+        if(playerTransform == null)
         playerTransform = GameManager.instance.PlayerInstance.transform;
     }
 }
