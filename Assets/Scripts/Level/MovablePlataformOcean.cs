@@ -10,16 +10,26 @@ public class MovablePlataformOcean : MonoBehaviour
     [SerializeField] private int shakesBeforeGoingDown = 3;
     [SerializeField] private float shakeForce = 0.3f;
     [SerializeField] private float shakeMultiply = 1.5f;
-
-    private bool isDown;
+    [SerializeField] private float delayTimer = 0;
+    [SerializeField] private bool isDown;
+    [SerializeField] private float intendedYPos;
     private Vector3 startPos;
 
     private void Start()
     {
         startPos = transform.position;
+
+        if(isDown)
+        {
+            startPos.y = intendedYPos;
+        }
+        StartCoroutine(DelayTimer());
+    }
+    private IEnumerator DelayTimer()
+    {
+        yield return new WaitForSeconds(delayTimer);
         StartCoroutine(ShakePlataform());
     }
-
     private IEnumerator ShakePlataform()
     {
         yield return new WaitForSeconds(timeBetweenStates);
