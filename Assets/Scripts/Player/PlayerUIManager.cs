@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -60,14 +61,37 @@ public class PlayerUIManager : MonoBehaviour
         Time.timeScale = 1.4f;
     }
 
+    //public void AtualizePlayerHealthUI(float currentHealth)
+    //{
+    //    _currentHealth = currentHealth;
+
+    //    _healthText.text = currentHealth.ToString() + "/" + _stats.maxHealth.ToString();
+
+    //    _healthSlider.value = currentHealth;
+    //}
+
     public void AtualizePlayerHealthUI(float currentHealth)
     {
-        _currentHealth = currentHealth;
-
         _healthText.text = currentHealth.ToString() + "/" + _stats.maxHealth.ToString();
-
-        _healthSlider.value = currentHealth;
+        StartCoroutine(AnimarBarraDeVida(_healthSlider.value, currentHealth));
     }
+
+    private IEnumerator AnimarBarraDeVida(float valorInicial, float valorFinal)
+    {
+        float duracao = 0.3f; // tempo da animação (ajuste como quiser)
+        float tempo = 0f;
+
+        while (tempo < duracao)
+        {
+            tempo += Time.deltaTime;
+            float t = tempo / duracao;
+            _healthSlider.value = Mathf.Lerp(valorInicial, valorFinal, t);
+            yield return null;
+        }
+
+        _healthSlider.value = valorFinal; // garante que termina certinho
+    }
+
 
     public void OpenPauseMenu()
     {
