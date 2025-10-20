@@ -3,6 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -39,6 +40,14 @@ public class DataPersistenceManager : MonoBehaviour
     void FindData()
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+    }
+
+    [ContextMenu("New Game")]
+    public void NewGameDuringPlayTime()
+    {
+        this.gameData = new PlayerData();
+        SaveGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void NewGame()
     {

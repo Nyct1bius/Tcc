@@ -8,8 +8,12 @@ public class GameLoader : MonoBehaviour
     public Vector3 spawnOffset = new Vector3(0, 0, 2);
 
 
-    public Vector3 LoadSpawnPos()
+    public Vector3 LoadSpawnPos(bool resetPos = false)
     {
+        if(resetPos)
+            return Vector3.zero;    
+
+
         PlayerData data = DataPersistenceManager.Instance.GetGameData();
         var posToSpawn = Vector3.zero;
         if (data != null && !string.IsNullOrEmpty(data.lastTotemId))
