@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7249282008688952236}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DecorationSet_C_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,6 +43,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7249282008688952236}
     m_Modifications:
+    - target: {fileID: 3581483771106180083, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3581483771106180083, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -104,8 +108,16 @@ PrefabInstance:
       value: Box_Object_prefab (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5493889497546310442, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493889497546310442, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163042083548238398, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -125,6 +137,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7249282008688952236}
     m_Modifications:
+    - target: {fileID: 3581483771106180083, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3581483771106180083, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -186,8 +202,16 @@ PrefabInstance:
       value: Box_Object_prefab
       objectReference: {fileID: 0}
     - target: {fileID: 5493889497546310442, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493889497546310442, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163042083548238398, guid: 9fed3c2d69c58c547b0a831d29ba42f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -208,12 +232,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 7249282008688952236}
     m_Modifications:
     - target: {fileID: 1836573355595889330, guid: 7bf7a91bb46430b438567eb520051f60, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836573355595889330, guid: 7bf7a91bb46430b438567eb520051f60, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7273623859006145131, guid: 7bf7a91bb46430b438567eb520051f60, type: 3}
       propertyPath: m_Name
       value: Cask_Object_Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7273623859006145131, guid: 7bf7a91bb46430b438567eb520051f60, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7273623859006145131, guid: 7bf7a91bb46430b438567eb520051f60, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -271,6 +303,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1c2dadd749d90614b8e1a46d7498d27d, type: 2}
+    - target: {fileID: 9147889266552078863, guid: 7bf7a91bb46430b438567eb520051f60, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -344,6 +380,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7a25c524eeeb48649bfd1b9d0e8b7927, type: 3}
       propertyPath: m_Name
       value: SM_Rope_Circle_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7a25c524eeeb48649bfd1b9d0e8b7927, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7a25c524eeeb48649bfd1b9d0e8b7927, type: 3}
       propertyPath: m_StaticEditorFlags
