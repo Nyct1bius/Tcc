@@ -22,6 +22,11 @@ public class MeleeEnemyIdleState : MeleeEnemyState
         base.UpdateLogic();
 
         if (enemy.RoomManager.EnemiesAlerted)
-            stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
+        {
+            if (!enemy.HasHyperarmor)
+                stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
+            else
+                stateMachine.ChangeState(new MeleeMinibossCombatState(stateMachine, enemy));
+        }
     }
 }

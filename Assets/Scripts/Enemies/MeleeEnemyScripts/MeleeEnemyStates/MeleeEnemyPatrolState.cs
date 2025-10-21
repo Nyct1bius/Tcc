@@ -30,7 +30,15 @@ public class MeleeEnemyPatrolState : MeleeEnemyState
             enemy.StartCoroutine(WaitAndMove());
 
         if (enemy.RoomManager.EnemiesAlerted)
-            stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
+        {
+            if (enemy.RoomManager.EnemiesAlerted)
+            {
+                if (!enemy.HasHyperarmor)
+                    stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
+                else
+                    stateMachine.ChangeState(new MeleeMinibossCombatState(stateMachine, enemy));
+            }
+        }
     }
 
     private void MoveToNextPoint()

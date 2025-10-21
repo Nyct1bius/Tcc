@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4603771573005418630}
   - component: {fileID: 5813917258890079396}
-  - component: {fileID: 3020263314438592368}
-  - component: {fileID: 5881810835160293389}
+  - component: {fileID: 3563395366920619839}
+  - component: {fileID: 7927439042188183239}
   - component: {fileID: 6520499278165487594}
   m_Layer: 0
   m_Name: Critter
@@ -59,7 +59,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3020263314438592368
+--- !u!114 &3563395366920619839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,16 +68,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3111398171907707225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 170e89e3430a59543846a5c289c206f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 396f9640bee7238419477a3b8f969f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CritterHealth: 15
-  CritterMovementSpeed: 4.5
-  RoomManager: {fileID: 0}
-  Agent: {fileID: 6520499278165487594}
   Player: {fileID: 0}
+  Agent: {fileID: 6520499278165487594}
+  RoomManager: {fileID: 0}
   Animator: {fileID: 2655955883749047029}
---- !u!114 &5881810835160293389
+  PatrolPoints: []
+--- !u!114 &7927439042188183239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,12 +85,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3111398171907707225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ef31d4a51138d40b7c207b29ecec03, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fa7165073831184e85b951cc0edd1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints: []
-  waitTimer: 2
-  CritterHealth: {fileID: 3020263314438592368}
+  critter: {fileID: 0}
+  maxHealth: 5
+  CurrentHealth: 1
+  MovementSpeed: 8
+  KnockbackForce: 16
 --- !u!195 &6520499278165487594
 NavMeshAgent:
   m_ObjectHideFlags: 0

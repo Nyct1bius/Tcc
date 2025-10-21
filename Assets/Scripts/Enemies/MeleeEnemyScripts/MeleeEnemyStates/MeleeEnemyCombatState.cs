@@ -19,7 +19,6 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         base.Enter();
 
         enemy.StopAllCoroutines();
-        enemy.Agent.SetDestination(playerPosition);
     }
 
     public override void UpdateLogic()
@@ -27,6 +26,7 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         base.UpdateLogic();
 
         playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
+        enemy.Agent.SetDestination(playerPosition);
 
         if (!enemy.TookDamage)
             CombatLogic();
@@ -46,10 +46,11 @@ public class MeleeEnemyCombatState : MeleeEnemyState
             enemy.Animator.SetBool("Idle", false);
             enemy.Animator.SetBool("Walk", true);
 
-            enemy.StopCoroutine(MeleeAttack(Random.Range(1, 3)));
+            enemy.StopCoroutine(MeleeAttack());
+            enemy.StopCoroutine(SlowMeleeAttack());
+            enemy.AttackHitbox.enabled = false;
 
             hasAttacked = false;
-            enemy.AttackHitbox.enabled = false;
         }
         else
         {
@@ -62,51 +63,29 @@ public class MeleeEnemyCombatState : MeleeEnemyState
 
             if (!hasAttacked)
             {
-                enemy.StartCoroutine(MeleeAttack(Random.Range(1, 3)));
+                enemy.StartCoroutine(MeleeAttack());
             }
         }
     }
 
-    private IEnumerator MeleeAttack(int meleeAnimDice)
+    private IEnumerator MeleeAttack()
     {
         hasAttacked = true;
 
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
 
-        if (meleeAnimDice == 1)
-        {
-            enemy.StartCoroutine(FastMeleeAttack());
-        }
-        if (meleeAnimDice == 2)
-        {
-            enemy.StartCoroutine(SlowMeleeAttack());
-        }
-    }
-
-    private IEnumerator FastMeleeAttack()
-    {
-        enemy.Animator.SetTrigger("MeleeFast");
-
-        yield return new WaitForSeconds(0.2f);
-
-        enemy.AttackHitbox.enabled = true;
-
-        yield return new WaitForSeconds(0.25f);
-
-        enemy.AttackHitbox.enabled = false;
-
-        hasAttacked = false;
+        enemy.StartCoroutine(SlowMeleeAttack());
     }
 
     private IEnumerator SlowMeleeAttack()
     {
         enemy.Animator.SetTrigger("MeleeSlow");
 
-        yield return new WaitForSeconds(1.19f);
+        yield return new WaitForSeconds(1.18f);
 
         enemy.AttackHitbox.enabled = true;
 
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.20f);
 
         enemy.AttackHitbox.enabled = false;
 

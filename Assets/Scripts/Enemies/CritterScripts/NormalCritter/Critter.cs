@@ -10,6 +10,7 @@ public class Critter : CritterStateMachine
     public NavMeshAgent Agent;
     public RoomManager RoomManager;
     public Animator Animator;
+    public Transform[] PatrolPoints;
 
     private void Awake()
     {

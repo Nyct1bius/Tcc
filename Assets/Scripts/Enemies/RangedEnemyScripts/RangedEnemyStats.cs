@@ -12,6 +12,8 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
     public float RangedAttackDistance;
     public float KnockbackForce;
 
+    public LayerMask GroundLayer;
+
     void Start()
     {
         CurrentHealth = maxHealth;
@@ -60,6 +62,6 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
 
     public bool IsGrounded()
     {
-        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, 5f);
+        return Physics.Raycast(transform.position, Vector3.down, 5f, GroundLayer);
     }
 }

@@ -19,7 +19,6 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         base.Enter();
 
         enemy.StopAllCoroutines();
-        enemy.Agent.SetDestination(playerPosition);
     }
 
     public override void UpdateLogic()
@@ -27,6 +26,7 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         base.UpdateLogic();
 
         playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
+        enemy.Agent.SetDestination(playerPosition);
 
         if (!enemy.TookDamage)
             CombatLogic();
