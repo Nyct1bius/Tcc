@@ -1,9 +1,8 @@
 using UnityEngine;
 using System.Linq;
-using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -42,7 +41,6 @@ public class DataPersistenceManager : MonoBehaviour
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
     }
 
-    [ContextMenu("New Game")]
     public void NewGameDuringPlayTime()
     {
         this.gameData = new PlayerData();
@@ -113,3 +111,20 @@ public class DataPersistenceManager : MonoBehaviour
 
 
 }
+
+[CustomEditor(typeof(DataPersistenceManager))]
+public class DataPersistenceManagerCustomEditor: Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        DataPersistenceManager playerData = (DataPersistenceManager)target; 
+
+        if (GUILayout.Button("New game"))
+        {
+            playerData.NewGameDuringPlayTime();
+        }
+    }
+    
+}
+
