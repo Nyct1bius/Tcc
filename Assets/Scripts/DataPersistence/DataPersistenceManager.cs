@@ -112,19 +112,19 @@ public class DataPersistenceManager : MonoBehaviour
 
 }
 
-[CustomEditor(typeof(DataPersistenceManager))]
-public class DataPersistenceManagerCustomEditor: Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-        DataPersistenceManager playerData = (DataPersistenceManager)target; 
+//[CustomEditor(typeof(DataPersistenceManager))]
+//public class DataPersistenceManagerCustomEditor: Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        DrawDefaultInspector();
+//        DataPersistenceManager playerData = (DataPersistenceManager)target; 
 
-        if (GUILayout.Button("New game"))
-        {
-            playerData.NewGameDuringPlayTime();
-        }
-    }
+//        if (GUILayout.Button("New game"))
+//        {
+//            playerData.NewGameDuringPlayTime();
+//        }
+//    }
     
-}
+//}
 

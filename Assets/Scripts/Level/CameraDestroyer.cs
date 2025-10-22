@@ -12,6 +12,8 @@ public class CameraDestroyer : MonoBehaviour
         
         if(uiCanva != null)
             uiCanva.SetActive(false);
+
+        ManagerOfScenes.instance.ToggleVignette();
         Destroy(gameObject);
     }
 

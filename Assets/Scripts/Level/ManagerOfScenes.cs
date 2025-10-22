@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class ManagerOfScenes : MonoBehaviour
 {
+    public static ManagerOfScenes instance;
     [SerializeField] CameraDestroyer[] cameraDestroyers;
     public GameObject fogGameObject;
 
@@ -13,7 +14,20 @@ public class ManagerOfScenes : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         StartCoroutine(DelayedStart());
+    }
+    private void OnEnable()
+    {
+        instance = this;
+    }
+    private void OnDisable()
+    {
+        instance = null;
+    }
+    private void OnDestroy()
+    {
+        instance = null;
     }
     private IEnumerator DelayedStart()
     {
