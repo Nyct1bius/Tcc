@@ -1,10 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class ManagerOfScenes : MonoBehaviour
 {
     [SerializeField] CameraDestroyer[] cameraDestroyers;
     public GameObject fogGameObject;
+
+
+    public Image topVignette, bottomVignette;
+
     private void Awake()
     {
         StartCoroutine(DelayedStart());
@@ -28,6 +34,14 @@ public class ManagerOfScenes : MonoBehaviour
             camera.DestroyAfterCutscene();
         }
         Cursor.lockState = CursorLockMode.Locked;
+        ToggleVignette();
 
+    }
+
+
+    public void ToggleVignette()
+    {
+        topVignette.DOFade(0f, 1.5f);
+        bottomVignette.DOFade(0f, 1.5f);
     }
 }
