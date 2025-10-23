@@ -22,8 +22,6 @@ public class RangedEnemyIdleState : RangedEnemyState
         base.UpdateLogic();
 
         if (enemy.RoomManager.EnemiesAlerted)
-        {
             stateMachine.ChangeState(new RangedEnemyCombatState(stateMachine, enemy));
-        }
     }
 }

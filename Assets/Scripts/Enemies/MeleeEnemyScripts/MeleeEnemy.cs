@@ -22,7 +22,6 @@ public class MeleeEnemy : MeleeEnemyStateMachine
         Stats = GetComponent<MeleeEnemyStats>();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (!RoomManager.EnemiesAlerted)
@@ -44,13 +43,11 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     {
         yield return new WaitForSeconds(0.25f);
         if (GameManager.instance.PlayerInstance != null)
-        {
             while (Player == null)
             {
                 Player = GameManager.instance.PlayerInstance;
                 yield return null;
             }
-        }
     }
 
     public void RemoveSelfFromList()

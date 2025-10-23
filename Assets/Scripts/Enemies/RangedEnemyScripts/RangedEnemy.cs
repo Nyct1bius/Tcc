@@ -35,24 +35,16 @@ public class RangedEnemy : RangedEnemyStateMachine
     {
         yield return new WaitForSeconds(0.25f);
         if (GameManager.instance.PlayerInstance != null)
-        {
             while (Player == null)
             {
                 Player = GameManager.instance.PlayerInstance;
                 yield return null;
             }
-        }
-        else
-        {
-            Debug.LogWarning("GameManager Instance not found");
-        }
     }
 
     public void RemoveSelfFromList()
     {
         if (RoomManager != null)
-        {
             RoomManager.RemoveEnemyFromList(gameObject);
-        }
     }
 }

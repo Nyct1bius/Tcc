@@ -31,7 +31,7 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         if (!enemy.TookDamage)
             CombatLogic();
 
-        if (enemy.Stats.CurrentHealth <= 0 && enemy.Stats.IsGrounded())
+        if (enemy.Stats.Health <= 0 && enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
         if (!enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyFallingState(stateMachine, enemy));
@@ -58,10 +58,9 @@ public class MeleeMinibossCombatState : MeleeEnemyState
             enemy.Animator.SetBool("Walk", false);
             enemy.Animator.SetBool("Idle", true);
 
-            enemy.transform.LookAt(playerPosition);
-
             if (!hasAttacked)
             {
+                enemy.transform.LookAt(playerPosition);
                 enemy.StartCoroutine(MeleeAttack(Random.Range(1, 3)));
             }
         }
@@ -74,13 +73,9 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
 
         if (meleeAnimDice == 1)
-        {
             enemy.StartCoroutine(FastMeleeAttack());
-        }
         if (meleeAnimDice == 2)
-        {
             enemy.StartCoroutine(SlowMeleeAttack());
-        }
     }
 
     private IEnumerator FastMeleeAttack()
@@ -88,11 +83,9 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         enemy.Animator.SetTrigger("MeleeFast");
 
         yield return new WaitForSeconds(0.2f);
-
         enemy.AttackHitbox.enabled = true;
 
         yield return new WaitForSeconds(0.25f);
-
         enemy.AttackHitbox.enabled = false;
 
         hasAttacked = false;
@@ -103,11 +96,9 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         enemy.Animator.SetTrigger("MeleeSlow");
 
         yield return new WaitForSeconds(1.19f);
-
         enemy.AttackHitbox.enabled = true;
 
         yield return new WaitForSeconds(1.25f);
-
         enemy.AttackHitbox.enabled = false;
 
         hasAttacked = false;

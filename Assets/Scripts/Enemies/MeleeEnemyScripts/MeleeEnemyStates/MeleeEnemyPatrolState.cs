@@ -17,8 +17,6 @@ public class MeleeEnemyPatrolState : MeleeEnemyState
     {
         base.Enter();
 
-        enemy.StopAllCoroutines();
-
         currentPatrolPoint = 0;
     }
 
@@ -29,25 +27,15 @@ public class MeleeEnemyPatrolState : MeleeEnemyState
         if (!enemy.Agent.pathPending && enemy.Agent.remainingDistance <= enemy.Agent.stoppingDistance && !isWaiting)
             enemy.StartCoroutine(WaitAndMove());
 
-        if (enemy.RoomManager.EnemiesAlerted)
-        {
-            if (enemy.RoomManager.EnemiesAlerted)
-            {
-                if (!enemy.HasHyperarmor)
-                    stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
-                else
-                    stateMachine.ChangeState(new MeleeMinibossCombatState(stateMachine, enemy));
-            }
-        }
+        if (enemy.RoomManager.EnemiesAlerted && !enemy.HasHyperarmor)
+            stateMachine.ChangeState(new MeleeEnemyCombatState(stateMachine, enemy));
+        if (enemy.RoomManager.EnemiesAlerted && enemy.HasHyperarmor)
+            stateMachine.ChangeState(new MeleeMinibossCombatState(stateMachine, enemy));
     }
 
     private void MoveToNextPoint()
     {
-        if (enemy.PatrolPoints == null || enemy.PatrolPoints.Length == 0)
-            return;
-
         enemy.Agent.destination = enemy.PatrolPoints[currentPatrolPoint].position;
-
         currentPatrolPoint = (currentPatrolPoint + 1) % enemy.PatrolPoints.Length;
     }
 

@@ -21,11 +21,6 @@ public class MeleeEnemyDeadState : MeleeEnemyState
         enemy.RemoveSelfFromList();
     }
 
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-    }
-
     private IEnumerator Despawn(float timeToDespawn)
     {
         if (enemy.Agent.enabled)

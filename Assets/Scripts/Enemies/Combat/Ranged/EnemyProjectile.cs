@@ -7,7 +7,7 @@ public class EnemyProjectile : MonoBehaviour, IPooledObject
 
     [SerializeField] GameObject nonPlayerTarget;
 
-    Transform playerPosition, nonPlayerTargetPosition;
+    Transform playerPosition;
 
     Vector3 targetDirection;
 
@@ -34,7 +34,6 @@ public class EnemyProjectile : MonoBehaviour, IPooledObject
 
     public void OnObjectSpawn()
     {
-        print("Has spawen from pool");
         StartCoroutine(DeactivateFromTime());
 
         player = GameManager.instance.PlayerInstance;

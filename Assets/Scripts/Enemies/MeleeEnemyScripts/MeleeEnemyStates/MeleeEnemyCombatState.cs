@@ -31,7 +31,7 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         if (!enemy.TookDamage)
             CombatLogic();
 
-        if (enemy.Stats.CurrentHealth <= 0 && enemy.Stats.IsGrounded())
+        if (enemy.Stats.Health <= 0 && enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
         if (!enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyFallingState(stateMachine, enemy));
@@ -59,10 +59,9 @@ public class MeleeEnemyCombatState : MeleeEnemyState
             enemy.Animator.SetBool("Walk", false);
             enemy.Animator.SetBool("Idle", true);
 
-            enemy.transform.LookAt(playerPosition);
-
             if (!hasAttacked)
             {
+                enemy.transform.LookAt(playerPosition);
                 enemy.StartCoroutine(MeleeAttack());
             }
         }
@@ -73,7 +72,6 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         hasAttacked = true;
 
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
-
         enemy.StartCoroutine(SlowMeleeAttack());
     }
 
@@ -82,11 +80,9 @@ public class MeleeEnemyCombatState : MeleeEnemyState
         enemy.Animator.SetTrigger("MeleeSlow");
 
         yield return new WaitForSeconds(1.18f);
-
         enemy.AttackHitbox.enabled = true;
 
         yield return new WaitForSeconds(1.20f);
-
         enemy.AttackHitbox.enabled = false;
 
         hasAttacked = false;

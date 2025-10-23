@@ -15,17 +15,15 @@ public class MeleeEnemyFallingState : MeleeEnemyState
         base.Enter();
 
         enemy.StopAllCoroutines();
-
         enemy.Agent.enabled = false;
-
-        enemy.StartCoroutine(Fall(3));
+        enemy.StartCoroutine(Fall(2));
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
-        enemy.transform.position += Vector3.down * 7f * Time.deltaTime;
+        enemy.transform.position += 6f * Time.deltaTime * Vector3.down;
     }
 
     private IEnumerator Fall(float timer)

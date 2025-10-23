@@ -4,9 +4,8 @@ using UnityEngine;
 public class MeleeEnemyStats : MonoBehaviour, IHealth
 {
     public MeleeEnemy enemy;
-    
-    [SerializeField] private float maxHealth;
-    public float CurrentHealth;
+
+    public float Health;
     public float MovementSpeed;
     public float TimeBetweenAttacks;
     public float MeleeAttackDistance;
@@ -16,20 +15,18 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
 
     void Start()
     {
-        CurrentHealth = maxHealth;
-
         enemy.Agent.speed = MovementSpeed;
         enemy.Agent.stoppingDistance = MeleeAttackDistance;
     }
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        CurrentHealth -= damage;
+        Health -= damage;
         enemy.TookDamage = true;
 
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
         if (!enemy.HasHyperarmor)
-            StartCoroutine(Knockback(knockbackDir, .4f));
+            StartCoroutine(Knockback(knockbackDir, 0.2f));
     }
     public void HealHealth(float health)
     {
@@ -57,7 +54,7 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         }
 
         enemy.TookDamage = false;
-        if (CurrentHealth > 0)
+        if (Health > 0)
             enemy.Agent.enabled = true;
     }
 

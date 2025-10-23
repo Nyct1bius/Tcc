@@ -15,23 +15,10 @@ public class RangedEnemyDeadState : RangedEnemyState
         base.Enter();
 
         enemy.StopAllCoroutines();
-
         ChooseDeathAnimation(Random.Range(1, 3));
-
         enemy.GetComponent<CapsuleCollider>().enabled = false;
-
         enemy.StartCoroutine(Despawn(2.2f));
-
-        if (enemy.RoomManager != null)
-        {
-            enemy.RemoveSelfFromList();
-        }
-    }
-
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-        // Usually nothing here since enemy is dead
+        enemy.RemoveSelfFromList();
     }
 
     private IEnumerator Despawn(float timeToDespawn)
@@ -58,9 +45,8 @@ public class RangedEnemyDeadState : RangedEnemyState
     private void ChooseDeathAnimation(int deathAnimationDice)
     {
         if (deathAnimationDice == 1)
-            enemy.Animator.SetTrigger("Dead1");
-
+            enemy.Animator.SetTrigger("DieLeft");
         if (deathAnimationDice == 2)
-            enemy.Animator.SetTrigger("Dead2");
+            enemy.Animator.SetTrigger("DieRight");
     }
 }

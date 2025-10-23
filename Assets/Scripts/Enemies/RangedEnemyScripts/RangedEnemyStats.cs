@@ -5,8 +5,7 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
 {
     public RangedEnemy enemy;
 
-    [SerializeField] private float maxHealth;
-    public float CurrentHealth;
+    public float Health;
     public float MovementSpeed;
     public float TimeBetweenAttacks;
     public float RangedAttackDistance;
@@ -16,19 +15,16 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
 
     void Start()
     {
-        CurrentHealth = maxHealth;
-
         enemy.Agent.speed = MovementSpeed;
     }
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        CurrentHealth -= damage;
+        Health -= damage;
+        enemy.TookDamage = true;
 
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
-        StartCoroutine(Knockback(knockbackDir, .4f));
-
-        enemy.TookDamage = true;
+        StartCoroutine(Knockback(knockbackDir, .2f));
     }
     public void HealHealth(float health)
     {
@@ -55,8 +51,7 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
         }
 
         enemy.TookDamage = false;
-
-        if (CurrentHealth > 0)
+        if (Health > 0)
             enemy.Agent.enabled = true;
     }
 
