@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
-using System.Linq;
 
 public class HorizontalMovePlatform : MonoBehaviour
 {
     public List<Transform> points;
-    [SerializeField] float movementSpeed = 5f;
+    [SerializeField] float movementSpeed = 4f;
     public int currentIndex = 1;
     private Vector3 lastPosition;
     public Vector3 velocity { get; private set; }
@@ -18,6 +17,9 @@ public class HorizontalMovePlatform : MonoBehaviour
     public bool needsToReturn = false;
     public int checkpointIndexChecker = 0;
 
+    public bool needsToRotate = false;
+    public float origitalRotationY;
+    public float rotateAmount = 0f;
 
     public HorizontalPlatformLever lever;
 
@@ -27,7 +29,7 @@ public class HorizontalMovePlatform : MonoBehaviour
         if (points.Count < 2) Debug.LogError("Need at least 2 waypoints!");
         transform.position = points[0].position;
         lastPosition = transform.position;
-
+        origitalRotationY = transform.parent.rotation.y;
     }
 
     [ContextMenu("MovePlatform")]
@@ -38,8 +40,10 @@ public class HorizontalMovePlatform : MonoBehaviour
 
         Vector3 target = points[currentIndex].position;
 
-        transform.parent.DOMove(target, 4f).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.15f).OnComplete(() =>
+        transform.parent.DOMove(target, movementSpeed).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnComplete(() => transform.parent.DOShakePosition(0.5f, 0.15f).OnComplete(() =>
                 transform.parent.position = target).OnComplete(() => SetNextIndex()));
+
+        RotateElevator();
 
     }
 
@@ -50,6 +54,8 @@ public class HorizontalMovePlatform : MonoBehaviour
             if (currentIndex < points.Count - 1)
             {
                 currentIndex++;
+                if (needsToRotate)
+            transform.parent.DORotate( new Vector3(0,rotateAmount,0), movementSpeed);
                 MovePlatform();
             }
             else
@@ -113,6 +119,20 @@ public class HorizontalMovePlatform : MonoBehaviour
         {
             print("HasAccessedIF");
             MovePlatform();
+        }
+    }
+
+    void RotateElevator()
+    {
+        if (currentIndex == 0)
+        {
+            if (needsToRotate)
+                transform.parent.DORotate(new Vector3(0, 0, 0), movementSpeed);
+        }
+        else
+        {
+            if (needsToRotate)
+                transform.parent.DORotate(new Vector3(0, rotateAmount, 0), movementSpeed);
         }
     }
 }
