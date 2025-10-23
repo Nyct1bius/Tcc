@@ -16,6 +16,7 @@ public class Button : MonoBehaviour,IHealth
     [SerializeField] GameObject buttonLever;
     [SerializeField] private GameObject leverGameObject;
     private Material meshMaterial;
+    [SerializeField] PlatformRaiser platformRaiser;
 
     private void Start()
     {
@@ -41,6 +42,13 @@ public class Button : MonoBehaviour,IHealth
         else
             buttonLever.transform.DORotate(new Vector3(activatedButton, 0, 0), 1.5f);
         meshMaterial.SetColor("_Emission_Color_Variation", Color.green);
+
+
+
+        if(platformRaiser != null)
+        {
+            platformRaiser.RaisePlatforms();
+        }
     }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {

@@ -9,7 +9,7 @@ public class PlatformRaiser : MonoBehaviour
 
 
 
-    void RaisePlatforms()
+    public void RaisePlatforms()
     {
         platformsParent.transform.DOMoveY(target.position.y, movementSpeed).SetEase(Ease.InOutSine).SetUpdate(UpdateType.Fixed).OnPlay(() => transform.parent.DOShakePosition(0.5f, 0.15f));
     }
