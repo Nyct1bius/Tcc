@@ -66,6 +66,7 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
         _mainCameraRef = Camera.main;
 
         _animationSystem = new AnimationSystem(animator);
+        PauseGameManager.ResumeGame();
     }
 
 
