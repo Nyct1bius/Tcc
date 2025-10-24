@@ -26,6 +26,7 @@ public class RoomManager : MonoBehaviour
             if (!isWavedRoom)
             {
                 GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
+                ManagerOfScenes.instance.IntensifyCombat(1f);
                 Debug.Log("Player found");
                 foreach (GameObject enemy in MyEnemies)
                 {
@@ -38,6 +39,7 @@ public class RoomManager : MonoBehaviour
                 if(!isRoomCleared)
                 {
                     GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
+                    ManagerOfScenes.instance.IntensifyCombat(1f);
                     Debug.Log("Player found");
                     if(closingWalls.Count > 0)
                     {
@@ -137,6 +139,7 @@ public class RoomManager : MonoBehaviour
     public void OpenTheDoor()
     {
         GameManager.instance.SwitchGameState(GameManager.GameStates.ExitCombat);
+        ManagerOfScenes.instance.IntensifyCombat(0f);
         isRoomCleared = true;
         if (doors.Length > 0)
         {

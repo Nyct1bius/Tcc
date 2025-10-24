@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using FMODUnity;
 
 public class ManagerOfScenes : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class ManagerOfScenes : MonoBehaviour
     [SerializeField] CameraDestroyer[] cameraDestroyers;
     public GameObject fogGameObject;
 
+    [SerializeField] private StudioEventEmitter bgmEmitter;
+    [SerializeField] private StudioEventEmitter waveEmitter;
 
     public Image topVignette, bottomVignette;
 
@@ -50,6 +53,11 @@ public class ManagerOfScenes : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         ToggleVignette();
 
+    }
+
+    public void IntensifyCombat(float combatLevel)
+    {
+        bgmEmitter.SetParameter("State", combatLevel);
     }
 
 

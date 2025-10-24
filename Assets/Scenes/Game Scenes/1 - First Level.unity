@@ -22480,6 +22480,8 @@ MonoBehaviour:
   - {fileID: 895401040}
   - {fileID: 1322054551}
   fogGameObject: {fileID: 1392783435}
+  bgmEmitter: {fileID: 506280340}
+  waveEmitter: {fileID: 591447999}
   topVignette: {fileID: 1149089339}
   bottomVignette: {fileID: 1637553972}
 --- !u!114 &506280339
@@ -86816,7 +86818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1515116816
 RectTransform:
   m_ObjectHideFlags: 0
