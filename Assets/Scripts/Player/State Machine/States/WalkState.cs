@@ -71,12 +71,13 @@ public class WalkState : State
 
         if (_ctx.IsBlocking)
         {
-            _ctx.AnimationSystem.UpdateShieldMovement(move.CurrentMovementInput);
+            _ctx.PlayerAnimator.SetFloat("inputX", move.CurrentMovementInput.x);
+            _ctx.PlayerAnimator.SetFloat("inputY", move.CurrentMovementInput.y);
             move.HorizontalVelocity = Vector3.ClampMagnitude(move.HorizontalVelocity, move.MaxWalkSpeed) * 0.5f;
             return;
         }
 
-        _ctx.AnimationSystem.UpdateMovement(_ctx.Body.linearVelocity.magnitude);
+        _ctx.PlayerAnimator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
         move.HorizontalVelocity = Vector3.ClampMagnitude(move.HorizontalVelocity, move.MaxWalkSpeed);
     }
 

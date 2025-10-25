@@ -41,11 +41,11 @@ public class JumpState : State
     public override void FixedDo()
     {
         if (_ctx.GameIsPaused) return;
-        _ctx.AnimationSystem.UpdateJump(_ctx.Body.linearVelocity.y);
+        _ctx.PlayerAnimator.SetFloat("YSpeed", _ctx.Body.linearVelocity.y);
     }
     public override void Exit()
     {
-        _ctx.AnimationSystem.UpdateGrounded(true);
+        _ctx.PlayerAnimator.SetBool("IsGrounded", true);
         CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
         PlayerEvents.OnLandSFX();
     }
@@ -77,8 +77,8 @@ public class JumpState : State
     private void HandleJump()
     {
         PlayerEvents.OnJumpSFX();
-        _ctx.AnimationSystem.Jump();
-        _ctx.AnimationSystem.UpdateGrounded(false);
+        _ctx.PlayerAnimator.SetTrigger("OnAir");
+        _ctx.PlayerAnimator.SetBool("IsGrounded", false);
         _ctx.Movement.UngroudedDueToJump = true;
         var currentVerticalSpeed = Vector3.Dot(_ctx.Body.linearVelocity, _ctx.transform.up);
         var targetVerticalSpeed = Mathf.Max(currentVerticalSpeed, _ctx.Movement.JumpVelocity);

@@ -36,7 +36,7 @@ public class DashState : State
         startPos = move.PlayerTransform.position;
         targetPos = startPos + dashDir * move.DashDistance;
 
-        _ctx.AnimationSystem.UpdateDash(true);
+        _ctx.PlayerAnimator.SetBool("IsDashing", true);
         PlayerEvents.OnDashSFX();
         CameraShakeManager.CameraShakeFromProfile(move.DashProfile, _ctx.CameraShakeSource);
     }
@@ -74,7 +74,7 @@ public class DashState : State
     public override void Exit()
     {
         var move = _ctx.Movement;
-        _ctx.AnimationSystem.UpdateDash(false);
+        _ctx.PlayerAnimator.SetBool("IsDashing", false);
         move.ResetDash();
     }
 

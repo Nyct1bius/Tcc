@@ -15,8 +15,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         GameEvents.StartGame -= SpawnPlayer;
     }
-    [ContextMenu("SpawnPlayer")]
-    private void SpawnPlayer()
+    public void SpawnPlayer()
     {
         GameManager.instance.SpawnPlayer(transform);
     }
@@ -65,3 +64,18 @@ public class PlayerSpawner : MonoBehaviour
         }
     }
 }
+#if UNITY_EDITOR
+[CustomEditor(typeof(PlayerSpawner))]
+public class SpawnPlayerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        PlayerSpawner spawner = (PlayerSpawner)target;
+        if (GUILayout.Button("Spawn Player"))
+        {
+            spawner.SpawnPlayer();
+        }
+    }
+}
+#endif

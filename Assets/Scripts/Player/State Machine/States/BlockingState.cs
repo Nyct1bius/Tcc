@@ -11,7 +11,8 @@ public class BlockingState : State
 
     public override void Enter()
     {
-        _ctx.AnimationSystem.ShieldUp();
+        _ctx.PlayerAnimator.SetTrigger("ShieldUp");
+        _ctx.PlayerAnimator.SetBool("IsBlocking", true);
     }
 
     public override void CheckSwitchState()
@@ -67,7 +68,8 @@ public class BlockingState : State
     {
         _ctx.IsBlocking = false;
         _ctx.Shield.ToggleShield(false);
-        _ctx.AnimationSystem.ShieldDown();
+        _ctx.PlayerAnimator.SetBool("IsBlocking", false);
+
 
     }
 

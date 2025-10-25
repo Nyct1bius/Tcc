@@ -15,12 +15,12 @@ public class AnimationHandler : MonoBehaviour
 
     public void OnSpawnAttackVFX()
     {
-        //PlayerEvents.OnAttackVfx();
+        PlayerEvents.OnAttackVfx();
     }
 
     public void OnStartAttackDetection()
     {
-        //PlayerEvents.OnStartAttackDetection();
+        PlayerEvents.OnStartAttackDetection();
     }
 
     #region SFX

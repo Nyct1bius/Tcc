@@ -22,6 +22,7 @@ public class PlayerCombatManager : MonoBehaviour
     [Header("Combat")]
     [SerializeField] private bool _attackIncooldown;
     [SerializeField] private float _timeBetweenAttacks = 0.5f;
+    [SerializeField] private float _timeBetweenCombos = 1f;
     [SerializeField] private int _attackCount;
     private bool _isAttacking;
     [Header("Lock On")]
@@ -41,7 +42,8 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private ScreenShakeProfileSO _damagePlayerProfile;
     private float _nextHitAudioTime = 0f;
     [SerializeField] private float _hitAudioCooldown = 0.5f;
-
+    bool _attacking;
+    Coroutine _attackCoroutine;
 
     #region Getters and Setters
 
@@ -53,6 +55,7 @@ public class PlayerCombatManager : MonoBehaviour
     public LayerMask DamageableLayer { get { return _damageableLayer; } }
     public WeaponSO CurrentWeaponData { get { return _currentWeaponData; } }
     public List<Collider> DetectedEnemys { get { return _detectedEnemys; } }
+    public bool AttackFineshed;
 
     //VFX
     public GameObject VfxLightnining { get { return _vfxLightnining; } }
@@ -102,6 +105,11 @@ public class PlayerCombatManager : MonoBehaviour
     }
     private void Update()
     {
+
+        if (_attacking)
+            PerformAttack();
+
+
         if (!_searchForTargets) return;
         LookAtTarget();
     }
@@ -194,12 +202,16 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void CheckAttackButton(bool attacking)
     {
-        if (attacking && !_attackIncooldown && _currentWeaponData != null && _machine.Movement.IsGrounded)
+        _attacking = attacking;
+    }
+    private void PerformAttack()
+    {
+
+        if (!_attackIncooldown && _currentWeaponData != null && _machine.Movement.IsGrounded)
         {
+            AttackFineshed = false;
             _isAttacking = true;
             StartCoroutine(AttackVisual());
-            var clip = _currentWeaponData.attacks[_attackCount].attackAnimationClip;
-            _machine.AnimationSystem.PlayAttack(clip);
         }
     }
 
@@ -212,9 +224,32 @@ public class PlayerCombatManager : MonoBehaviour
     }
     public void HandleResetAttack()
     {
+        if (_attackCoroutine != null)
+            StopCoroutine(_attackCoroutine);
+
+        _attackCoroutine = StartCoroutine(CoolingDownAttack());
+        AttackFineshed = true;
+    }
+
+
+    IEnumerator CoolingDownAttack()
+    {
+        _attackIncooldown = true;
+
+        if (_attackCount >= CurrentWeaponData.attacks.Length - 1)
+        {
+            yield return new WaitForSeconds(_timeBetweenCombos);
+            _attackCount = 0;
+        }
+        else
+        {
+            yield return new WaitForSeconds(_timeBetweenAttacks);
+        }
+
         _attackIncooldown = false;
     }
-   
+
+
     private void OnDrawGizmos()
     {
 

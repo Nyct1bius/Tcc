@@ -165,7 +165,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1879942085890910862
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _machine: {fileID: 1879942085890910862}
   playerVisualTransform: {fileID: 4876681331297986845}
-  _walkAcceleration: 5
-  _maxWalkSpeed: 1.5
+  _walkAcceleration: 2
+  _maxWalkSpeed: 30
   _maxSlopeAngle: 40
   _highFrictionMaterial: {fileID: 13400000, guid: e2cb1bb2bd8748d44b2cb980bc4db1a1, type: 2}
   _lowFrictionMaterial: {fileID: 13400000, guid: f8eda721b61be304ebf42578ada74445, type: 2}
@@ -287,7 +287,7 @@ MonoBehaviour:
   _attackIncooldown: 0
   _timeBetweenAttacks: 0.5
   _attackCount: 0
-  _lockOnRange: 9
+  _lockOnRange: 6
   _detectedEnemys: []
   _lookRotationSpeed: 7
   _vfxAttackSpawnpoint: {fileID: 1391100049703571938}

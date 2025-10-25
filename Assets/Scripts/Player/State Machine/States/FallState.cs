@@ -15,8 +15,8 @@ public class FallState : State
     {
         _timeSinceEntered = 0f;
 
-        _ctx.AnimationSystem.Jump();
-        _ctx.AnimationSystem.UpdateGrounded(false);
+        _ctx.PlayerAnimator.SetTrigger("OnAir");
+        _ctx.PlayerAnimator.SetBool("IsGrounded", false);
         _ctx.Movement.FallDeathTimer = 0f;  
     }
 
@@ -74,7 +74,8 @@ public class FallState : State
 
     public override void Exit()
     {
-        _ctx.AnimationSystem.UpdateGrounded(true);
+        _ctx.PlayerAnimator.SetBool("IsGrounded", true);
+
         CameraShakeManager.CameraShakeFromProfile(_ctx.Movement.LandProfile, _ctx.CameraShakeSource);
 
     }

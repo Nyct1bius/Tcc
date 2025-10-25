@@ -11,7 +11,6 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     [SerializeField] private GroundSensor _groundSensor;
     [SerializeField] private CinemachineImpulseSource _cameraShakeSource;
     [SerializeField] private PlayerAudioManager _audioManager;
-    private AnimationSystem _animationSystem;
     public InputReader inputReader;
     private Camera _mainCameraRef;
 
@@ -50,7 +49,6 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     public Camera MainCameraRef {  get { return _mainCameraRef; } }
     public CinemachineImpulseSource CameraShakeSource { get { return _cameraShakeSource; } }
     public PlayerAudioManager AudioManager { get { return _audioManager; } }
-    public AnimationSystem AnimationSystem {  get { return _animationSystem; } }
 
 
     #endregion
@@ -64,8 +62,6 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
         DataPersistenceManager.Instance.LoadGame();
         //Get Components
         _mainCameraRef = Camera.main;
-
-        _animationSystem = new AnimationSystem(animator);
         PauseGameManager.ResumeGame();
     }
 
@@ -114,10 +110,6 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
         _gameIsPaused = false;
     }
 
-    private void OnDestroy()
-    {
-        _animationSystem.Destroy();
-    }
 
     #endregion
 

@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _currentMovementInput;
 
     [Header("Movement")]
-    [Range(0f, 50f)]
+    [Range(0f, 5f)]
     [SerializeField] private float _walkAcceleration;
-    [Range(0f, 10f)]
+    [Range(0f, 50f)]
     [SerializeField] private float _maxWalkSpeed;
     private Vector3 _horizontalVelocity;
     private float _verticalVelocity;
@@ -217,6 +217,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _newVelocity = new Vector3(_horizontalVelocity.x, _verticalVelocity, _horizontalVelocity.z);
         ApplyFriction();
+        if (_machine.Body.linearVelocity.magnitude > _maxWalkSpeed)
+            return;
         _machine.Body.AddForce(_newVelocity, ForceMode.VelocityChange);
     }
 

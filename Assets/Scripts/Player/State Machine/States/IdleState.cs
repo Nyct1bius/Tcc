@@ -26,10 +26,11 @@ public class IdleState : State
     {
         if (_ctx.IsBlocking)
         {
-            _ctx.AnimationSystem.UpdateShieldMovement(_ctx.Movement.CurrentMovementInput);
+            _ctx.PlayerAnimator.SetFloat("inputX", _ctx.Movement.CurrentMovementInput.x);
+            _ctx.PlayerAnimator.SetFloat("inputY", _ctx.Movement.CurrentMovementInput.y);
             return;
         }
-        _ctx.AnimationSystem.UpdateMovement(_ctx.Body.linearVelocity.magnitude);
+        _ctx.PlayerAnimator.SetFloat("Speed", _ctx.Body.linearVelocity.magnitude);
     }
 
     public override void Exit() 

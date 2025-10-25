@@ -15,6 +15,9 @@ public class AttackState : State
         _ctx.Combat.AttackIncooldown = true;
         LockToClosestEnemy();
         PlayerEvents.StartAttackDetection += StartAttackCollisionDetection;
+        var clip = _ctx.Combat.CurrentWeaponData.attacks[_ctx.Combat.AttackCount].attackAnimationClip;
+        _ctx.PlayerAnimator.SetBool("IsAttacking", true);
+        _ctx.PlayerAnimator.Play(clip.name);
     }
 
     public override void Do()
@@ -27,19 +30,21 @@ public class AttackState : State
 
     public override void Exit()
     {
+        _ctx.PlayerAnimator.SetBool("IsAttacking", false);
         PlayerEvents.StartAttackDetection -= StartAttackCollisionDetection;
         _ctx.Combat.IsAttacking = false;
         if (!_ctx.Health.IsDamaged)
         {
-            _ctx.Combat.AttackCount++;
-            if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length)
-                _ctx.Combat.AttackCount = 0;
+            if (_ctx.Combat.AttackCount >= _ctx.Combat.CurrentWeaponData.attacks.Length - 1) return;
+
+                _ctx.Combat.AttackCount++;
         }
     }
 
     public override void CheckSwitchState()
     {
-        if (!_ctx.Combat.AttackIncooldown)
+
+        if (_ctx.Combat.AttackFineshed)
         {
             SwitchStates(_factory.Grounded());
         }

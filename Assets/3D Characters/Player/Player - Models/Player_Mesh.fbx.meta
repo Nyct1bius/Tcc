@@ -175,7 +175,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ATK.2
+      name: ATK_2
       takeName: ATK.2
       internalID: 7088158889527028464
       firstFrame: 0
@@ -199,22 +199,29 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.42307693
+      - time: 0.4491073
         functionName: OnPlayAttackSFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.45785734
+      - time: 0.4817185
         functionName: OnSpawnAttackVFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.49943244
+      - time: 0.5232937
         functionName: OnStartAttackDetection
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAtackAnimationFinished
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -225,7 +232,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ATK.1
+      name: ATK_1
       takeName: ATK.1
       internalID: 5279618206996639872
       firstFrame: 0
@@ -249,22 +256,29 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.25
+      - time: 0.37147507
         functionName: OnSpawnAttackVFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.27197802
+      - time: 0.39345306
         functionName: OnPlayAttackSFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.3794872
+      - time: 0.4315479
         functionName: OnStartAttackDetection
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAtackAnimationFinished
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -275,7 +289,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ATK.3
+      name: ATK_3
       takeName: ATK.3
       internalID: -7652434211879746216
       firstFrame: 0
@@ -299,22 +313,29 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.32417583
+      - time: 0.40660533
         functionName: OnSpawnAttackVFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.3434066
+      - time: 0.4258361
         functionName: OnPlayAttackSFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.3904762
+      - time: 0.4729057
         functionName: OnStartAttackDetection
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAtackAnimationFinished
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
