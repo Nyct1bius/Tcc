@@ -16,6 +16,7 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     public bool TookDamage = false;
     public bool HasHyperarmor;
     public bool IsPatroller;
+    public bool CheckPlayerPosition = true;
 
     private void Awake()
     {
@@ -54,5 +55,15 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     {
         if (RoomManager != null)
             RoomManager.RemoveEnemyFromList(gameObject);
+    }
+
+    public void EnableHitbox()
+    {
+        AttackHitbox.enabled = true;
+    }
+    public void DisableHitbox()
+    {
+        AttackHitbox.enabled = false;
+        CheckPlayerPosition = true;
     }
 }
