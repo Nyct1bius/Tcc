@@ -7,7 +7,9 @@ public class Button : MonoBehaviour,IHealth
     [SerializeField] private bool isActivated;
     [SerializeField] private bool isPressed;
     [SerializeField] Door doorToOpen;
+    [SerializeField] private Door extraDoorToOpen;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private HorizontalMovePlatform horizontalMovePlatform;
     public SteppingTrigger steppingTrigger;
 
     private float activatedButton = -110f;
@@ -49,6 +51,11 @@ public class Button : MonoBehaviour,IHealth
         {
             platformRaiser.RaisePlatforms();
         }
+
+        doorToOpen?.CheckIfAllButtonsIsActivated();
+        extraDoorToOpen?.CheckIfAllButtonsIsActivated();
+        if (horizontalMovePlatform != null)
+            horizontalMovePlatform.enabled = true;
     }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
@@ -61,7 +68,10 @@ public class Button : MonoBehaviour,IHealth
             isPressed = true;
             steppingTrigger?.ButtonPressedDeactivation();
             Debug.Log("OpenDoor");
-            doorToOpen.CheckIfAllButtonsIsActivated();
+            doorToOpen?.CheckIfAllButtonsIsActivated();
+            extraDoorToOpen?.CheckIfAllButtonsIsActivated();
+            if(horizontalMovePlatform != null)
+                horizontalMovePlatform.enabled = true;
 
 
         }
