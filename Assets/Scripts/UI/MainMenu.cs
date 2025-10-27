@@ -15,27 +15,6 @@ public class MainMenu : MonoBehaviour
     
     void Update()
     {
-        if(Input.GetKeyDown("1"))
-        {
-            // pega item
-            Debug.Log("Pegou roda");
-            Roda();
-        }
-
-        if (Input.GetKeyDown("2"))
-        {
-            // pega item
-            Debug.Log("Pegou casco");
-            Casco();
-        }
-
-        if (Input.GetKeyDown("3"))
-        {
-            // pega item
-            Debug.Log("Pegou arma");
-            Arma();
-        }
-
         int hours = Mathf.FloorToInt(playerUIManager.tempoDeJogo / 3600);
         int minutes = Mathf.FloorToInt((playerUIManager.tempoDeJogo % 3600) / 60);
         int seconds = Mathf.FloorToInt(playerUIManager.tempoDeJogo % 60);
@@ -50,22 +29,5 @@ public class MainMenu : MonoBehaviour
 
         healthText.text = playerUIManager._currentHealth.ToString() + "/ 75";
         healthSlider.value = playerUIManager._currentHealth;
-    }
-
-    // testes
-    public InventoryManager inventoryManager;
-    public void Roda()
-    {
-        inventoryManager.GetIten("Roda");
-    }
-
-    public void Casco()
-    {
-        inventoryManager.GetIten("Casco");
-    }
-
-    public void Arma()
-    {
-        inventoryManager.GetIten("Arma");
     }
 }

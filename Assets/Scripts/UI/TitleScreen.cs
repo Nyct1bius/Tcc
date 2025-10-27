@@ -5,11 +5,13 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine.UI;
 
-public class TitleScreen : MonoBehaviour
+public class TitleScreen : MonoBehaviour, IDataPersistence
 {
     public GameObject _fase1, _fase2;
     private LoadScene loadscene;
     private bool fase2 = false;
+    [SerializeField]
+    private string lastScene; 
 
     public UnityEngine.UI.Button continueButton;
 
@@ -57,7 +59,8 @@ public class TitleScreen : MonoBehaviour
             DataPersistenceManager.Instance.LoadGame();
         }
         GameManager.instance.isNewGame = false;
-        loadscene.StartLoad("1 - First Level");
+        //loadscene.StartLoad("1 - First Level");
+        loadscene.StartLoad(lastScene);
     }
 
     public void NewGame()
@@ -74,5 +77,15 @@ public class TitleScreen : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void LoadData(PlayerData data)
+    {
+        lastScene = data.lastSceneName;
+    }
+
+    public void SaveData(PlayerData data)
+    {
+        
     }
 }
