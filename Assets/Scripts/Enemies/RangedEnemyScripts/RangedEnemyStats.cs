@@ -16,6 +16,7 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
     void Start()
     {
         enemy.Agent.speed = MovementSpeed;
+        enemy.Agent.stoppingDistance = RangedAttackDistance;
     }
 
     public void Damage(float damage, Vector3 DamageSourcePos)

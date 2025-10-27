@@ -25,7 +25,9 @@ public class MeleeEnemyCombatState : MeleeEnemyState
     {
         base.UpdateLogic();
 
-        playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
+        if (enemy.CheckPlayerPosition)
+            playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
+        
         enemy.Agent.SetDestination(playerPosition);
 
         if (!enemy.TookDamage)
@@ -46,11 +48,11 @@ public class MeleeEnemyCombatState : MeleeEnemyState
             enemy.Animator.SetBool("Idle", false);
             enemy.Animator.SetBool("Walk", true);
 
-            enemy.StopCoroutine(MeleeAttack());
-            enemy.StopCoroutine(SlowMeleeAttack());
-            enemy.AttackHitbox.enabled = false;
-
-            hasAttacked = false;
+            if (hasAttacked)
+            {
+                enemy.DisableHitbox();
+                enemy.StartCoroutine(MeleeAttackCooldown());
+            }
         }
         else
         {
@@ -60,31 +62,21 @@ public class MeleeEnemyCombatState : MeleeEnemyState
             enemy.Animator.SetBool("Idle", true);
 
             if (!hasAttacked)
-            {
-                enemy.transform.LookAt(playerPosition);
-                enemy.StartCoroutine(MeleeAttack());
-            }
+                MeleeAttack();
         }
     }
 
-    private IEnumerator MeleeAttack()
+    private void MeleeAttack()
     {
         hasAttacked = true;
-
-        yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
-        enemy.StartCoroutine(SlowMeleeAttack());
+        enemy.CheckPlayerPosition = false;
+        enemy.Animator.SetTrigger("MeleeSlow");
+        enemy.StartCoroutine(MeleeAttackCooldown());
     }
 
-    private IEnumerator SlowMeleeAttack()
+    private IEnumerator MeleeAttackCooldown()
     {
-        enemy.Animator.SetTrigger("MeleeSlow");
-
-        yield return new WaitForSeconds(1.18f);
-        enemy.AttackHitbox.enabled = true;
-
-        yield return new WaitForSeconds(1.20f);
-        enemy.AttackHitbox.enabled = false;
-
+        yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         hasAttacked = false;
     }
 }

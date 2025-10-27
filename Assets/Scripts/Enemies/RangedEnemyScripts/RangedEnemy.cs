@@ -47,4 +47,9 @@ public class RangedEnemy : RangedEnemyStateMachine
         if (RoomManager != null)
             RoomManager.RemoveEnemyFromList(gameObject);
     }
+
+    public void InstantiateProjectile()
+    {
+        EnemyProjectileGenerator.Instance.SpawnProjectile(ProjectileSpawnPoint);
+    }
 }

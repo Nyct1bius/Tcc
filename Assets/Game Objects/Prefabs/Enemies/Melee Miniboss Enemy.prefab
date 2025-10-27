@@ -103,6 +103,7 @@ MonoBehaviour:
   TookDamage: 0
   HasHyperarmor: 1
   IsPatroller: 0
+  CheckPlayerPosition: 1
 --- !u!114 &3473728194571692397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,9 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2452787464731627628}
-  Health: 60
+  Health: 70
   MovementSpeed: 4
-  TimeBetweenAttacks: 2
+  TimeBetweenAttacks: 7
   MeleeAttackDistance: 8
   KnockbackForce: 10
   GroundLayer:
@@ -561,6 +562,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8447f2270d76d2741bbec9eedff0d9da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6487503181512890859}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8447f2270d76d2741bbec9eedff0d9da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5053427640214478641}
   m_SourcePrefab: {fileID: 100100000, guid: 8447f2270d76d2741bbec9eedff0d9da, type: 3}
 --- !u!1 &8405403894172665325 stripped
 GameObject:
@@ -589,6 +593,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5053427640214478641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8405403894172665325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd80ebf89e524bf4cbcf70c42a4b6695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 2452787464731627628}
 --- !u!4 &9218357036602400599 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8447f2270d76d2741bbec9eedff0d9da, type: 3}

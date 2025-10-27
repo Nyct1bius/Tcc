@@ -33,7 +33,7 @@ public class WorldMapUI : MonoBehaviour
 
     void Update()
     {
-        // Alterna o mapa com a tecla P
+        
         if (Input.GetKeyDown(KeyCode.M))
         {
             if(player == null)
@@ -44,7 +44,7 @@ public class WorldMapUI : MonoBehaviour
             mapaPanel.SetActive(!mapaPanel.activeSelf);
         }
 
-        // Se o mapa estiver ativo, atualiza a posição do jogador
+        
         if (mapaPanel.activeSelf && player != null)
         {
             AtualizarPosicaoJogador(player.position);

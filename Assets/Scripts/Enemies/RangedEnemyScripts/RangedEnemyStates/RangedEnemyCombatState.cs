@@ -46,9 +46,10 @@ public class RangedEnemyCombatState : RangedEnemyState
             enemy.Animator.SetBool("Idle", false);
             enemy.Animator.SetBool("Walk", true);
 
-            enemy.StopCoroutine(RangedAttack(Random.Range(1, 3)));
-
-            hasAttacked = false;
+            if (hasAttacked)
+            {
+                enemy.StartCoroutine(RangedAttackCooldown());
+            }
         }
         else
         {
@@ -59,22 +60,25 @@ public class RangedEnemyCombatState : RangedEnemyState
 
             if (!hasAttacked)
             {
+                RangedAttack();
+            }
+            else
+            {
                 enemy.transform.LookAt(playerPosition);
-                enemy.StartCoroutine(RangedAttack(Random.Range(1, 3)));
             }
         }
     }
 
-    private IEnumerator RangedAttack(int meleeAnimDice)
+    private void RangedAttack()
     {
         hasAttacked = true;
-
-        yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         enemy.Animator.SetTrigger("Shoot");
+        enemy.StartCoroutine(RangedAttackCooldown());
+    }
 
-        yield return new WaitForSeconds(0.6f);
-        EnemyProjectileGenerator.Instance.SpawnProjectile(enemy.ProjectileSpawnPoint);
-
+    private IEnumerator RangedAttackCooldown()
+    {
+        yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         hasAttacked = false;
     }
 }
