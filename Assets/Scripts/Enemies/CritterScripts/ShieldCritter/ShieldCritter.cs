@@ -53,7 +53,9 @@ public class ShieldCritter : ShieldCritterStateMachine
     {
         Animator.SetTrigger("Throw");
         yield return new WaitForSeconds(1.8f);
-        Instantiate(Shield, ShieldDropPosition);
+        Shield.transform.position = ShieldDropPosition.position;
+        Shield.transform.rotation = ShieldDropPosition.rotation;
+        Shield.GetComponent<ItemShield>().enabled = true;
     }
 
     public void RemoveSelfFromList()
