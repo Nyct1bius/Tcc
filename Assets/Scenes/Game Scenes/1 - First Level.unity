@@ -21132,6 +21132,7 @@ GameObject:
   - component: {fileID: 506280338}
   - component: {fileID: 506280339}
   - component: {fileID: 506280340}
+  - component: {fileID: 506280341}
   m_Layer: 0
   m_Name: ManagerOfScene
   m_TagString: Untagged
@@ -21156,6 +21157,10 @@ MonoBehaviour:
     prefab: {fileID: 2102856790986989687, guid: 1df588c11fe364840b1b88332f8bf039, type: 3}
     poolSize: 50
     parentTransform: {fileID: 767045045}
+  - tag: HealingBattery
+    prefab: {fileID: 7276284775133730732, guid: 762ac7493b1425a489c4f4f7c3aa1ce5, type: 3}
+    poolSize: 25
+    parentTransform: {fileID: 2005873154}
 --- !u!4 &506280336
 Transform:
   m_ObjectHideFlags: 0
@@ -21170,6 +21175,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 767045045}
+  - {fileID: 2005873154}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &506280337
@@ -21250,6 +21256,18 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &506280341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506280334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e239d3ca51ea9234e83043e9e67ce3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &510061280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117939,6 +117957,37 @@ Transform:
   - {fileID: 1935068836}
   - {fileID: 1553500192}
   m_Father: {fileID: 1295124331}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2005873153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2005873154}
+  m_Layer: 0
+  m_Name: HealingBatteryParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2005873154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005873153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 506280336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008740428
 GameObject:

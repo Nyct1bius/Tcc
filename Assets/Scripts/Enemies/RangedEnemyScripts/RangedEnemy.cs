@@ -46,6 +46,15 @@ public class RangedEnemy : RangedEnemyStateMachine
     {
         if (RoomManager != null)
             RoomManager.RemoveEnemyFromList(gameObject);
+
+        float chance = Random.value; // same as Random.Range(0f, 1f)
+        print(chance);
+
+        // 20% probability
+        if (chance <= 0.2f)
+        {
+            CombatHealGenerator.Instance.SpawnHeal(transform);
+        }
     }
 
     public void InstantiateProjectile()
