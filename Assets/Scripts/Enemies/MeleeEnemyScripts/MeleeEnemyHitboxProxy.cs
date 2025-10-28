@@ -12,4 +12,8 @@ public class MeleeEnemyHitboxProxy : MonoBehaviour
     {
         enemy.DisableHitbox();
     }
+    public void EndAttack()
+    {
+        enemy.CheckPlayerPosition = true;
+    }
 }

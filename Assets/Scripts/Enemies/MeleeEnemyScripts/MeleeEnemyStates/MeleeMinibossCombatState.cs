@@ -9,6 +9,8 @@ public class MeleeMinibossCombatState : MeleeEnemyState
 
     private bool hasAttacked = false;
 
+    private Coroutine cooldownCoroutine;    
+
     public MeleeMinibossCombatState(MeleeEnemyStateMachine stateMachine, MeleeEnemy enemy) : base(stateMachine)
     {
         this.enemy = enemy;
@@ -26,12 +28,18 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         base.UpdateLogic();
 
         if (enemy.CheckPlayerPosition)
+        {
             playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
-        
-        enemy.Agent.SetDestination(playerPosition);
+            enemy.Agent.SetDestination(playerPosition);
+        }
 
         if (!enemy.TookDamage)
             CombatLogic();
+        else
+        {
+            StopCooldownCoroutine();
+            StartCooldownCoroutine();
+        }
 
         if (enemy.Stats.Health <= 0 && enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));
@@ -50,9 +58,9 @@ public class MeleeMinibossCombatState : MeleeEnemyState
 
             if (hasAttacked)
             {
-                enemy.StopCoroutine(MeleeAttackCooldown());
+                StopCooldownCoroutine();
                 enemy.DisableHitbox();
-                enemy.StartCoroutine(MeleeAttackCooldown());
+                StartCooldownCoroutine();
             }
         }
         else
@@ -77,12 +85,25 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         if (meleeAnimDice == 2)
             enemy.Animator.SetTrigger("MeleeSlow");
 
-        enemy.StartCoroutine(MeleeAttackCooldown());
+        StartCooldownCoroutine();
     }
 
     private IEnumerator MeleeAttackCooldown()
     {
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         hasAttacked = false;
+    }
+
+    private void StartCooldownCoroutine()
+    {
+        cooldownCoroutine = enemy.StartCoroutine(MeleeAttackCooldown());
+    }
+
+    private void StopCooldownCoroutine()
+    {
+        if (cooldownCoroutine != null)
+        {
+            enemy.StopCoroutine(cooldownCoroutine);
+        }
     }
 }

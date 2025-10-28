@@ -27,6 +27,8 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
         if (!enemy.HasHyperarmor)
             StartCoroutine(Knockback(knockbackDir, 0.2f));
+        else
+            StartCoroutine(TookDamage());
     }
     public void HealHealth(float health)
     {
@@ -41,7 +43,6 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     private IEnumerator Knockback(Vector3 direction, float duration)
     {
         enemy.Agent.enabled = false;
-
         yield return new WaitForSeconds(0.1f);
 
         float timer = 0f;
@@ -56,6 +57,12 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
         enemy.TookDamage = false;
         if (Health > 0)
             enemy.Agent.enabled = true;
+    }
+
+    private IEnumerator TookDamage()
+    {
+        yield return new WaitForSeconds(0.1f);
+        enemy.TookDamage = false;
     }
 
     public bool IsGrounded()

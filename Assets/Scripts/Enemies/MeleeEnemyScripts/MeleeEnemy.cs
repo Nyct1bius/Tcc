@@ -64,6 +64,5 @@ public class MeleeEnemy : MeleeEnemyStateMachine
     public void DisableHitbox()
     {
         AttackHitbox.enabled = false;
-        CheckPlayerPosition = true;
     }
 }
