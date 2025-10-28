@@ -5,20 +5,20 @@ using UnityEngine.SceneManagement;
 public class GameOverScreen : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private string mapaAtual;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    private LoadScene loadScene;
+
+    private void Start()
     {
-        
+        mapaAtual = SceneManager.GetActiveScene().name;
     }
 
     public void Continue()
     {
-
+        loadScene.StartLoad(mapaAtual);
     }
 
     public void Quit()
