@@ -97,7 +97,7 @@ MonoBehaviour:
       HasValue: 1
     Overlay:
       Value: 0
-      HasValue: 1
+      HasValue: 0
     OverlayPosition:
       Value: 0
       HasValue: 0
@@ -114,8 +114,8 @@ MonoBehaviour:
       Value: 
       HasValue: 0
     SpeakerMode:
-      Value: 3
-      HasValue: 1
+      Value: 0
+      HasValue: 0
     VirtualChannelCount:
       Value: 0
       HasValue: 0
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   identifier: 2c5177b11d81d824dbb064f9ac8527da
   parentIdentifier: default
-  active: 1
+  active: 0
   Properties:
     LiveUpdate:
       Value: 0
@@ -658,7 +658,7 @@ MonoBehaviour:
     CallbackHandler:
       Value: {fileID: 0}
       HasValue: 0
-  OutputTypeName: AUTODETECT
+  OutputTypeName: 
   threadAffinities:
     Value: []
     HasValue: 0
@@ -705,7 +705,7 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - Desktop/Master
+  - Master
   Banks:
   - BGM
   - SFX
