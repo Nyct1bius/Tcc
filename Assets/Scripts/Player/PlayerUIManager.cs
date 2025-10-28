@@ -72,6 +72,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void AtualizePlayerHealthUI(float currentHealth)
     {
+        _currentHealth = currentHealth;
         _healthText.text = currentHealth.ToString() + "/" + _stats.maxHealth.ToString();
         StartCoroutine(AnimarBarraDeVida(_healthSlider.value, currentHealth));
     }
