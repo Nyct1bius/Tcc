@@ -5,6 +5,7 @@ public class ShipController : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private ShipSettings _shipSettings;
+    [SerializeField] private LayerMask islandLayer;
 
     private Rigidbody _body;
     private Vector2 _moveDir;
@@ -17,11 +18,13 @@ public class ShipController : MonoBehaviour
     private void OnEnable()
     {
         _inputReader.MoveEvent += GetInputDirection;
+        _inputReader.InteractEvent += Interact;
     }
 
     private void OnDisable()
     {
         _inputReader.MoveEvent -= GetInputDirection;
+        _inputReader.InteractEvent -= Interact;
     }
 
     private void FixedUpdate()
@@ -82,6 +85,23 @@ public class ShipController : MonoBehaviour
     {
         if (angle > 180f) angle -= 360f;
         return angle;
+    }
+    private void Interact()
+    {
+       foreach(Collider collider in checkForIslands())
+        {
+            collider.GetComponent<IslandManager>()?.LoadLevel();
+        }
+    }   
+
+    private Collider[] checkForIslands()
+    {
+        float checkRadius = 0.5f;   
+        return Physics.OverlapSphere(
+            transform.position,
+            checkRadius,
+            islandLayer
+        );
     }
 }
 
