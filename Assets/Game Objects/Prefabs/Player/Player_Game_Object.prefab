@@ -285,7 +285,8 @@ MonoBehaviour:
   _currentWeaponData: {fileID: 0}
   _backupWeaponData: {fileID: 11400000, guid: 65ecfab748b1d7348b1054235ed0dab7, type: 2}
   _attackIncooldown: 0
-  _timeBetweenAttacks: 0.5
+  _timeBetweenAttacks: 0.1
+  _timeBetweenCombos: 0.5
   _attackCount: 0
   _lockOnRange: 6
   _detectedEnemys: []
@@ -296,6 +297,7 @@ MonoBehaviour:
   _damageEnemyProfile: {fileID: 11400000, guid: 273adcc73b41afe42b71db431dd61054, type: 2}
   _damagePlayerProfile: {fileID: 11400000, guid: 3e1579166186ee342a85dad9c479508b, type: 2}
   _hitAudioCooldown: 0.5
+  AttackFineshed: 0
 --- !u!114 &5923956784815927567
 MonoBehaviour:
   m_ObjectHideFlags: 0

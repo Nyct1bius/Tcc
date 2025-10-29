@@ -28,6 +28,7 @@ public class DamagedState : State
     {
         _ctx.Health.IsInvulnerable = false;
         _ctx.Health.IsDamaged = false;
+        _ctx.Combat.AttackIncooldown = false;
     }
     public override void FixedDo()
     {

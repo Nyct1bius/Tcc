@@ -39,6 +39,10 @@ public class AttackState : State
 
                 _ctx.Combat.AttackCount++;
         }
+        else
+        {
+            _ctx.Combat.AttackCount = 0;
+        }
     }
 
     public override void CheckSwitchState()

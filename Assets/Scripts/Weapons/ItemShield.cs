@@ -1,19 +1,18 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class ItemShield : Item, IProximityEventTrigger, IDataPersistence
 {
    [SerializeField] bool hasShield;
-    private void Start()
-    {
-        
-        transform.DORotate(new Vector3(0, 180f, 0), 10f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        transform.DOLocalMoveY(transform.position.y + 1f, 3f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
-
-    }
+  
     private void OnEnable()
     {
-        GetItemHeight();
+        StartCoroutine(DelayStart());
+    }
+    IEnumerator DelayStart()
+    {
+        yield return new WaitForSeconds(.5f);
     }
     private void OnDisable()
     {
