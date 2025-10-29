@@ -5,7 +5,7 @@ public class GroundSensor : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheckTransform;
     [SerializeField] private float groundCheckRadius;
-    [SerializeField] private LayerMask groundMask;
+    public LayerMask groundMask;
 
     private Collider[] hitColliders = new Collider[3];
 

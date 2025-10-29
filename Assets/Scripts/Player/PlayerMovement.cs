@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerStateMachine _machine;
     [SerializeField] private Transform playerVisualTransform;
 
-    //Inputs
     private Vector2 _currentMovementInput;
 
     [Header("Movement")]
@@ -48,8 +47,6 @@ public class PlayerMovement : MonoBehaviour
     private float _buttonPressedTime;
     private bool _requireNewJumpPress;
     private float _timeSinceUnground = 0f;
-
-
     [SerializeField] private float _jumpBufferTime = 0.1f;
     public float _timeSinceJumpPressed = Mathf.Infinity;
 
@@ -95,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 CameraFowardXZ { get { return _cameraFowardXZ; } set { _cameraFowardXZ = value; } }
     public Vector3 CameraRightXZ { get { return _cameraRightXZ; } set { _cameraRightXZ = value; } }
     public Vector3 MovementDelta { get { return _movementDelta; } set { _movementDelta = value; } }
+    public float MaxSlopeAngle { get { return _maxSlopeAngle; } }
 
     public float DashTime { get { return _dashTime; } }
     public float DashDistance { get { return _dashDistance; } }
@@ -117,13 +115,12 @@ public class PlayerMovement : MonoBehaviour
     public ScreenShakeProfileSO LandProfile { get { return _landProfile; } }
     public ScreenShakeProfileSO DashProfile { get { return _dashProfile; } }
 
-    // --- INPUT BUFFER ---
     public bool HasBufferedJump => _timeSinceJumpPressed <= _jumpBufferTime;
     #endregion
 
     private void Start()
     {
-        SetUpJumpVariables();;
+        SetUpJumpVariables();
     }
 
     private void OnEnable()
@@ -143,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (_machine.GameIsPaused) return;
-        _timeSinceJumpPressed += Time.deltaTime; 
+        _timeSinceJumpPressed += Time.deltaTime;
         Debug.DrawRay(transform.position, Vector3.down * (transform.localScale.y * 0.5f + 0.3f), Color.red);
         UpdateFrictionMaterial();
         IsGroundAtLandingPoint();
@@ -158,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
         _timeSinceUnground += Time.deltaTime;
     }
 
-    #region Movement
     private void SetUpJumpVariables()
     {
         _jumpVelocity = MathF.Sqrt(jumpHeight * _gravity * -2) * _machine.Body.mass;
@@ -176,9 +172,7 @@ public class PlayerMovement : MonoBehaviour
         _requireNewJumpPress = false;
 
         if (isJumpButtonPressed)
-        {
             _timeSinceJumpPressed = 0f;
-        }
     }
 
     private void HandleGrounded()
@@ -194,7 +188,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _isGrounded = false;
         }
-
     }
 
     private void HandleDash(bool isDashing)
@@ -234,43 +227,32 @@ public class PlayerMovement : MonoBehaviour
             if (_machine.IsBlocking)
             {
                 Vector3 cameraForward = _machine.MainCameraRef.transform.forward;
-                cameraForward.y = 0f; 
+                cameraForward.y = 0f;
                 cameraForward.Normalize();
 
                 if (cameraForward.sqrMagnitude > 0.01f)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
-                    transform.rotation = Quaternion.Slerp(
-                        transform.rotation,
-                        targetRotation,
-                        Time.deltaTime / turnSmoothTime
-                    );
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime / turnSmoothTime);
                 }
 
-                _moveDirection = transform.forward * _currentMovementInput.y +
-                                 transform.right * _currentMovementInput.x;
+                _moveDirection = transform.forward * _currentMovementInput.y + transform.right * _currentMovementInput.x;
             }
             else
             {
-                targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg +
-                              _machine.MainCameraRef.transform.eulerAngles.y;
+                targetAngle = Mathf.Atan2(_currentMovementInput.x, _currentMovementInput.y) * Mathf.Rad2Deg + _machine.MainCameraRef.transform.eulerAngles.y;
                 angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             }
         }
     }
 
-
     private void UpdateFrictionMaterial()
     {
         if (OnSlope() && _currentMovementInput == Vector2.zero)
-        {
             _playerCollider.material = _highFrictionMaterial;
-        }
         else
-        {
             _playerCollider.material = _lowFrictionMaterial;
-        }
     }
 
     private void ApplyGravity()
@@ -281,13 +263,9 @@ public class PlayerMovement : MonoBehaviour
         var verticalSpeed = Vector3.Dot(_machine.Body.linearVelocity, transform.up);
 
         if (_isJumpButtonPressed && verticalSpeed > 0)
-        {
             effectiveGravity *= jumpSustainGravity;
-        }
         else if (!_isJumpButtonPressed && verticalSpeed > 0)
-        {
             effectiveGravity *= 2f;
-        }
 
         _machine.Body.linearVelocity += effectiveGravity * Time.deltaTime * transform.up;
     }
@@ -296,15 +274,24 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 rayOrigin = transform.position + Vector3.up * (_playerCollider.center.y - _playerCollider.height / 2 + 0.05f);
         float rayLength = (transform.localScale.y * 0.5f) + 0.3f;
-
         Debug.DrawRay(rayOrigin, Vector3.down * rayLength, Color.red);
-
         if (Physics.Raycast(rayOrigin, Vector3.down, out _slopeHit, rayLength))
         {
             float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
             return angle < _maxSlopeAngle && angle != 0;
         }
+        return false;
+    }
 
+    public bool OnSlope(out RaycastHit slopeHit)
+    {
+        Vector3 rayOrigin = transform.position + Vector3.up * (_playerCollider.center.y - _playerCollider.height / 2 + 0.05f);
+        float rayLength = (transform.localScale.y * 0.5f) + 0.3f;
+        if (Physics.Raycast(rayOrigin, Vector3.down, out slopeHit, rayLength))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < _maxSlopeAngle && angle != 0;
+        }
         return false;
     }
 
@@ -317,9 +304,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 rayOrigin = transform.position + Vector3.up * (_playerCollider.center.y - _playerCollider.height / 2 + 0.05f);
         float rayLength = (transform.localScale.y * 0.5f) + _groundDetectionDistance;
-
         Debug.DrawRay(rayOrigin, Vector3.down * rayLength, Color.green);
         return Physics.Raycast(rayOrigin, Vector3.down, out _slopeHit, rayLength);
     }
-    #endregion
 }
