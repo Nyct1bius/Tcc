@@ -17,7 +17,7 @@ public class ShieldCritterCorneredState : ShieldCritterState
 
         critter.Agent.ResetPath();
         critter.GetComponent<CapsuleCollider>().enabled = false;
-        critter.StartThrowShieldCoroutine();
+        critter.Animator.SetTrigger("Throw");
     }
 
     public override void FixedUpdateLogic()

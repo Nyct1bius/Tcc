@@ -103,6 +103,7 @@ MonoBehaviour:
   TookDamage: 0
   HasHyperarmor: 0
   IsPatroller: 0
+  CheckPlayerPosition: 1
 --- !u!114 &3473728194571692397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +119,7 @@ MonoBehaviour:
   enemy: {fileID: 2452787464731627628}
   Health: 20
   MovementSpeed: 6
-  TimeBetweenAttacks: 1
+  TimeBetweenAttacks: 1.6
   MeleeAttackDistance: 4
   KnockbackForce: 25
   GroundLayer:

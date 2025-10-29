@@ -67,6 +67,6 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
 
     public bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, 5f, GroundLayer);
+        return Physics.Raycast(transform.position, Vector3.down, 10f, GroundLayer);
     }
 }

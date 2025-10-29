@@ -44,18 +44,9 @@ public class ShieldCritter : ShieldCritterStateMachine
         }
     }
 
-    public void StartThrowShieldCoroutine()
+    public void SpawnShield()
     {
-        StartCoroutine(ThrowShield());
-    }
-
-    private IEnumerator ThrowShield()
-    {
-        Animator.SetTrigger("Throw");
-        yield return new WaitForSeconds(1.8f);
-        Shield.transform.position = ShieldDropPosition.position;
-        Shield.transform.rotation = ShieldDropPosition.rotation;
-        Shield.GetComponent<ItemShield>().enabled = true;
+        Shield.SetActive(true);
     }
 
     public void RemoveSelfFromList()
