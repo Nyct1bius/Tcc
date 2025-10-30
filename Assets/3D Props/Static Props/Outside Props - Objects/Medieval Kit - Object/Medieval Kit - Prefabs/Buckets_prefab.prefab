@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 3051133071639845465}
   - component: {fileID: 1810953097666415216}
   - component: {fileID: 5721209150254109199}
+  - component: {fileID: 2495321813579847394}
   m_Layer: 0
   m_Name: wooden_bucket_01.007 (1)
   m_TagString: Untagged
@@ -119,6 +120,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2495321813579847394
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2853570619473736401}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6301479, y: 1.3711588, z: 1.4514351}
+  m_Center: {x: 6.786581, y: 0.6547382, z: 15.774427}
 --- !u!1 &5770134514272361281
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +152,7 @@ GameObject:
   - component: {fileID: 284033898423571138}
   - component: {fileID: 3385679918573631935}
   - component: {fileID: 3351216726349323275}
+  - component: {fileID: 6665676215893474513}
   m_Layer: 0
   m_Name: wooden_bucket_01.005 (1)
   m_TagString: Untagged
@@ -205,3 +228,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6665676215893474513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770134514272361281}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6301484, y: 1.4113164, z: 1.3606129}
+  m_Center: {x: 5.6229477, y: 0.70291233, z: 14.599011}
