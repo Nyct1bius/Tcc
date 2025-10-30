@@ -56,17 +56,22 @@ public class TurretController : MonoBehaviour
                     float distance = hit.distance;
                     distance = Mathf.Clamp(distance, 0, 15);
                     vfx.SetFloat("Distance", distance/3);
-                    
 
-                    if(GameManager.instance.PlayerInstance == hit.transform.gameObject)
+                    var playerHealth = GameManager.instance.PlayerInstance.GetComponent<PlayerHealthManager>();
+                    if (GameManager.instance.PlayerInstance == hit.transform.gameObject)
                     {
                         if(type == TurretType.KillPlayer && GameManager.instance.canRespawnPlayer)
                         {
-                            GameManager.instance.RespawnPlayer(0.5f);
+                            if (!playerHealth.shield.CanBlock(origin))
+                            {
+                                playerHealth.Damage(10, transform.position);
+                                GameManager.instance.RespawnPlayer(0.5f);
+                            }
+                             
                         }
                         else if(type == TurretType.DamagePlayer)
                         {
-                            GameManager.instance.PlayerInstance.GetComponent<PlayerHealthManager>().Damage(10, origin);
+                            playerHealth.Damage(10, transform.position);
                         }
                     }
                 }

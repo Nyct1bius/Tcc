@@ -24,7 +24,7 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private float _timeBetweenAttacks = 0.5f;
     [SerializeField] private float _timeBetweenCombos = 1f;
     [SerializeField] private int _attackCount;
-    private bool _isAttacking;
+    [SerializeField] private bool _isAttacking;
     [Header("Lock On")]
     [SerializeField] private float _lockOnRange;
     private Collider[] _lookAtTargets = new Collider[10];
@@ -76,6 +76,14 @@ public class PlayerCombatManager : MonoBehaviour
         GameEvents.EnterCombat += OnEnterCombat;
         GameEvents.ExitCombat += OnExitCombat;
         _machine.inputReader.LockOnEnemy += LockOnEnemy;
+        if (_machine.currentData.hasShield)
+        {
+            _machine.inputReader.HandleShieldEvent += _machine.Shield.ToggleShield;
+        }
+        if(_currentWeaponData!= null)
+        {
+            _machine.inputReader.AttackEvent += CheckAttackButton;
+        }
     }
     private void OnDisable()
     {

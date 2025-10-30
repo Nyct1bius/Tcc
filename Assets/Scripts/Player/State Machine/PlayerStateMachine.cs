@@ -85,7 +85,6 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     }
     private void FixedUpdate()
     {
-        Debug.Log(_currentState);   
         _currentState.FixedUpdateStates();
     }
 

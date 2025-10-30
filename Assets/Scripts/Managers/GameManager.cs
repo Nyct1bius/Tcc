@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
         oldCnCameraRef = _cnCameraRef;
         oldCnCameraRef.Priority = 0;
         PlayerInstance.gameObject.SetActive(true);
+        PlayerInstance.GetComponent<PlayerHealthManager>().shield.ResetShield();
         yield return new WaitForSeconds(0.25f);
         canRespawnPlayer = true;
         _cnCameraRef = Instantiate(cnCameraPrefab, PlayerInstance.transform.position, Quaternion.identity);

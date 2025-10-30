@@ -26,7 +26,12 @@ public class Shield : MonoBehaviour
             _shieldAnimator.Play("Shield_Close");
         }
     }
-
+    public void ResetShield()
+    {
+        _shieldAnimator.Play("Shield_Close");
+        shieldVisual.SetActive(false);
+        _machine.IsBlocking = false;
+    }
     public bool CanBlock(Vector3 enemyPos)
     {
         if (!_machine.IsBlocking) return false;
