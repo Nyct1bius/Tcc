@@ -52,10 +52,10 @@ public class Button : MonoBehaviour,IHealth
             platformRaiser.RaisePlatforms();
         }
 
-        doorToOpen?.CheckIfAllButtonsIsActivated();
-        extraDoorToOpen?.CheckIfAllButtonsIsActivated();
-        if (horizontalMovePlatform != null)
-            horizontalMovePlatform.enabled = true;
+        //doorToOpen?.CheckIfAllButtonsIsActivated();
+        //extraDoorToOpen?.CheckIfAllButtonsIsActivated();
+        //if (horizontalMovePlatform != null)
+        //    horizontalMovePlatform.enabled = true;
     }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
