@@ -85,12 +85,12 @@ public class AttackState : State
                 Vector3 posToMove = targetPos.position + dirEnemyToPlayer * (range * 0.4f);
                 posToMove.y = _ctx.Movement.PlayerTransform.position.y;
 
-                _ctx.StartCoroutine(SmoothDash(posToMove, targetPos, 0.15f));
+                _ctx.StartCoroutine(SmoothDash( targetPos, 0.15f));
             }
         }
     }
 
-    private System.Collections.IEnumerator SmoothDash(Vector3 targetPos, Transform enemy, float duration)
+    private System.Collections.IEnumerator SmoothDash(Transform enemy, float duration)
     {
         Transform player = _ctx.Movement.PlayerTransform;
         Vector3 startPos = player.position;
@@ -108,12 +108,10 @@ public class AttackState : State
 
             float easedT = 1f - Mathf.Pow(2f, -10f * t);
 
-            player.position = Vector3.Lerp(startPos, targetPos, easedT);
             player.rotation = Quaternion.Slerp(startRot, targetRot, easedT);
 
             yield return null;
         }
-        player.position = targetPos;
         player.rotation = targetRot;
     }
 
