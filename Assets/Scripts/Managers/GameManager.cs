@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     private Camera _minimapCamRef;
     public CinemachineCamera _cnCameraRef;
     private CinemachineCamera oldCnCameraRef;
-    private Transform _checkpoint;
+    [SerializeField] private Transform _checkpoint;
     public int _checkpointIndex;
-    private Transform _spawnPos;
+    [SerializeField] private Transform _spawnPos;
     public bool IsRestartingGame;
     public bool isNewGame;
     public GameObject PlayerInstance { get; private set; }
@@ -161,13 +161,10 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer(Transform spawnPoint)
     {
-        if (!isNewGame)
+        DataPersistenceManager.Instance.LoadGame();
+        if (loader.LoadSpawnPos() != Vector3.zero)
         {
-            DataPersistenceManager.Instance.LoadGame();
-            if(loader.LoadSpawnPos() != Vector3.zero)
-            {
-                spawnPoint.position = loader.LoadSpawnPos();
-            }
+            spawnPoint.position = loader.LoadSpawnPos();
         }
         PlayerInstance = Instantiate(playerPrefab, spawnPoint.position , spawnPoint.rotation);
         _cnCameraRef = Instantiate(cnCameraPrefab, spawnPoint.position, Quaternion.identity);
@@ -223,18 +220,14 @@ public class GameManager : MonoBehaviour
         _cnCameraRef.Follow = null;
         _cnCameraRef.LookAt = null;
         yield return new WaitForSeconds(1.5f);
+        PlayerInstance.gameObject.SetActive(false); 
         if (_checkpoint == null)
-        {
             PlayerInstance.transform.position = _spawnPos.position;
-
-        }
         else
-        {
             PlayerInstance.transform.position = _checkpoint.position;
-        }
-          
         oldCnCameraRef = _cnCameraRef;
         oldCnCameraRef.Priority = 0;
+        PlayerInstance.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         _cnCameraRef = Instantiate(cnCameraPrefab, PlayerInstance.transform.position, Quaternion.identity);
         cnCameraPrefab.Priority = 1;
