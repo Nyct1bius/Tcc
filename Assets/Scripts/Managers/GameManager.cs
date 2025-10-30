@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [SerializeField] private int lastCheckPointIndex;
+    public bool canRespawnPlayer = true;
     
     
 
@@ -204,9 +205,9 @@ public class GameManager : MonoBehaviour
         oldCnCameraRef = null;
         PlayerInstance = null;
     }
-    public void RespawnPlayer()
+    public void RespawnPlayer(float timer = 1.5f)
     {
-       StartCoroutine(RespawningPlayer());
+       StartCoroutine(RespawningPlayer(timer));
     }
 
     public GameObject GetPlayerPrefab()
@@ -215,11 +216,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-    IEnumerator RespawningPlayer()
+    IEnumerator RespawningPlayer(float timerToWait)
     {
+        canRespawnPlayer = false;
         _cnCameraRef.Follow = null;
         _cnCameraRef.LookAt = null;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(timerToWait);
         PlayerInstance.gameObject.SetActive(false); 
         if (_checkpoint == null)
             PlayerInstance.transform.position = _spawnPos.position;
@@ -228,12 +230,14 @@ public class GameManager : MonoBehaviour
         oldCnCameraRef = _cnCameraRef;
         oldCnCameraRef.Priority = 0;
         PlayerInstance.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
+        canRespawnPlayer = true;
         _cnCameraRef = Instantiate(cnCameraPrefab, PlayerInstance.transform.position, Quaternion.identity);
         cnCameraPrefab.Priority = 1;
         _cnCameraRef.Follow = PlayerInstance.transform;
         _cnCameraRef.LookAt = PlayerInstance.transform;
         yield return new WaitForSeconds(2f);
+        
         Destroy(oldCnCameraRef.gameObject);
     }
 

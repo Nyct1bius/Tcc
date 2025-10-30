@@ -60,9 +60,9 @@ public class TurretController : MonoBehaviour
 
                     if(GameManager.instance.PlayerInstance == hit.transform.gameObject)
                     {
-                        if(type == TurretType.KillPlayer)
+                        if(type == TurretType.KillPlayer && GameManager.instance.canRespawnPlayer)
                         {
-                            GameManager.instance.RespawnPlayer();
+                            GameManager.instance.RespawnPlayer(0.5f);
                         }
                         else if(type == TurretType.DamagePlayer)
                         {
