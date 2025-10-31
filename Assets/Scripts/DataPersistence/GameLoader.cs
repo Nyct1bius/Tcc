@@ -5,7 +5,7 @@ using System.Linq;
 public class GameLoader : MonoBehaviour
 {
     [Tooltip("Offset em relação ao totem salvo (por exemplo, (0, 0, 2) para spawnar 2 unidades à frente).")]
-    public Vector3 spawnOffset = new Vector3(0, 0, 2);
+    public Vector3 spawnOffset = new Vector3(0, 5, 2);
 
 
     public Vector3 LoadSpawnPos(bool resetPos = false)
@@ -23,6 +23,7 @@ public class GameLoader : MonoBehaviour
             {
                 Debug.Log("Save é de outra cena, spawnando no início desta fase.");
                 posToSpawn =  Vector3.zero;
+                return posToSpawn;
             }
 
             // Procura o totem salvo na cena
@@ -45,6 +46,9 @@ public class GameLoader : MonoBehaviour
             Debug.Log("Nenhum totem salvo, spawnando no default.");
         }
 
+        Debug.Log(posToSpawn);
+
         return posToSpawn;
+
     }
 }
