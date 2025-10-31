@@ -1021,7 +1021,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""25976444-9158-47ad-915f-e32ae16225b8"",
-                    ""path"": """",
+                    ""path"": ""<XInputController>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

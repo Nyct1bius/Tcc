@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class WorldMapUI : MonoBehaviour
@@ -11,12 +12,22 @@ public class WorldMapUI : MonoBehaviour
 
     [Header("Referências do Mundo")]
     public Transform worldBottomLeft; 
-    public Transform worldTopRight;   
+    public Transform worldTopRight;
+
+    
+    private PlayerInputs playerInput;
 
     private float minX, maxX, minZ, maxZ;
 
+    private void Awake()
+    {
+        playerInput = new PlayerInputs();
+    }
+
     void Start()
     {
+        playerInput.Enable();
+
         // Calcula os limites do mundo com base nos dois pontos
         if (worldBottomLeft != null && worldTopRight != null)
         {
@@ -33,22 +44,24 @@ public class WorldMapUI : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if(player == null)
-            {
-                GetPlayerReference();
-            }
 
-            mapaPanel.SetActive(!mapaPanel.activeSelf);
-        }
-
+        playerInput.UI.Map.performed += OnMapPressed;
         
         if (mapaPanel.activeSelf && player != null)
         {
             AtualizarPosicaoJogador(player.position);
         }
+    }
+
+    private void OnMapPressed(InputAction.CallbackContext ctx)
+    {
+        
+        if(player == null)
+        {
+            GetPlayerReference();
+        }
+
+        mapaPanel.SetActive(!mapaPanel.activeSelf);
     }
 
     void AtualizarPosicaoJogador(Vector3 posMundo)
