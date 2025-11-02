@@ -26,10 +26,12 @@ public class DeathState : State
     public override void Do()
     {
         _timeInState += Time.deltaTime;
+        ManagerOfScenes.instance.IntensifyCombat(4f);
         if (_timeInState > 3f && !CalledDeath)
         {
             CalledDeath = true;
             GameManager.instance.SwitchGameState(GameManager.GameStates.GameOver);
+            
         }
     }
     public override void Exit()
