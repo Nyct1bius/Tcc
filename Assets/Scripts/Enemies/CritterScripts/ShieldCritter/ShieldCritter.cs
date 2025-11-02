@@ -6,7 +6,7 @@ public class ShieldCritter : ShieldCritterStateMachine
 {
     public ShieldCritterStats Stats { get; private set; }
 
-    public GameObject Player, Shield;
+    public GameObject Player, PlayableShield, CritterVisualShield;
     public NavMeshAgent Agent;
     public RoomManager RoomManager;
     public Animator Animator;
@@ -46,7 +46,8 @@ public class ShieldCritter : ShieldCritterStateMachine
 
     public void SpawnShield()
     {
-        Shield.SetActive(true);
+        PlayableShield?.SetActive(true);
+        CritterVisualShield?.SetActive(false);
     }
 
     public void RemoveSelfFromList()

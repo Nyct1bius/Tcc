@@ -21,11 +21,15 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        Health -= damage;
-        enemy.TookDamage = true;
+        if(enemy.TookDamage == false)
+        {
+            enemy.TookDamage = true;
+            Health -= damage;
 
-        Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
-        StartCoroutine(Knockback(knockbackDir, .2f));
+            Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
+            StartCoroutine(Knockback(knockbackDir, .2f));
+        }
+        
     }
     public void HealHealth(float health)
     {

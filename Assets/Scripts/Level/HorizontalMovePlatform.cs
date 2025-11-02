@@ -22,6 +22,7 @@ public class HorizontalMovePlatform : MonoBehaviour
     public float rotateAmount = 0f;
 
     public HorizontalPlatformLever lever;
+    public GameObject waybackLever;
 
 
     private void Start()
@@ -92,6 +93,7 @@ public class HorizontalMovePlatform : MonoBehaviour
         {
             other.transform.parent = transform;
             MovePlatform();
+            waybackLever?.SetActive(true);
 
             if(lever != null && !lever.enabled)
             {

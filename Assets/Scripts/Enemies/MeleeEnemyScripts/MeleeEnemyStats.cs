@@ -21,14 +21,18 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        Health -= damage;
-        enemy.TookDamage = true;
+        if(enemy.TookDamage == false)
+        {
+            enemy.TookDamage = true;
+            Health -= damage;
 
-        Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
-        if (!enemy.HasHyperarmor)
-            StartCoroutine(Knockback(knockbackDir, 0.2f));
-        else
-            StartCoroutine(TookDamage());
+            Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
+            if (!enemy.HasHyperarmor)
+                StartCoroutine(Knockback(knockbackDir, 0.2f));
+            else
+                StartCoroutine(TookDamage());
+        }
+        
     }
     public void HealHealth(float health)
     {
