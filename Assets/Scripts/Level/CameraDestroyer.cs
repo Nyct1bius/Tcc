@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class CameraDestroyer : MonoBehaviour
 {
-    public GameObject fogGameObject, uiCanva;
+    public GameObject follawableGameObject, uiCanva;
     
 
     public void DestroyAfterCutscene()
     {
-        if(fogGameObject != null)
-            fogGameObject.SetActive(true);
+        if(follawableGameObject != null)
+            follawableGameObject.SetActive(true);
         
         if(uiCanva != null)
             uiCanva.SetActive(false);

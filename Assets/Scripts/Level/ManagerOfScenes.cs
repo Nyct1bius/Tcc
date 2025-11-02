@@ -8,7 +8,7 @@ public class ManagerOfScenes : MonoBehaviour
 {
     public static ManagerOfScenes instance;
     [SerializeField] CameraDestroyer[] cameraDestroyers;
-    public GameObject fogGameObject;
+    public GameObject followableGameObjects;
 
     [SerializeField] private StudioEventEmitter bgmEmitter;
     [SerializeField] private StudioEventEmitter waveEmitter;
@@ -37,8 +37,8 @@ public class ManagerOfScenes : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         GameManager.instance.SwitchGameState(GameManager.GameStates.Started);
         GameManager.instance.PlayerInstance.SetActive(false);
-        if(fogGameObject != null)
-            fogGameObject.SetActive(false);
+        if(followableGameObjects != null)
+            followableGameObjects.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
 
     }
