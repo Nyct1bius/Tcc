@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "PlayerInputs",
     "maps": [
         {
@@ -483,6 +484,15 @@
                     "name": "Map",
                     "type": "Button",
                     "id": "b0da87d0-f51a-4b4d-b838-35fe0dc15d2a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Anykey",
+                    "type": "Button",
+                    "id": "3832d6f2-4df8-4bd8-acff-f2ea9a642885",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1004,6 +1014,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96210404-3327-4061-8457-1e4070edb3ec",
+                    "path": "*/{PrimaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Anykey",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

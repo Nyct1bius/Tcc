@@ -8,16 +8,19 @@ using UnityEngine.UI;
 public class TitleScreen : MonoBehaviour, IDataPersistence
 {
     public GameObject _fase1, _fase2;
+    public GameObject _camera1, _camera2;
     private LoadScene loadscene;
     private bool fase2 = false;
     [SerializeField]
-    private string lastScene; 
+    private string lastScene;
+    [SerializeField] private InputAction anyKeyAction;
 
     public UnityEngine.UI.Button continueButton;
 
     private void Awake()
     {
         loadscene = GetComponent<LoadScene>();
+        anyKeyAction.Enable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -43,10 +46,12 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
     {
         if(!fase2)
         {
-            if(Input.anyKeyDown)
+            if(anyKeyAction.WasPressedThisFrame())
             {
                 _fase1.SetActive(false);
                 _fase2.SetActive(true);
+                _camera1.SetActive(false);
+                _camera2.SetActive(true);
             }
         }
     }

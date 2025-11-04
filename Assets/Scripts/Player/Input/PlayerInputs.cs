@@ -574,6 +574,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Anykey"",
+                    ""type"": ""Button"",
+                    ""id"": ""3832d6f2-4df8-4bd8-acff-f2ea9a642885"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1093,6 +1102,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96210404-3327-4061-8457-1e4070edb3ec"",
+                    ""path"": ""*/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Anykey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1124,6 +1144,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_Skip = m_UI.FindAction("Skip", throwIfNotFound: true);
         m_UI_Map = m_UI.FindAction("Map", throwIfNotFound: true);
+        m_UI_Anykey = m_UI.FindAction("Anykey", throwIfNotFound: true);
     }
 
     ~@PlayerInputs()
@@ -1391,6 +1412,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_Skip;
     private readonly InputAction m_UI_Map;
+    private readonly InputAction m_UI_Anykey;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -1454,6 +1476,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Map".
         /// </summary>
         public InputAction @Map => m_Wrapper.m_UI_Map;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Anykey".
+        /// </summary>
+        public InputAction @Anykey => m_Wrapper.m_UI_Anykey;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1519,6 +1545,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Map.started += instance.OnMap;
             @Map.performed += instance.OnMap;
             @Map.canceled += instance.OnMap;
+            @Anykey.started += instance.OnAnykey;
+            @Anykey.performed += instance.OnAnykey;
+            @Anykey.canceled += instance.OnAnykey;
         }
 
         /// <summary>
@@ -1569,6 +1598,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Map.started -= instance.OnMap;
             @Map.performed -= instance.OnMap;
             @Map.canceled -= instance.OnMap;
+            @Anykey.started -= instance.OnAnykey;
+            @Anykey.performed -= instance.OnAnykey;
+            @Anykey.canceled -= instance.OnAnykey;
         }
 
         /// <summary>
@@ -1764,5 +1796,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMap(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Anykey" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAnykey(InputAction.CallbackContext context);
     }
 }
