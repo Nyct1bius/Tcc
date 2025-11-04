@@ -1,20 +1,25 @@
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class CritterStats : MonoBehaviour, IHealth
 {
-    public Critter critter;
+    public Critter Critter;
 
     [SerializeField] private float maxHealth;
     public float CurrentHealth;
     public float MovementSpeed;
     public float KnockbackForce;
 
-    void Start()
+    private void Awake()
     {
-        CurrentHealth = maxHealth;
+        Critter = GetComponent<Critter>();
+    }
 
-        critter.Agent.speed = MovementSpeed;
+    void Start()
+    {       
+        CurrentHealth = maxHealth;
+        Critter.Agent.speed = MovementSpeed;
     }
 
     public void Damage(float damage, Vector3 DamageSourcePos)
@@ -37,7 +42,7 @@ public class CritterStats : MonoBehaviour, IHealth
 
     private IEnumerator Knockback(Vector3 direction, float duration)
     {
-        critter.Agent.enabled = false;
+        Critter.Agent.enabled = false;
 
         yield return new WaitForSeconds(0.1f);
 
@@ -49,6 +54,6 @@ public class CritterStats : MonoBehaviour, IHealth
             yield return null;
         }
 
-        critter.Agent.enabled = true;
+        Critter.Agent.enabled = true;
     }
 }
