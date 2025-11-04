@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class Boss : BossStateMachine
@@ -8,6 +9,9 @@ public class Boss : BossStateMachine
     public Animator Animator;
     public GameObject[] AttackHitboxes;
     public Transform[] MovementPoints;
+    public Transform NextPoint, CurrentPoint;
+
+    public bool TookDamage = false;
 
     private void Awake()
     {
@@ -19,6 +23,8 @@ public class Boss : BossStateMachine
     {
         Animator.SetBool("Idle", true);
         Animator.SetBool("Moving", false);
+
+        NextPoint = MovementPoints[0];
     }
 
     // Update is called once per frame
@@ -28,5 +34,10 @@ public class Boss : BossStateMachine
         {
             InitializeStateMachine(new BossIntroState(this, this));
         }
+    }
+
+    public void SetCurrentPoint()
+    {
+        CurrentPoint = NextPoint;
     }
 }

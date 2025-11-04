@@ -1,18 +1,35 @@
+using System.Collections;
 using UnityEngine;
 
-public class BossStats : MonoBehaviour
+public class BossStats : MonoBehaviour, IHealth
 {
-    public Boss boss;
+    public Boss Boss;
+    public float Health, MovementSpeed, TimeBetweenAttacks;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Damage(float damage, Vector3 damageSourcePos)
     {
-        
+        if (!Boss.TookDamage)
+        {
+            Boss.TookDamage = true;
+            Health -= damage;
+
+            StartCoroutine(TookDamage());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator TookDamage()
     {
-        
+        yield return new WaitForSeconds(0.2f);
+        Boss.TookDamage = false;
+    }
+
+    public void HealHealth(float health)
+    {
+
+    }
+
+    public void Death()
+    {
+
     }
 }
