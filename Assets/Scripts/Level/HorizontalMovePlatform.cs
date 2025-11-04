@@ -93,7 +93,8 @@ public class HorizontalMovePlatform : MonoBehaviour
         {
             other.transform.parent = transform;
             MovePlatform();
-            waybackLever?.SetActive(true);
+            if(waybackLever != null)
+                waybackLever.SetActive(true);
 
             if(lever != null && !lever.enabled)
             {
