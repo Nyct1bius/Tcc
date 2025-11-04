@@ -33,28 +33,30 @@ public class MeleeEnemyPatrolState : MeleeEnemyState
             stateMachine.ChangeState(new MeleeMinibossCombatState(stateMachine, enemy));
     }
 
-    private void MoveToNextPoint()
-    {
-        enemy.Agent.destination = enemy.PatrolPoints[currentPatrolPoint].position;
-        currentPatrolPoint = (currentPatrolPoint + 1) % enemy.PatrolPoints.Length;
-    }
-
     private IEnumerator WaitAndMove()
     {
         isWaiting = true;
 
-        enemy.Animator.SetBool("Walk", false);
         enemy.Animator.SetBool("Idle", true);
+        enemy.Animator.SetBool("Walk", false);
 
         enemy.Agent.ResetPath();
 
         yield return new WaitForSeconds(2f);
 
-        enemy.Animator.SetBool("Idle", false);
         enemy.Animator.SetBool("Walk", true);
+        enemy.Animator.SetBool("Idle", false);
 
         MoveToNextPoint();
 
+        yield return new WaitForSeconds(0.5f);
+
         isWaiting = false;
+    }
+
+    private void MoveToNextPoint()
+    {
+        currentPatrolPoint = (currentPatrolPoint + 1) % enemy.PatrolPoints.Length;
+        enemy.Agent.destination = enemy.PatrolPoints[currentPatrolPoint].position;
     }
 }

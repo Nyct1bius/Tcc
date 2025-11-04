@@ -6,8 +6,7 @@ public class CritterStats : MonoBehaviour, IHealth
 {
     public Critter Critter;
 
-    [SerializeField] private float maxHealth;
-    public float CurrentHealth;
+    public float Health;
     public float MovementSpeed;
     public float KnockbackForce;
 
@@ -18,13 +17,12 @@ public class CritterStats : MonoBehaviour, IHealth
 
     void Start()
     {       
-        CurrentHealth = maxHealth;
         Critter.Agent.speed = MovementSpeed;
     }
 
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
-        CurrentHealth -= damage;
+        Health -= damage;
 
         Vector3 knockbackDir = (transform.position - DamageSourcePos).normalized;
         StartCoroutine(Knockback(knockbackDir, .4f));

@@ -8,52 +8,71 @@ public class CritterPatrolState : CritterState
     private int currentPatrolPoint = 0;
     private bool isWaiting = false;
 
+    private Coroutine patrolCoroutine;
+
     public CritterPatrolState(CritterStateMachine stateMachine, Critter critter) : base(stateMachine)
     {
         this.critter = critter;
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-
-        critter.StopAllCoroutines();
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
 
-        if (!critter.Agent.pathPending && critter.Agent.remainingDistance <= critter.Agent.stoppingDistance && !isWaiting)
-            critter.StartCoroutine(WaitAndMove());
-    }
+        if (critter.Agent.remainingDistance <= critter.Agent.stoppingDistance && !isWaiting)
+            StartPatrolCoroutine();
 
-    private void MoveToNextPoint()
-    {
-        if (critter.PatrolPoints == null || critter.PatrolPoints.Length == 0)
-            return;
-
-        critter.Agent.destination = critter.PatrolPoints[currentPatrolPoint].position;
-
-        currentPatrolPoint = (currentPatrolPoint + 1) % critter.PatrolPoints.Length;
+        if (critter.Stats.Health <= 0)
+            stateMachine.ChangeState(new CritterDeadState(stateMachine, critter));
     }
 
     private IEnumerator WaitAndMove()
     {
         isWaiting = true;
 
-        critter.Animator.SetBool("Walk", false);
         critter.Animator.SetBool("Idle", true);
+        critter.Animator.SetBool("Walk", false);
 
         critter.Agent.ResetPath();
 
         yield return new WaitForSeconds(2f);
 
-        critter.Animator.SetBool("Idle", false);
         critter.Animator.SetBool("Walk", true);
+        critter.Animator.SetBool("Idle", false);
 
         MoveToNextPoint();
 
+        yield return new WaitForSeconds(0.5f);
+
         isWaiting = false;
+    }
+
+    private void MoveToNextPoint()
+    {
+        currentPatrolPoint = (currentPatrolPoint + 1) % critter.PatrolPoints.Length;
+        critter.Agent.destination = critter.PatrolPoints[currentPatrolPoint].position;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        StopPatrolCoroutine();
+
+        if (isWaiting)
+            isWaiting = false;
+    }
+
+    private void StartPatrolCoroutine()
+    {
+        patrolCoroutine = critter.StartCoroutine(WaitAndMove());
+    }
+
+    private void StopPatrolCoroutine()
+    {
+        if (patrolCoroutine != null)
+        {
+            critter.StopCoroutine(patrolCoroutine);
+        }
     }
 }
