@@ -16,14 +16,4 @@ public class CritterIdleState : CritterState
         critter.Animator.SetBool("Walk", false);
         critter.Animator.SetBool("Idle", true);
     }
-
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-
-        if (critter.RoomManager.EnemiesAlerted)
-        {
-            stateMachine.ChangeState(new CritterFleeState(stateMachine, critter));
-        }
-    }
 }

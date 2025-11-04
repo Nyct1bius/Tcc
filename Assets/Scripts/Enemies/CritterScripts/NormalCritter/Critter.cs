@@ -5,10 +5,9 @@ using UnityEngine.AI;
 public class Critter : CritterStateMachine
 {
     public CritterStats Stats { get; private set; }
-
+ 
     public GameObject Player;
     public NavMeshAgent Agent;
-    public RoomManager RoomManager;
     public Animator Animator;
     public Transform[] PatrolPoints;
 
@@ -19,7 +18,7 @@ public class Critter : CritterStateMachine
 
     void Start()
     {
-        InitializeStateMachine(new CritterIdleState(this, this));
+        InitializeStateMachine(new CritterPatrolState(this, this));
 
         Player = GameManager.instance.PlayerInstance;
         if (Player == null)
@@ -40,14 +39,6 @@ public class Critter : CritterStateMachine
         else
         {
             Debug.LogWarning("GameManager Instance not found");
-        }
-    }
-
-    public void RemoveSelfFromList()
-    {
-        if (RoomManager != null)
-        {
-            RoomManager.RemoveEnemyFromList(gameObject);
         }
     }
 }
