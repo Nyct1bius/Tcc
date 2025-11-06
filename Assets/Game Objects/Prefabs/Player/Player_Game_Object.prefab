@@ -288,6 +288,7 @@ MonoBehaviour:
   _timeBetweenAttacks: 0.1
   _timeBetweenCombos: 0.5
   _attackCount: 0
+  _isAttacking: 0
   _lockOnRange: 6
   _detectedEnemys: []
   _lookRotationSpeed: 7
@@ -10543,7 +10544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6842512829803107667}
   - component: {fileID: 4578448172802471199}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -89,7 +89,8 @@ public class HorizontalMovePlatform : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         print("OnTriggerCalled");
-        if(other.CompareTag("Player"))
+        PlayerStateMachine playerStateMachine = other.GetComponent<PlayerStateMachine>();
+        if(GameManager.instance.PlayerInstance == other.gameObject)
         {
             other.transform.parent = transform;
             MovePlatform();
@@ -105,7 +106,8 @@ public class HorizontalMovePlatform : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.transform.parent = null;
+        if (GameManager.instance.PlayerInstance == other.gameObject)
+            other.transform.parent = null;
         if(needsToReturn)
         {
             print("HasLeftTrigger");

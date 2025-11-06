@@ -203,6 +203,7 @@ public class PlayerCombatManager : MonoBehaviour
     }
     private void AddShield()
     {
+        if (_machine.Shield == null) return;
         _machine.currentData.hasShield = true;
         _machine.inputReader.HandleShieldEvent += _machine.Shield.ToggleShield;
         DataPersistenceManager.Instance.SaveGame();
