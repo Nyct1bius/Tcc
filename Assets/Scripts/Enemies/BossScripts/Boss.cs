@@ -7,7 +7,7 @@ public class Boss : BossStateMachine
 
     public RoomManager RoomManager;
     public Animator Animator;
-    public GameObject[] AttackHitboxes;
+    public BoxCollider[] AttackHitboxes;
     public Transform[] MovementPoints;
     public Transform NextPoint, CurrentPoint;
 
