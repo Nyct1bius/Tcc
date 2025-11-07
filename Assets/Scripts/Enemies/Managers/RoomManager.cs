@@ -72,6 +72,15 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (GameManager.instance.PlayerInstance == other.gameObject && isTriggered)
+        {
+            isTriggered = false;
+            StartCoroutine(CheckPlayerOutCountdown());
+        }
+    }
+
     public void SpawnSecondWave()
     {
         foreach (GameObject enemy in enemiesWave2)
@@ -157,5 +166,11 @@ public class RoomManager : MonoBehaviour
             }
         }
 
+    }
+
+    IEnumerator CheckPlayerOutCountdown()
+    {
+        yield return new WaitForSeconds(2f);
+        ManagerOfScenes.instance.IntensifyCombat(0f);
     }
 }

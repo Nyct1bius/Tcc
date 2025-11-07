@@ -4,7 +4,7 @@ using System.Collections;
 public class FollowPlayer : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 velocity = Vector3.one;
     [SerializeField] float smoothTime = 0.5f;
     [SerializeField] Vector3 offset = new Vector3(-2f, 0f, -2f);
     [SerializeField] float minFollowDistance = 0.5f;
