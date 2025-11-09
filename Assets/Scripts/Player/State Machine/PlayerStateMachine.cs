@@ -128,6 +128,7 @@ public class PlayerData
     {
         health = 100;
         hasSword = false;
+        hasShield = false;
         spawnPos = Vector3.zero;  
         lastTotemId = null;
         lastSceneName = null;  
