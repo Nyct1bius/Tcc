@@ -8865,6 +8865,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialAnimator: {fileID: 592009321}
+  isShieldTutorial: 0
+  hasShield: 0
 --- !u!65 &187349798
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22650,6 +22652,7 @@ GameObject:
   - component: {fileID: 530384202}
   - component: {fileID: 530384204}
   - component: {fileID: 530384203}
+  - component: {fileID: 530384205}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -22715,6 +22718,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530384201}
   m_CullTransparentMesh: 1
+--- !u!114 &530384205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530384201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 5, y: -1}
+  m_UseGraphicAlpha: 0
 --- !u!1 &530448247
 GameObject:
   m_ObjectHideFlags: 0
@@ -47415,6 +47433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialAnimator: {fileID: 2113386751}
+  isShieldTutorial: 0
+  hasShield: 0
 --- !u!65 &949445837
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65756,6 +65776,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialAnimator: {fileID: 1286167573}
+  isShieldTutorial: 0
+  hasShield: 0
 --- !u!65 &1149561203
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -106905,6 +106927,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialAnimator: {fileID: 1639204016}
+  isShieldTutorial: 0
+  hasShield: 0
 --- !u!65 &1813240179
 BoxCollider:
   m_ObjectHideFlags: 0
