@@ -23,7 +23,7 @@ public class GameLoader : MonoBehaviour
             {
                 Debug.Log("Save é de outra cena, spawnando no início desta fase.");
                 posToSpawn =  Vector3.zero;
-                return posToSpawn;
+                return posToSpawn + spawnOffset;
             }
 
             // Procura o totem salvo na cena
