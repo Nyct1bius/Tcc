@@ -27,11 +27,10 @@ public class MeleeMinibossCombatState : MeleeEnemyState
     {
         base.UpdateLogic();
 
+        Debug.Log(enemy.Agent.isStopped);
+
         if (enemy.CheckPlayerPosition)
-        {
             playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
-            enemy.Agent.SetDestination(playerPosition);
-        }
 
         if (!enemy.TookDamage)
             CombatLogic();
@@ -49,12 +48,25 @@ public class MeleeMinibossCombatState : MeleeEnemyState
 
     private void CombatLogic()
     {
-        if (enemy.Agent.remainingDistance > enemy.Agent.stoppingDistance)
+        if (enemy.IsCloseToTarget(playerPosition))
+        {
+            enemy.Agent.isStopped = true;
+
+            if (enemy.CheckPlayerPosition)
+                enemy.transform.LookAt(playerPosition);
+
+            enemy.Animator.SetBool("Idle", true);
+            enemy.Animator.SetBool("Walk", false);
+
+            MeleeAttack(Random.Range(1, 3));
+        }
+        else
         {
             enemy.Agent.isStopped = false;
+            enemy.Agent.SetDestination(playerPosition);
 
-            enemy.Animator.SetBool("Idle", false);
             enemy.Animator.SetBool("Walk", true);
+            enemy.Animator.SetBool("Idle", false);
 
             if (hasAttacked)
             {
@@ -63,36 +75,24 @@ public class MeleeMinibossCombatState : MeleeEnemyState
                 StartCooldownCoroutine();
             }
         }
-        else
-        {
-            enemy.Agent.isStopped = true;
-
-            if (enemy.CheckPlayerPosition)
-                enemy.transform.LookAt(playerPosition);
-
-            enemy.Animator.SetBool("Walk", false);
-            enemy.Animator.SetBool("Idle", true);
-
-            if (!hasAttacked)
-                MeleeAttack(Random.Range(1, 3));
-        }
     }
 
     private void MeleeAttack(int meleeAnimDice)
     {
-        hasAttacked = true;
-        enemy.CheckPlayerPosition = false;
+        if (!hasAttacked)
+        {
+            if (meleeAnimDice == 1)
+                enemy.Animator.SetTrigger("MeleeFast");
+            if (meleeAnimDice == 2)
+                enemy.Animator.SetTrigger("MeleeSlow");
 
-        if (meleeAnimDice == 1)
-            enemy.Animator.SetTrigger("MeleeFast");
-        if (meleeAnimDice == 2)
-            enemy.Animator.SetTrigger("MeleeSlow");
-
-        StartCooldownCoroutine();
+            StartCooldownCoroutine();
+        }
     }
 
     private IEnumerator MeleeAttackCooldown()
     {
+        hasAttacked = true;
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         hasAttacked = false;
     }

@@ -12,7 +12,12 @@ public class MeleeEnemyHitboxProxy : MonoBehaviour
     {
         enemy.DisableHitbox();
     }
-    public void EndAttack()
+
+    public void StopCheckingPlayerPosition()
+    {
+        enemy.CheckPlayerPosition = false;
+    }
+    public void StartCheckingPlayerPosition()
     {
         enemy.CheckPlayerPosition = true;
     }

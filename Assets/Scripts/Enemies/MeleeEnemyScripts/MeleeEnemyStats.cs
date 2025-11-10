@@ -10,6 +10,7 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     public float TimeBetweenAttacks;
     public float MeleeAttackDistance;
     public float KnockbackForce;
+    public float RotationSpeed;
 
     public LayerMask GroundLayer;
 
@@ -47,6 +48,10 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     private IEnumerator Knockback(Vector3 direction, float duration)
     {
         enemy.Agent.enabled = false;
+
+        if (enemy.Stats.Health > 0)
+            enemy.Animator.SetTrigger("Hit");
+        
         yield return new WaitForSeconds(0.1f);
 
         float timer = 0f;

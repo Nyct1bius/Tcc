@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 705542044431384098}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.95, y: 0.19, z: 0.41}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9218357036602400599}
@@ -69,7 +69,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 705542044431384098}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
+  m_Radius: 4.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -118,10 +118,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 2452787464731627628}
   Health: 70
-  MovementSpeed: 4
-  TimeBetweenAttacks: 4.2
+  MovementSpeed: 5
+  TimeBetweenAttacks: 2.5
   MeleeAttackDistance: 9.5
   KnockbackForce: 10
+  RotationSpeed: 10
   GroundLayer:
     serializedVersion: 2
     m_Bits: 1088
@@ -177,8 +178,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 3, z: 4}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!114 &4191503100974368883
 MonoBehaviour:
   m_ObjectHideFlags: 0

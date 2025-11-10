@@ -41,4 +41,14 @@ public class Critter : CritterStateMachine
             Debug.LogWarning("GameManager Instance not found");
         }
     }
+
+    public void DropHealingItem()
+    {
+        float chance = Random.value;
+
+        if (chance <= 0.5f)
+        {
+            CombatHealGenerator.Instance.SpawnHeal(transform);
+        }
+    }
 }

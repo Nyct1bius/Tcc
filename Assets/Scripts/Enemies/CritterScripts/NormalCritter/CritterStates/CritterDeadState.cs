@@ -17,6 +17,7 @@ public class CritterDeadState : CritterState
 
         ChooseDeathAnimation(Random.Range(1, 3));
         critter.GetComponent<CapsuleCollider>().enabled = false;
+        critter.DropHealingItem();
         critter.StartCoroutine(Despawn(1));
     }
 

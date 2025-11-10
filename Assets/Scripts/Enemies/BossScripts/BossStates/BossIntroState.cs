@@ -21,7 +21,7 @@ public class BossIntroState : BossState
     {
         base.UpdatePhysics();
 
-        if (Vector3.Distance(boss.transform.position, boss.NextPoint.position) <= 5)
+        if (boss.IsCloseToTarget(boss.NextPoint.position))
         {
             boss.SetCurrentPoint();
             stateMachine.ChangeState(new BossWaitingState(stateMachine, boss));
@@ -29,13 +29,7 @@ public class BossIntroState : BossState
         else
         {
             boss.transform.position = Vector3.MoveTowards(boss.transform.position, boss.NextPoint.position, boss.Stats.MovementSpeed * Time.deltaTime);
-            boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, boss.NextPoint.rotation, 10 * Time.deltaTime);
+            boss.transform.LookAt(boss.NextPoint.position);
         }
-    }
-
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 }

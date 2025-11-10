@@ -9,6 +9,8 @@ public class RangedEnemyCombatState : RangedEnemyState
 
     private bool hasAttacked = false;
 
+    private Coroutine cooldownCoroutine;
+
     public RangedEnemyCombatState(RangedEnemyStateMachine stateMachine, RangedEnemy enemy) : base(stateMachine)
     {
         this.enemy = enemy;
@@ -30,6 +32,11 @@ public class RangedEnemyCombatState : RangedEnemyState
 
         if (!enemy.TookDamage)
             CombatLogic();
+        else
+        {
+            StopCooldownCoroutine();
+            StartCooldownCoroutine();
+        }
 
         if (enemy.Stats.Health <= 0 && enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new RangedEnemyDeadState(stateMachine, enemy));
@@ -48,7 +55,8 @@ public class RangedEnemyCombatState : RangedEnemyState
 
             if (hasAttacked)
             {
-                enemy.StartCoroutine(RangedAttackCooldown());
+                StopCooldownCoroutine();
+                StartCooldownCoroutine();
             }
         }
         else
@@ -73,12 +81,25 @@ public class RangedEnemyCombatState : RangedEnemyState
     {
         hasAttacked = true;
         enemy.Animator.SetTrigger("Shoot");
-        enemy.StartCoroutine(RangedAttackCooldown());
+        StartCooldownCoroutine();
     }
 
     private IEnumerator RangedAttackCooldown()
     {
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         hasAttacked = false;
+    }
+
+    private void StartCooldownCoroutine()
+    {
+        cooldownCoroutine = enemy.StartCoroutine(RangedAttackCooldown());
+    }
+
+    private void StopCooldownCoroutine()
+    {
+        if (cooldownCoroutine != null)
+        {
+            enemy.StopCoroutine(cooldownCoroutine);
+        }
     }
 }
