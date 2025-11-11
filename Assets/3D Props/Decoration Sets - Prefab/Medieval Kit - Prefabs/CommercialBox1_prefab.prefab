@@ -393,6 +393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6853217636971962609}
+  - component: {fileID: 7317945086237621751}
   m_Layer: 0
   m_Name: CommercialBox1_prefab
   m_TagString: Untagged
@@ -419,3 +420,19 @@ Transform:
   - {fileID: 2953815403238392761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &7317945086237621751
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9001412901416153056}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.43, y: 1.5, z: 3.435}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 2, y: 0, z: 3}
+  m_TimeToStationary: 0.5

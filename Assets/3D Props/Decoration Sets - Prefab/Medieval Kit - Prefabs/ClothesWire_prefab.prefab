@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1513426682617532481}
+  - component: {fileID: 6196517793283355771}
   m_Layer: 0
   m_Name: ClothesWire_prefab
   m_TagString: Untagged
@@ -34,6 +35,22 @@ Transform:
   - {fileID: 7318832860575026114}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &6196517793283355771
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254651340738043337}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.75, y: 1.5, z: 2}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 5, y: 1.5, z: 4}
+  m_TimeToStationary: 0.5
 --- !u!1 &742171587784725442
 GameObject:
   m_ObjectHideFlags: 0

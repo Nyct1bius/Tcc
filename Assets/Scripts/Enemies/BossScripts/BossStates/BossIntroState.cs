@@ -29,7 +29,7 @@ public class BossIntroState : BossState
         else
         {
             boss.transform.position = Vector3.MoveTowards(boss.transform.position, boss.NextPoint.position, boss.Stats.MovementSpeed * Time.deltaTime);
-            boss.transform.LookAt(boss.NextPoint.position);
+            boss.RotateTowards(boss.NextPoint.position);
         }
     }
 }

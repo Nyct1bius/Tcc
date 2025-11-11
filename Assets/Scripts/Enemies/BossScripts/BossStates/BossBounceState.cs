@@ -92,7 +92,7 @@ public class BossBounceState : BossState
 
         yield return new WaitForSeconds(7.5f);
 
-        if (bounceCounter < 3)
+        if (bounceCounter < 2)
         {
             canMove = true;
             bounceCounter++;

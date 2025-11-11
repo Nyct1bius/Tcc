@@ -257,6 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 671923929639223534}
+  - component: {fileID: 7734419033885504747}
   m_Layer: 0
   m_Name: Boxes1_prefab
   m_TagString: Untagged
@@ -284,6 +285,22 @@ Transform:
   - {fileID: 4426373139244401669}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &7734419033885504747
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730895169919792169}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.25, y: 2.5, z: 3.75}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 18.5, y: 2.3, z: 13}
+  m_TimeToStationary: 0.5
 --- !u!1 &3615065420207032268
 GameObject:
   m_ObjectHideFlags: 0
