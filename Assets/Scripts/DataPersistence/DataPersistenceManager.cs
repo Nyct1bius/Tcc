@@ -27,14 +27,15 @@ public class DataPersistenceManager : MonoBehaviour
             return;
         }
         Instance = this;
+        this.dataHandler = new FileDataHandler(Application.dataPath, fileName, useEncryption);
+        FindData();
+        LoadGame(); // Load game at start 
     }
 
 
     private void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.dataPath, fileName, useEncryption);
-        FindData();
-        LoadGame(); // Load game at start 
+
     }
     void FindData()
     {

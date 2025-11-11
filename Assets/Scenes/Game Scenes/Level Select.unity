@@ -1014,8 +1014,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.1981132, g: 0.1971787, b: 0.1971787, a: 1}
-        key1: {r: 0.2, g: 0.2, b: 0.2, a: 0.7372549}
+        key0: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
+        key1: {r: 0.24528301, g: 0.18396226, b: 0.18713401, a: 0.7372549}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -13943,6 +13943,8 @@ MonoBehaviour:
   levels:
   - {fileID: 737511806}
   - {fileID: 1940009243}
+  ship: {fileID: 1682027040}
+  secondSpawn: {fileID: 1608475517}
 --- !u!4 &1581927783
 Transform:
   m_ObjectHideFlags: 0
@@ -13994,6 +13996,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 28.9042}
   m_SizeDelta: {x: 0, y: 57.8084}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1608475516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1608475517}
+  m_Layer: 0
+  m_Name: SecondSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1608475517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608475516}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 54.399994, y: 13.649999, z: -115.54997}
+  m_LocalScale: {x: 0.5599514, y: 0.5599514, z: 0.5599514}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1651319642
 GameObject:
   m_ObjectHideFlags: 0
@@ -14321,7 +14354,7 @@ MonoBehaviour:
   - {fileID: 414455199}
   - {fileID: 324328898}
   - {fileID: 2053929470}
-  - {fileID: 0}
+  - {fileID: 244468424}
   underWaterDrag: 3
   underWaterAngularDrag: 1
   airDrag: 0
@@ -14700,15 +14733,15 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.2, g: 0.19607843, b: 0.19607843, a: 1}
-        key1: {r: 0.2, g: 0.19607843, b: 0.19607843, a: 0.7372549}
+        key0: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
+        key1: {r: 0.24528301, g: 0.18396226, b: 0.18713401, a: 0.7372549}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 193
+        ctime0: 0
         ctime1: 65535
         ctime2: 0
         ctime3: 0
@@ -19386,7 +19419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleAmount: 1.5
   fogVFX: {fileID: 323338616}
-  levelToLoad: Third_Island
+  levelToLoad: 3 - Third Level
   LoadScene: {fileID: 1651319643}
 --- !u!135 &1940009244
 SphereCollider:
@@ -19680,3 +19713,4 @@ SceneRoots:
   - {fileID: 1510098842}
   - {fileID: 938798640}
   - {fileID: 365964973}
+  - {fileID: 1608475517}

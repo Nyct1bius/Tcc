@@ -5,6 +5,8 @@ public class LevelsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] IslandManager[] levels;
     bool hasShield;
+    [SerializeField] Transform ship;
+    [SerializeField] Transform secondSpawn;
 
     public void LoadData(PlayerData data)
     {
@@ -21,8 +23,11 @@ public class LevelsManager : MonoBehaviour, IDataPersistence
 
         if (hasShield)
         {
+            ship.position = secondSpawn.position;
+            ship.rotation = secondSpawn.rotation;
+            levels[0].InstaEneableIsland();
             levels[1].EneableIsland();  
         }
-        
+        DataPersistenceManager.Instance.LoadGame();
     }
 }
