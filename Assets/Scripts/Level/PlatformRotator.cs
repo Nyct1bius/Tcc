@@ -17,7 +17,7 @@ public class PlatformRotator : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player") 
+        if (GameManager.instance.PlayerInstance == collision.gameObject) 
         {
             collision.transform.parent = transform;
         }
@@ -25,19 +25,8 @@ public class PlatformRotator : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        collision.transform.parent = null;
+        if(GameManager.instance.PlayerInstance == collision.gameObject)
+            collision.transform.parent = null;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        print("OnTriggerCalled");
-        
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        other.transform.parent = null;
-        
-    }
-
 
 }
