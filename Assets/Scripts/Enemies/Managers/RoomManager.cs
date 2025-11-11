@@ -76,7 +76,29 @@ public class RoomManager : MonoBehaviour
     {
         if (GameManager.instance.PlayerInstance == other.gameObject && isTriggered)
         {
-            isTriggered = false;
+            if(!isRoomCleared)
+            {
+                isTriggered = false;
+                GameManager.instance.SwitchGameState(GameManager.GameStates.ExitCombat);
+                ManagerOfScenes.instance.IntensifyCombat(0f);
+
+                if (doors.Length > 0)
+                {
+                    foreach (var door in doors)
+                    {
+                        door.OpenDoor();
+                    }
+                }
+
+                if (closingWalls.Count > 0)
+                {
+                    foreach (GameObject walls in closingWalls)
+                    {
+                        walls.SetActive(false);
+                    }
+                }
+
+            }
             StartCoroutine(CheckPlayerOutCountdown());
         }
     }
