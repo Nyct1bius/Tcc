@@ -46,7 +46,17 @@ public class RangedEnemyCombatState : RangedEnemyState
 
     private void CombatLogic()
     {
-        if (enemy.Agent.remainingDistance > enemy.Agent.stoppingDistance)
+        if (enemy.IsCloseToTarget(playerPosition))
+        {
+            enemy.Agent.isStopped = true;
+
+            enemy.Animator.SetBool("Walk", false);
+            enemy.Animator.SetBool("Idle", true);
+
+            RangedAttack();
+            enemy.RotateTowards(playerPosition);
+        }
+        else
         {
             enemy.Agent.isStopped = false;
 
@@ -59,33 +69,20 @@ public class RangedEnemyCombatState : RangedEnemyState
                 StartCooldownCoroutine();
             }
         }
-        else
-        {
-            enemy.Agent.isStopped = true;
-
-            enemy.Animator.SetBool("Walk", false);
-            enemy.Animator.SetBool("Idle", true);
-
-            if (!hasAttacked)
-            {
-                RangedAttack();
-            }
-            else
-            {
-                enemy.transform.LookAt(playerPosition);
-            }
-        }
     }
 
     private void RangedAttack()
     {
-        hasAttacked = true;
-        enemy.Animator.SetTrigger("Shoot");
-        StartCooldownCoroutine();
+        if (!hasAttacked)
+        {
+            enemy.Animator.SetTrigger("Shoot");
+            StartCooldownCoroutine();
+        }
     }
 
     private IEnumerator RangedAttackCooldown()
     {
+        hasAttacked = true;
         yield return new WaitForSeconds(enemy.Stats.TimeBetweenAttacks);
         hasAttacked = false;
     }

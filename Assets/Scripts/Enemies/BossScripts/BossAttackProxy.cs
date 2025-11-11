@@ -22,4 +22,22 @@ public class BossAttackProxy : MonoBehaviour
     {
         Boss.DisableCollider();
     }
+
+    public void EnableBossDiveTrigger()
+    {
+        Boss.EnableDiveHitbox();
+    }
+    public void DisableBossDiveTigger()
+    {
+        Boss.DisableDiveHitbox();
+    }
+
+    public void SetBossLaserOn()
+    {
+        Boss.SetLaserOn();
+    }
+    public void SetBossLaserOff()
+    {
+        Boss.SetLaserOff();
+    }
 }

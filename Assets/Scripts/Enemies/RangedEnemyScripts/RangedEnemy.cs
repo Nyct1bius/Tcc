@@ -42,15 +42,37 @@ public class RangedEnemy : RangedEnemyStateMachine
             }
     }
 
+    public void RotateTowards(Vector3 targetPosition)
+    {
+        Vector3 direction = (targetPosition - transform.position).normalized;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Stats.RotationSpeed);
+        }
+    }
+
+    public bool IsCloseToTarget(Vector3 targetPosition)
+    {
+        if (Vector3.Distance(transform.position, targetPosition) > Stats.RangedAttackDistance)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public void RemoveSelfFromList()
     {
         if (RoomManager != null)
             RoomManager.RemoveEnemyFromList(gameObject);
 
-        float chance = Random.value; // same as Random.Range(0f, 1f)
+        float chance = Random.value;
         print(chance);
 
-        // 20% probability
         if (chance <= 0.2f)
         {
             CombatHealGenerator.Instance.SpawnHeal(transform);

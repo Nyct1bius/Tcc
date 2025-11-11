@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BossBounceState : BossState
@@ -18,8 +17,6 @@ public class BossBounceState : BossState
     public override void Enter()
     {
         base.Enter();
-
-        Debug.Log("Bounce State");
 
         if (!canMove)
             canMove = true;

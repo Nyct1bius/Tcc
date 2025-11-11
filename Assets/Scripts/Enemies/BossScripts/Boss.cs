@@ -5,7 +5,7 @@ public class Boss : BossStateMachine
 {
     public BossStats Stats {  get; private set; }
 
-    public GameObject Player;
+    public GameObject Player, Laser;
     public RoomManager RoomManager;
     public Animator Animator;
     public BoxCollider BounceHitbox, bossCollider;
@@ -43,11 +43,11 @@ public class Boss : BossStateMachine
         CurrentPoint = NextPoint;
     }
 
-    public void EnableBounceHitbox()
+    public void EnableDiveHitbox()
     {
         BounceHitbox.enabled = true;
     }
-    public void DisableBounceHitbox()
+    public void DisableDiveHitbox()
     {
         BounceHitbox.enabled = false;
     }
@@ -59,6 +59,15 @@ public class Boss : BossStateMachine
     public void DisableCollider()
     {
         bossCollider.enabled = false;   
+    }
+
+    public void SetLaserOn()
+    {
+        Laser.SetActive(true);
+    }
+    public void SetLaserOff()
+    {
+        Laser.SetActive(false);
     }
 
     public void RotateTowards(Vector3 targetPosition)

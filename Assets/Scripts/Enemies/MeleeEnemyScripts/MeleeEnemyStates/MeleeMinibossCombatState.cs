@@ -50,7 +50,7 @@ public class MeleeMinibossCombatState : MeleeEnemyState
     {
         if (enemy.IsCloseToTarget(playerPosition))
         {
-            enemy.Agent.isStopped = true;
+            enemy.Agent.enabled = false;
 
             if (enemy.CheckPlayerPosition)
                 enemy.transform.LookAt(playerPosition);
@@ -62,7 +62,7 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         }
         else
         {
-            enemy.Agent.isStopped = false;
+            enemy.Agent.enabled = true;
             enemy.Agent.SetDestination(playerPosition);
 
             enemy.Animator.SetBool("Walk", true);

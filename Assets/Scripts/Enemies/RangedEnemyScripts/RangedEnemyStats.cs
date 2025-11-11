@@ -10,6 +10,7 @@ public class RangedEnemyStats : MonoBehaviour, IHealth
     public float TimeBetweenAttacks;
     public float RangedAttackDistance;
     public float KnockbackForce;
+    public float RotationSpeed;
 
     public LayerMask GroundLayer;
 

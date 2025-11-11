@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossLaserState : BossState
+public class BossDiveState : BossState
 {
     private Boss boss;
 
@@ -10,7 +10,7 @@ public class BossLaserState : BossState
 
     private float attackMovementSpeed;
 
-    public BossLaserState(BossStateMachine stateMachine, Boss boss) : base(stateMachine)
+    public BossDiveState(BossStateMachine stateMachine, Boss boss) : base(stateMachine)
     {
         this.boss = boss;
     }
@@ -26,7 +26,7 @@ public class BossLaserState : BossState
         if (!checkPlayerPos)
             checkPlayerPos = true;
 
-        boss.Animator.SetTrigger("Laser");
+        boss.Animator.SetTrigger("Dive");
     }
 
     public override void UpdatePhysics()
