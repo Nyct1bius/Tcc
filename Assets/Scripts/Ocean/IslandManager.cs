@@ -26,23 +26,31 @@ public class IslandManager : MonoBehaviour
         main.startLifetime = 1f;
     }
 
+    public void InstaEneableIsland()
+    {
+        isEneabled = true;
+        GetComponent<Collider>().isTrigger = true;
+        Destroy(fogVFX);
+        
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        ScaleIsland(scaleAmount, other);
+        ScaleIsland(scaleAmount, other,1f);
     }
     private void OnTriggerExit(Collider other)
     {
-        ScaleIsland(normalScale, other);
+        ScaleIsland(normalScale, other,0.2f);
     }
 
-    private void ScaleIsland(float scaleAmount, Collider other)
+    private void ScaleIsland(float scaleAmount, Collider other, float time)
     {
         if (!isEneabled) return;
 
         ShipController shipController = other.gameObject.GetComponent<ShipController>();
         if (shipController != null)
         {
-            transform.DOScale(scaleAmount, 1f);
+            transform.DOScale(scaleAmount, time);
         }
     }
     
