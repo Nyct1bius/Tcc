@@ -11,7 +11,10 @@ public class ListComponentEditor : Editor
         RoomManager myTarget = (RoomManager)target;
         // Draw the default inspector first (includes all public fields)
         myTarget.isWavedRoom = EditorGUILayout.Toggle("It's a Waved Room", myTarget.isWavedRoom);
-        
+
+        SerializedProperty intensitySetter = serializedObject.FindProperty("intensity");
+        EditorGUILayout.PropertyField(intensitySetter, true); // 'true' to allow children (i.e., elements of list)
+
 
         // If toggle is true, show the list
         if (myTarget.isWavedRoom)

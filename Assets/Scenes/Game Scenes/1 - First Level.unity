@@ -6317,6 +6317,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &143616633
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12056,6 +12057,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!1 &271997984
 GameObject:
   m_ObjectHideFlags: 0
@@ -14684,6 +14686,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!1 &356791628
 GameObject:
   m_ObjectHideFlags: 0
@@ -16219,6 +16222,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!1 &398385032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 705542044431384098, guid: 97db3a02feed4054695492bad4a898d3, type: 3}
@@ -19000,6 +19004,7 @@ MonoBehaviour:
   - {fileID: 1998282363}
   - {fileID: 2817163119538926432}
   closingWalls: []
+  intensity: 1
 --- !u!65 &466120973
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25324,6 +25329,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &554615299
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25631,6 +25637,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &558163031
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25746,6 +25753,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &559173479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38953,6 +38961,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!1 &742325674
 GameObject:
   m_ObjectHideFlags: 0
@@ -39384,6 +39393,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!4 &746430161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8789915937596558823, guid: 0981b0cded460f547ba1847adefbfe36, type: 3}
@@ -39824,6 +39834,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 6981315534946621313, guid: 2c3ccfa8288d43c47ae240ebbbcd72ce, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_22_Prefab (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 7757817393565961531, guid: 2c3ccfa8288d43c47ae240ebbbcd72ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -257.19
@@ -39863,10 +39877,6 @@ PrefabInstance:
     - target: {fileID: 7757817393565961531, guid: 2c3ccfa8288d43c47ae240ebbbcd72ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6981315534946621313, guid: 2c3ccfa8288d43c47ae240ebbbcd72ce, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_22_Prefab (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45404,6 +45414,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &902202940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45798,6 +45809,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &910668294
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47811,6 +47823,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &967834733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -64330,6 +64343,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1123003563
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65115,6 +65129,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!1001 &1147677948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66964,6 +66979,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 1187692643599060288, guid: 6beef4a171e616640925a37d366de4d5, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_26_Prefab (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 1959163171371571194, guid: 6beef4a171e616640925a37d366de4d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -205.5
@@ -67003,10 +67022,6 @@ PrefabInstance:
     - target: {fileID: 1959163171371571194, guid: 6beef4a171e616640925a37d366de4d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1187692643599060288, guid: 6beef4a171e616640925a37d366de4d5, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_26_Prefab (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -67224,6 +67239,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1209800734
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69667,6 +69683,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1273813340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71151,6 +71168,7 @@ MonoBehaviour:
   closingWalls:
   - {fileID: 1665940868}
   - {fileID: 1385369950}
+  intensity: 2
 --- !u!65 &1295124333
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -77530,6 +77548,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1425369631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80705,6 +80724,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1473685869
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -81709,6 +81729,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1489614468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82617,6 +82638,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1525312235
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -83093,6 +83115,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1604507036}
     m_Modifications:
+    - target: {fileID: 3560133270684868182, guid: 60e2152f946671c4bbe4441b110210a6, type: 3}
+      propertyPath: m_Name
+      value: Stilt_House_21_Prefab (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 4189459210092201196, guid: 60e2152f946671c4bbe4441b110210a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -164.04
@@ -83132,10 +83158,6 @@ PrefabInstance:
     - target: {fileID: 4189459210092201196, guid: 60e2152f946671c4bbe4441b110210a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560133270684868182, guid: 60e2152f946671c4bbe4441b110210a6, type: 3}
-      propertyPath: m_Name
-      value: Stilt_House_21_Prefab (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -88919,6 +88941,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!1 &1566394324
 GameObject:
   m_ObjectHideFlags: 0
@@ -95663,6 +95686,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1609039222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -108080,6 +108104,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!4 &1816224679
 Transform:
   m_ObjectHideFlags: 0
@@ -108532,6 +108557,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1823688146
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -108948,6 +108974,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1837106712
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119195,6 +119222,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1943877170
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -120699,6 +120727,7 @@ MonoBehaviour:
   isRoomCleared: 0
   doors: []
   closingWalls: []
+  intensity: 1
 --- !u!65 &1985829122
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class RoomManager : MonoBehaviour
     public bool isRoomCleared = false;
     [SerializeField] private Door[] doors;
     [SerializeField] private List<GameObject> closingWalls;
+    public float intensity = 1.0f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,7 +27,7 @@ public class RoomManager : MonoBehaviour
             if (!isWavedRoom)
             {
                 GameManager.instance.SwitchGameState(GameManager.GameStates.EnterCombat);
-                ManagerOfScenes.instance.IntensifyCombat(1f);
+                ManagerOfScenes.instance.IntensifyCombat(intensity);
                 Debug.Log("Player found");
                 foreach (GameObject enemy in MyEnemies)
                 {
