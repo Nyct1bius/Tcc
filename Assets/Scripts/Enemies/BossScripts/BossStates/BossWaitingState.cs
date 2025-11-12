@@ -16,6 +16,8 @@ public class BossWaitingState : BossState
     {
         base.Enter();
 
+        Debug.Log("Waiting State");
+
         boss.Animator.SetBool("Idle", true);
         boss.Animator.SetBool("Moving", false);
 
@@ -51,7 +53,7 @@ public class BossWaitingState : BossState
             boss.Animator.SetBool("Idle", true);
             boss.Animator.SetBool("Moving", false);
 
-            boss.StartCoroutine(ChangeState(1f, Random.Range(0, 2)));
+            boss.StartCoroutine(ChangeState(1f, Random.Range(0, 4)));
         }
         else
         {
@@ -67,9 +69,11 @@ public class BossWaitingState : BossState
     {
         yield return new WaitForSeconds(timer);
 
-        if (stateIndex == 0)
+        if (stateIndex == 0 || stateIndex == 1)
             stateMachine.ChangeState(new BossBounceState(stateMachine, boss));
-        if (stateIndex == 1)
-            stateMachine.ChangeState(new BossBounceState(stateMachine, boss)); //Change to laser state later.
+        if (stateIndex == 2)
+            stateMachine.ChangeState(new BossDiveState(stateMachine, boss));
+        if (stateIndex == 3)
+            stateMachine.ChangeState(new BossLaserState(stateMachine, boss));
     }
 }

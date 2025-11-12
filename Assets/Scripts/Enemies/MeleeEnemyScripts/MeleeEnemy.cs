@@ -58,7 +58,7 @@ public class MeleeEnemy : MeleeEnemyStateMachine
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Stats.RotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Stats.RotationSpeed * Time.deltaTime);
         }
     }
 

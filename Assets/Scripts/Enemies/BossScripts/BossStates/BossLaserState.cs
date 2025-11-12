@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BossLaserState : BossState
@@ -8,8 +9,6 @@ public class BossLaserState : BossState
 
     private bool canMove = true, checkPlayerPos = true;
 
-    private float attackMovementSpeed;
-
     public BossLaserState(BossStateMachine stateMachine, Boss boss) : base(stateMachine)
     {
         this.boss = boss;
@@ -19,14 +18,15 @@ public class BossLaserState : BossState
     {
         base.Enter();
 
-        attackMovementSpeed = boss.Stats.MovementSpeed * 2;
-
         if (!canMove)
             canMove = true;
         if (!checkPlayerPos)
             checkPlayerPos = true;
 
+        boss.Stats.AttackMovementSpeed = 0f;
         boss.Animator.SetTrigger("Laser");
+
+        boss.StartCoroutine(ChangeState());
     }
 
     public override void UpdatePhysics()
@@ -34,7 +34,7 @@ public class BossLaserState : BossState
         base.UpdatePhysics();
 
         if (checkPlayerPos)
-            SetTargetPosition(1.5f);
+            SetTargetPosition(2f);
         if (canMove)
             MovementLogic();
     }
@@ -43,18 +43,15 @@ public class BossLaserState : BossState
     {
         if (boss.IsCloseToTarget(targetPos))
         {
-            boss.Animator.SetBool("Idle", true);
-            boss.Animator.SetBool("Moving", false);
-
             canMove = false;
         }
         else
         {
-            boss.Animator.SetBool("Moving", true);
-            boss.Animator.SetBool("Idle", false);
-
-            boss.transform.position = Vector3.MoveTowards(boss.transform.position, targetPos, attackMovementSpeed * Time.deltaTime);
-            boss.transform.LookAt(targetPos);
+            if (boss.Stats.AttackMovementSpeed != 0)
+            {
+                boss.transform.position = Vector3.MoveTowards(boss.transform.position, targetPos, boss.Stats.AttackMovementSpeed * Time.deltaTime);
+            }
+            boss.RotateTowards(targetPos);
         }
     }
 
@@ -65,5 +62,12 @@ public class BossLaserState : BossState
         targetPos = boss.transform.position + direction * distanceMultiplier;
 
         checkPlayerPos = false;
+    }
+
+    private IEnumerator ChangeState()
+    {
+        yield return new WaitForSeconds(8);
+
+        stateMachine.ChangeState(new BossWaitingState(stateMachine, boss));
     }
 }

@@ -26,6 +26,7 @@ public class BossAttackProxy : MonoBehaviour
     public void EnableBossDiveTrigger()
     {
         Boss.EnableDiveHitbox();
+        Boss.Stats.AttackMovementSpeed = 40f;
     }
     public void DisableBossDiveTigger()
     {
@@ -35,6 +36,7 @@ public class BossAttackProxy : MonoBehaviour
     public void SetBossLaserOn()
     {
         Boss.SetLaserOn();
+        Boss.Stats.AttackMovementSpeed = 40f;
     }
     public void SetBossLaserOff()
     {

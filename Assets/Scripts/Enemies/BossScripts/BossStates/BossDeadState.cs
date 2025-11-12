@@ -17,7 +17,7 @@ public class BossDeadState : BossState
         boss.StopAllCoroutines();
         boss.Animator.SetTrigger("Die");
 
-        if (boss.bossCollider.enabled)
+        if (boss.BossCollider.enabled)
             boss.DisableCollider();
 
         boss.enabled = false;

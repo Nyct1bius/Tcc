@@ -8,7 +8,7 @@ public class Boss : BossStateMachine
     public GameObject Player, Laser;
     public RoomManager RoomManager;
     public Animator Animator;
-    public BoxCollider BounceHitbox, bossCollider;
+    public BoxCollider DiveHitbox, BossCollider;
     public Transform[] MovementPoints;
     public Transform NextPoint, CurrentPoint;
 
@@ -45,20 +45,20 @@ public class Boss : BossStateMachine
 
     public void EnableDiveHitbox()
     {
-        BounceHitbox.enabled = true;
+        DiveHitbox.enabled = true;
     }
     public void DisableDiveHitbox()
     {
-        BounceHitbox.enabled = false;
+        DiveHitbox.enabled = false;
     }
 
     public void EnableCollider()
     {
-        bossCollider.enabled = true;    
+        BossCollider.enabled = true;    
     }
     public void DisableCollider()
     {
-        bossCollider.enabled = false;   
+        BossCollider.enabled = false;   
     }
 
     public void SetLaserOn()
@@ -77,7 +77,7 @@ public class Boss : BossStateMachine
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Stats.RotationSpeed * 100f * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Stats.RotationSpeed * Time.deltaTime);
         }
     }
 

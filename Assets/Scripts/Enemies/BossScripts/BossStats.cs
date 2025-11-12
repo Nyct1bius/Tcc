@@ -4,7 +4,7 @@ using UnityEngine;
 public class BossStats : MonoBehaviour, IHealth
 {
     public Boss Boss;
-    public float Health, MovementSpeed, TimeBetweenAttacks, BounceAttackRange, RotationSpeed;
+    public float Health, MovementSpeed, AttackMovementSpeed, TimeBetweenAttacks, BounceAttackRange, RotationSpeed;
     
     public void Damage(float damage, Vector3 damageSourcePos)
     {
