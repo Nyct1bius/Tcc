@@ -13,7 +13,11 @@ public class ListComponentEditor : Editor
         myTarget.isWavedRoom = EditorGUILayout.Toggle("It's a Waved Room", myTarget.isWavedRoom);
 
         SerializedProperty intensitySetter = serializedObject.FindProperty("intensity");
-        EditorGUILayout.PropertyField(intensitySetter, true); // 'true' to allow children (i.e., elements of list)
+        EditorGUILayout.PropertyField(intensitySetter, true);
+        SerializedProperty portalGameObject = serializedObject.FindProperty("portalGameObject");
+        EditorGUILayout.PropertyField(portalGameObject, true);
+        SerializedProperty invisibleWallGameObject = serializedObject.FindProperty("invisibleWall");
+        EditorGUILayout.PropertyField(invisibleWallGameObject, true);
 
 
         // If toggle is true, show the list

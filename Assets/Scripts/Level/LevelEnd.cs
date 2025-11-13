@@ -22,6 +22,7 @@ public class LevelEnd : MonoBehaviour
     {
         if (GameManager.instance.PlayerInstance == other.gameObject)
         {
+            LoadLevel();
             canInteract = true;
             print(canInteract);
         }
@@ -38,9 +39,9 @@ public class LevelEnd : MonoBehaviour
 
     private void Interact()
     {
-        print("HasInteracted");
-        if(canInteract)
-            LoadLevel();
+        //print("HasInteracted");
+        //if(canInteract)
+        //    LoadLevel();
     }
     public void LoadLevel()
     {

@@ -18,6 +18,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private Door[] doors;
     [SerializeField] private List<GameObject> closingWalls;
     public float intensity = 1.0f;
+    public GameObject portalGameObject;
+    public GameObject invisibleWall;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -69,6 +71,10 @@ public class RoomManager : MonoBehaviour
                     door.CloseDoor();
                 }
             }
+
+            if(invisibleWall != null)
+                invisibleWall.SetActive(true);
+
             EnemiesAlerted = true;
         }
     }
@@ -188,6 +194,12 @@ public class RoomManager : MonoBehaviour
                 walls.SetActive(false);
             }
         }
+
+        if (portalGameObject != null)
+            portalGameObject.SetActive(true);
+
+        if(invisibleWall != null)
+            invisibleWall.SetActive(false);
 
     }
 
