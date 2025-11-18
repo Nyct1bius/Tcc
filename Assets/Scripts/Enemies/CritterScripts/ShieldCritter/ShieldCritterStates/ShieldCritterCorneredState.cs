@@ -26,6 +26,6 @@ public class ShieldCritterCorneredState : ShieldCritterState
 
         playerPosition = new Vector3(critter.Player.transform.position.x, critter.transform.position.y, critter.Player.transform.position.z);
 
-        critter.transform.LookAt(playerPosition);
+        critter.RotateTowards(playerPosition);
     }
 }

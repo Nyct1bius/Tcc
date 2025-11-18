@@ -23,7 +23,7 @@ public class BossLaserState : BossState
         if (!checkPlayerPos)
             checkPlayerPos = true;
 
-        boss.Stats.AttackMovementSpeed = 0f;
+        boss.Stats.AttackMovementSpeed = 6f;
         boss.Animator.SetTrigger("Laser");
 
         boss.StartCoroutine(ChangeState());

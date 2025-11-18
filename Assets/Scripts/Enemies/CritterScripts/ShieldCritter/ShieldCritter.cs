@@ -44,6 +44,17 @@ public class ShieldCritter : ShieldCritterStateMachine
         }
     }
 
+    public void RotateTowards(Vector3 targetPosition)
+    {
+        Vector3 direction = (targetPosition - transform.position).normalized;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Stats.RotationSpeed * Time.deltaTime);
+        }
+    }
+
     public void SpawnShield()
     {
         PlayableShield?.SetActive(true);

@@ -96,7 +96,8 @@ MonoBehaviour:
   critter: {fileID: 1432936426055537701}
   maxHealth: 100
   CurrentHealth: 1
-  MovementSpeed: 22
+  MovementSpeed: 30
+  RotationSpeed: 8
 --- !u!114 &1432936426055537701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  Shield: {fileID: 0}
+  PlayableShield: {fileID: 0}
+  CritterVisualShield: {fileID: 0}
   Agent: {fileID: 1711964880805654862}
   RoomManager: {fileID: 0}
   Animator: {fileID: 6040658113232817057}

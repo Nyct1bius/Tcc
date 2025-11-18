@@ -7,6 +7,7 @@ public class ShieldCritterStats : MonoBehaviour, IHealth
     [SerializeField] private float maxHealth;
     public float CurrentHealth;
     public float MovementSpeed;
+    public float RotationSpeed;
 
     void Start()
     {
