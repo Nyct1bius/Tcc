@@ -26,6 +26,7 @@ public class DeathState : State
     public override void Do()
     {
         _timeInState += Time.deltaTime;
+        Debug.LogWarning("CalledIntensify4");
         ManagerOfScenes.instance.IntensifyCombat(4f);
         if (_timeInState > 3f && !CalledDeath)
         {

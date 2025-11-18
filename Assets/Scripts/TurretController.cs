@@ -71,7 +71,7 @@ public class TurretController : MonoBehaviour
                         }
                         else if(type == TurretType.DamagePlayer)
                         {
-                            playerHealth.Damage(10, transform.position);
+                            playerHealth.Damage(1, transform.position);
                         }
                     }
                 }
