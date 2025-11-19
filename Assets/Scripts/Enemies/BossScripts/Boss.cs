@@ -11,6 +11,7 @@ public class Boss : BossStateMachine
     public BoxCollider DiveHitbox, BossCollider;
     public Transform[] MovementPoints;
     public Transform NextPoint, CurrentPoint;
+    public BossDeath BossDeathScript;
 
     public bool TookDamage = false;
 

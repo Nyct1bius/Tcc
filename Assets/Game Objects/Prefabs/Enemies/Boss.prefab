@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 6151843359232147267}
   - component: {fileID: 2123768544643356085}
   - component: {fileID: 1192634122614258079}
+  - component: {fileID: 3807719308600073375}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Untagged
@@ -159,6 +160,7 @@ MonoBehaviour:
   - {fileID: 0}
   NextPoint: {fileID: 0}
   CurrentPoint: {fileID: 0}
+  BossDeathScript: {fileID: 3807719308600073375}
   TookDamage: 0
 --- !u!114 &2123768544643356085
 MonoBehaviour:
@@ -200,6 +202,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8, y: 5, z: 15}
   m_Center: {x: 0, y: -9, z: 2.5}
+--- !u!114 &3807719308600073375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023650241536993031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184e7d27543d73e46931dbf7aff84f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creditsScene: Creditos
+  loadScene: {fileID: 0}
 --- !u!1001 &30907730913278560
 PrefabInstance:
   m_ObjectHideFlags: 0

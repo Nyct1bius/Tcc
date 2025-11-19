@@ -20,7 +20,12 @@ public class BossDeadState : BossState
         if (boss.BossCollider.enabled)
             boss.DisableCollider();
 
-        boss.enabled = false;
-        boss.Stats.enabled = false;
+        boss.StartCoroutine(LoadCreditsScene());
+    }
+
+    private IEnumerator LoadCreditsScene()
+    {
+        yield return new WaitForSeconds(5f);
+        boss.BossDeathScript.LoadCreditsScene();
     }
 }
