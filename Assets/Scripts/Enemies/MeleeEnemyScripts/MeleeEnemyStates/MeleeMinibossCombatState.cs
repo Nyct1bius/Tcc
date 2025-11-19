@@ -32,13 +32,7 @@ public class MeleeMinibossCombatState : MeleeEnemyState
         if (enemy.CheckPlayerPosition)
             playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);
 
-        if (!enemy.TookDamage)
-            CombatLogic();
-        else
-        {
-            StopCooldownCoroutine();
-            StartCooldownCoroutine();
-        }
+        CombatLogic();
 
         if (enemy.Stats.Health <= 0 && enemy.Stats.IsGrounded())
             stateMachine.ChangeState(new MeleeEnemyDeadState(stateMachine, enemy));

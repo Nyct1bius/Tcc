@@ -122943,10 +122943,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 94.96848
       objectReference: {fileID: 0}
-    - target: {fileID: 3473728194571692397, guid: 3a45e68986866144da6e9af44b642ba1, type: 3}
-      propertyPath: Health
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 3642149324295971462, guid: 3a45e68986866144da6e9af44b642ba1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -2.3519146
@@ -123989,6 +123985,10 @@ PrefabInstance:
     - target: {fileID: 705542044431384098, guid: 97db3a02feed4054695492bad4a898d3, type: 3}
       propertyPath: m_Name
       value: Melee Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 705542044431384098, guid: 97db3a02feed4054695492bad4a898d3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2452787464731627628, guid: 97db3a02feed4054695492bad4a898d3, type: 3}
       propertyPath: RoomManager
