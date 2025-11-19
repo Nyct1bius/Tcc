@@ -73718,6 +73718,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1385965027}
     m_Modifications:
+    - target: {fileID: 2251242082480683334, guid: 178955cf2060b034fb149cddeb7dcb1c, type: 3}
+      propertyPath: smoothTime
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251242082480683334, guid: 178955cf2060b034fb149cddeb7dcb1c, type: 3}
+      propertyPath: minFollowDistance
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 7397926171161681395, guid: 178955cf2060b034fb149cddeb7dcb1c, type: 3}
       propertyPath: m_Name
       value: Fog2_Object_Prefab
