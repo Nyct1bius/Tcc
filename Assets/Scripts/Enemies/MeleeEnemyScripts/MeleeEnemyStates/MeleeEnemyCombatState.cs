@@ -24,7 +24,7 @@ public class MeleeEnemyCombatState : MeleeEnemyState
     {
         base.UpdateLogic();
 
-        Debug.Log(enemy.Agent.isStopped);
+        //Debug.Log(enemy.Agent.isStopped);
 
         if (enemy.CheckPlayerPosition)
             playerPosition = new Vector3(enemy.Player.transform.position.x, enemy.transform.position.y, enemy.Player.transform.position.z);

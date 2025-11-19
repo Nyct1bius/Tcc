@@ -222,6 +222,7 @@ public class GameManager : MonoBehaviour
         _cnCameraRef.Follow = null;
         _cnCameraRef.LookAt = null;
         yield return new WaitForSeconds(timerToWait);
+        PlayerInstance.transform.parent = null;
         PlayerInstance.gameObject.SetActive(false); 
         if (_checkpoint == null)
             PlayerInstance.transform.position = _spawnPos.position;
