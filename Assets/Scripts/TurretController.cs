@@ -51,7 +51,7 @@ public class TurretController : MonoBehaviour
                 Debug.DrawRay(origin, direction * 10f, Color.green, 0.03f);
                 RaycastHit hit;
 
-                if (Physics.Raycast(origin, direction, out hit, 100f, LayerMask))
+                if (Physics.Raycast(origin, direction, out hit, 20f, LayerMask))
                 {
                     float distance = hit.distance;
                     distance = Mathf.Clamp(distance, 0, 15);

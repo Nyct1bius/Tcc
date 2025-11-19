@@ -186,7 +186,7 @@ public class RoomManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (!isRoomCleared)
         {
-            isTriggered = false;
+            //isTriggered = false;
             GameManager.instance.SwitchGameState(GameManager.GameStates.ExitCombat);
             ManagerOfScenes.instance.IntensifyCombat(0f);
 
