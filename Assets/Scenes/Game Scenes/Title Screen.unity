@@ -1595,6 +1595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creditos: {fileID: 195678422}
   titleScreen: {fileID: 1159187106}
+  isScene: 0
 --- !u!1 &198967493
 GameObject:
   m_ObjectHideFlags: 0
@@ -9329,6 +9330,14 @@ MonoBehaviour:
     - m_Name: 
       m_Id: 3b395558-4081-40ae-a54d-6da7c49ce9bb
       m_Path: <Gamepad>/{PrimaryAction}
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Any Key
+      m_Flags: 0
+    - m_Name: 
+      m_Id: a7d37f19-2d22-48e6-9ec0-4d3fe3021f77
+      m_Path: <Mouse>/leftButton
       m_Interactions: 
       m_Processors: 
       m_Groups: 
