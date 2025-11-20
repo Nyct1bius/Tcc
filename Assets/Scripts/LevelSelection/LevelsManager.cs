@@ -21,7 +21,7 @@ public class LevelsManager : MonoBehaviour, IDataPersistence
     {   
         levels[0].EneableIsland();
 
-        if (hasShield)
+        if (hasShield || GameManager.instance.hasCompletedLevel2)
         {
             ship.position = secondSpawn.position;
             ship.rotation = secondSpawn.rotation;
