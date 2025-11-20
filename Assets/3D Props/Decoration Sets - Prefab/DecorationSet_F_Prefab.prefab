@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7863432635394875703}
+  - component: {fileID: 3215313122339426293}
   m_Layer: 6
   m_Name: DecorationSet_F_Prefab
   m_TagString: Untagged
@@ -41,6 +42,22 @@ Transform:
   - {fileID: 2154667821373308333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &3215313122339426293
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593941961940131794}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 6, y: 5, z: 5.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -2.35, y: 5, z: -2.49}
+  m_TimeToStationary: 0.5
 --- !u!1001 &73555398562700303
 PrefabInstance:
   m_ObjectHideFlags: 0
