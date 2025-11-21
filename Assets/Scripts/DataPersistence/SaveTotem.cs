@@ -16,6 +16,7 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
             data.lastTotemId = totemId;
             data.lastSceneName = SceneManager.GetActiveScene().name;
             data.spawnPos = transform.position;
+
         }
     }
 

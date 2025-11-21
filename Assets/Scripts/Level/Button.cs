@@ -10,6 +10,7 @@ public class Button : MonoBehaviour,IHealth
     [SerializeField] private Door extraDoorToOpen;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private HorizontalMovePlatform horizontalMovePlatform;
+    [SerializeField] private BoxCollider boxColl;
     public SteppingTrigger steppingTrigger;
 
     private float activatedButton = -110f;
@@ -57,6 +58,31 @@ public class Button : MonoBehaviour,IHealth
         //if (horizontalMovePlatform != null)
         //    horizontalMovePlatform.enabled = true;
     }
+
+    public void CheatPressButton()
+    {
+        if (isRotated)
+        {
+            buttonLever.transform.DORotate(new Vector3(activatedButton, activatedButtonYAdjust, 0), 1.5f);
+        }
+        else
+            buttonLever.transform.DORotate(new Vector3(activatedButton, 0, 0), 1.5f);
+        meshMaterial.SetColor("_Emission_Color_Variation", Color.green);
+
+
+
+        if (platformRaiser != null)
+        {
+            platformRaiser.RaisePlatforms();
+        }
+
+        doorToOpen?.CheckIfAllButtonsIsActivated();
+        extraDoorToOpen?.CheckIfAllButtonsIsActivated();
+        if (horizontalMovePlatform != null)
+            horizontalMovePlatform.enabled = true;
+        if (boxColl != null)
+            boxColl.enabled = true;
+    }
     public void Damage(float damage, Vector3 DamageSourcePos)
     {
         
@@ -72,6 +98,8 @@ public class Button : MonoBehaviour,IHealth
             extraDoorToOpen?.CheckIfAllButtonsIsActivated();
             if(horizontalMovePlatform != null)
                 horizontalMovePlatform.enabled = true;
+            if(boxColl != null)
+                boxColl.enabled = true;
 
 
         }

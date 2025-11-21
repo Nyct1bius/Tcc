@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int lastCheckPointIndex;
     public bool canRespawnPlayer = true;
+    public string playerLoadTotemId;
     
     
 
