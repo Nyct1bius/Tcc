@@ -6,6 +6,7 @@ public class LevelEnd : MonoBehaviour
     [SerializeField] private LoadScene LoadScene;
     [SerializeField] private InputReader _inputReader;
     private bool canInteract = false;
+    public bool isLevelTwo = false;
 
 
     private void OnEnable()
@@ -46,6 +47,8 @@ public class LevelEnd : MonoBehaviour
     public void LoadLevel()
     {
         print("HasLoadedLevel");
+        if(isLevelTwo)
+            GameManager.instance.hasCompletedLevel2 = true;
         LoadScene.StartLoad(levelToLoad);
     }
 }

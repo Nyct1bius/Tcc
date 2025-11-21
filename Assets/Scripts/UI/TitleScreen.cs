@@ -76,7 +76,8 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
             DataPersistenceManager.Instance.NewGame();
         }
         GameManager.instance.isNewGame = true;
-        loadscene.StartLoad("1 - First Level");
+        loadscene.StartLoad("Cutscene Scene");
+        //loadscene.StartLoad("1 - First Level");
     }
 
     public void ExitGame()

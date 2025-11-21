@@ -23,11 +23,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _spawnPos;
     public bool IsRestartingGame;
     public bool isNewGame;
+    public bool hasCompletedLevel2 = false;
     public GameObject PlayerInstance { get; private set; }
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [SerializeField] private int lastCheckPointIndex;
     public bool canRespawnPlayer = true;
+    public string playerLoadTotemId;
     
     
 
