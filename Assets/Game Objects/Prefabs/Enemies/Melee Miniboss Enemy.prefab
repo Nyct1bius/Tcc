@@ -104,6 +104,7 @@ MonoBehaviour:
   HasHyperarmor: 1
   IsPatroller: 0
   CheckPlayerPosition: 1
+  IsMiniboss: 1
 --- !u!114 &3473728194571692397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +124,7 @@ MonoBehaviour:
   MeleeAttackDistance: 7
   KnockbackForce: 10
   RotationSpeed: 5
+  DamageToPlayer: 10
   GroundLayer:
     serializedVersion: 2
     m_Bits: 1088
@@ -192,6 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1a3f305da463245aad35d391fc5476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyStats: {fileID: 3473728194571692397}
 --- !u!1001 &8675225492415445180
 PrefabInstance:
   m_ObjectHideFlags: 0

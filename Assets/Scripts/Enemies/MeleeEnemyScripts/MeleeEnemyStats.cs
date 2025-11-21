@@ -11,6 +11,7 @@ public class MeleeEnemyStats : MonoBehaviour, IHealth
     public float MeleeAttackDistance;
     public float KnockbackForce;
     public float RotationSpeed;
+    public float DamageToPlayer;
 
     public LayerMask GroundLayer;
 

@@ -11,7 +11,8 @@ public class MeleeEnemyHitboxProxy : MonoBehaviour
     public void EnableEnemyHitbox()
     {
         enemy.EnableHitbox();
-        AudioManager.PlayOneShot(slamSound, transform.position);
+        if (enemy.HasHyperarmor)
+            AudioManager.PlayOneShot(slamSound, transform.position);
     }
     public void DisableEnemyHitbox()
     {

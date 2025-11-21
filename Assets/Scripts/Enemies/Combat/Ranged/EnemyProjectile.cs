@@ -11,7 +11,7 @@ public class EnemyProjectile : MonoBehaviour, IPooledObject
 
     Vector3 targetDirection;
 
-    public float Speed, StartDespawnTimer, DespawnTimer;
+    public float Speed, StartDespawnTimer, DespawnTimer, DamageToPlayer;
 
     private void Update()
     {
@@ -22,7 +22,7 @@ public class EnemyProjectile : MonoBehaviour, IPooledObject
     {
         if (GameManager.instance.PlayerInstance == other.gameObject)
         {
-            other.GetComponent<PlayerHealthManager>().Damage(10, transform.position);
+            other.GetComponent<PlayerHealthManager>().Damage(DamageToPlayer, transform.position);
 
             StartCoroutine(DeactivateAfterHit());
         }

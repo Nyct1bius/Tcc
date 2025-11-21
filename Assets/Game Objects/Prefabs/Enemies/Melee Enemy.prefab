@@ -123,6 +123,7 @@ MonoBehaviour:
   MeleeAttackDistance: 8
   KnockbackForce: 10
   RotationSpeed: 7
+  DamageToPlayer: 10
   GroundLayer:
     serializedVersion: 2
     m_Bits: 1088
@@ -192,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1a3f305da463245aad35d391fc5476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyStats: {fileID: 3473728194571692397}
 --- !u!1001 &8793525843499859242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -594,6 +596,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd80ebf89e524bf4cbcf70c42a4b6695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioManager: {fileID: 0}
+  slamSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   enemy: {fileID: 2452787464731627628}
 --- !u!4 &9043888134004923073 stripped
 Transform:
