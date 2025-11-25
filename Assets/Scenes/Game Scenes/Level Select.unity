@@ -6851,6 +6851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 666475439}
   - component: {fileID: 666475438}
+  - component: {fileID: 666475440}
   m_Layer: 0
   m_Name: Level 1
   m_TagString: Untagged
@@ -6897,6 +6898,22 @@ Transform:
   - {fileID: 493431860}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &666475440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666475437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71383903c442db1429314beb157a5dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleAmount: 1.5
+  fogVFX: {fileID: 1852956557}
+  levelToLoad: 1 - First Level
+  LoadScene: {fileID: 1651319643}
 --- !u!1 &684134867
 GameObject:
   m_ObjectHideFlags: 0

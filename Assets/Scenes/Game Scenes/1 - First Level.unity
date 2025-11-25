@@ -5092,6 +5092,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &116768871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 1253604505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &119687427
 GameObject:
   m_ObjectHideFlags: 0
@@ -17486,6 +17491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 305779275}
   checkpointIndex: 3
+  standingLamp: {fileID: 872814292}
+  meshMaterial: {fileID: 0}
 --- !u!43 &439022482
 Mesh:
   m_ObjectHideFlags: 0
@@ -19280,6 +19287,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 38.999996, y: 3, z: 0.5}
   m_Center: {x: 0.85240924, y: 0.0000047683707, z: 1.1479661}
+--- !u!1 &470235435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 588677656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &477520560
 GameObject:
   m_ObjectHideFlags: 0
@@ -21511,6 +21523,7 @@ GameObject:
   - component: {fileID: 506280339}
   - component: {fileID: 506280340}
   - component: {fileID: 506280341}
+  - component: {fileID: 506280342}
   m_Layer: 0
   m_Name: ManagerOfScene
   m_TagString: Untagged
@@ -21646,6 +21659,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e239d3ca51ea9234e83043e9e67ce3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &506280342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506280334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2b1cce363bc79c4e9e68bf04a1d8b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doors32:
+  - {fileID: 1684529333}
+  - {fileID: 445947799}
+  - {fileID: 2817163119538926432}
+  - {fileID: 1998282363}
+  doors33:
+  - {fileID: 1788170895}
+  - {fileID: 521500262}
+  - {fileID: 1557935683}
+  buttons32: []
+  buttons33: []
+  isLevelOne: 1
 --- !u!1001 &510061280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26847,8 +26884,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 4, z: 20}
-  m_Center: {x: 0.000091552734, y: 0.00007247925, z: -0.000030517578}
+  m_Size: {x: 40, y: 4, z: 20}
+  m_Center: {x: -6.3, y: 0.00007247925, z: -0.000030517578}
 --- !u!114 &592332691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26863,6 +26900,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 0}
   checkpointIndex: 9
+  standingLamp: {fileID: 116768871}
+  meshMaterial: {fileID: 0}
 --- !u!1 &596558536
 GameObject:
   m_ObjectHideFlags: 0
@@ -27434,8 +27473,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 4, z: 20}
-  m_Center: {x: 0.000091552734, y: 0.00007247925, z: -0.000030517578}
+  m_Size: {x: 20, y: 4, z: 40}
+  m_Center: {x: 0.000091552734, y: 0.00007247925, z: -3.92}
 --- !u!114 &607962362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27450,6 +27489,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 0}
   checkpointIndex: 11
+  standingLamp: {fileID: 701029320}
+  meshMaterial: {fileID: 0}
 --- !u!1001 &608180846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36164,6 +36205,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 3, z: 10}
   m_Center: {x: 0.85240996, y: 0, z: 1.1479692}
+--- !u!1 &701029320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 409042242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &702263754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42061,6 +42107,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806895640}
   m_CullTransparentMesh: 1
+--- !u!1 &807338060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 639647412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &810730533
 GameObject:
   m_ObjectHideFlags: 0
@@ -43714,6 +43765,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &856664744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 982303801}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &856818519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44137,6 +44193,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 17.000004, y: 3, z: 0.5000001}
   m_Center: {x: 0.85239905, y: -0.0000009536743, z: 1.1479738}
+--- !u!1 &872814292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 19431867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &873418695
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56911,6 +56972,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.000001, y: 3, z: 0.5000001}
   m_Center: {x: 0.85238403, y: 0.0000009536743, z: 1.1479653}
+--- !u!1 &1071567401 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 886521058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1073913416
 GameObject:
   m_ObjectHideFlags: 0
@@ -63709,8 +63775,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 4, z: 20}
-  m_Center: {x: 0.000091552734, y: 0.00007247925, z: -0.000030517578}
+  m_Size: {x: 40, y: 4, z: 54.36}
+  m_Center: {x: -2.31, y: 1.38, z: -14.6}
 --- !u!114 &1107768336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63725,6 +63791,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 280385109}
   checkpointIndex: 2
+  standingLamp: {fileID: 872814292}
+  meshMaterial: {fileID: 0}
 --- !u!4 &1109030260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1787384267775664362, guid: 4257b00f3b68d73489c47398d1220bce, type: 3}
@@ -64475,6 +64543,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 0}
   checkpointIndex: 0
+  standingLamp: {fileID: 1536741013}
+  meshMaterial: {fileID: 0}
 --- !u!1 &1123003560
 GameObject:
   m_ObjectHideFlags: 0
@@ -69174,6 +69244,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3824458726154622694, guid: 6109ddfc40b55e14e85dff0e4ac3ab91, type: 3}
   m_PrefabInstance: {fileID: 1257753732}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1260915531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 965114424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1261965393
 GameObject:
   m_ObjectHideFlags: 0
@@ -69821,6 +69896,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 1917804360}
   checkpointIndex: 7
+  standingLamp: {fileID: 1071567401}
+  meshMaterial: {fileID: 0}
 --- !u!1 &1273813337
 GameObject:
   m_ObjectHideFlags: 0
@@ -72280,7 +72357,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 4, z: 20}
+  m_Size: {x: 40, y: 4, z: 40}
   m_Center: {x: 0.000091552734, y: 0.00007247925, z: -0.000030517578}
 --- !u!114 &1311413590
 MonoBehaviour:
@@ -72296,6 +72373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 1764824673}
   checkpointIndex: 8
+  standingLamp: {fileID: 470235435}
+  meshMaterial: {fileID: 0}
 --- !u!1 &1311729804
 GameObject:
   m_ObjectHideFlags: 0
@@ -74289,6 +74368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 0}
   checkpointIndex: 1
+  standingLamp: {fileID: 807338060}
+  meshMaterial: {fileID: 0}
 --- !u!1001 &1341220633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76952,6 +77033,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 266951522}
   checkpointIndex: 6
+  standingLamp: {fileID: 1810522383}
+  meshMaterial: {fileID: 0}
 --- !u!23 &1402893144
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -82970,6 +83053,11 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6293650768224212400, guid: 97db3a02feed4054695492bad4a898d3, type: 3}
   m_PrefabInstance: {fileID: 853014090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1536741013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 447075540}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1538608305
 GameObject:
@@ -104195,6 +104283,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 0}
   checkpointIndex: 4
+  standingLamp: {fileID: 1260915531}
+  meshMaterial: {fileID: 0}
 --- !u!65 &1768240186
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -105544,8 +105634,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 4, z: 20}
-  m_Center: {x: 0.000091552734, y: 0.00007247925, z: -0.000030517578}
+  m_Size: {x: 40, y: 4, z: 40}
+  m_Center: {x: -5.06, y: 0.00007247925, z: 12.38}
 --- !u!114 &1799198442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105560,6 +105650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 1343337782}
   checkpointIndex: 10
+  standingLamp: {fileID: 1912499911}
+  meshMaterial: {fileID: 0}
 --- !u!43 &1800752273
 Mesh:
   m_ObjectHideFlags: 0
@@ -108039,6 +108131,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49d8f2a4a480a5e4bb6a95d0480cb649, type: 3}
+--- !u!1 &1810522383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 999002777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1813240176
 GameObject:
   m_ObjectHideFlags: 0
@@ -117135,6 +117232,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1912499911 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 52106f9bd44926942afaf7374e49a0de, type: 3}
+  m_PrefabInstance: {fileID: 1590349609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1914640407
 GameObject:
   m_ObjectHideFlags: 0
@@ -118205,6 +118307,9 @@ MonoBehaviour:
   levelToLoad: Level Select
   LoadScene: {fileID: 1444082632}
   _inputReader: {fileID: 11400000, guid: 12337715a3680b24cb9047a0f4e3a238, type: 2}
+  isLevelOne: 1
+  hasCompletedLevel: 0
+  isLevelTwo: 0
 --- !u!1001 &1924507185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122161,6 +122266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPoint: {fileID: 825411375}
   checkpointIndex: 5
+  standingLamp: {fileID: 856664744}
+  meshMaterial: {fileID: 0}
 --- !u!1001 &2046483297
 PrefabInstance:
   m_ObjectHideFlags: 0

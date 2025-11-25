@@ -8,6 +8,7 @@ public class LevelThreeLoadAndSaveDoors : MonoBehaviour, IDataPersistence
     public Door[] doors33;
     public Button[] buttons32;
     public Button[] buttons33;
+    public bool isLevelOne = false;
     public void LoadData(PlayerData data)
     {
         playerData = data;
@@ -49,6 +50,22 @@ public class LevelThreeLoadAndSaveDoors : MonoBehaviour, IDataPersistence
             foreach (Door door in doors33)
             {
                 door.OpenDoor();
+            }
+        }
+
+        if(isLevelOne)
+        {
+            if(playerData.hasCompletedLevel1)
+            {
+                foreach (Door door in doors32)
+                {
+                    door.OpenDoor();
+                }
+
+                foreach (Door door in doors33)
+                {
+                    door.OpenDoor();
+                }
             }
         }
     }

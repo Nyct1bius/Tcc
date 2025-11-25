@@ -121,6 +121,8 @@ public class PlayerData
 {
     public float health;
     public bool hasSword, hasShield;
+    public bool hasCompletedLevel1 = false;
+    public bool hasCompletedLevel2 = false;
     public Vector3 spawnPos;
     public string lastTotemId;
     public string lastSceneName;
