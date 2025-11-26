@@ -92,12 +92,14 @@ public class PlayerStateMachine : MonoBehaviour,IDataPersistence
     {
         currentData.hasSword = data.hasSword;
         currentData.hasShield = data.hasShield; 
+        currentData.isFirstPlaythrough = data.isFirstPlaythrough;
     }
 
     public void SaveData(PlayerData data)
     {
        data.hasSword = currentData.hasSword;  
-        data.hasShield = currentData.hasShield;
+       data.hasShield = currentData.hasShield;
+        data.isFirstPlaythrough= currentData.isFirstPlaythrough;
     }
     #region Game States
     private void OnPauseGame()
@@ -126,6 +128,7 @@ public class PlayerData
     public Vector3 spawnPos;
     public string lastTotemId;
     public string lastSceneName;
+    public bool isFirstPlaythrough;
     public PlayerData()
     {
         health = 100;
@@ -133,7 +136,8 @@ public class PlayerData
         hasShield = false;
         spawnPos = Vector3.zero;  
         lastTotemId = null;
-        lastSceneName = null;  
-       
+        lastSceneName = null;
+        isFirstPlaythrough = true;
+
     }  
 }

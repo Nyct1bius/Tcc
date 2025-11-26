@@ -16,6 +16,7 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
             data.lastTotemId = totemId;
             data.lastSceneName = SceneManager.GetActiveScene().name;
             data.spawnPos = transform.position;
+            data.isFirstPlaythrough = false;
 
         }
     }
@@ -32,6 +33,8 @@ public class SaveTotem : MonoBehaviour, IDataPersistence
             isPlayerNearby = true;
 
             // dispara o save automaticamente
+            DataPersistenceManager.Instance.isFirstPlaythrough = false;
+
             DataPersistenceManager.Instance.SaveGame();
 
             saveText.SetActive(true); // trocar para animação depois

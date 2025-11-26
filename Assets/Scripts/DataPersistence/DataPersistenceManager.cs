@@ -19,6 +19,8 @@ public class DataPersistenceManager : MonoBehaviour
     private FileDataHandler dataHandler;
     public static DataPersistenceManager Instance { get; private set; }
 
+    public bool isFirstPlaythrough = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

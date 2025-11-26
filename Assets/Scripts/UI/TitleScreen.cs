@@ -14,6 +14,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
     [SerializeField]
     private string lastScene;
     [SerializeField] private InputAction anyKeyAction;
+    public GameObject continueButtonParent;
 
     public UnityEngine.UI.Button continueButton;
 
@@ -29,7 +30,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
         _fase1.SetActive(true);
         _fase2.SetActive(false);
 
-        if(DataPersistenceManager.Instance != null)
+        if(!DataPersistenceManager.Instance.isFirstPlaythrough && DataPersistenceManager.Instance.HasGameData())
         {
             bool hasSave = DataPersistenceManager.Instance.HasGameData();
             continueButton.interactable = hasSave;
@@ -37,7 +38,9 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
         else
         {
             continueButton.interactable = false;
+            continueButtonParent.SetActive(false);
         }
+
         
     }
 
@@ -76,6 +79,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
             DataPersistenceManager.Instance.NewGame();
         }
         GameManager.instance.isNewGame = true;
+        DataPersistenceManager.Instance.isFirstPlaythrough = true;
         loadscene.StartLoad("Cutscene Scene");
         //loadscene.StartLoad("1 - First Level");
     }
