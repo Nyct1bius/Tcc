@@ -36,11 +36,19 @@ public class TutorialSwitcher : MonoBehaviour
 
     private void MostrarTeclado()
     {
-        foreach (var obj in keyboardContents)
-            obj.SetActive(true);
+        if(keyboardContents.Length != 0)
+        {
+            foreach (var obj in keyboardContents)
+                obj.SetActive(true);
+        }
+        if(controllerContents.Length != 0)
+        {
+            foreach (var obj in controllerContents)
+                obj.SetActive(false);
+        }
+        
 
-        foreach (var obj in controllerContents)
-            obj.SetActive(false);
+        
     }
 
     private void MostrarControle()
