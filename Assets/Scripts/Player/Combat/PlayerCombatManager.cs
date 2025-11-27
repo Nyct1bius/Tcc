@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
-
 public class PlayerCombatManager : MonoBehaviour
 {
     [Header("Components")]
@@ -261,20 +262,24 @@ public class PlayerCombatManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
+        if (_backupWeaponData != null && _backupWeaponData.attacks != null && _backupWeaponData.attacks.Length > 0)
+        {
+            Handles.color = Color.yellow;
+            Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
+                _backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
+        }
+#endif
 
-        //Handles.color = Color.yellow;
-        //Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward,
-            //_backupWeaponData.attacks[_attackCount].attackArcAngle, _backupWeaponData.attacks[_attackCount].attackRange);
+        if (_backupWeaponData != null && _backupWeaponData.attacks != null && _backupWeaponData.attacks.Length > 0)
+        {
+            Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
+            Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
 
-        Vector3 leftBoundary = Quaternion.Euler(0, -_backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
-        Vector3 rightBoundary = Quaternion.Euler(0, _backupWeaponData.attacks[_attackCount].attackArcAngle / 2f, 0) * transform.forward * _backupWeaponData.attacks[_attackCount].attackRange;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _lockOnRange);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
+            Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+        }
     }
 
 
@@ -294,9 +299,9 @@ public class PlayerCombatManager : MonoBehaviour
         {
             _nextHitAudioTime = Time.time + _hitAudioCooldown;
             _machine.AudioManager.audioManager.PlayOneShot(_machine.AudioManager.playerFmodEvents._hit, enemyPos);
-            Debug.Log("Damage");
             CameraShakeManager.CameraShakeFromProfile(_damageEnemyProfile, _machine.CameraShakeSource);
         }
     }
     #endregion
 }
+

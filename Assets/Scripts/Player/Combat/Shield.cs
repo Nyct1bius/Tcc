@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class Shield : MonoBehaviour
@@ -58,6 +59,12 @@ public class Shield : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+#if UNITY_EDITOR
+      
+            Handles.color = Color.red;
+            Handles.DrawWireArc(transform.position, Vector3.up, Quaternion.Euler(0, -defenseAngle / 2f, 0) * transform.forward,
+                defenseAngle, gizmoRange);
+#endif
     }
 
 
